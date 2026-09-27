@@ -1,0 +1,80 @@
+extends MoveTestCase
+## Mantle bands and wall jumps (design §13.1).
+
+const R := 0.4064
+
+
+func _ledge_x(i: int) -> float:
+	return 4.0 * float(i)
+
+
+## spec: movement.md §15 mantle bands 32-63/64-95/96-127/128-160 u -> 0.2/0.3/0.4/0.5 s (T25)
+func test_t25_mantle_bands() -> void:
+	var h := new_harness(&"flat")
+	var hs: Array[int] = [24, 32, 64, 96, 128, 160, 170]
+	var expect: Array[int] = [0, 13, 20, 26, 32, 32, 0]
+	for i in hs.size():
+		ArenaBuilder.add_ledge(h.root, Vector3(_ledge_x(i), 0.0, -5.0), hs[i], 6.0)
+	var wall_i := hs.size()
+	ArenaBuilder.add_ledge(h.root, Vector3(_ledge_x(wall_i), 0.0, -5.0), 160, 4.0 * ArenaBuilder.HU)
+	await h.ready()
+	var sz := -5.0 + R + 0.3
+	for i in hs.size():
+		h.spawn(Vector3(_ledge_x(i), 0.0, sz), 0.0)
+		h.state.air_jumps_used = 1
+		h.state.air_dashes_used = 1
+		h.run(60, hold(B_JUMP, 0, 1))
+		var tag := "%du" % hs[i]
+		var n := count_loco(h.trace, L.MANTLE)
+		assert_eq(n, expect[i], tag + " MANTLE ticks")
+		if expect[i] > 0 and n > 0:
+			var m0 := first_loco(h.trace, L.MANTLE)
+			var after := m0 + n
+			assert_true(first_event(h.trace, MoveEvents.MANTLE_START) == m0, tag + " MANTLE_START on first mantle tick")
+			if after < h.trace.size():
+				assert_true(bool(h.trace[after]["grounded"]), tag + " grounded after the mantle")
+				assert_near((h.trace[after]["pos"] as Vector3).y, float(hs[i]) * ArenaBuilder.HU, 0.01, tag + " on top of the ledge")
+			assert_eq(h.state.air_jumps_used, 0, tag + " air jumps refreshed")
+			assert_eq(h.state.air_dashes_used, 0, tag + " air dashes refreshed")
+	# 4 u deep wall: below the 6 u minimum depth
+	h.spawn(Vector3(_ledge_x(wall_i), 0.0, sz), 0.0)
+	h.run(60, hold(B_JUMP, 0, 1))
+	assert_eq(count_loco(h.trace, L.MANTLE), 0, "4u-deep wall: no mantle")
+	# crouch held through a mantle ends in a slide
+	h.spawn(Vector3(_ledge_x(2), 0.0, sz), 0.0)
+	h.run(40, hold(B_JUMP | B_CROUCH, 0, 1))
+	var m := first_loco(h.trace, L.MANTLE)
+	var n2 := count_loco(h.trace, L.MANTLE)
+	assert_eq(n2, 20, "64u with crouch: MANTLE ticks")
+	if m >= 0 and m + n2 < h.trace.size():
+		assert_eq(int(h.trace[m + n2]["loco"]), L.SLIDE, "64u with crouch: slide after the mantle")
+	done()
+
+
+## spec: movement.md §14 wall jump: first free, then 0.5 stamina and fatigue (T26)
+func test_t26_wall_jump() -> void:
+	# the G33 min interval would eat the tick-3 press; it is tested in test_fpp_g33_double_press_one_wall_jump
+	var p := MovementParams.new()
+	p.wall_jump_min_interval = 0.0
+	var h := new_harness(&"flat", p)
+	ArenaBuilder.add_wall(h.root, Vector3(1.25, 5.0, 0.0), Vector3(0.5, 10.0, 10.0))
+	await h.ready()
+	h.spawn(Vector3(1.0 - R - 0.1, 3.0, 0.0), 0.0)
+	assert_eq(h.state.loco, L.AIR, "starts airborne next to the wall")
+	h.run(4, func(t: int) -> InputCmd: return cmd(t, B_JUMP if (t == 1 or t == 3) else 0))
+	var i1 := first_event(h.trace, MoveEvents.WALL_JUMP, "count", 1)
+	var i2 := first_event(h.trace, MoveEvents.WALL_JUMP, "count", 2)
+	assert_eq(i1, 0, "first wall jump on tick 1")
+	assert_eq(i2, 2, "second wall jump on tick 3")
+	if i1 >= 0:
+		assert_near(h.trace[i1]["stamina"], 3.0, 1e-9, "first wall jump is free")
+		var vx: float = (h.trace[i1]["vel"] as Vector3).x
+		assert_near(vx, -4.5, 0.05, "neutral kick away from the wall")
+	if i1 >= 0 and i2 >= 0:
+		assert_near(h.trace[i2]["stamina"], 2.5, 1e-9, "second wall jump costs 0.5")
+		assert_true((h.trace[i2]["vel"] as Vector3).y < (h.trace[i1]["vel"] as Vector3).y, "fatigue lowers the second jump")
+	h.run(200, hold())
+	assert_true(h.state.grounded, "landed")
+	assert_near(h.state.wall_fatigue, 0.0, 1e-9, "fatigue cleared on landing")
+	assert_eq(h.state.wall_jumps_done, 0, "wall jump count cleared on landing")
+	done()

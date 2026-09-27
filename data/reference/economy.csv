@@ -1,0 +1,23 @@
+key,value,source_type,provenance
+item_price_per_tier,"[0, 800, 1600, 3200, 6400, 9999]",community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+trooper_kill_gold_share_frac,"[1.0, 0.54, 0.36, 0.25, 0.2, 0.16]",community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+hero_kill_gold_share_frac,"[1.25, 0.575, 0.283, 0.175, 0.11, 0.083]",community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+objective_params.gold_per_orb,0,community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+objective_params.near_player_split_pct,25.0,community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+objective_params.tier1_gold_kill,1375,community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+objective_params.tier1_gold_orbs,0,community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+objective_params.tier2_gold_kill,3675,community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+objective_params.tier2_gold_orbs,0,community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+objective_params.base_guardians_gold_kill,1000,community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+objective_params.base_guardians_gold_orbs,0,community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+objective_params.shrines_gold_kill,2000,community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+objective_params.shrines_gold_orbs,0,community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+objective_params.patron_phase1_gold_kill,0,community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+objective_params.patron_phase1_gold_orbs,0,community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+rejuv_params.rejuvinator_expiration_warning_timing,30.0,community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+rejuv_params.rejuvinator_buff_duration,180.0,community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+rejuv_params.rejuvinator_drop_height,500.0,community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+rejuv_params.rejuvinator_drop_duration,6.0,community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+rejuv_params.trooper_health_mult,"[1.7, 2.0, 2.3]",community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+rejuv_params.player_respawn_mult,"[0.5, 0.4, 0.3]",community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine
+rejuv_params.rejuvinator_rebirth_duration,"[180.0, 180.0, 180.0]",community-datamine,generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine

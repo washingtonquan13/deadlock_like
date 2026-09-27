@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/camera/local_controller.gd" id="1_lc"]
+[ext_resource type="Script" path="res://src/camera/input_sampler.gd" id="2_is"]
+[ext_resource type="Script" path="res://src/camera/camera_rig.gd" id="3_cr"]
+[ext_resource type="Script" path="res://src/camera/crosshair.gd" id="4_ch"]
+
+[node name="LocalController" type="Node"]
+script = ExtResource("1_lc")
+
+[node name="InputSampler" type="Node" parent="."]
+script = ExtResource("2_is")
+
+[node name="CameraRig" type="Node3D" parent="."]
+top_level = true
+script = ExtResource("3_cr")
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig"]
+fov = 90.0
+near = 0.05
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Crosshair" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_ch")

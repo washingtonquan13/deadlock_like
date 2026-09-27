@@ -1,0 +1,40 @@
+{
+  "_comment": [
+    "Clip A1 (recording_shot_list.md): ground jump in place, forward air dash at the apex (W only on the dash tick), no input after.",
+    "Timeline ticks are 1-based sim ticks at 64 Hz and are a first guess: move the dash tick so it matches the trial",
+    "(the apex of a 295 u/s jump under 967 u/s^2 is ~0.305 s = tick 20).",
+    "fit_window (times from sim tick 0) ends at landing, ~1.04 s: ground friction is not part of this fit.",
+    "Alignment: first rising crossing of speed_h through value_u (the air dash start) in video and sim. The jump sits",
+    "before t_rel 0 and is not scored; the apex height still enters through pos_v.",
+    "B3 trials: set hero to res://data/movement/heroes/hero_heavy_b3.tres (the dash lasts 0.51 s; raise ticks to ~84).",
+    "Model comparisons (run each as its own fit and compare cost):",
+    "  G02 formula: fixed air_dash_end_drag_mode 1 (a), 2 (b), 3 (flat x0.8). G25: fixed air_dash_zero_vertical true / false.",
+    "  air_dash_end_drag_floor is not fitted: from rest the post-drag speed (~602 u/s) is above the 480 u/s floor, so this",
+    "  clip cannot see it. Add it only if air_dash_end_drag_frac ends up above ~0.35.",
+    "Expected model gap: the real dash ramps up over ~0.13 s (V8 2:10); ours steps. Report that residual under G01, do not tune it away.",
+    "Bounds are search limits, not game limits: a result on a bound is flagged in the report."
+  ],
+  "name": "Air dash from rest (A1)",
+  "clip": "A1",
+  "gaps": ["G01", "G02", "G25"],
+  "hero": "res://data/movement/heroes/hero_default_b1.tres",
+  "params_resource": "res://data/movement/movement_params.tres",
+  "layout": "flat",
+  "suppress_sprint": true,
+  "up_axis": "z",
+  "start": {"pos_m": [0.0, 0.0, 0.0], "yaw_deg": 0.0, "stamina": 3.0},
+  "ticks": 80,
+  "default": {"move": [0, 0], "buttons": []},
+  "timeline": [
+    {"from": 1, "to": 1, "buttons": ["jump"]},
+    {"from": 20, "to": 20, "buttons": ["dash"], "move": [0, 1]}
+  ],
+  "align": {"mode": "threshold", "channel": "speed_h", "value_u": 200.0, "direction": 1},
+  "fit_window": [0.0, 1.03],
+  "weights": {"speed_h": 1.0, "vel_v": 1.0, "pos_v": 4.0},
+  "params": [
+    {"name": "air_dash_distance", "min": 5.0, "max": 12.0, "gap": "G01", "note": "m; impulse J and cap C = distance / bucket duration (B1 ~732 u/s)"},
+    {"name": "air_dash_end_drag_frac", "min": 0.0, "max": 0.6, "gap": "G02", "optional": true, "note": "fraction removed at air dash end"}
+  ],
+  "optimizer": {"method": "nelder_mead", "max_evals": 300, "restarts": 2}
+}

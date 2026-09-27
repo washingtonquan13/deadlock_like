@@ -1,0 +1,27 @@
+{
+  "_comment": [
+    "Readout layout for the cl_showpos overlay. The exact Deadlock text format is UNVERIFIED",
+    "(specs/_measurement_protocol.md lists cl_showpos as 'medium' and says it shows position and velocity).",
+    "Edit this file after looking at your first recording; nothing in extract.py hard-codes the format.",
+    "fields[].label   : regex matched at the start of an OCR line (case-insensitive). Use line_index instead when the overlay has no labels.",
+    "fields[].names   : column names for the numbers after the label, in order.",
+    "fields[].alt_names: other accepted number counts (e.g. vel shown as one scalar instead of a vector).",
+    "fields[].full_regex: optional; overrides label+numbers. Named groups must equal column names.",
+    "decimals         : digits after the point the overlay prints (null = unknown). Known decimals lets the parser split numbers that OCR glued together.",
+    "up_axis          : which position/velocity component is vertical in the game's frame (Source engines use z).",
+    "units_per_meter  : 39.3701 = 1 u / 0.0254 m (protocol R0 must confirm this).",
+    "binarize         : used by the template backend and by line segmentation. Text is assumed brighter than its background.",
+    "label_separator  : template backend only; after this character only digits . - + are recognised (empty string disables)."
+  ],
+  "fields": [
+    {"key": "pos", "label": "^\\W*p[o0]s\\w*\\s*[:;.]?", "names": ["pos_x", "pos_y", "pos_z"]},
+    {"key": "ang", "label": "^\\W*ang\\w*\\s*[:;.]?", "names": ["ang_pitch", "ang_yaw", "ang_roll"], "optional": true},
+    {"key": "vel", "label": "^\\W*ve[l1i]\\w*\\s*[:;.]?", "names": ["vel_x", "vel_y", "vel_z"], "alt_names": [["vel_scalar"]]}
+  ],
+  "decimals": 2,
+  "up_axis": "z",
+  "label_separator": ":",
+  "units_per_meter": 39.3701,
+  "binarize": {"method": "fixed", "threshold": 170, "upscale": 2, "invert": false},
+  "segment": {"min_line_px": 6, "line_merge_gap_px": 2, "space_gap_frac": 0.33}
+}

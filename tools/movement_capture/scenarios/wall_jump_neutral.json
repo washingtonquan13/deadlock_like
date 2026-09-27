@@ -1,0 +1,35 @@
+{
+  "_comment": [
+    "Clip W1 (recording_shot_list.md): moving along a wall at speed, airborne, one neutral wall jump (no move keys).",
+    "The sim starts airborne next to a long wall (T26 geometry, lengthened) with the incoming velocity in start.vel_mps",
+    "(Godot frame: forward is -Z, up is +Y). Set that velocity to what the video shows just before the jump",
+    "(speed_h and vel_v at t0), then line up the jump tick.",
+    "h_along / h_across split the horizontal velocity along/across the incoming direction (measured in",
+    "align.ref_window, before the jump), which separates tangential keep (G03) from the kick (G32).",
+    "Alignment: first rising crossing of vel_v through value_u (the wall jump) in video and sim."
+  ],
+  "name": "Neutral wall jump at speed (W1)",
+  "clip": "W1",
+  "gaps": ["G03", "G15", "G32"],
+  "hero": "res://data/movement/heroes/hero_default_b1.tres",
+  "params_resource": "res://data/movement/movement_params.tres",
+  "layout": "flat",
+  "suppress_sprint": true,
+  "up_axis": "z",
+  "geometry": [{"type": "wall", "center": [1.25, 5.0, -15.0], "size": [0.5, 10.0, 40.0]}],
+  "start": {"pos_m": [0.4936, 3.0, 0.0], "yaw_deg": 0.0, "vel_mps": [0.0, -0.5, -6.0], "stamina": 3.0},
+  "ticks": 72,
+  "default": {"move": [0, 0], "buttons": []},
+  "timeline": [
+    {"from": 3, "to": 3, "buttons": ["jump"]}
+  ],
+  "align": {"mode": "threshold", "channel": "vel_v", "value_u": 100.0, "direction": 1, "ref_window": [0.0, 0.02]},
+  "fit_window": [0.0, 0.8],
+  "weights": {"speed_h": 0.0, "vel_v": 1.0, "h_along": 1.0, "h_across": 1.0, "pos_v": 4.0},
+  "params": [
+    {"name": "wall_jump_up_speed", "min": 4.0, "max": 12.0, "gap": "G32", "note": "m/s"},
+    {"name": "wall_jump_kick_neutral", "min": 2.0, "max": 9.0, "gap": "G32", "note": "m/s away from the wall"},
+    {"name": "wall_jump_tangent_keep", "min": 0.3, "max": 1.3, "gap": "G03", "optional": true, "note": "fraction of tangential speed kept"}
+  ],
+  "optimizer": {"method": "nelder_mead", "max_evals": 400, "restarts": 2}
+}

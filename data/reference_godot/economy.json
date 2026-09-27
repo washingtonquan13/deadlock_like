@@ -1,0 +1,141 @@
+{
+ "_meta": {
+  "reference_only": true,
+  "warning": "REFERENCE ONLY - numbers observed from Deadlock via public community APIs. Do NOT use as game data; our game uses its own tuned values in res://data/.",
+  "generated_at": "2026-09-27T05:19:50+00:00",
+  "generator": "tools/deadlock_data/export_godot.py",
+  "units": {
+   "distance_engine_units_to_m": 0.0254,
+   "move_speed": "m/s",
+   "time": "s",
+   "wpn_*_range": "engine units (see _m columns)"
+  },
+  "provenance": {
+   "source_type": "community-datamine",
+   "provenance": "generic_data|https://api.deadlock-api.com/v1/assets/generic-data|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine"
+  }
+ },
+ "economy": {
+  "item_price_per_tier": {
+   "key": "item_price_per_tier",
+   "value": [
+    0,
+    800,
+    1600,
+    3200,
+    6400,
+    9999
+   ]
+  },
+  "trooper_kill_gold_share_frac": {
+   "key": "trooper_kill_gold_share_frac",
+   "value": [
+    1.0,
+    0.54,
+    0.36,
+    0.25,
+    0.2,
+    0.16
+   ]
+  },
+  "hero_kill_gold_share_frac": {
+   "key": "hero_kill_gold_share_frac",
+   "value": [
+    1.25,
+    0.575,
+    0.283,
+    0.175,
+    0.11,
+    0.083
+   ]
+  },
+  "objective_params.gold_per_orb": {
+   "key": "objective_params.gold_per_orb",
+   "value": 0
+  },
+  "objective_params.near_player_split_pct": {
+   "key": "objective_params.near_player_split_pct",
+   "value": 25.0
+  },
+  "objective_params.tier1_gold_kill": {
+   "key": "objective_params.tier1_gold_kill",
+   "value": 1375
+  },
+  "objective_params.tier1_gold_orbs": {
+   "key": "objective_params.tier1_gold_orbs",
+   "value": 0
+  },
+  "objective_params.tier2_gold_kill": {
+   "key": "objective_params.tier2_gold_kill",
+   "value": 3675
+  },
+  "objective_params.tier2_gold_orbs": {
+   "key": "objective_params.tier2_gold_orbs",
+   "value": 0
+  },
+  "objective_params.base_guardians_gold_kill": {
+   "key": "objective_params.base_guardians_gold_kill",
+   "value": 1000
+  },
+  "objective_params.base_guardians_gold_orbs": {
+   "key": "objective_params.base_guardians_gold_orbs",
+   "value": 0
+  },
+  "objective_params.shrines_gold_kill": {
+   "key": "objective_params.shrines_gold_kill",
+   "value": 2000
+  },
+  "objective_params.shrines_gold_orbs": {
+   "key": "objective_params.shrines_gold_orbs",
+   "value": 0
+  },
+  "objective_params.patron_phase1_gold_kill": {
+   "key": "objective_params.patron_phase1_gold_kill",
+   "value": 0
+  },
+  "objective_params.patron_phase1_gold_orbs": {
+   "key": "objective_params.patron_phase1_gold_orbs",
+   "value": 0
+  },
+  "rejuv_params.rejuvinator_expiration_warning_timing": {
+   "key": "rejuv_params.rejuvinator_expiration_warning_timing",
+   "value": 30.0
+  },
+  "rejuv_params.rejuvinator_buff_duration": {
+   "key": "rejuv_params.rejuvinator_buff_duration",
+   "value": 180.0
+  },
+  "rejuv_params.rejuvinator_drop_height": {
+   "key": "rejuv_params.rejuvinator_drop_height",
+   "value": 500.0
+  },
+  "rejuv_params.rejuvinator_drop_duration": {
+   "key": "rejuv_params.rejuvinator_drop_duration",
+   "value": 6.0
+  },
+  "rejuv_params.trooper_health_mult": {
+   "key": "rejuv_params.trooper_health_mult",
+   "value": [
+    1.7,
+    2.0,
+    2.3
+   ]
+  },
+  "rejuv_params.player_respawn_mult": {
+   "key": "rejuv_params.player_respawn_mult",
+   "value": [
+    0.5,
+    0.4,
+    0.3
+   ]
+  },
+  "rejuv_params.rejuvinator_rebirth_duration": {
+   "key": "rejuv_params.rejuvinator_rebirth_duration",
+   "value": [
+    180.0,
+    180.0,
+    180.0
+   ]
+  }
+ }
+}

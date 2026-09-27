@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/debug/movement_debug_overlay.gd" id="1_overlay"]
+[ext_resource type="Script" path="res://src/debug/speed_graph.gd" id="2_graph"]
+[ext_resource type="Script" path="res://src/debug/measurement_recorder.gd" id="3_recorder"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(0, 0, 0, 0.55)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="MovementDebugOverlay" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_overlay")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Root"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 450.0
+offset_bottom = 400.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="Root/Panel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Readout" type="Label" parent="Root/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "movement debug"
+
+[node name="SpeedGraph" type="Control" parent="Root/Panel/VBox"]
+custom_minimum_size = Vector2(420, 140)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_graph")
+
+[node name="RecordRow" type="HBoxContainer" parent="Root/Panel/VBox"]
+layout_mode = 2
+
+[node name="Recipe" type="OptionButton" parent="Root/Panel/VBox/RecordRow"]
+layout_mode = 2
+focus_mode = 0
+tooltip_text = "Measurement recipe (specs/_measurement_protocol.md)"
+
+[node name="RecordStatus" type="Label" parent="Root/Panel/VBox/RecordRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+text = "F7 record selected recipe"
+
+[node name="Help" type="Label" parent="Root/Panel/VBox"]
+modulate = Color(1, 1, 1, 0.6)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "F1 hide"
+
+[node name="MeasurementRecorder" type="Node" parent="."]
+script = ExtResource("3_recorder")

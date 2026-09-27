@@ -1,0 +1,20 @@
+# Godot
+.godot/
+*.tmp
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Regenerable data (tools/deadlock_data/fetch.py rebuilds the API cache)
+tools/deadlock_data/cache/
+
+# Generated capture / fit outputs
+tools/movement_capture/_synth/
+tools_fit/_out/
+
+# Recordings stay local (large, and they are raw game footage)
+*.mp4
+*.mkv
+*.mov

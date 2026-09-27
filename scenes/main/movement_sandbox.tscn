@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://fesxdunm3a3"]
+
+[ext_resource type="PackedScene" path="res://scenes/arena/movement_arena.tscn" id="1_arena"]
+[ext_resource type="PackedScene" path="res://scenes/player/player_character.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/player/local_controller.tscn" id="3_ctrl"]
+[ext_resource type="PackedScene" path="res://scenes/debug/movement_debug_overlay.tscn" id="4_overlay"]
+
+[node name="MovementSandbox" type="Node3D"]
+
+[node name="MovementArena" parent="." instance=ExtResource("1_arena")]
+
+[node name="PlayerCharacter" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+
+[node name="LocalController" parent="." instance=ExtResource("3_ctrl")]
+player_path = NodePath("../PlayerCharacter")
+
+[node name="MovementDebugOverlay" parent="." instance=ExtResource("4_overlay")]
+player_path = NodePath("../PlayerCharacter")

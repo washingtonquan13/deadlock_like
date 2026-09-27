@@ -1,0 +1,2 @@
+# optional - toolkit falls back to urllib from the standard library
+requests>=2.31

@@ -1,0 +1,42 @@
+{
+  "_comment": [
+    "Clip A3 (recording_shot_list.md): as A2, but the air dash is at an angle to the travel direction. As written it is the",
+    "45 deg case (W+D held from the dash tick on). Per trial, edit the entry that starts on the dash tick:",
+    "  90 deg: \"move\": [1, 0].   45 deg: \"move\": [1, 1].",
+    "  75 deg: \"move\": [1, 1] plus \"yaw_deg\": <the mouse flick, ~30> (use ang_yaw from the extract).",
+    "h_along / h_across split the horizontal velocity along/across the pre-dash travel direction, measured in",
+    "align.ref_window (after the dash-jump takeoff, before the air dash).",
+    "Put the A2 results (dash_jump_set_speed, dash_jump_vertical_speed) in 'fixed' before fitting, so the pre-dash state is right.",
+    "Model comparison (the point of this clip): fixed air_dash_cap_mode 1 (Hyp A, keep the perpendicular part) vs 2 (set).",
+    "If both fit poorly, the rotate-toward-dash model (V3 4:39, V10 1:47) is needed: a code change under G01, not a new cap.",
+    "fit_window (times from sim tick 0) ends at landing (~1.25 s at 45 deg; extend it for trials that land later): ground friction is not part of this fit.",
+    "Alignment: first rising crossing of speed_h through value_u (the ground dash start), as in A2.",
+    "Bounds are search limits, not game limits: a result on a bound is flagged in the report."
+  ],
+  "name": "Angled air dash after dash-jump (A3)",
+  "clip": "A3",
+  "gaps": ["G01", "G02"],
+  "hero": "res://data/movement/heroes/hero_default_b1.tres",
+  "params_resource": "res://data/movement/movement_params.tres",
+  "layout": "flat",
+  "suppress_sprint": true,
+  "up_axis": "z",
+  "start": {"pos_m": [0.0, 0.0, 0.0], "yaw_deg": 0.0, "stamina": 3.0},
+  "ticks": 110,
+  "default": {"move": [0, 1], "buttons": []},
+  "fixed": {},
+  "timeline": [
+    {"from": 1, "to": 1, "buttons": ["dash"]},
+    {"from": 21, "to": 21, "buttons": ["jump"]},
+    {"from": 31, "to": 31, "buttons": ["dash"]},
+    {"from": 31, "to": 110, "move": [1, 1]}
+  ],
+  "align": {"mode": "threshold", "channel": "speed_h", "value_u": 400.0, "direction": 1, "ref_window": [0.36, 0.44]},
+  "fit_window": [0.0, 1.25],
+  "weights": {"h_along": 1.0, "h_across": 1.0, "vel_v": 1.0},
+  "params": [
+    {"name": "air_dash_distance", "min": 5.0, "max": 12.0, "gap": "G01", "note": "m; impulse J and cap C"},
+    {"name": "air_dash_end_drag_frac", "min": 0.0, "max": 0.6, "gap": "G02", "optional": true, "note": "fraction removed at air dash end (here above the cap)"}
+  ],
+  "optimizer": {"method": "nelder_mead", "max_evals": 300, "restarts": 2}
+}

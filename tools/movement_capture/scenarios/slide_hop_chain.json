@@ -1,0 +1,47 @@
+{
+  "_comment": [
+    "Clip S2 (recording_shot_list.md), variant (a): dash-jump, crouch held before landing (air-entry slide at ~600 u/s),",
+    "slide jump at ~0.3 s (free, sets the flag), land crouched, slide jump again at ~0.3 s (flagged and early: penalized),",
+    "land, and let the last slide run out.",
+    "Variant (b): move the second slide jump to ~0.6 s after that landing (no penalty expected). Fit (b) FIRST: it must",
+    "fit with no penalty (slide_hop_penalty_drag has no effect there, so the report flags it FLAT). If (b) does not fit,",
+    "the 0.5 s rule or the flag model is wrong: stop and write it up under G09.",
+    "Timeline ticks are 1-based sim ticks at 64 Hz, set from the sim's own landing ticks (check with",
+    "tools_fit/scenario_probe.gd). Copy each trial's jump and crouch ticks from the video (tick = (t - t0) * 64).",
+    "Crouch is held from before the first landing to the end, as in the shot list; a jump out of a SLIDE does not",
+    "store crouch, so holding it through the jumps re-enters the slide on each landing.",
+    "slide_hop_penalty_time is not fitted by default (< 0 = until landing). To test a timed penalty, add",
+    "{\"name\": \"slide_hop_penalty_time\", \"min\": 0.05, \"max\": 1.0} to params.",
+    "slide_friction is a side read (G43 check on 0.1875) from the slide segments.",
+    "Alignment: first rising crossing of speed_h through value_u (the ground dash start).",
+    "Bounds are search limits, not game limits: a result on a bound is flagged in the report."
+  ],
+  "name": "Slide-hop chain (S2)",
+  "clip": "S2",
+  "gaps": ["G09", "G43"],
+  "hero": "res://data/movement/heroes/hero_default_b1.tres",
+  "params_resource": "res://data/movement/movement_params.tres",
+  "layout": "flat",
+  "suppress_sprint": true,
+  "up_axis": "z",
+  "start": {"pos_m": [0.0, 0.0, 0.0], "yaw_deg": 0.0, "stamina": 3.0},
+  "ticks": 280,
+  "default": {"move": [0, 0], "buttons": []},
+  "fixed": {"slide_hop_min_time": 0.5},
+  "timeline": [
+    {"from": 1, "to": 21, "move": [0, 1]},
+    {"from": 1, "to": 1, "buttons": ["dash"]},
+    {"from": 21, "to": 21, "buttons": ["jump"]},
+    {"from": 95, "to": 95, "buttons": ["jump"]},
+    {"from": 152, "to": 152, "buttons": ["jump"]},
+    {"from": 60, "to": 280, "buttons": ["crouch"]}
+  ],
+  "align": {"mode": "threshold", "channel": "speed_h", "value_u": 400.0, "direction": 1},
+  "fit_window": [0.0, 4.3],
+  "weights": {"speed_h": 1.0, "vel_v": 1.0, "pos_h": 1.0},
+  "params": [
+    {"name": "slide_hop_penalty_drag", "min": 0.0, "max": 3.0, "gap": "G09", "note": "per-second air drag added while the penalty is active"},
+    {"name": "slide_friction", "min": 0.05, "max": 0.6, "gap": "G43", "optional": true, "note": "side read; spec 0.1875"}
+  ],
+  "optimizer": {"method": "nelder_mead", "max_evals": 300, "restarts": 2}
+}

@@ -1,0 +1,3191 @@
+{
+ "_meta": {
+  "reference_only": true,
+  "warning": "REFERENCE ONLY - numbers observed from Deadlock via public community APIs. Do NOT use as game data; our game uses its own tuned values in res://data/.",
+  "generated_at": "2026-09-27T05:19:50+00:00",
+  "generator": "tools/deadlock_data/export_godot.py",
+  "units": {
+   "distance_engine_units_to_m": 0.0254,
+   "move_speed": "m/s",
+   "time": "s",
+   "wpn_*_range": "engine units (see _m columns)"
+  },
+  "provenance": {
+   "source_type": "community-datamine",
+   "provenance": "items|https://api.deadlock-api.com/v1/assets/items?language=english|retrieved=2026-09-27|client_version=latest(6701)|source_type=community-datamine"
+  }
+ },
+ "items": {
+  "upgrade_extra_charge": {
+   "item_id": 3776945997,
+   "class_name": "upgrade_extra_charge",
+   "name": "Extra Charge",
+   "slot": "spirit",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusAbilityCharges": 1.0,
+    "BonusSpiritForChargedAbilities": 7.0
+   }
+  },
+  "upgrade_improved_spirit": {
+   "item_id": 968099481,
+   "class_name": "upgrade_improved_spirit",
+   "name": "Extra Spirit",
+   "slot": "spirit",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "TechPower": 10.0
+   }
+  },
+  "upgrade_goose_egg": {
+   "item_id": 2462046703,
+   "class_name": "upgrade_goose_egg",
+   "name": "Golden Goose Egg",
+   "slot": "spirit",
+   "tier": 1,
+   "cost": 800,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusBuffsPerGold": 80.0,
+    "BonusGoldPerMinute": 80.0,
+    "BonusSprintSpeed": 1.0,
+    "OutOfCombatHealthRegen": 1.0,
+    "OutgoingDamagePenaltyPercent": -15.0,
+    "StartingGold": 400.0,
+    "ThinkRate": 3.0
+   }
+  },
+  "upgrade_magic_burst": {
+   "item_id": 1998374645,
+   "class_name": "upgrade_magic_burst",
+   "name": "Mystic Burst",
+   "slot": "spirit",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 14.0,
+   "properties_json": {
+    "AbilityChargeUpTime": 14.0,
+    "Damage": 40.0,
+    "MinimumDamage": 80.0
+   }
+  },
+  "upgrade_magic_reach": {
+   "item_id": 754480263,
+   "class_name": "upgrade_magic_reach",
+   "name": "Mystic Expansion",
+   "slot": "spirit",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "TechRadiusMultiplier": 20.0,
+    "TechRangeMultiplier": 20.0
+   }
+  },
+  "upgrade_mystic_regeneration": {
+   "item_id": 1439347412,
+   "class_name": "upgrade_mystic_regeneration",
+   "name": "Mystic Regeneration",
+   "slot": "spirit",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusHealth": 50.0,
+    "Regeneration": 4.0,
+    "RegenerationDuration": 7.0
+   }
+  },
+  "upgrade_withering_whip": {
+   "item_id": 2922054143,
+   "class_name": "upgrade_withering_whip",
+   "name": "Rusted Barrel",
+   "slot": "spirit",
+   "tier": 1,
+   "cost": 800,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 16.0,
+   "properties_json": {
+    "BonusHealth": 60.0,
+    "BonusSprintSpeed": 0.5,
+    "BulletArmorReduction": -8.0,
+    "FireRateSlow": 32.0
+   }
+  },
+  "upgrade_acolytes_glove": {
+   "item_id": 465043967,
+   "class_name": "upgrade_acolytes_glove",
+   "name": "Spirit Strike",
+   "slot": "spirit",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 8.0,
+   "properties_json": {
+    "LightMeleeCooldownMult": 2.0,
+    "SpiritDamage": 40.0,
+    "TechArmorDamageReduction": -6.0
+   }
+  },
+  "upgrade_arcane_surge": {
+   "item_id": 1150006784,
+   "class_name": "upgrade_arcane_surge",
+   "name": "Arcane Surge",
+   "slot": "spirit",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusAbilityDurationPercent": 15.0,
+    "SpiritPower": 20.0,
+    "Stamina": 1.0,
+    "StaminaCooldownReduction": 12.0,
+    "TechRadiusMultiplierBuff": 12.0,
+    "TechRangeMultiplierBuff": 12.0
+   }
+  },
+  "upgrade_bullet_resist_shredder": {
+   "item_id": 2971868509,
+   "class_name": "upgrade_bullet_resist_shredder",
+   "name": "Bullet Resist Shredder",
+   "slot": "spirit",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BaseAttackDamagePercent": 9.0,
+    "BulletArmorReduction": -10.0,
+    "BulletResist": 9.0
+   }
+  },
+  "upgrade_cold_front": {
+   "item_id": 1976391348,
+   "class_name": "upgrade_cold_front",
+   "name": "Cold Front",
+   "slot": "spirit",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 25.0,
+   "properties_json": {
+    "Damage": 95.0,
+    "DamageHeight": 7.0,
+    "EndRadius": 10.0,
+    "MovementSpeedSlow": 48.0,
+    "NPCDamageMult": 1.0,
+    "SpreadDuration": 0.6,
+    "StartRadius": 2.0,
+    "TechResist": 6.0
+   }
+  },
+  "upgrade_magic_tempo": {
+   "item_id": 380806748,
+   "class_name": "upgrade_magic_tempo",
+   "name": "Compress Cooldown",
+   "slot": "spirit",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "CooldownReduction": 18.0
+   }
+  },
+  "upgrade_arcane_extension": {
+   "item_id": 2951612397,
+   "class_name": "upgrade_arcane_extension",
+   "name": "Duration Extender",
+   "slot": "spirit",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusAbilityDurationPercent": 22.0
+   }
+  },
+  "upgrade_soaring_spirit": {
+   "item_id": 7409189,
+   "class_name": "upgrade_soaring_spirit",
+   "name": "Improved Spirit",
+   "slot": "spirit",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusHealth": 75.0,
+    "BonusSprintSpeed": 1.0,
+    "OutOfCombatHealthRegen": 1.5,
+    "TechPower": 18.0
+   }
+  },
+  "upgrade_magic_slow": {
+   "item_id": 1102081447,
+   "class_name": "upgrade_magic_slow",
+   "name": "Mystic Slow",
+   "slot": "spirit",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusHealth": 50.0,
+    "BonusSprintSpeed": 0.75,
+    "GroundDashReductionPercent": -10.0,
+    "MovementSpeedSlow": 24.0
+   }
+  },
+  "upgrade_magic_vulnerability": {
+   "item_id": 2081037738,
+   "class_name": "upgrade_magic_vulnerability",
+   "name": "Mystic Vulnerability",
+   "slot": "spirit",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "TechArmorDamageReduction": -8.0,
+    "TechResist": 8.0
+   }
+  },
+  "upgrade_quick_silver": {
+   "item_id": 84321454,
+   "class_name": "upgrade_quick_silver",
+   "name": "Quicksilver Reload",
+   "slot": "spirit",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 18.0,
+   "properties_json": {
+    "AbilityChargeUpTime": 18.0,
+    "AmmoReloadPercent": 100.0,
+    "BonusFireRate": 10.0,
+    "BuffDuration": 12.0,
+    "Damage": 44.0
+   }
+  },
+  "upgrade_containment": {
+   "item_id": 1813726886,
+   "class_name": "upgrade_containment",
+   "name": "Slowing Hex",
+   "slot": "spirit",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 29.0,
+   "properties_json": {
+    "BonusSprintSpeed": 0.5,
+    "GroundDashReductionPercent": -26.0,
+    "SlowPercent": 16.0
+   }
+  },
+  "upgrade_spirit_sap": {
+   "item_id": 1219329868,
+   "class_name": "upgrade_spirit_sap",
+   "name": "Spirit Sap",
+   "slot": "spirit",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 18.0,
+   "properties_json": {
+    "BonusHealth": 50.0,
+    "MagicResistReduction": -9.0,
+    "TechPowerReduction": -30.0
+   }
+  },
+  "upgrade_suppressor": {
+   "item_id": 1925087134,
+   "class_name": "upgrade_suppressor",
+   "name": "Suppressor",
+   "slot": "spirit",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BulletResist": 8.0,
+    "FireRateSlow": 28.0,
+    "TechPower": 6.0
+   }
+  },
+  "upgrade_rupture": {
+   "item_id": 3144988365,
+   "class_name": "upgrade_rupture",
+   "name": "Decay",
+   "slot": "spirit",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 30.0,
+   "properties_json": {
+    "BonusHealth": 65.0,
+    "DotHealthPercent": 1.95,
+    "HealAmpReceivePenaltyPercent": -50.0,
+    "HealAmpRegenPenaltyPercent": -50.0,
+    "TechPower": 8.0,
+    "TickRate": 1.0
+   }
+  },
+  "upgrade_greater_withering_whip": {
+   "item_id": 2061878743,
+   "class_name": "upgrade_greater_withering_whip",
+   "name": "Disarming Hex",
+   "slot": "spirit",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 16.0,
+   "properties_json": {
+    "BonusHealth": 75.0,
+    "BonusSprintSpeed": 0.75,
+    "BulletArmorReduction": -13.0
+   }
+  },
+  "upgrade_tech_range": {
+   "item_id": 1193964439,
+   "class_name": "upgrade_tech_range",
+   "name": "Greater Expansion",
+   "slot": "spirit",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "TechRadiusMultiplier": 30.0,
+    "TechRangeMultiplier": 30.0,
+    "TechResist": 10.0
+   }
+  },
+  "upgrade_target_stun": {
+   "item_id": 1254091416,
+   "class_name": "upgrade_target_stun",
+   "name": "Knockdown",
+   "slot": "spirit",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 35.0,
+   "properties_json": {
+    "BonusHealth": 75.0,
+    "MaxBonusDuration": 1.5,
+    "MaxHeightForBonus": 30.0,
+    "StunDelay": 2.0,
+    "StunDuration": 0.5,
+    "TechRadiusMultiplier": 5.0,
+    "TechRangeMultiplier": 5.0,
+    "VisualContractRadius": 3.0
+   }
+  },
+  "upgrade_resonant_healing": {
+   "item_id": 2947183272,
+   "class_name": "upgrade_resonant_healing",
+   "name": "Radiant Regeneration",
+   "slot": "spirit",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 6.0,
+   "properties_json": {
+    "BonusHealth": 90.0,
+    "BonusMoveSpeed": 1.75,
+    "HealingPerCast": 65.0,
+    "Regeneration": 4.0,
+    "RegenerationDuration": 7.0
+   }
+  },
+  "upgrade_rapid_recharge": {
+   "item_id": 787198704,
+   "class_name": "upgrade_rapid_recharge",
+   "name": "Rapid Recharge",
+   "slot": "spirit",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusAbilityCharges": 2.0,
+    "BonusSpiritForChargedAbilities": 14.0,
+    "CooldownBetweenChargeReduction": 30.0,
+    "CooldownReductionOnChargedAbilities": 14.0
+   }
+  },
+  "upgrade_targeted_silence": {
+   "item_id": 619484391,
+   "class_name": "upgrade_targeted_silence",
+   "name": "Silence Wave",
+   "slot": "spirit",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 42.0,
+   "properties_json": {
+    "BonusHealth": 50.0,
+    "CooldownOnMiss": 30.0,
+    "Damage": 75.0,
+    "GrowthPerMeter": 0.15,
+    "InitialWidth": 5.0
+   }
+  },
+  "upgrade_spirit_snatch": {
+   "item_id": 3190916303,
+   "class_name": "upgrade_spirit_snatch",
+   "name": "Spirit Snatch",
+   "slot": "spirit",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 6.0,
+   "properties_json": {
+    "BonusHealth": 75.0,
+    "BonusMeleeDamagePercent": 7.0,
+    "LightMeleeReduction": 30.0,
+    "SpiritDamage": 50.0,
+    "TechArmorDamageReduction": -12.0,
+    "TechArmorGain": 12.0,
+    "TechPowerGain": 25.0,
+    "TechPowerReduction": -25.0
+   }
+  },
+  "upgrade_cooldown_reduction": {
+   "item_id": 3261353684,
+   "class_name": "upgrade_cooldown_reduction",
+   "name": "Superior Cooldown",
+   "slot": "spirit",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "CooldownReduction": 20.0,
+    "OutOfCombatHealthRegen": 4.0
+   }
+  },
+  "upgrade_imbued_duration_extender": {
+   "item_id": 2717651715,
+   "class_name": "upgrade_imbued_duration_extender",
+   "name": "Superior Duration",
+   "slot": "spirit",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusAbilityDurationPercent": 28.0,
+    "BulletResist": 8.0
+   }
+  },
+  "upgrade_magic_storm": {
+   "item_id": 1292979587,
+   "class_name": "upgrade_magic_storm",
+   "name": "Surge of Power",
+   "slot": "spirit",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 14.0,
+   "properties_json": {
+    "BonusMoveSpeed": 1.75,
+    "FireRateBonus": 20.0,
+    "ImbuedTechPower": 28.0,
+    "MoveWhileShootingSpeedPenaltyReductionPercent": 100.0,
+    "MoveWhileZoomedSpeedPenaltyReductionPercent": 100.0,
+    "MovementSpeedBonusDuration": 8.0
+   }
+  },
+  "upgrade_magic_shock": {
+   "item_id": 2121044373,
+   "class_name": "upgrade_magic_shock",
+   "name": "Tankbuster",
+   "slot": "spirit",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 14.0,
+   "properties_json": {
+    "AbilityChargeUpTime": 14.0,
+    "BonusHealth": 50.0,
+    "CurrentHealthDamage": 7.5,
+    "Damage": 40.0,
+    "MinimumDamage": 165.0,
+    "ReProcLockoutTime": 5.0,
+    "WatcherMaxDuration": 30.0
+   }
+  },
+  "upgrade_tech_damage_pulse": {
+   "item_id": 395944548,
+   "class_name": "upgrade_tech_damage_pulse",
+   "name": "Torment Pulse",
+   "slot": "spirit",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 1.4,
+   "properties_json": {
+    "BonusHealth": 100.0,
+    "DamagePulseAmount": 25.0,
+    "DamagePulseRadius": 9.0,
+    "MeleeResistPercent": 18.0
+   }
+  },
+  "upgrade_arctic_blast": {
+   "item_id": 3812615317,
+   "class_name": "upgrade_arctic_blast",
+   "name": "Arctic Blast",
+   "slot": "spirit",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 24.0,
+   "properties_json": {
+    "Damage": 175.0,
+    "DamageHeight": 7.0,
+    "EndRadius": 16.0,
+    "FreezeDuration": 1.0,
+    "NPCDamageMult": 1.0,
+    "SlowDuration": 4.0,
+    "SlowPercent": 48.0,
+    "SpreadDuration": 0.6,
+    "StartRadius": 2.0,
+    "TechResist": 10.0
+   }
+  },
+  "upgrade_boundless_spirit": {
+   "item_id": 2519598785,
+   "class_name": "upgrade_boundless_spirit",
+   "name": "Boundless Spirit",
+   "slot": "spirit",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusHealth": 75.0,
+    "OutOfCombatHealthRegen": 4.0,
+    "TechPower": 30.0,
+    "TechPowerPercent": 15.0
+   }
+  },
+  "upgrade_glitch": {
+   "item_id": 2617435668,
+   "class_name": "upgrade_glitch",
+   "name": "Cursed Relic",
+   "slot": "spirit",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 55.0,
+   "properties_json": {
+    "OutgoingDamagePenaltyPercent": -25.0,
+    "SkipFrames": 6.0
+   }
+  },
+  "upgrade_ability_power_shard": {
+   "item_id": 630839635,
+   "class_name": "upgrade_ability_power_shard",
+   "name": "Echo Shard",
+   "slot": "spirit",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 30.0,
+   "properties_json": {
+    "BulletResist": 5.0,
+    "ImbuedCooldownMultiplier": 1.0,
+    "TechResist": 5.0
+   }
+  },
+  "upgrade_escalating_exposure": {
+   "item_id": 3005970438,
+   "class_name": "upgrade_escalating_exposure",
+   "name": "Escalating Exposure",
+   "slot": "spirit",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "MagicIncreasePerStack": 4.5,
+    "MaxStacks": 12.0,
+    "ProcCooldown": 0.7,
+    "TechArmorDamageReduction": -8.0,
+    "TechResist": 17.0
+   }
+  },
+  "upgrade_self_bubble": {
+   "item_id": 2533252781,
+   "class_name": "upgrade_self_bubble",
+   "name": "Ethereal Shift",
+   "slot": "spirit",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 37.0,
+   "properties_json": {
+    "BonusMoveSpeed": 3.0,
+    "BonusSpirit": 20.0,
+    "BuffDuration": 5.0,
+    "DampingFactor": 3.0,
+    "FloatMoveSpeed": 2.5,
+    "LiftHeight": 200.0,
+    "TechResist": 30.0
+   }
+  },
+  "upgrade_focus_lens": {
+   "item_id": 2142980412,
+   "class_name": "upgrade_focus_lens",
+   "name": "Focus Lens",
+   "slot": "spirit",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 45.0,
+   "properties_json": {
+    "BonusFireRate": 10.0,
+    "MagicResistReduction": -9.0,
+    "PercentDamage": 35.0,
+    "ResistReductionDuration": 12.0,
+    "TechPowerReduction": -30.0
+   }
+  },
+  "upgrade_ultimate_burst": {
+   "item_id": 493591231,
+   "class_name": "upgrade_ultimate_burst",
+   "name": "Lightning Scroll",
+   "slot": "spirit",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusHealth": 50.0,
+    "BonusSprintSpeed": 0.75,
+    "Damage": 150.0,
+    "DelayBeforeStun": 3.0,
+    "GroundDashReductionPercent": -10.0,
+    "MovementSpeedSlow": 24.0,
+    "SlowPercent": 64.0,
+    "StunDuration": 0.75
+   }
+  },
+  "upgrade_magic_carpet": {
+   "item_id": 2800629741,
+   "class_name": "upgrade_magic_carpet",
+   "name": "Magic Carpet",
+   "slot": "spirit",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 32.0,
+   "properties_json": {
+    "AirControlPercent": 25.0,
+    "BonusAbilityDurationPercent": 15.0,
+    "BonusHealth": 125.0,
+    "FlyMoveSpeed": 7.0,
+    "GravityScale": -15.0,
+    "SummonDuration": 1.3,
+    "TechPower": 14.0
+   }
+  },
+  "upgrade_ethereal_bullets": {
+   "item_id": 3919289022,
+   "class_name": "upgrade_ethereal_bullets",
+   "name": "Mercurial Magnum",
+   "slot": "spirit",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 15.0,
+   "properties_json": {
+    "AbilityChargeUpTime": 14.0,
+    "AmmoReloadPercent": 100.0,
+    "BonusClipSizePercent": 20.0,
+    "BonusFireRate": 22.0,
+    "BuffDuration": 12.0,
+    "BulletsBonusMagicDamage": 20.0,
+    "Damage": 60.0,
+    "TechPower": 7.0
+   }
+  },
+  "upgrade_mystic_reverb": {
+   "item_id": 3577481646,
+   "class_name": "upgrade_mystic_reverb",
+   "name": "Mystic Reverb",
+   "slot": "spirit",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 6.25,
+   "properties_json": {
+    "AbilityLifestealPercentHero": 8.0,
+    "DelayDuration": 3.0,
+    "ImbueAbilityLifesteal": 22.0,
+    "MaxHealthDamage": 10.0,
+    "MinimumDamage": 100.0,
+    "MovementSpeedSlow": 32.0,
+    "Radius": 16.0,
+    "TechDamagePercent": 50.0
+   }
+  },
+  "upgrade_ability_refresher": {
+   "item_id": 677738769,
+   "class_name": "upgrade_ability_refresher",
+   "name": "Refresher",
+   "slot": "spirit",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 300.0,
+   "properties_json": {
+    "BulletResist": 15.0,
+    "TechResist": 14.0
+   }
+  },
+  "upgrade_discord": {
+   "item_id": 2417568017,
+   "class_name": "upgrade_discord",
+   "name": "Scourge",
+   "slot": "spirit",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 35.0,
+   "properties_json": {
+    "AuraRadius": 10.0,
+    "BonusHealth": 100.0,
+    "MaxHealthPercentAsDPS": 2.3,
+    "StatusResistancePercent": 20.0,
+    "TechResist": 40.0,
+    "TickRate": 0.25
+   }
+  },
+  "upgrade_spirit_burn": {
+   "item_id": 343572757,
+   "class_name": "upgrade_spirit_burn",
+   "name": "Spirit Burn",
+   "slot": "spirit",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "DPS": 24.0,
+    "DamagePctVsNonHeroes": 50.0,
+    "DamageThreshold": 500.0,
+    "DamageThresholdDuration": 5.0,
+    "DebuffDuration": 8.0,
+    "ExplosionDamage": 50.0,
+    "ExplosionRadius": 3.0,
+    "HealAmpReceivePenaltyPercent": -70.0,
+    "HealAmpRegenPenaltyPercent": -70.0,
+    "ImmunityDuration": 20.0,
+    "TechRadiusMultiplier": 6.0,
+    "TechRangeMultiplier": 6.0,
+    "TickRate": 0.5
+   }
+  },
+  "upgrade_transcendent_cooldown": {
+   "item_id": 915014646,
+   "class_name": "upgrade_transcendent_cooldown",
+   "name": "Transcendent Cooldown",
+   "slot": "spirit",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "CooldownReduction": 25.0,
+    "ItemCooldownReduction": 25.0,
+    "OutOfCombatHealthRegen": 4.0
+   }
+  },
+  "upgrade_aoe_root": {
+   "item_id": 1152158042,
+   "class_name": "upgrade_aoe_root",
+   "name": "Vortex Web",
+   "slot": "spirit",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 42.0,
+   "properties_json": {
+    "BonusSprintSpeed": 0.75,
+    "CaptureRadius": 12.0,
+    "GroundDashReductionPercent": -36.0,
+    "SlowPercent": 28.0,
+    "TechRadiusMultiplier": 8.0,
+    "TechRangeMultiplier": 8.0,
+    "TetherDuration": 0.5,
+    "TetherRadius": 1.0
+   }
+  },
+  "upgrade_shivas_bracelet": {
+   "item_id": 2068250483,
+   "class_name": "upgrade_shivas_bracelet",
+   "name": "Frostbite Charm",
+   "slot": "spirit",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 10.0,
+   "properties_json": {
+    "Damage": 200.0,
+    "FreezeDuration": 1.0,
+    "ImbuedCooldownReduction": 50.0,
+    "ImbuedTechPower": 70.0
+   }
+  },
+  "upgrade_patrons_blessing": {
+   "item_id": 4050602737,
+   "class_name": "upgrade_patrons_blessing",
+   "name": "Mystic Conduit",
+   "slot": "spirit",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 25.0,
+   "properties_json": {
+    "AllyPercentage": 50.0,
+    "CooldownReduction": 40.0,
+    "DamageThreshold": 300.0,
+    "DamageThresholdDuration": 5.0,
+    "HealAmount": 700.0,
+    "HealRadius": 35.0,
+    "Radius": 25.0,
+    "TechPower": 40.0,
+    "TechRadiusMultiplier": 40.0,
+    "TechRangeMultiplier": 40.0
+   }
+  },
+  "upgrade_mystical_piano": {
+   "item_id": 2054088113,
+   "class_name": "upgrade_mystical_piano",
+   "name": "Mystical Piano",
+   "slot": "spirit",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 23.0,
+   "properties_json": {
+    "DazeDuration": 2.0,
+    "DazeMoveSpeed": 2.0,
+    "Radius": 12.0,
+    "StunDelay": 1.7,
+    "StunDuration": 2.0
+   }
+  },
+  "upgrade_omnicharge_pendant": {
+   "item_id": 424779525,
+   "class_name": "upgrade_omnicharge_pendant",
+   "name": "Omnicharge Signet",
+   "slot": "spirit",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusAbilityCharges": 4.0,
+    "BonusAbilityChargesNonCharge": 2.0,
+    "BonusSpiritForChargedAbilities": 50.0,
+    "CooldownBetweenChargeReduction": 70.0,
+    "CooldownReductionOnChargedAbilities": 30.0,
+    "EnableAbilityCharges": 1.0
+   }
+  },
+  "upgrade_prism_blast": {
+   "item_id": 1132564516,
+   "class_name": "upgrade_prism_blast",
+   "name": "Prism Blast",
+   "slot": "spirit",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 40.0,
+   "properties_json": {
+    "BeamLength": 30.0,
+    "BeamWidth": 2.9,
+    "DPS": 270.0,
+    "DampingFactor": 3.0,
+    "FloatMoveSpeed": 2.5,
+    "LiftHeight": 100.0
+   }
+  },
+  "upgrade_shrink_ray": {
+   "item_id": 4121584236,
+   "class_name": "upgrade_shrink_ray",
+   "name": "Shrink Ray",
+   "slot": "spirit",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 30.0,
+   "properties_json": {
+    "BonusFireRate": 20.0,
+    "BonusMoveSpeed": 5.0,
+    "ModelScaleGrowth": 0.5,
+    "ModelScaleGrowthTooltip": -50.0,
+    "ShrinkDuration": 60.0
+   }
+  },
+  "upgrade_unstable_concoction": {
+   "item_id": 1558545403,
+   "class_name": "upgrade_unstable_concoction",
+   "name": "Unstable Concoction",
+   "slot": "spirit",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 25.0,
+   "properties_json": {
+    "BaseAttackDamagePercent": 150.0,
+    "BonusHealth": 3000.0,
+    "BonusMoveSpeed": 10.0,
+    "MaxHPDamage": 30.0,
+    "Radius": 22.0,
+    "RespawnTimeMod": 50.0,
+    "StunDuration": 3.0,
+    "TechPower": 150.0
+   }
+  },
+  "upgrade_health": {
+   "item_id": 3633614685,
+   "class_name": "upgrade_health",
+   "name": "Extra Health",
+   "slot": "vitality",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusHealth": 210.0
+   }
+  },
+  "upgrade_endurance": {
+   "item_id": 2829638276,
+   "class_name": "upgrade_endurance",
+   "name": "Extra Regen",
+   "slot": "vitality",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusHealthRegen": 2.5,
+    "OutOfCombatHealthRegen": 1.5
+   }
+  },
+  "upgrade_improved_stamina": {
+   "item_id": 4139877411,
+   "class_name": "upgrade_improved_stamina",
+   "name": "Extra Stamina",
+   "slot": "vitality",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "Stamina": 1.0,
+    "StaminaCooldownReduction": 12.0
+   }
+  },
+  "upgrade_grit": {
+   "item_id": 1672893796,
+   "class_name": "upgrade_grit",
+   "name": "Grit",
+   "slot": "vitality",
+   "tier": 1,
+   "cost": 800,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 60.0,
+   "properties_json": {
+    "BarrierDuration": 4.0,
+    "CombatBarrier": 200.0,
+    "OutOfCombatHealthRegen": 1.0
+   }
+  },
+  "upgrade_health_stimpak": {
+   "item_id": 1710079648,
+   "class_name": "upgrade_health_stimpak",
+   "name": "Healing Rite",
+   "slot": "vitality",
+   "tier": 1,
+   "cost": 800,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 70.0,
+   "properties_json": {
+    "BonusSprintSpeed": 2.0,
+    "RegenDuration": 20.0,
+    "TotalHealthRegen": 300.0
+   }
+  },
+  "upgrade_lifestrike_gauntlets": {
+   "item_id": 1437614329,
+   "class_name": "upgrade_lifestrike_gauntlets",
+   "name": "Melee Lifesteal",
+   "slot": "vitality",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 8.0,
+   "properties_json": {
+    "BonusMeleeDamagePercent": 12.0,
+    "LifestrikeHeal": 100.0,
+    "LightMeleeCooldownMult": 1.5,
+    "NonHeroHealPct": 30.0
+   }
+  },
+  "upgrade_melee_rebuttal": {
+   "item_id": 4204808176,
+   "class_name": "upgrade_melee_rebuttal",
+   "name": "Rebuttal",
+   "slot": "vitality",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusDamagePercent": 30.0,
+    "BonusHealth": 75.0,
+    "BuffDuration": 6.0,
+    "MeleeResistPercent": 18.0,
+    "ParryCooldownReduction": 1.75,
+    "ParrySuccessHealPercentage": 100.0
+   }
+  },
+  "upgrade_sprint_booster": {
+   "item_id": 3399065363,
+   "class_name": "upgrade_sprint_booster",
+   "name": "Sprint Boots",
+   "slot": "vitality",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusSprintSpeed": 2.0,
+    "OutOfCombatHealthRegen": 2.0
+   }
+  },
+  "upgrade_regenerating_bullet_shield": {
+   "item_id": 1235347618,
+   "class_name": "upgrade_regenerating_bullet_shield",
+   "name": "Battle Vest",
+   "slot": "vitality",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BaseAttackDamagePercent": 18.0,
+    "BonusFireRate": 7.0,
+    "BulletResist": 18.0,
+    "LifeThreshold": 65.0,
+    "OutOfCombatHealthRegen": 3.0
+   }
+  },
+  "upgrade_vampire": {
+   "item_id": 499683006,
+   "class_name": "upgrade_vampire",
+   "name": "Bullet Lifesteal",
+   "slot": "vitality",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BaseAttackDamagePercent": 6.0,
+    "BonusHealth": 90.0,
+    "BulletLifestealPercent": 13.0
+   }
+  },
+  "upgrade_debuff_reducer": {
+   "item_id": 1047818222,
+   "class_name": "upgrade_debuff_reducer",
+   "name": "Debuff Reducer",
+   "slot": "vitality",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusHealth": 90.0,
+    "StatusResistancePercent": 25.0
+   }
+  },
+  "upgrade_magic_shield": {
+   "item_id": 3970837787,
+   "class_name": "upgrade_magic_shield",
+   "name": "Enchanter's Emblem",
+   "slot": "vitality",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "CooldownReduction": 5.0,
+    "LifeThreshold": 65.0,
+    "OutOfCombatHealthRegen": 2.0,
+    "TechPower": 15.0,
+    "TechResist": 18.0
+   }
+  },
+  "upgrade_cardio_calibrator": {
+   "item_id": 2447176615,
+   "class_name": "upgrade_cardio_calibrator",
+   "name": "Enduring Speed",
+   "slot": "vitality",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusMoveSpeed": 2.0,
+    "OutOfCombatHealthRegen": 2.0,
+    "SlowResistancePercent": 25.0
+   }
+  },
+  "upgrade_guardian_ward": {
+   "item_id": 857669956,
+   "class_name": "upgrade_guardian_ward",
+   "name": "Guardian Ward",
+   "slot": "vitality",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 60.0,
+   "properties_json": {
+    "BonusMoveSpeed": 2.75,
+    "BuffDuration": 6.0,
+    "CooldownReductionPctOnOthers": 50.0,
+    "GuardianWardCombatBarrier": 250.0,
+    "OutOfCombatHealthRegen": 1.5,
+    "TechRadiusMultiplier": 8.0,
+    "TechRangeMultiplier": 8.0
+   }
+  },
+  "upgrade_healbane": {
+   "item_id": 2603935618,
+   "class_name": "upgrade_healbane",
+   "name": "Healbane",
+   "slot": "vitality",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "HealAmpReceivePenaltyPercent": -35.0,
+    "HealAmpRegenPenaltyPercent": -35.0,
+    "HealOnKill": 275.0,
+    "TechPower": 7.0
+   }
+  },
+  "upgrade_healing_booster": {
+   "item_id": 2566692615,
+   "class_name": "upgrade_healing_booster",
+   "name": "Healing Booster",
+   "slot": "vitality",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusHealthRegen": 3.0,
+    "HealAmpCastPercent": 20.0,
+    "HealAmpRegenPercent": 20.0,
+    "OutOfCombatHealthRegen": 1.0
+   }
+  },
+  "upgrade_vex_barrier": {
+   "item_id": 1644605047,
+   "class_name": "upgrade_vex_barrier",
+   "name": "Reactive Barrier",
+   "slot": "vitality",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 55.0,
+   "properties_json": {
+    "OutOfCombatHealthRegen": 1.0,
+    "VexBarrierCombatBarrier": 325.0
+   }
+  },
+  "upgrade_restorative_locket": {
+   "item_id": 2059712766,
+   "class_name": "upgrade_restorative_locket",
+   "name": "Restorative Locket",
+   "slot": "vitality",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 20.0,
+   "properties_json": {
+    "HealPerStack": 16.0,
+    "MaxStacks": 25.0,
+    "MaxStaminaRestore": 3.0,
+    "Radius": 32.0,
+    "TechResist": 8.0
+   }
+  },
+  "upgrade_return_fire": {
+   "item_id": 3361075077,
+   "class_name": "upgrade_return_fire",
+   "name": "Return Fire",
+   "slot": "vitality",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 23.0,
+   "properties_json": {
+    "BulletDamageReflectedPct": 65.0,
+    "BulletResist": 10.0,
+    "SpiritDamageReflectedPct": 25.0
+   }
+  },
+  "upgrade_health_stealing_magic": {
+   "item_id": 876563814,
+   "class_name": "upgrade_health_stealing_magic",
+   "name": "Spirit Lifesteal",
+   "slot": "vitality",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "AbilityLifestealPercentHero": 13.0,
+    "BonusHealth": 90.0,
+    "NonHeroAbilityLifestealTooltipOnly": 3.0,
+    "TechPower": 6.0
+   }
+  },
+  "upgrade_spirit_bubble": {
+   "item_id": 112198670,
+   "class_name": "upgrade_spirit_bubble",
+   "name": "Spirit Shielding",
+   "slot": "vitality",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 45.0,
+   "properties_json": {
+    "BarrierDuration": 8.0,
+    "CombatBarrier": 300.0,
+    "DamageThreshold": 225.0,
+    "DamageWindow": 3.5,
+    "OutOfCombatHealthRegen": 2.5,
+    "TechResist": 18.0
+   }
+  },
+  "upgrade_trophy_collector": {
+   "item_id": 3074274290,
+   "class_name": "upgrade_trophy_collector",
+   "name": "Trophy Collector",
+   "slot": "vitality",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusSprintSpeed": 2.0,
+    "MaxStacks": 16.0,
+    "NonPlayerBonusWeaponPower": -15.0,
+    "OutOfCombatHealthRegen": 2.0,
+    "StackingBonusSprintSpeed": 0.15,
+    "StackingGoldPerMinute": 16.0,
+    "StackingTechRadiusMultiplier": 0.75,
+    "StackingTechRangeMultiplier": 0.75,
+    "ThinkRate": 3.0
+   }
+  },
+  "upgrade_weapon_shielding": {
+   "item_id": 805079544,
+   "class_name": "upgrade_weapon_shielding",
+   "name": "Weapon Shielding",
+   "slot": "vitality",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 35.0,
+   "properties_json": {
+    "BarrierDuration": 8.0,
+    "BulletResist": 18.0,
+    "CombatBarrier": 300.0,
+    "DamageThreshold": 250.0,
+    "DamageWindow": 4.0,
+    "OutOfCombatHealthRegen": 2.5
+   }
+  },
+  "upgrade_improved_bullet_armor": {
+   "item_id": 3140772621,
+   "class_name": "upgrade_improved_bullet_armor",
+   "name": "Bullet Resilience",
+   "slot": "vitality",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BulletResist": 30.0,
+    "BulletResistBelowThreshold": 15.0,
+    "HealthThreshold": 50.0,
+    "OutOfCombatHealthRegen": 3.0
+   }
+  },
+  "upgrade_counterspell": {
+   "item_id": 1414025773,
+   "class_name": "upgrade_counterspell",
+   "name": "Counterspell",
+   "slot": "vitality",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 23.0,
+   "properties_json": {
+    "BonusHealth": 50.0,
+    "BonusMoveSpeed": 1.75,
+    "BuffDuration": 6.0,
+    "HealOnSuccess": 150.0,
+    "SpellParryDuration": 0.8,
+    "SpiritPower": 20.0,
+    "SpiritPowerInnate": 5.0
+   }
+  },
+  "upgrade_reduce_debuff_duration": {
+   "item_id": 3731635960,
+   "class_name": "upgrade_reduce_debuff_duration",
+   "name": "Dispel Magic",
+   "slot": "vitality",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 45.0,
+   "properties_json": {
+    "ActiveBonusMoveSpeed": 2.0,
+    "BuffDuration": 3.0,
+    "HealOnActivate": 250.0,
+    "TechResist": 10.0
+   }
+  },
+  "upgrade_chonky": {
+   "item_id": 3585132399,
+   "class_name": "upgrade_chonky",
+   "name": "Fortitude",
+   "slot": "vitality",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusHealth": 375.0,
+    "BonusMoveSpeed": 1.5,
+    "HealLifePercentOutOfCombat": 2.25,
+    "HealthThreshold": 75.0,
+    "RestoreDelay": 10.0
+   }
+  },
+  "upgrade_fury_trance": {
+   "item_id": 1409190604,
+   "class_name": "upgrade_fury_trance",
+   "name": "Fury Trance",
+   "slot": "vitality",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 18.0,
+   "properties_json": {
+    "ActiveBonusFireRate": 32.0,
+    "ActiveBonusMoveSpeed": 1.0,
+    "BaseAttackDamagePercent": 6.0,
+    "BonusHealth": 100.0,
+    "BulletLifestealPercent": 14.0,
+    "MoveWhileShootingSpeedPenaltyReductionPercent": 100.0,
+    "TechResist": 40.0
+   }
+  },
+  "upgrade_health_nova": {
+   "item_id": 2956256701,
+   "class_name": "upgrade_health_nova",
+   "name": "Healing Nova",
+   "slot": "vitality",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 60.0,
+   "properties_json": {
+    "AuraRadius": 18.0,
+    "RegenDuration": 2.0,
+    "SpiritPower": 8.0,
+    "TechRadiusMultiplier": 5.0,
+    "TechRangeMultiplier": 5.0,
+    "TotalHealthRegen": 325.0
+   }
+  },
+  "upgrade_boxing_glove": {
+   "item_id": 1252627263,
+   "class_name": "upgrade_boxing_glove",
+   "name": "Lifestrike",
+   "slot": "vitality",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 4.0,
+   "properties_json": {
+    "BonusHealth": 125.0,
+    "BonusMeleeDamagePercent": 16.0,
+    "LifestealHeal": 120.0,
+    "LifestealHealPercent": 35.0,
+    "LightMeleeCooldownMult": 1.5,
+    "NonHeroHealPct": 40.0,
+    "SlowDuration": 2.5,
+    "SlowPercent": 48.0
+   }
+  },
+  "upgrade_rocket_booster": {
+   "item_id": 600033864,
+   "class_name": "upgrade_rocket_booster",
+   "name": "Majestic Leap",
+   "slot": "vitality",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 45.0,
+   "properties_json": {
+    "AirControlPercent": 100.0,
+    "AirControlPercentBarrier": 50.0,
+    "BarrierDuration": 8.0,
+    "CombatBarrier": 200.0,
+    "DropDownSpeed": 35.0,
+    "ImpactHeight": 2.0,
+    "InterruptCooldown": 5.0,
+    "JumpVelocityHidden": 27.0,
+    "MaxLandingSpeed": 20.0,
+    "MinAimAngle": 30.0,
+    "SlamDownRadius": 10.0,
+    "SlowDuration": 2.5,
+    "SlowPercent": 32.0,
+    "TossSpeed": 500.0,
+    "VerticalDifferenceTolerance": 2.0
+   }
+  },
+  "upgrade_metal_skin": {
+   "item_id": 1378931225,
+   "class_name": "upgrade_metal_skin",
+   "name": "Metal Skin",
+   "slot": "vitality",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 24.0,
+   "properties_json": {
+    "ActiveMoveSpeedPenalty": -1.5,
+    "BulletResist": 12.0,
+    "GroundDashReductionPercent": -20.0
+   }
+  },
+  "upgrade_rescue_beam": {
+   "item_id": 1804594021,
+   "class_name": "upgrade_rescue_beam",
+   "name": "Rescue Beam",
+   "slot": "vitality",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 60.0,
+   "properties_json": {
+    "BonusSprintSpeed": 0.75,
+    "HealInterval": 0.2,
+    "HealPercentAmount": 20.0,
+    "SelfModifier": 100.0,
+    "TechRadiusMultiplier": 6.0,
+    "TechRangeMultiplier": 6.0
+   }
+  },
+  "upgrade_tech_purge": {
+   "item_id": 2163598980,
+   "class_name": "upgrade_tech_purge",
+   "name": "Spirit Resilience",
+   "slot": "vitality",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "HealthThreshold": 50.0,
+    "OutOfCombatHealthRegen": 3.0,
+    "TechResist": 30.0,
+    "TechResistBelowThreshold": 15.0
+   }
+  },
+  "upgrade_superior_stamina": {
+   "item_id": 334300056,
+   "class_name": "upgrade_superior_stamina",
+   "name": "Stamina Mastery",
+   "slot": "vitality",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "AirMoveIncreasePercent": 23.0,
+    "Stamina": 2.0,
+    "StaminaCooldownReduction": 18.0
+   }
+  },
+  "upgrade_veil_walker": {
+   "item_id": 865958998,
+   "class_name": "upgrade_veil_walker",
+   "name": "Veil Walker",
+   "slot": "vitality",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 15.0,
+   "properties_json": {
+    "BonusHealth": 125.0,
+    "BonusMoveSpeed": 3.5,
+    "HealOnVeil": 85.0,
+    "InvisAlertWhenFading": 1.0,
+    "InvisDuration": 8.0,
+    "InvisFadeToDuration": 0.25,
+    "RevealOnDamageDuration": 0.5,
+    "RevealOnSpottedDuration": 1.25,
+    "SpiritPower": 6.0,
+    "SpottedRadius": 20.0
+   }
+  },
+  "upgrade_warp_stone": {
+   "item_id": 3270001687,
+   "class_name": "upgrade_warp_stone",
+   "name": "Warp Stone",
+   "slot": "vitality",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 16.0,
+   "properties_json": {
+    "BulletResist": 30.0,
+    "CasterBuffDuration": 6.0
+   }
+  },
+  "upgrade_cheat_death": {
+   "item_id": 3361811174,
+   "class_name": "upgrade_cheat_death",
+   "name": "Cheat Death",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 90.0,
+   "properties_json": {
+    "BonusHealth": 200.0,
+    "BulletResist": 15.0,
+    "DeathImmunityDamageReduction": -60.0,
+    "DeathImmunityDuration": 4.5,
+    "HealAmpReceivePenaltyPercent": -60.0,
+    "HealAmpRegenPenaltyPercent": -60.0
+   }
+  },
+  "upgrade_colossus": {
+   "item_id": 2407781327,
+   "class_name": "upgrade_colossus",
+   "name": "Colossus",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 37.0,
+   "properties_json": {
+    "BaseAttackDamagePercent": 15.0,
+    "BonusBaseHealth": 25.0,
+    "BonusMeleeDamagePercent": 30.0,
+    "BuffBulletResist": 35.0,
+    "BuffTechResist": 35.0,
+    "GroundDashReductionPercent": -22.0,
+    "ModelScaleGrowth": 1.2,
+    "ModelScaleGrowthTooltip": 20.0,
+    "Radius": 14.0,
+    "SlowPercent": 24.0
+   }
+  },
+  "upgrade_divine_barrier": {
+   "item_id": 1662311306,
+   "class_name": "upgrade_divine_barrier",
+   "name": "Divine Barrier",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 45.0,
+   "properties_json": {
+    "BonusMoveSpeed": 2.75,
+    "BuffDuration": 6.0,
+    "CombatBarrier": 600.0,
+    "CooldownReductionPctOnOthers": 50.0,
+    "OutOfCombatHealthRegen": 1.5,
+    "TechRadiusMultiplier": 10.0,
+    "TechRangeMultiplier": 10.0
+   }
+  },
+  "upgrade_diviners_kevlar": {
+   "item_id": 2820116164,
+   "class_name": "upgrade_diviners_kevlar",
+   "name": "Diviner's Kevlar",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 40.0,
+   "properties_json": {
+    "BonusAbilityDurationPercent": 15.0,
+    "BuffDuration": 20.0,
+    "CombatBarrier": 1000.0,
+    "TechPower": 40.0,
+    "UltimateCooldownReduction": 10.0
+   }
+  },
+  "upgrade_healbuff": {
+   "item_id": 1427630806,
+   "class_name": "upgrade_healbuff",
+   "name": "Healing Tempo",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 1.0,
+   "properties_json": {
+    "BonusFireRate": 35.0,
+    "BonusHealthRegen": 6.0,
+    "BonusMoveSpeed": 1.25,
+    "BuffDuration": 7.0,
+    "HealAmpCastPercent": 25.0,
+    "HealAmpRegenPercent": 25.0,
+    "MinimumHealAmount": 1.0,
+    "OutOfCombatHealthRegen": 4.0,
+    "TechResist": 10.0
+   }
+  },
+  "upgrade_auto_cleanse": {
+   "item_id": 951866250,
+   "class_name": "upgrade_auto_cleanse",
+   "name": "Indomitable",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 55.0,
+   "properties_json": {
+    "BulletResist": 10.0,
+    "CooldownReductionOnProc": 20.0,
+    "OutOfCombatHealthRegen": 2.0,
+    "TechResist": 10.0,
+    "VexBarrierCombatBarrier": 325.0
+   }
+  },
+  "upgrade_infuser": {
+   "item_id": 1797283378,
+   "class_name": "upgrade_infuser",
+   "name": "Infuser",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 30.0,
+   "properties_json": {
+    "AbilityLifestealPercentHero": 70.0,
+    "AbilityLifestealPercentHeroPassive": 13.0,
+    "BonusHealth": 100.0,
+    "BonusSpirit": 30.0,
+    "NonHeroAbilityLifestealTooltipOnly": 3.0,
+    "TechPower": 6.0,
+    "TechResist": 10.0
+   }
+  },
+  "upgrade_inhibitor": {
+   "item_id": 2037039379,
+   "class_name": "upgrade_inhibitor",
+   "name": "Inhibitor",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BaseAttackDamagePercent": 10.0,
+    "BonusHealth": 150.0,
+    "BuildUpDuration": 5.0,
+    "BuildUpPerShot": 0.77,
+    "DebuffDuration": 5.0,
+    "HealAmpReceivePenaltyPercent": -40.0,
+    "HealAmpRegenPenaltyPercent": -40.0,
+    "OutgoingDamagePenaltyPercent": -30.0
+   }
+  },
+  "upgrade_juggernaut": {
+   "item_id": 1250307611,
+   "class_name": "upgrade_juggernaut",
+   "name": "Juggernaut",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusHealthRegen": 8.0,
+    "BonusMoveSpeed": 2.5,
+    "FireRateSlow": 40.0,
+    "FireRateSlowDuration": 4.0,
+    "MeleeResistPercent": 25.0,
+    "SlowResistancePercent": 50.0
+   }
+  },
+  "upgrade_damage_recycler": {
+   "item_id": 865846625,
+   "class_name": "upgrade_damage_recycler",
+   "name": "Leech",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "AbilityLifestealPercentHero": 28.0,
+    "BaseAttackDamagePercent": 12.0,
+    "BonusHealth": 180.0,
+    "BulletLifestealPercent": 28.0,
+    "TechPower": 12.0
+   }
+  },
+  "upgrade_phantom_strike": {
+   "item_id": 1371725689,
+   "class_name": "upgrade_phantom_strike",
+   "name": "Phantom Strike",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 35.0,
+   "properties_json": {
+    "BaseAttackDamagePercent": 15.0,
+    "ImpactDamage": 75.0,
+    "SlowDuration": 3.0,
+    "SlowPercent": 40.0,
+    "TechPower": 8.0
+   }
+  },
+  "upgrade_deflecting_armor": {
+   "item_id": 3491236900,
+   "class_name": "upgrade_deflecting_armor",
+   "name": "Plated Armor",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 1.0,
+   "properties_json": {
+    "BonusHealth": 130.0,
+    "BulletProcDeflectionPercent": 50.0,
+    "DeflectionPercent": 30.0,
+    "DeflectionRandomness": 1.0
+   }
+  },
+  "upgrade_siphon_bullets": {
+   "item_id": 1282141666,
+   "class_name": "upgrade_siphon_bullets",
+   "name": "Siphon Bullets",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BaseAttackDamagePercent": 15.0,
+    "BulletResist": 10.0,
+    "HealthStealPctHero": 2.5,
+    "MaxStacks": 9999.0,
+    "ParticleRadius": 1.0,
+    "ProcCooldown": 1.2,
+    "StackLostPerDeath": 2.0,
+    "StealDuration": 17.0,
+    "StealPerHit": 1.0,
+    "StealPerKill": 1.0
+   }
+  },
+  "upgrade_spellbreaker": {
+   "item_id": 1955841979,
+   "class_name": "upgrade_spellbreaker",
+   "name": "Spellbreaker",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 9.0,
+   "properties_json": {
+    "BonusHealth": 90.0,
+    "DamageThreshold": 175.0,
+    "SpiritDamageReductionProc": 65.0,
+    "StatusResistancePercent": 25.0,
+    "TechResist": 18.0
+   }
+  },
+  "upgrade_unstoppable": {
+   "item_id": 3357231760,
+   "class_name": "upgrade_unstoppable",
+   "name": "Unstoppable",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 60.0,
+   "properties_json": {
+    "BonusHealth": 125.0,
+    "StatusResistancePercent": 25.0
+   }
+  },
+  "upgrade_surging_power": {
+   "item_id": 1055679805,
+   "class_name": "upgrade_surging_power",
+   "name": "Vampiric Burst",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 30.0,
+   "properties_json": {
+    "ActiveBonusFireRate": 34.0,
+    "ActiveBonusLifesteal": 70.0,
+    "ActiveReloadPercent": 75.0,
+    "BaseAttackDamagePercent": 6.0,
+    "BonusHealth": 100.0,
+    "BulletLifestealPercent": 13.0,
+    "BulletResist": 10.0
+   }
+  },
+  "upgrade_absorbing_armor": {
+   "item_id": 3028234315,
+   "class_name": "upgrade_absorbing_armor",
+   "name": "Witchmail",
+   "slot": "vitality",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 1.0,
+   "properties_json": {
+    "CooldownReduction": 7.0,
+    "CooldownReductionPerHit": 4.0,
+    "DamageThreshold": 75.0,
+    "TechPower": 14.0,
+    "TechResist": 22.0
+   }
+  },
+  "upgrade_celestial_guidance": {
+   "item_id": 3729138568,
+   "class_name": "upgrade_celestial_guidance",
+   "name": "Celestial Blessing",
+   "slot": "vitality",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 30.0,
+   "properties_json": {
+    "BuffDuration": 6.0,
+    "BuffMoveSpeedBonus": 5.0,
+    "HealPercentAmount": 60.0,
+    "MinHeal": 400.0,
+    "Radius": 999.0,
+    "StaminaCooldownReduction": 100.0
+   }
+  },
+  "upgrade_cloak_of_opportunity": {
+   "item_id": 3523480953,
+   "class_name": "upgrade_cloak_of_opportunity",
+   "name": "Cloak of Opportunity",
+   "slot": "vitality",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 12.0,
+   "properties_json": {
+    "BonusMoveSpeed": 3.0,
+    "BuffDuration": 6.0,
+    "CombatBarrier": 500.0,
+    "StatusImmuneDuration": 4.0
+   }
+  },
+  "upgrade_electric_slippers": {
+   "item_id": 1825399334,
+   "class_name": "upgrade_electric_slippers",
+   "name": "Electric Slippers",
+   "slot": "vitality",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "Damage": 100.0,
+    "EvasionWhileSliding": 60.0,
+    "FireRateWhileSliding": 60.0,
+    "ProcCooldown": 0.3,
+    "Radius": 12.0,
+    "SlideScale": 80.0,
+    "SlideTurnScale": 100.0,
+    "Stamina": 2.0
+   }
+  },
+  "upgrade_eternal_gift": {
+   "item_id": 230297145,
+   "class_name": "upgrade_eternal_gift",
+   "name": "Eternal Gift",
+   "slot": "vitality",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 165.0,
+   "properties_json": {
+    "BuffFrequency": 2.0,
+    "RespawnTime": -70.0
+   }
+  },
+  "upgrade_nullification_aura": {
+   "item_id": 3949773228,
+   "class_name": "upgrade_nullification_aura",
+   "name": "Nullification Burst",
+   "slot": "vitality",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 18.0,
+   "properties_json": {
+    "BonusHealth": 300.0,
+    "Damage": 250.0,
+    "DamageHeight": 4.0,
+    "EndRadius": 20.0,
+    "SpreadDuration": 0.5,
+    "StartRadius": 2.0,
+    "StatusResistancePercent": 40.0
+   }
+  },
+  "upgrade_icarus_wings": {
+   "item_id": 1736094134,
+   "class_name": "upgrade_icarus_wings",
+   "name": "Seraphim Wings",
+   "slot": "vitality",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "AirBonusDamageGiven": 40.0,
+    "AirBonusDamageTaken": -40.0,
+    "AirControlAccelPercent": 50.0,
+    "AirControlPercent": 100.0,
+    "GravityScale": -70.0,
+    "StaminaCooldownReduction": 120.0
+   }
+  },
+  "upgrade_shadow_strike": {
+   "item_id": 2319629810,
+   "class_name": "upgrade_shadow_strike",
+   "name": "Shadow Strike",
+   "slot": "vitality",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusHealth": 350.0,
+    "DPS": 125.0,
+    "InvisAlertWhenFading": 1.0,
+    "InvisFadeToDuration": 0.2,
+    "MaxStacks": 1.0,
+    "ResistStealAmount": 40.0,
+    "RevealOnDamageDuration": 1.5,
+    "RevealOnSpottedDuration": 0.25,
+    "Stamina": 3.0,
+    "StealDuration": 6.0,
+    "TickRate": 1.0
+   }
+  },
+  "upgrade_close_range": {
+   "item_id": 1342610602,
+   "class_name": "upgrade_close_range",
+   "name": "Close Quarters",
+   "slot": "weapon",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "CloseRangeBonusDamageRange": 15.0,
+    "CloseRangeBonusWeaponPower": 20.0,
+    "MeleeResistPercent": 20.0
+   }
+  },
+  "upgrade_clip_size": {
+   "item_id": 1548066885,
+   "class_name": "upgrade_clip_size",
+   "name": "Extended Magazine",
+   "slot": "weapon",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BaseAttackDamagePercent": 8.0,
+    "BonusClipSizePercent": 30.0
+   }
+  },
+  "upgrade_headshot_booster": {
+   "item_id": 2010028405,
+   "class_name": "upgrade_headshot_booster",
+   "name": "Headshot Booster",
+   "slot": "weapon",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 9.0,
+   "properties_json": {
+    "BonusHealth": 30.0,
+    "HeadShotBonusDamage": 45.0,
+    "ProcChance": 100.0
+   }
+  },
+  "upgrade_high_velocity_mag": {
+   "item_id": 3077079169,
+   "class_name": "upgrade_high_velocity_mag",
+   "name": "High-Velocity Rounds",
+   "slot": "weapon",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BaseAttackDamagePercent": 8.0,
+    "BonusBulletSpeedPercent": 60.0
+   }
+  },
+  "upgrade_non_player_bonus": {
+   "item_id": 1009965641,
+   "class_name": "upgrade_non_player_bonus",
+   "name": "Monster Rounds",
+   "slot": "weapon",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "NonPlayerBonusWeaponPower": 25.0,
+    "NonPlayerBulletResist": 25.0,
+    "OutOfCombatHealthRegen": 1.0
+   }
+  },
+  "upgrade_rapid_rounds": {
+   "item_id": 668299740,
+   "class_name": "upgrade_rapid_rounds",
+   "name": "Rapid Rounds",
+   "slot": "weapon",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusFireRate": 9.0
+   }
+  },
+  "upgrade_medic_bullets": {
+   "item_id": 3862866912,
+   "class_name": "upgrade_medic_bullets",
+   "name": "Restorative Shot",
+   "slot": "weapon",
+   "tier": 1,
+   "cost": 800,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 6.0,
+   "properties_json": {
+    "BaseAttackDamagePercent": 6.0,
+    "HealFromHero": 50.0,
+    "HealFromNPC": 20.0,
+    "ProcChance": 100.0,
+    "Radius": 1.0
+   }
+  },
+  "upgrade_active_reload": {
+   "item_id": 381961617,
+   "class_name": "upgrade_active_reload",
+   "name": "Active Reload",
+   "slot": "weapon",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 12.0,
+   "properties_json": {
+    "BonusClipSizePercent": 20.0,
+    "BonusFireRate": 25.0,
+    "BonusMoveSpeed": 0.75,
+    "BulletLifestealPercent": 16.0
+   }
+  },
+  "upgrade_fleetfoot_boots": {
+   "item_id": 3403085434,
+   "class_name": "upgrade_fleetfoot_boots",
+   "name": "Fleetfoot",
+   "slot": "weapon",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 16.0,
+   "properties_json": {
+    "ActiveBonusMoveSpeed": 3.0,
+    "BaseAttackDamagePercent": 6.0,
+    "BulletResist": 6.0,
+    "MoveWhileShootingSpeedPenaltyReductionPercent": 100.0,
+    "MoveWhileZoomedSpeedPenaltyReductionPercent": 100.0,
+    "SlideScale": 35.0,
+    "SlowResistancePercent": 40.0
+   }
+  },
+  "upgrade_intensifying_clip": {
+   "item_id": 2407033488,
+   "class_name": "upgrade_intensifying_clip",
+   "name": "Intensifying Magazine",
+   "slot": "weapon",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BaseAttackDamagePercentAtMaxDuration": 45.0,
+    "BonusClipSizePercent": 20.0,
+    "ShootDurationForMax": 2.5
+   }
+  },
+  "upgrade_kinetic_sash": {
+   "item_id": 3977876567,
+   "class_name": "upgrade_kinetic_sash",
+   "name": "Kinetic Dash",
+   "slot": "weapon",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusClipSize": 6.0,
+    "BonusFireRate": 25.0,
+    "Stamina": 1.0,
+    "StaminaCooldownReduction": 12.0
+   }
+  },
+  "upgrade_long_range": {
+   "item_id": 3331811235,
+   "class_name": "upgrade_long_range",
+   "name": "Long Range",
+   "slot": "weapon",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusAttackRangePercent": 8.0,
+    "BonusSprintSpeed": 0.75,
+    "LongRangeBonusWeaponPower": 40.0,
+    "LongRangeBonusWeaponPowerMinRange": 15.0
+   }
+  },
+  "upgrade_melee_charge": {
+   "item_id": 26002154,
+   "class_name": "upgrade_melee_charge",
+   "name": "Melee Charge",
+   "slot": "weapon",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 5.0,
+   "properties_json": {
+    "BonusHeavyMeleeDamage": 25.0,
+    "BonusMeleeDamagePercent": 10.0,
+    "BulletResist": 6.0,
+    "MeleeDistanceScale": 50.0
+   }
+  },
+  "upgrade_crackshot": {
+   "item_id": 395867183,
+   "class_name": "upgrade_crackshot",
+   "name": "Mystic Shot",
+   "slot": "weapon",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 8.0,
+   "properties_json": {
+    "ProcBonusMagicDamage": 40.0,
+    "ProcChance": 100.0,
+    "ProcCooldown": 1.0,
+    "Radius": 1.0,
+    "SpiritPower": 7.0
+   }
+  },
+  "upgrade_pristine_emblem": {
+   "item_id": 2064029594,
+   "class_name": "upgrade_pristine_emblem",
+   "name": "Opening Rounds",
+   "slot": "weapon",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BaseAttackDamagePercent": 8.0,
+    "BaseAttackDamagePercentBonus": 25.0,
+    "BonusBulletSpeedPercent": 60.0,
+    "EnemyLifeThreshold": 50.0,
+    "TechPower": 7.0
+   }
+  },
+  "upgrade_rechargingbullets": {
+   "item_id": 1763073141,
+   "class_name": "upgrade_rechargingbullets",
+   "name": "Recharging Rush",
+   "slot": "weapon",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 25.0,
+   "properties_json": {
+    "BaseAttackDamagePercent": 10.0,
+    "BonusClipSizePercent": 20.0,
+    "DamageThreshold": 200.0,
+    "DamageWindow": 3.5
+   }
+  },
+  "upgrade_slowing_bullets": {
+   "item_id": 393974127,
+   "class_name": "upgrade_slowing_bullets",
+   "name": "Slowing Bullets",
+   "slot": "weapon",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BuildUpDuration": 5.0,
+    "BuildUpPerShot": 0.7,
+    "GroundDashReductionPercent": -20.0,
+    "SlowDuration": 3.5,
+    "SlowPercent": 24.0
+   }
+  },
+  "upgrade_tech_defense_shredders": {
+   "item_id": 1144549437,
+   "class_name": "upgrade_tech_defense_shredders",
+   "name": "Spirit Shredder Bullets",
+   "slot": "weapon",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "AbilityLifestealPercentHero": 10.0,
+    "DebuffDuration": 8.0,
+    "TechArmorDamageReduction": -8.0
+   }
+  },
+  "upgrade_split_shot": {
+   "item_id": 3647584222,
+   "class_name": "upgrade_split_shot",
+   "name": "Split Shot",
+   "slot": "weapon",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 27.0,
+   "properties_json": {
+    "BonusShotsDuration": 5.0,
+    "BulletSplitShot": 5.0,
+    "MaxStacks": 5.0,
+    "SpreadAngleDegrees": 45.0,
+    "WeaponDamageBonusDuration": 12.0,
+    "WeaponDamagePerStack": 8.0
+   }
+  },
+  "upgrade_weapon_backstabber": {
+   "item_id": 98582110,
+   "class_name": "upgrade_weapon_backstabber",
+   "name": "Stalker",
+   "slot": "weapon",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 6.0,
+   "properties_json": {
+    "BonusHealth": 50.0,
+    "BonusMoveSpeed": 1.5,
+    "BulletResistReduction": -6.0,
+    "DPS": 17.0,
+    "DebuffDuration": 5.0,
+    "DebuffRadius": 25.0,
+    "ProcRadius": 8.0,
+    "ReduceFootstepSound": -50.0,
+    "TickRate": 0.5
+   }
+  },
+  "upgrade_blitz_bullets": {
+   "item_id": 4104549924,
+   "class_name": "upgrade_blitz_bullets",
+   "name": "Swift Striker",
+   "slot": "weapon",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusFireRate": 20.0,
+    "BonusSprintSpeed": 0.75
+   }
+  },
+  "upgrade_titan_round": {
+   "item_id": 2356412290,
+   "class_name": "upgrade_titan_round",
+   "name": "Titanic Magazine",
+   "slot": "weapon",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BaseAttackDamagePercent": 14.0,
+    "BonusClipSizePercent": 100.0
+   }
+  },
+  "upgrade_headshot_booster2": {
+   "item_id": 1770441818,
+   "class_name": "upgrade_headshot_booster2",
+   "name": "Weakening Headshot",
+   "slot": "weapon",
+   "tier": 2,
+   "cost": 1600,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusHealth": 60.0,
+    "BulletResistReduction": -12.0,
+    "DebuffDuration": 12.0,
+    "DiminishingMultiplier": 0.5
+   }
+  },
+  "upgrade_thermal_detonator": {
+   "item_id": 1932939246,
+   "class_name": "upgrade_thermal_detonator",
+   "name": "Alchemical Fire",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 30.0,
+   "properties_json": {
+    "BulletArmorReduction": -7.0,
+    "DPS": 45.0,
+    "DPSIncrease": 7.0,
+    "DPSMax": 95.0,
+    "NonHeroReductionPercent": 50.0,
+    "Radius": 10.0,
+    "SpiritPower": 10.0,
+    "TickRate": 0.5
+   }
+  },
+  "upgrade_bulletshredimbue": {
+   "item_id": 3294954488,
+   "class_name": "upgrade_bulletshredimbue",
+   "name": "Ballistic Enchantment",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "NonHeroStackLimit": 8.0,
+    "TechRadiusMultiplier": 22.0,
+    "TechRangeMultiplier": 22.0,
+    "WeaponPowerPerStack": 20.0,
+    "WeaponPowerPerStackNonHero": 5.0
+   }
+  },
+  "upgrade_berserker": {
+   "item_id": 1414319208,
+   "class_name": "upgrade_berserker",
+   "name": "Berserker",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BulletResist": 8.0,
+    "DamageDuration": 10.0,
+    "DamageToStack": 120.0,
+    "MaxStacks": 10.0,
+    "WeaponPowerPerStack": 7.0
+   }
+  },
+  "upgrade_blood_tribute": {
+   "item_id": 989206714,
+   "class_name": "upgrade_blood_tribute",
+   "name": "Blood Tribute",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": true,
+   "activation": "instant_cast_toggle",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusFireRate": 35.0,
+    "BonusMoveSpeed": 2.0,
+    "HealthDrainedPerSecond": 50.0,
+    "InnateStatusResistancePercent": 8.0,
+    "OutOfCombatHealthRegen": 4.0,
+    "StatusResistancePercent": 35.0,
+    "TechResist": 8.0,
+    "TickRate": 0.1
+   }
+  },
+  "upgrade_burst_fire": {
+   "item_id": 2739107182,
+   "class_name": "upgrade_burst_fire",
+   "name": "Burst Fire",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 9.0,
+   "properties_json": {
+    "ActivatedFireRate": 32.0,
+    "BonusFireRate": 10.0,
+    "BonusMoveSpeed": 1.25,
+    "SlideScale": 50.0
+   }
+  },
+  "upgrade_non_player_bonus_sacrifice": {
+   "item_id": 709540378,
+   "class_name": "upgrade_non_player_bonus_sacrifice",
+   "name": "Cultist Sacrifice",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": true,
+   "activation": "press",
+   "cooldown_s": 270.0,
+   "properties_json": {
+    "BaseAttackDamagePercent": 10.0,
+    "BonusAbilityCharges": 1.0,
+    "BonusHealth": 50.0,
+    "BonusSoulsPct": 170.0,
+    "NonPlayerBonusWeaponPower": 30.0,
+    "NonPlayerBulletResist": 30.0,
+    "OutOfCombatHealthRegen": 2.0,
+    "TechRadiusMultiplier": 12.0,
+    "TechRangeMultiplier": 12.0
+   }
+  },
+  "upgrade_reinforcing_casings": {
+   "item_id": 2463960640,
+   "class_name": "upgrade_reinforcing_casings",
+   "name": "Escalating Resilience",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BaseAttackDamagePercent": 18.0,
+    "BonusClipSizePercent": 35.0,
+    "BonusHealth": 75.0,
+    "BulletResistDuration": 24.0,
+    "BulletResistPerStack": 2.0,
+    "MaxArmorStacks": 30.0
+   }
+  },
+  "upgrade_express_shot": {
+   "item_id": 690458959,
+   "class_name": "upgrade_express_shot",
+   "name": "Express Shot",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 8.0,
+   "properties_json": {
+    "BaseAttackDamagePercent": 8.0,
+    "BonusBulletSpeedPercent": 60.0,
+    "ProcAmmoConsumed": 2.0,
+    "ProcBaseAttackDamagePercent": 125.0,
+    "ProcBaseAttackDamagePercentAltFire": 40.0,
+    "ProcBulletVelocity": 100.0
+   }
+  },
+  "upgrade_headhunter": {
+   "item_id": 4053935515,
+   "class_name": "upgrade_headhunter",
+   "name": "Headhunter",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 8.0,
+   "properties_json": {
+    "BaseAttackDamagePercent": 5.0,
+    "BonusHealth": 50.0,
+    "BonusMoveSpeed": 1.75,
+    "HeadShotBonusDamage": 75.0,
+    "HealPercentPerHeadshot": 4.0,
+    "MovementSpeedBonusDuration": 3.0,
+    "ProcChance": 100.0
+   }
+  },
+  "upgrade_dps_aura": {
+   "item_id": 2108215830,
+   "class_name": "upgrade_dps_aura",
+   "name": "Heroic Aura",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 22.0,
+   "properties_json": {
+    "ActiveBonusMoveSpeed": 2.25,
+    "ActiveRadius": 35.0,
+    "BonusFireRate": 26.0,
+    "BonusSprintSpeed": 1.5,
+    "BulletResist": 17.0,
+    "NonHeroMult": 2.0,
+    "Radius": 35.0
+   }
+  },
+  "upgrade_hollow_point_rounds": {
+   "item_id": 2678489038,
+   "class_name": "upgrade_hollow_point_rounds",
+   "name": "Hollow Point",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BaseAttackDamagePercent": 35.0,
+    "BonusHealth": 125.0,
+    "BulletArmorReduction": -10.0,
+    "DebuffDuration": 8.0,
+    "LifeThreshold": 65.0,
+    "OutOfCombatHealthRegen": 4.5
+   }
+  },
+  "upgrade_bullet_armor_reduction_aura": {
+   "item_id": 2481177645,
+   "class_name": "upgrade_bullet_armor_reduction_aura",
+   "name": "Hunter's Aura",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusHealth": 100.0,
+    "BonusSprintSpeed": 0.75,
+    "BulletArmorReduction": -10.0,
+    "FireRateSlow": 15.0,
+    "Radius": 15.0,
+    "SingleTargetPlayerMultiplier": 2.0
+   }
+  },
+  "upgrade_close_quarter_combat": {
+   "item_id": 2095565695,
+   "class_name": "upgrade_close_quarter_combat",
+   "name": "Point Blank",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusHealth": 75.0,
+    "CloseRangeBonusDamageRange": 15.0,
+    "CloseRangeBonusWeaponPower": 50.0,
+    "MeleeResistPercent": 30.0,
+    "SlowDuration": 2.0,
+    "SlowPercent": 20.0
+   }
+  },
+  "upgrade_cloaking_device_active": {
+   "item_id": 1798666702,
+   "class_name": "upgrade_cloaking_device_active",
+   "name": "Shadow Weave",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 37.0,
+   "properties_json": {
+    "AmbushBonusFireRate": 25.0,
+    "AmbushBonusMeleeDamage": 25.0,
+    "AmbushBonusTechPower": 25.0,
+    "AmbushDuration": 5.0,
+    "BonusSprintSpeed": 2.0,
+    "FullInvisDistance": 30.0,
+    "InvisAlertWhenFading": 1.0,
+    "InvisCancelOnDamage": 1.0,
+    "InvisFadeToDuration": 0.6,
+    "InvisMoveSpeedMod": 5.0,
+    "OutOfCombatHealthRegen": 5.0,
+    "RevealOnDamageDuration": 1.5,
+    "RevealOnSpottedDuration": 1.5,
+    "SpottedRadius": 20.0
+   }
+  },
+  "upgrade_sharpshooter": {
+   "item_id": 2152872419,
+   "class_name": "upgrade_sharpshooter",
+   "name": "Sharpshooter",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BaseAttackDamagePercent": 10.0,
+    "BonusAttackRangePercent": 20.0,
+    "BonusBulletSpeedPercent": 60.0,
+    "BonusMoveSpeed": -0.7,
+    "BonusSprintSpeed": 1.0,
+    "BonusZoomPercent": 25.0,
+    "LongRangeBonusWeaponPower": 60.0,
+    "LongRangeBonusWeaponPowerMinRange": 15.0
+   }
+  },
+  "upgrade_spellslinger_headshots": {
+   "item_id": 4075861416,
+   "class_name": "upgrade_spellslinger_headshots",
+   "name": "Spirit Rend",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "AbilityLifestealPercentHero": 10.0,
+    "BonusHealth": 75.0,
+    "DebuffDuration": 8.0,
+    "MagicResistReduction": -7.0,
+    "MaxStacks": 4.0,
+    "ProcCooldown": 2.0,
+    "TechArmorDamageReduction": -8.0
+   }
+  },
+  "upgrade_chain_lightning": {
+   "item_id": 811521119,
+   "class_name": "upgrade_chain_lightning",
+   "name": "Tesla Bullets",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusPerChain": 33.0,
+    "ChainCount": 4.0,
+    "ChainRadius": 8.0,
+    "ChainTickRate": 0.4,
+    "DamagePerChain": 33.0,
+    "ProcChance": 15.0,
+    "ProcCooldown": 0.2
+   }
+  },
+  "upgrade_toxic_bullets": {
+   "item_id": 3696726732,
+   "class_name": "upgrade_toxic_bullets",
+   "name": "Toxic Bullets",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BuildUpDuration": 5.0,
+    "BuildUpPerShot": 1.28,
+    "DotDuration": 4.0,
+    "DotHealthPercent": 1.9,
+    "DotMultiplerTroopers": 0.5,
+    "HealAmpReceivePenaltyPercent": -35.0,
+    "HealAmpRegenPenaltyPercent": -35.0,
+    "TickRate": 0.5
+   }
+  },
+  "upgrade_weighted_shots": {
+   "item_id": 3791587546,
+   "class_name": "upgrade_weighted_shots",
+   "name": "Weighted Shots",
+   "slot": "weapon",
+   "tier": 3,
+   "cost": 3200,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BaseAttackDamagePercent": 30.0,
+    "BonusMoveSpeed": -0.5,
+    "BuildUpDuration": 5.0,
+    "BuildUpPerShot": 0.7,
+    "GroundDashReductionPercent": -20.0,
+    "SlowDuration": 3.5,
+    "SlowPercent": 24.0,
+    "StaminaCooldownReduction": -14.0,
+    "StatusResistancePercent": 22.0
+   }
+  },
+  "upgrade_aprounds": {
+   "item_id": 673001892,
+   "class_name": "upgrade_aprounds",
+   "name": "Armor Piercing Rounds",
+   "slot": "weapon",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BaseAttackDamagePercent": 8.0,
+    "BonusBulletSpeedPercent": 60.0,
+    "ProcChance": 55.0
+   }
+  },
+  "upgrade_capacitor": {
+   "item_id": 710436191,
+   "class_name": "upgrade_capacitor",
+   "name": "Capacitor",
+   "slot": "weapon",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": true,
+   "activation": "instant_cast",
+   "cooldown_s": 40.0,
+   "properties_json": {
+    "BonusFireRate": 5.0,
+    "BonusPerChain": 43.0,
+    "ChainCount": 6.0,
+    "ChainRadius": 10.0,
+    "ChainTickRate": 0.4,
+    "Damage": 100.0,
+    "DamagePerChain": 43.0,
+    "MaxSlowPercent": 60.0,
+    "ProcChance": 20.0,
+    "ProcCooldown": 0.2,
+    "SlowDuration": 3.0
+   }
+  },
+  "upgrade_banshee_slugs": {
+   "item_id": 3884003354,
+   "class_name": "upgrade_banshee_slugs",
+   "name": "Crippling Headshot",
+   "slot": "weapon",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusHealth": 125.0,
+    "BulletResistReduction": -16.0,
+    "DebuffDuration": 12.0,
+    "DiminishingMultiplier": 0.5,
+    "HealAmpReceivePenaltyPercent": -35.0,
+    "HealAmpRegenPenaltyPercent": -35.0,
+    "MagicResistReduction": -16.0
+   }
+  },
+  "upgrade_crushing_fists": {
+   "item_id": 800008313,
+   "class_name": "upgrade_crushing_fists",
+   "name": "Crushing Fists",
+   "slot": "weapon",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 5.0,
+   "properties_json": {
+    "BonusHeavyMeleeDamage": 25.0,
+    "BonusMeleeDamagePercent": 22.0,
+    "BulletResist": 12.0,
+    "BulletResistReduction": -5.0,
+    "DebuffDuration": 8.0,
+    "HeavyMeleeMultiplier": 2.0,
+    "LightMeleeAmmo": 15.0,
+    "LightMeleeStacks": 1.0,
+    "MaxStacks": 6.0,
+    "MeleeDistanceScale": 60.0,
+    "StunDuration": 0.75
+   }
+  },
+  "upgrade_fervor": {
+   "item_id": 339443430,
+   "class_name": "upgrade_fervor",
+   "name": "Frenzy",
+   "slot": "weapon",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 16.0,
+   "properties_json": {
+    "BonusFireRate": 15.0,
+    "BonusHealth": 160.0,
+    "BulletLifestealPercent": 10.0,
+    "FervorFireRate": 40.0,
+    "FervorMovespeed": 4.0,
+    "FervorStatusResistancePercent": 40.0,
+    "LowHealthThreshold": 50.0
+   }
+  },
+  "upgrade_glass_cannon": {
+   "item_id": 365620721,
+   "class_name": "upgrade_glass_cannon",
+   "name": "Glass Cannon",
+   "slot": "weapon",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BaseAttackDamagePercent": 80.0,
+    "BonusClipPerKill": 2.0,
+    "BuildUpDuration": 2.0,
+    "BuildUpPerShot": 1.2,
+    "FireRatePerKill": 7.0,
+    "MaxHealthLossPercent": -13.0,
+    "MaxStacks": 8.0,
+    "SlowDuration": 3.0,
+    "SlowPercent": 30.0
+   }
+  },
+  "upgrade_critshot": {
+   "item_id": 1396247347,
+   "class_name": "upgrade_critshot",
+   "name": "Lucky Shot",
+   "slot": "weapon",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusClipSizePercent": 30.0,
+    "CritDamagePercent": 100.0,
+    "ProcChance": 25.0,
+    "Radius": 1.0
+   }
+  },
+  "upgrade_ricochet": {
+   "item_id": 2480592370,
+   "class_name": "upgrade_ricochet",
+   "name": "Ricochet",
+   "slot": "weapon",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusFireRate": 18.0,
+    "RicochetDamagePercent": 65.0,
+    "RicochetRadius": 13.0,
+    "RicochetTargetsTooltipOnly": 2.0
+   }
+  },
+  "upgrade_proc_silence": {
+   "item_id": 1113837674,
+   "class_name": "upgrade_proc_silence",
+   "name": "Silencer",
+   "slot": "weapon",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BuildUpDuration": 5.0,
+    "BuildUpPerShot": 1.04,
+    "DebuffDuration": 6.0,
+    "ImmunityDuration": 10.0,
+    "SilenceDuration": 2.5,
+    "TechDamageReduction": -25.0,
+    "TechResist": 12.0
+   }
+  },
+  "upgrade_enchanted_holsters": {
+   "item_id": 2221211450,
+   "class_name": "upgrade_enchanted_holsters",
+   "name": "Spellslinger",
+   "slot": "weapon",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusFireRate": 11.0,
+    "BuffDuration": 18.0,
+    "CooldownReduction": 5.0,
+    "MaxStacks": 6.0,
+    "ReloadSpeedMultipler": -10.0
+   }
+  },
+  "upgrade_tech_overflow": {
+   "item_id": 2226497419,
+   "class_name": "upgrade_tech_overflow",
+   "name": "Spiritual Overflow",
+   "slot": "weapon",
+   "tier": 4,
+   "cost": 6400,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "AbilityLifestealPercentHero": 13.0,
+    "BonusAbilityDurationPercent": 13.0,
+    "BonusFireRate": 25.0,
+    "BonusHealth": 90.0,
+    "BonusSpirit": 30.0,
+    "BonusSpiritLifesteal": 10.0,
+    "BuildUpDuration": 5.0,
+    "BuildUpPerShot": 1.08,
+    "NonHeroAbilityLifestealTooltipOnly": 3.0,
+    "TechPower": 6.0
+   }
+  },
+  "upgrade_eldritch_shot": {
+   "item_id": 3568217437,
+   "class_name": "upgrade_eldritch_shot",
+   "name": "Haunting Shot",
+   "slot": "weapon",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 2.5,
+   "properties_json": {
+    "BulletRadius": 1.5,
+    "DebuffDuration": 4.0,
+    "GroundDashReductionPercent": -36.0,
+    "HealAmpReceivePenaltyPercent": -40.0,
+    "HealAmpRegenPenaltyPercent": -40.0,
+    "HealthPctDamage": 10.0,
+    "MovementSpeedSlow": 32.0,
+    "OutgoingDamagePenaltyPercent": -40.0,
+    "ProcChance": 100.0,
+    "ProcCooldown": 1.0,
+    "Radius": 1.0
+   }
+  },
+  "upgrade_infinite_rounds": {
+   "item_id": 3269957497,
+   "class_name": "upgrade_infinite_rounds",
+   "name": "Infinite Rounds",
+   "slot": "weapon",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": null,
+   "properties_json": {
+    "BonusBulletSpeedPercent": 200.0,
+    "BonusFireRate": 35.0,
+    "ProcChance": 65.0
+   }
+  },
+  "upgrade_runed_gauntlets": {
+   "item_id": 64550694,
+   "class_name": "upgrade_runed_gauntlets",
+   "name": "Runed Gauntlets",
+   "slot": "weapon",
+   "tier": 5,
+   "cost": 9999,
+   "is_active": false,
+   "activation": "passive",
+   "cooldown_s": 10.0,
+   "properties_json": {
+    "BonusMeleeDamagePercent": 30.0,
+    "CooldownReductionOnHitMin": 4.0,
+    "CooldownReductionOnHitPct": 16.0,
+    "MeleeDistanceScale": 150.0,
+    "MeleeResistPercent": 50.0
+   }
+  }
+ }
+}

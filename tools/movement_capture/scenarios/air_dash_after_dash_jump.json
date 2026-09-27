@@ -1,0 +1,37 @@
+{
+  "_comment": [
+    "Clip A2 (recording_shot_list.md): ground dash, dash-jump inside the window, air dash forward, W held throughout.",
+    "Timeline ticks are 1-based sim ticks at 64 Hz. They are a first guess: after extracting a trial, look at the",
+    "measured speed_h / vel_v curves and move 'from'/'to' so the jump and air dash start on the same tick as in",
+    "the video (tick = (video time - t0) * 64). One-tick presses have from == to (the sim derives press edges).",
+    "Alignment: t0 (measured time of tick 0) is found per run by matching the first rising crossing of",
+    "speed_h through value_u (the ground dash start) in the video and in the sim.",
+    "Bounds are search limits, not game limits: a result on a bound is flagged in the report."
+  ],
+  "name": "Air dash after dash-jump (A2)",
+  "clip": "A2",
+  "gaps": ["G01", "G02", "G05", "G17", "G25"],
+  "hero": "res://data/movement/heroes/hero_default_b1.tres",
+  "params_resource": "res://data/movement/movement_params.tres",
+  "layout": "flat",
+  "suppress_sprint": true,
+  "up_axis": "z",
+  "start": {"pos_m": [0.0, 0.0, 0.0], "yaw_deg": 0.0, "stamina": 3.0},
+  "ticks": 110,
+  "default": {"move": [0, 1], "buttons": []},
+  "timeline": [
+    {"from": 1, "to": 1, "buttons": ["dash"]},
+    {"from": 21, "to": 21, "buttons": ["jump"]},
+    {"from": 31, "to": 31, "buttons": ["dash"]}
+  ],
+  "align": {"mode": "threshold", "channel": "speed_h", "value_u": 400.0, "direction": 1, "ref_window": [0.30, 0.32]},
+  "fit_window": [0.0, 1.7],
+  "weights": {"speed_h": 1.0, "vel_v": 1.0, "pos_v": 4.0},
+  "params": [
+    {"name": "air_dash_distance", "min": 5.0, "max": 12.0, "gap": "G01", "note": "m; sets the air dash speed per bucket (distance / duration)"},
+    {"name": "dash_jump_vertical_speed", "min": 7.0, "max": 15.0, "gap": "G05", "note": "m/s; research ~425 u/s = 10.795"},
+    {"name": "dash_jump_set_speed", "min": 12.0, "max": 19.0, "gap": "G17", "note": "m/s, dash_jump_speed_mode 1 (set); research ~611 u/s = 15.5194"},
+    {"name": "air_dash_end_drag_frac", "min": 0.0, "max": 0.6, "gap": "G02", "optional": true, "note": "fraction removed at air dash end"}
+  ],
+  "optimizer": {"method": "nelder_mead", "max_evals": 500, "restarts": 2}
+}
