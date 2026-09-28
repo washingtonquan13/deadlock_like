@@ -213,7 +213,10 @@ extends Resource
 @export var wall_jump_kick_toward: float = 5.461                 # measured session 3: 215 u/s off the wall with W held straight in (d = -1)
 @export var wall_jump_kick_neutral: float = 6.807                # measured session 3: 268 u/s with no key; the kick is interpolated linearly in d = wish.normal
 @export var wall_jump_kick_away: float = 9.169                   # measured session 3: 361 u/s with S held straight away (d = +1)
-@export var wall_jump_kick_tangent: float = 3.734                 # measured session 3: 147 u/s along the wall per unit of the wish's tangential component (A/D)
+# measured session 7 (s7_open + s3 WJD/WJA, 10 trials): the A/D kick is added on top of the incoming tangent that the
+# air strafe built before the press (~45-55 u/s after ~4 ticks, kept x wall_jump_tangent_keep): post - 0.95*pre =
+# 107-111 u/s. Session 3's 147 was the total launch tangent. Diagonals (W+A, S+A) are unfit (game ~0.88 of single key).
+@export var wall_jump_kick_tangent: float = 2.718                 # 107 u/s along the wall per unit of the wish's tangential component
 @export var wall_jump_free_count: int = 1                        # spec: movement.md §14
 @export var wall_slide_max_fall: float = 15.24                   # G36: -600 u/s fall cap on a wall (walls_and_ledges.md rule 21); PROVISIONAL (G36): trigger (airborne + wall contact + falling) pending recording
 @export var wall_jump_fatigue_per_jump: float = 1.0              # measured session 4 (wallfat): each wall jump sets fatigue to full

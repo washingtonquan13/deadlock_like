@@ -110,7 +110,8 @@ static func try_wall_jump(sim: MovementSim, s: MoveState, ctx: Ctx) -> bool:
 	# measured session 3: the kick off the wall is linear in d = wish.normal (W in = toward, S out = away)
 	var d := ctx.wish.dot(n) if ctx.has_move else 0.0
 	var kick := p.wall_jump_kick_neutral + d * ((p.wall_jump_kick_away - p.wall_jump_kick_neutral) if d > 0.0 else (p.wall_jump_kick_neutral - p.wall_jump_kick_toward))
-	# measured session 3: a held key's component along the wall adds its own tangential kick
+	# measured session 3/7: a held key's component along the wall adds its own tangential kick, on top of the kept
+	# incoming tangent (session 7: the air strafe before the press is part of the launch)
 	var tan_kick := (ctx.wish - n * d) * p.wall_jump_kick_tangent if ctx.has_move else Vector3.ZERO
 	tan_kick.y = 0.0
 	# G03: split the incoming horizontal velocity into normal and tangential parts; the tangential
