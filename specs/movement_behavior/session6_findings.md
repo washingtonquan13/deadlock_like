@@ -80,7 +80,7 @@ This session made 27 new recordings (Haze, sandbox, 3 trials each, trials agree 
 
 ## Still open
 
-- The landing-loss threshold between 428 and 466: dash-jump landings at ~440 and ~460 would narrow it.
+- ~~The landing-loss threshold between 428 and 466~~: narrowed in session 7 (s7_open LT440-465) to 461-471; 466 used.
 - G09 penalty size at other hop speeds and timings.
 - The first air-jump tick of an air dash after a dash jump, and the rest of the session-5 list: NK1/NK2, WJD/WJA,
   mantle max height, strafe mult.
