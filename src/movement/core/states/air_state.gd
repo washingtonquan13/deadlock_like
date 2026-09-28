@@ -47,14 +47,18 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 			else:
 				s.velocity.y += vy
 			# measured session 5 (DB*/DG* refit with drag): along the previous tick's wish (a key change on the jump
-			# tick is ignored), top v.wish up toward run speed by at most air_jump_wish_add_max; no cap on |h|.
-			var dir := Vector3(s.prev_wish.x, 0.0, s.prev_wish.z)
-			if dir.length_squared() > 1e-8:
-				dir = dir.normalized()
+			# tick is ignored), top v.dir up toward run speed by at most air_jump_wish_add_max; no cap on |h|.
+			# measured session 6 (s6_diag, s6_diagverify): the add uses the UNNORMALIZED key vector with each world
+			# horizontal axis clamped to [-1, 1]; dir = c/|c| and the cap scales by |c|. Single keys are unaffected,
+			# diagonals lean toward the nearest world 45-degree line (so the result depends on world yaw).
+			var c := Vector3(clampf(s.prev_wish_raw.x, -1.0, 1.0), 0.0, clampf(s.prev_wish_raw.z, -1.0, 1.0))
+			var clen := c.length()
+			if clen > 1e-4:
+				var dir := c / clen
 				var along := s.velocity.dot(dir)
 				var run := sim.cp.effective_move_speed(s, ctx.firing)
 				if along < run:
-					var add := minf(p.air_jump_wish_add_max, run - along)
+					var add := minf(p.air_jump_wish_add_max * clen, run - along)
 					s.velocity += dir * add
 			s.air_jumps_used += 1
 			s.loco = L.AIR

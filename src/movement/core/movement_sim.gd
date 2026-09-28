@@ -138,6 +138,7 @@ func simulate(s: MoveState, cmd: InputCmd) -> void:
 	_track_contacts(s, ctx)
 	s.prev_buttons = cmd.buttons & InputCmd.BTN_MASK
 	s.prev_wish = ctx.wish
+	s.prev_wish_raw = Basis(Vector3.UP, s.yaw) * Vector3(float(ctx.move_x), 0.0, -float(ctx.move_y))
 	if s.loco != ctx.loco_start:
 		s.state_ticks = 1
 		emit(s, MoveEvents.STATE_CHANGED, {"from": ctx.loco_start, "to": s.loco})

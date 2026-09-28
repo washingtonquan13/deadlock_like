@@ -100,3 +100,21 @@ func test_measured_air_jump_wish_accel() -> void:
 		else:
 			assert_near(hs, 240.0, 30.0, "W from ~40: ~240")
 	done()
+
+
+## Measured diagonal air jump (session6_findings.md): the add uses the world-axis-clamped key vector, so W+D from rest
+## gets ~280 when the diagonal lies on a world 45-degree line and ~200 when it lies on a world axis. Loose on purpose.
+func test_measured_air_jump_diagonal_world_clamp() -> void:
+	var u := 0.0254
+	var got := []
+	for yaw: float in [0.0, PI / 4.0]:
+		var h := new_harness(&"flat")
+		await h.ready()
+		h.spawn(Vector3(0.0, 50.0, 0.0), yaw)
+		h.state.air_jumps_used = 0
+		h.run(2, func(t: int) -> InputCmd: return cmd(t, B_JUMP if t == 2 else 0, 1, 1, yaw))
+		var v: Vector3 = h.state.velocity / u
+		got.append(Vector2(v.x, v.z).length())
+	assert_near(got[0], 283.0, 25.0, "W+D on a world diagonal: ~200*sqrt2, got %.0f" % got[0])
+	assert_near(got[1], 200.0, 25.0, "W+D on a world axis: ~200, got %.0f" % got[1])
+	done()
