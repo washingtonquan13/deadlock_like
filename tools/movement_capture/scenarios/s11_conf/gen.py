@@ -4,6 +4,7 @@ H  street_y058b: heavy melee lunge (G10). The driver's "melee" key (q, the game'
    (hold = heavy). Standing, running, and from a standing jump: the lunge speed profile, distance and the hard stop.
    HM_R: W held through a heavy (recovery length, post-heavy self-slow). HM_C: melee held again through the miss
    cooldown (when the next heavy starts).
+C  street_y058b: G09 slide-hop flag clear time (SC6/14/24/36).
 W  wallAd: a second jump press 4/8/12/20 ticks after a wall jump (G33 wall-jump min interval: eaten or not).
 """
 import json
@@ -35,6 +36,16 @@ for k in (4, 8, 12, 20):
     s = base("WI%d" % k, "wallAd: W 1..62, jump 60, wall jump 88, second jump press %d, no keys after" % (88 + k), 200)
     add(s, 1, 62, move=[0, 1]); add(s, 60, 60, buttons=["jump"]); add(s, 88, 88, buttons=["jump"]); add(s, 88 + k, 88 + k, buttons=["jump"])
     S["WI%d" % k] = s
+# C: G09 slide-hop flag clear time. As s9 SHL up to hop 1 (dash 4, dash jump 31, landing slide, slide hop 103 sets the
+# flag), crouch released in the air (no landing slide), W held on the ground, crouch k ticks after hop 1 lands (~152),
+# hop 6 ticks into that slide: penalized (air speed pulled toward ~215-240) while the flag holds, ~400 once cleared.
+LAND = 152
+for k in (6, 14, 24, 36):
+    c = LAND + k; T = c + 6 + 90
+    s = base("SC%d" % k, "street_y058b: dash 4, dash jump 31, crouch 61..140, slide hop 103, W 140..%d, crouch %d..%d, hop %d, S brake" % (c + 46, c, c + 46, c + 6), T)
+    add(s, 1, 31, move=[0, 1]); add(s, 4, 4, buttons=["dash"]); add(s, 31, 31, buttons=["jump"]); add(s, 61, 140, buttons=["crouch"])
+    add(s, 103, 103, buttons=["jump"]); add(s, 141, c + 46, move=[0, 1]); add(s, c, c + 46, buttons=["crouch"]); add(s, c + 6, c + 6, buttons=["jump"])
+    add(s, c + 47, T, move=[0, -1]); S["SC%d" % k] = s
 for k, v in S.items():
     json.dump(v, open(k + ".json", "w"), indent=1)
 print(" ".join(S))

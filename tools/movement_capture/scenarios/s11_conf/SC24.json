@@ -1,0 +1,102 @@
+{
+ "_comment": "street_y058b: dash 4, dash jump 31, crouch 61..140, slide hop 103, W 140..222, crouch 176..222, hop 182, S brake",
+ "name": "SC24",
+ "clip": "SC24",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 272,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 31,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 31,
+   "to": 31,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 61,
+   "to": 140,
+   "buttons": [
+    "crouch"
+   ]
+  },
+  {
+   "from": 103,
+   "to": 103,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 141,
+   "to": 222,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 176,
+   "to": 222,
+   "buttons": [
+    "crouch"
+   ]
+  },
+  {
+   "from": 182,
+   "to": 182,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 223,
+   "to": 272,
+   "move": [
+    0,
+    -1
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}
