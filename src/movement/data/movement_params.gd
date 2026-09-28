@@ -219,7 +219,8 @@ extends Resource
 # --- mantle ---------------------------------------------------------------------
 @export var mantle_min_height_u: int = 32                        # spec: movement.md §15
 @export var mantle_band_tops_u: Array[int] = [64, 96, 128, 160]  # spec: movement.md §15
-@export var mantle_climb_speed: float = 5.476                    # measured session 4: straight-up climb ~215.6 u/s
+@export var mantle_climb_speed: float = 3.353                    # measured session 4 (3 heights): average climb 132 u/s + ...
+@export var mantle_climb_speed_per_height: float = 1.2           # ... 1.2/s x ledge height (66 u ~211, 94 u ~249, 162 u ~328 u/s)
 @export var mantle_exit_speed: float = 4.496                     # measured session 4: ~177 u/s forward onto the top, kept after
 @export var mantle_min_depth: float = 0.1524                     # spec: movement.md §15 (6 u)
 @export var mantle_reach: float = 0.6                            # spec: movement.md §15

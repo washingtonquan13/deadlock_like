@@ -711,7 +711,8 @@ All fields are `@export`. Defaults are the frozen spec baseline. Confidence: H =
 | corner_boost_mult | float | 0.8 | x (after -20%) | 14 | M |
 | mantle_min_height_u | int | 32 | u | 15 | M |
 | mantle_band_tops_u | Array[int] | [64, 96, 128, 160] | u | 15 | M |
-| mantle_climb_speed | float | 5.476 | m/s (~215.6 u/s, measured session 4) | 15 | H |
+| mantle_climb_speed | float | 3.353 | m/s (132 u/s) base of the average climb speed, measured session 4 | 15 | H |
+| mantle_climb_speed_per_height | float | 1.2 | 1/s, added per ledge height (66 u ~211, 162 u ~328 u/s) | 15 | H |
 | mantle_exit_speed | float | 4.496 | m/s (~177 u/s, kept after; measured session 4) | 15 | H |
 | mantle_min_depth | float | 0.1524 | m (6 u) | 15 | M |
 | mantle_reach | float | 0.6 | m forward probe | 15 (212 u unresolved) | L |

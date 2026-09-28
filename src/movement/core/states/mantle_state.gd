@@ -45,13 +45,16 @@ static func try_start(sim: MovementSim, s: MoveState, ctx: Ctx, forced: bool) ->
 	var top: Vector3 = ledge["top"]
 	var rise := maxf(0.0, top.y - s.position.y)
 	var run := Vector2(top.x - s.position.x, top.z - s.position.z).length()
-	var total := ceili(rise / (p.mantle_climb_speed * MoveUnits.DT) - 1e-6) + maxi(1, ceili(run / (p.mantle_exit_speed * MoveUnits.DT) - 1e-6))
+	# measured session 4 (66, 94, 162 u): the average climb speed grows with the ledge height above the floor
+	var climb := p.mantle_climb_speed + p.mantle_climb_speed_per_height * h
+	var total := ceili(rise / (climb * MoveUnits.DT) - 1e-6) + maxi(1, ceili(run / (p.mantle_exit_speed * MoveUnits.DT) - 1e-6))
 	if s.loco == L.SLIDE:
 		sim.emit(s, MoveEvents.SLIDE_END)
 	s.loco = L.MANTLE
 	s.mantle_from = s.position
 	s.mantle_to = ledge["top"]
 	s.mantle_total_ticks = total
+	s.mantle_climb_speed = climb
 	s.mantle_ticks = 0
 	s.mantle_band = band
 	s.mantle_glide = false
@@ -93,7 +96,7 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 		s.loco = L.CROUCH if s.crouched else L.GROUND
 
 
-## Scripted motion (measured session 4): straight up at the climb speed, then forward onto the top
+## Scripted motion (measured session 4): straight up at the height-based average climb speed, then forward onto the top
 ## at the exit speed. Horizontal speed is frozen during the climb.
 static func physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	ctx.skip_move = true
@@ -104,9 +107,9 @@ static func physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	var budget := MoveUnits.DT
 	var pos := s.position
 	if pos.y < b.y:
-		var dy := minf(b.y - pos.y, p.mantle_climb_speed * budget)
+		var dy := minf(b.y - pos.y, s.mantle_climb_speed * budget)
 		pos.y += dy
-		budget -= dy / p.mantle_climb_speed
+		budget -= dy / s.mantle_climb_speed
 	if pos.y >= b.y and budget > 0.0:
 		var h := Vector2(b.x - pos.x, b.z - pos.z)
 		var step := minf(h.length(), p.mantle_exit_speed * budget)

@@ -52,6 +52,7 @@ var last_air_crouch_press_tick: int = -1
 var mantle_from: Vector3 = Vector3.ZERO
 var mantle_to: Vector3 = Vector3.ZERO
 var mantle_total_ticks: int = 0
+var mantle_climb_speed: float = 0.0          # m/s, set at mantle start from the ledge height
 var mantle_glide: bool = false
 # zipline / rope (spec: movement.md §16, §17)
 var zip_rail_id: int = -1

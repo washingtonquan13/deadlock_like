@@ -34,7 +34,10 @@ func test_t25_mantle_bands() -> void:
 		assert_true(n > prev_n, tag + " takes longer than the lower ledge")
 		prev_n = n
 		if hs[i] == 64:
-			assert_true(n >= 24 and n <= 36, tag + " ~0.4-0.55 s (got %d ticks)" % n)
+			assert_true(n >= 24 and n <= 40, tag + " ~0.4-0.6 s (got %d ticks)" % n)
+		if hs[i] == 160:
+			# measured 162 u: ~32 climb ticks plus the exit (a 215.6 u/s climb would take ~64 here)
+			assert_true(n >= 34 and n <= 54, tag + " faster climb on tall ledges (got %d ticks)" % n)
 		if n > 0:
 			var m0 := first_loco(h.trace, L.MANTLE)
 			var after := m0 + n
