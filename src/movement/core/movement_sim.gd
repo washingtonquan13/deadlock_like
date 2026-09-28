@@ -137,6 +137,7 @@ func simulate(s: MoveState, cmd: InputCmd) -> void:
 	_iad_end_drag(s)
 	_track_contacts(s, ctx)
 	s.prev_buttons = cmd.buttons & InputCmd.BTN_MASK
+	s.prev_wish = ctx.wish
 	if s.loco != ctx.loco_start:
 		s.state_ticks = 1
 		emit(s, MoveEvents.STATE_CHANGED, {"from": ctx.loco_start, "to": s.loco})

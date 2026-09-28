@@ -20,6 +20,7 @@ var grounded: bool = true
 var ground_normal: Vector3 = Vector3.UP
 var crouched: bool = false             # crouch capsule active
 var prev_buttons: int = 0
+var prev_wish: Vector3 = Vector3.ZERO   # last tick's world wish dir (the air jump reads it; measured session 5)
 # stamina (spec: movement.md §7)
 var stamina: float = 3.0
 var stamina_regen_progress: float = 0.0

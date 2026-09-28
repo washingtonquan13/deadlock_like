@@ -90,10 +90,9 @@ extends Resource
 @export var gravity: float = 20.32                               # measured 798-801 u/s^2 on plain jumps (session2_findings.md); spec §10 was 24.562 (967 u/s^2)
 @export var air_jump_speed: float = 13.26                        # measured session 4: vz set to ~522 u/s (was 7.493 = 295)
 @export var air_jump_sets_vertical: bool = true                  # measured session 4: set, not added (rise ~168 u for any vz before)
-# measured session 4 (DB*/DG* HUD fits): if v.wish < gate (~280 u/s) the air jump adds a fixed ~200 u/s along the
-# wish, then caps horizontal speed at max(old speed, run speed); nothing at/above the gate or with no key held.
-@export var air_jump_wish_speed: float = 7.112                   # gate on v.wish (280 u/s; between 240 and 339 measured)
-@export var air_jump_wish_add_max: float = 5.08                  # the step (200 u/s)
+# measured session 5 (DB*/DG* refit with drag, session5_audit.md): along the previous tick's wish the air jump tops
+# v.wish up toward run speed, adding at most this much; no gate, no cap on |h|; nothing with no key held.
+@export var air_jump_wish_add_max: float = 5.08                  # 200 u/s
 @export var air_jumps_per_airtime: int = 1                       # spec: movement.md §10
 @export var coyote_time: float = 0.0                             # spec: movement.md §10 (Open Q20)
 @export var jump_buffer_time: float = 0.0                        # spec: movement.md §10 (Open Q20)
@@ -152,7 +151,7 @@ extends Resource
 # K26: the x0.5 accel above 450 u/s has no source (the wiki gives the split, not a factor; V8/Leif model
 # only the 700 u/s wishspeed cap), so it is neutral (1.0). PROVISIONAL (G26): pending A5.
 @export var air_accel_high_speed_mult: float = 1.0
-@export var air_drag: float = 0.0                                # measured session 4 (HUD refit): no horizontal decay in the air (A0, DJ22, after an air dash); G08's 0.2 was wrong
+@export var air_drag: float = 0.2                                # measured session 5 (vz0 pinned by airtime): 0.196-0.228 on jumps, dash jumps, after an air dash
 
 # --- slide ----------------------------------------------------------------------
 @export var slide_entry_speed: float = 8.89                      # spec: movement.md §13 (350 u/s)

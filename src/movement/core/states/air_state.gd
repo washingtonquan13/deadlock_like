@@ -46,17 +46,16 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 				s.velocity.y = vy
 			else:
 				s.velocity.y += vy
-			# measured session 4 (DG*/DB* HUD fits): below the gate along the wish, add a fixed step along the wish,
-			# then cap horizontal speed at max(old speed, run speed); at or above the gate nothing changes.
-			if ctx.has_move:
-				var h := Vector3(s.velocity.x, 0.0, s.velocity.z)
-				if h.dot(ctx.wish) < p.air_jump_wish_speed:
-					var old_speed := h.length()
-					h += Vector3(ctx.wish.x, 0.0, ctx.wish.z) * p.air_jump_wish_add_max
-					var cap := maxf(old_speed, sim.cp.effective_move_speed(s, ctx.firing))
-					if h.length() > cap:
-						h = h.normalized() * cap
-					s.velocity = Vector3(h.x, s.velocity.y, h.z)
+			# measured session 5 (DB*/DG* refit with drag): along the previous tick's wish (a key change on the jump
+			# tick is ignored), top v.wish up toward run speed by at most air_jump_wish_add_max; no cap on |h|.
+			var dir := Vector3(s.prev_wish.x, 0.0, s.prev_wish.z)
+			if dir.length_squared() > 1e-8:
+				dir = dir.normalized()
+				var along := s.velocity.dot(dir)
+				var run := sim.cp.effective_move_speed(s, ctx.firing)
+				if along < run:
+					var add := minf(p.air_jump_wish_add_max, run - along)
+					s.velocity += dir * add
 			s.air_jumps_used += 1
 			s.loco = L.AIR
 			sim.emit(s, MoveEvents.JUMPED, {"kind": &"air"})

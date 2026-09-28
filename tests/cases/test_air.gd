@@ -2,7 +2,7 @@ extends MoveTestCase
 ## Air drag, down dash, air jump (design §13.1).
 
 
-## Measured session 4 (HUD refit): no horizontal decay in the air, with or without a slow.
+## Measured session 5 (vz0 pinned by airtime): ~0.2/s proportional horizontal decay in the air.
 func test_t10_air_drag() -> void:
 	var h := new_harness(&"flat", null, hero_with(1, 0.0))
 	await h.ready()
@@ -10,7 +10,7 @@ func test_t10_air_drag() -> void:
 	h.state.velocity = Vector3(0.0, 0.0, -10.0)
 	h.run(64, hold())
 	assert_eq(h.state.loco, L.AIR, "still airborne")
-	assert_near(h.state.horizontal_speed(), 10.0, 0.05, "no air drag over 1 s")
+	assert_near(h.state.horizontal_speed(), 8.19, 0.15, "~0.2/s air drag over 1 s")
 	done()
 
 
@@ -79,8 +79,8 @@ func test_t18_air_jump() -> void:
 	done()
 
 
-## Measured air jump horizontal (session4_findings.md, HUD fits): below the gate a fixed ~200 u/s step along the held
-## key, then horizontal speed capped at max(old speed, run speed). Loose on purpose.
+## Measured air jump horizontal (session5_audit.md): along the previous tick's wish, top up toward run speed by at most
+## ~200 u/s; no cap on |h|. Loose on purpose.
 func test_measured_air_jump_wish_accel() -> void:
 	var u := 0.0254
 	for c: Array in [[1, 0, Vector3(0.0, 0.0, -340.0)], [0, -1, Vector3(0.0, 0.0, -210.0)], [0, 1, Vector3(0.0, 0.0, -40.0)]]:
@@ -94,7 +94,7 @@ func test_measured_air_jump_wish_accel() -> void:
 		var hs := Vector2(v.x, v.z).length()
 		if c[0] == 1:
 			assert_true(v.x > 120.0, "D: lateral gained")
-			assert_true(hs > 330.0 and hs < 400.0, "D: capped near max(old, run speed), got %.0f" % hs)
+			assert_true(hs > 370.0 and hs < 410.0, "D: 200 added sideways, no cap, got %.0f" % hs)
 		elif c[1] == -1:
 			assert_near(-v.z, 0.0, 30.0, "S against 210: one ~200 step, to ~0")
 		else:
