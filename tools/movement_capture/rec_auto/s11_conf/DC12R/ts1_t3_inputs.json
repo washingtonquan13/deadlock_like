@@ -1,0 +1,117 @@
+{
+  "t0_perf": 106477.0564173,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.0002756000030785799,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.047164799994789064,
+      "t_plan": 0.046875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 4
+    },
+    {
+      "t_real": 0.07225240000116173,
+      "t_plan": 0.071875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 5
+    },
+    {
+      "t_real": 0.1722470999957295,
+      "t_plan": 0.171875,
+      "kind": "up",
+      "arg": "w",
+      "tick": 12
+    },
+    {
+      "t_real": 0.17267519999586511,
+      "t_plan": 0.171875,
+      "kind": "down",
+      "arg": "lctrl",
+      "tick": 12
+    },
+    {
+      "t_real": 0.8127777999907266,
+      "t_plan": 0.8125,
+      "kind": "up",
+      "arg": "lctrl",
+      "tick": 53
+    },
+    {
+      "t_real": 0.8133380999934161,
+      "t_plan": 0.8125,
+      "kind": "down",
+      "arg": "s",
+      "tick": 53
+    },
+    {
+      "t_real": 1.7503238999925088,
+      "t_plan": 1.75,
+      "kind": "up",
+      "arg": "s",
+      "tick": 113
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2212.34,
+    "pos_y": -614.38,
+    "pos_z": 102.19,
+    "ang_pitch": 14.72,
+    "ang_yaw": 57.69,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 0.0
+  },
+  "start_yaw": 57.69,
+  "late_ms_max": 0.8380999934161082,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\s11_conf\\DC12R.json",
+  "mark": "street_y058b",
+  "mark_value": {
+    "pawn": [
+      2231.41,
+      -519.73,
+      102.08
+    ],
+    "hud": [
+      2212.37,
+      -614.4200000000001,
+      102.11999999999999
+    ],
+    "yaw": 57.72,
+    "pitch": 14.69,
+    "cam_offset": [
+      -19.039999999999964,
+      -94.69,
+      0.03999999999999204
+    ],
+    "return_error_u": 0.0,
+    "note": "street_y058 moved 300 u back along the view (session 9 SHL runway)"
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl",
+    "melee": "q"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 434,
+  "pre_real_s": 0.3
+}

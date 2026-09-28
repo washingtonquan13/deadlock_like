@@ -1,0 +1,66 @@
+{
+ "_comment": "street_y058b: W 1..64, dash 4, crouch 24..64, S brake 65..",
+ "name": "DC24W",
+ "clip": "DC24W",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 124,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 64,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 24,
+   "to": 64,
+   "buttons": [
+    "crouch"
+   ]
+  },
+  {
+   "from": 65,
+   "to": 124,
+   "move": [
+    0,
+    -1
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}
