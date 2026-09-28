@@ -196,9 +196,9 @@ extends Resource
 # The flag clears after slide_hop_clear_time on the ground not sliding, or on a downhill slide jump.
 # The zip exit drag immunity blocks it. PROVISIONAL (G09): pending recording clip S2.
 @export var slide_hop_enabled: bool = true
-@export var slide_hop_min_time: float = 0.5                      # PROVISIONAL (G09): 0.5 s (V4 0:34, V15 1:14, Eskay V7); pending S2
-@export var slide_hop_penalty_drag: float = 1.3                  # PROVISIONAL (G09): measured session 6 (SHH6 hop ~6 ticks into the slide): extra drag decays (+1.5/s ticks 4-12, +0.9 12-22, ~0 after); box 1.3 x 20 ticks matches apex 229 and landing 214
-@export var slide_hop_penalty_time: float = 0.3125               # PROVISIONAL (G09): 20 ticks (session 6; drag x time ~0.4 is the fitted valley); < 0 = until landing
+@export var slide_hop_min_time: float = 0.5                      # measured session 7 (s7_open SHH*): penalized at hop delays 6-30 ticks, not at 40 (bracket 0.47-0.63 s); 0.5 s from V4 0:34, V15 1:14, Eskay V7
+@export var slide_hop_penalty_drag: float = 1.34                 # measured session 7 (s7_open SHH6/12/20/30): h after the penalty is x0.652-0.661 of drag-only at takeoff 357-376 u/s; box 1.34 x 20 ticks gives ~0.658 (the in-flight extra drag decays, ~1.4/s at ticks 2-8 to 0 by ~26)
+@export var slide_hop_penalty_time: float = 0.3125               # 20 ticks (sessions 6-7; drag x time ~0.42 fits the plateau; the box shape is PROVISIONAL); < 0 = until landing
 # measured session 6: a landing into a NORMAL slide below this speed loses one ground-friction tick (x0.9375).
 # measured session 7 (s7_open LT440-465): loses at 439-461, keeps at 471-476; bracketed 461-471, midpoint used
 @export var landing_slide_friction_speed: float = 11.836          # 466 u/s
