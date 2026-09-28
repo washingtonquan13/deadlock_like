@@ -152,8 +152,8 @@ static func air_physics(sim: MovementSim, s: MoveState, ctx: Ctx, allow_input: b
 		var ws := minf(full, cap)
 		var add := ws - v.dot(ctx.wish)
 		if add > 0.0:
-			# PROVISIONAL (G26): accel rate pending A5. The 450 u/s split is sourced (air_movement.md rule 27,
-			# wiki E8) but no source gives a factor, so air_accel_high_speed_mult defaults to 1.0 (K26).
+			# measured session 10 (s10_gains FA_*): the same accel rate at ~560 u/s as at ~350, so
+			# air_accel_high_speed_mult is 1.0 (the 450 u/s split of air_movement.md rule 27 has no measured effect).
 			var accel := p.air_accel * full * dt
 			if v.length() > p.air_strafe_threshold:
 				accel *= p.air_accel_high_speed_mult
