@@ -17,6 +17,20 @@ func test_t21_slope_slide() -> void:
 	done()
 
 
+## measured session 8 (sliding_3 x1): a crouch pressed while walking slowly downhill on a ramp slides.
+func test_slow_crouch_downhill_slides() -> void:
+	var h := new_harness(&"flat")
+	ArenaBuilder.add_ramp(h.root, Vector3.ZERO, 25.0, 40.0, 6.0)
+	await h.ready()
+	var d := 30.0
+	h.spawn(Vector3(0.0, d * tan(deg_to_rad(25.0)) + slope_rest_offset(R, 25.0), -d), PI)
+	h.state.velocity = Vector3(0.0, 0.0, 2.5)   # ~100 u/s downhill
+	h.run(40, hold(B_CROUCH))
+	assert_eq(h.state.loco, L.SLIDE, "slides")
+	assert_true(h.state.horizontal_speed() > 5.0, "gains speed (%.1f m/s)" % h.state.horizontal_speed())
+	done()
+
+
 ## measured session 8 (s8_city_slide): a slide down a long ramp keeps gaining speed; the penalty waits for the flat
 func test_long_ramp_slide_no_penalty() -> void:
 	var h := new_harness(&"flat")

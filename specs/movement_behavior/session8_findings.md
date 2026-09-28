@@ -43,7 +43,7 @@ cl_showpos `vel` was read by OCR; it is the horizontal speed.
 - A crouch there slides, although the horizontal speed was below 350.
 - The ground crouch entry test now uses the along-surface speed, so RRUN and RJ slide in the replay again. They broke
   when `slide_entry_speed` became 350 in session 7b.
-- Crouching at rest or at crouch-walk speed on a ramp is unchanged: 187 / cos 26.5 = 209, still no slide.
+- Crouching at rest, or crouch-walking onto a ramp with crouch already held, does not slide (see the sliding_3 section).
 
 ## Replay (v3, `s8_city_slide/replay.gd`)
 
@@ -74,9 +74,28 @@ cl_showpos `vel` was read by OCR; it is the horizontal speed.
   - The sim decays at ground friction 4/s, a bit slower than ~5.5. RUP's ~400 u/s² tail below 100 hints at an extra
     uphill g·tanθ term in crouch. That is not modelled.
 
+## sliding_3 x1 and the 11-17-35 clip: "or when on a ramp"
+
+- **x1 (`ocr/x1.csv`):**
+  - The hero stands at the top of a 20-26° stair ramp and walks off.
+  - Crouch is pressed at ~70-100 u/s: the crouch pose is at frames 9-12, the slide VFX from frame 24.
+  - It slides, and the HUD climbs a steady ~460 u/s² to 435 at the bottom. That is well above g·tanθ (~390 at 26°).
+    The rate is the same at 190 and 362 u/s, so there is almost no speed-proportional friction here.
+- **11-17-35.mkv (`ocr/y1.csv`):**
+  - Crouch at rest, then a crouch-walk at 187 on the flat and down a ~35° ramp.
+  - It stays at 187 the whole way, with no slide.
+- **The user confirms:** from rest it never slides; crouching and then walking onto a ramp keeps you crouching.
+- **Rule (GROUND branch):** a crouch press slides when the along-surface speed is above 350, or when moving downhill
+  on a slide slope at any speed above 0. The CROUCH state only uses the 350 test.
+- **Replay:** `replay.gd --angle=25 --drop=110 --runup=4 --crouch_at=6`.
+  - Sim: 100 → 407 at the bottom, ~300 u/s² on the ramp.
+  - Game: 435 at the bottom, ~460 u/s².
+  - The ramp accel model (k·g·tanθ − f·v, session 8 fit k 0.99, f 0.19) is too weak at low speed. A joint fit over
+    v1-v3 and x1 does not converge, because the stair-ramp angles from OCR z are too noisy (x1: 20-26°).
+
 ## Open
 
 - Restart vs hold of the timer (needs a flat slide carried onto a ramp).
 - A smooth (non-stair) ramp at a second angle, to pin k.
 - Crouch friction uphill (~5.5/s game vs 4/s sim); a possible g·tanθ term on crouch/ground movement on slopes.
-- Along-surface entry below 350 on a ramp (see above).
+- Ramp slide accel at low speed: game ~460 u/s² at 190-360 u/s on 20-26° vs sim ~300. This needs a smooth ramp of known angle, with a slow-crouch slide and a fast one on it.

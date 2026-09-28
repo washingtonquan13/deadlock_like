@@ -42,9 +42,12 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 		else:
 			s.loco = L.CROUCH
 	if s.loco == L.GROUND:
-		# spec: movement.md §6 crouch, §13 slide entry
+		# spec: movement.md §6 crouch, §13 slide entry ("above 350 u/s or when on a ramp")
+		# measured session 8 (sliding_3 x1): a crouch pressed while walking downhill on a ~20-26 deg stair ramp at
+		# ~70-100 u/s slides (HUD then climbs ~460 u/s^2 to the bottom); at rest (s7 RS0) or with crouch already held
+		# before moving onto or down the ramp (s7 RSW, CROUCH branch below) it stays a crouch. No speed floor.
 		if crouch:
-			if slide_ok:
+			if slide_ok or (moving_downhill_on_slide_slope(sim, s) and not s.slide_block_until_crouch_release):
 				enter_slide(sim, s, MoveState.SlideKind.NORMAL, -1.0)
 				s.slide_from_ground = true
 			else:
@@ -90,6 +93,10 @@ static func surface_speed(s: MoveState) -> float:
 ## measured session 7 (s7_ramp RUP): no slide (normal or dash) starts while moving uphill on a slide slope.
 static func moving_uphill_on_slide_slope(sim: MovementSim, s: MoveState) -> bool:
 	return sim.on_slide_slope(s) and Vector2(s.velocity.x, s.velocity.z).dot(Vector2(s.ground_normal.x, s.ground_normal.z)) < 0.0
+
+
+static func moving_downhill_on_slide_slope(sim: MovementSim, s: MoveState) -> bool:
+	return sim.on_slide_slope(s) and Vector2(s.velocity.x, s.velocity.z).dot(Vector2(s.ground_normal.x, s.ground_normal.z)) > 0.0
 
 
 static func enter_crouch(sim: MovementSim, s: MoveState) -> void:
