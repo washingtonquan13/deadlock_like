@@ -75,13 +75,13 @@ def require_game(exe: str = "deadlock.exe") -> None:
         raise NotForeground("the game is not in front (foreground: %r). Click into the game and retry." % fg)
 
 
-def focus_game(exe: str = "deadlock.exe") -> bool:
-    """Brings the game's main window to the front (only when asked; runs never refocus on their own)."""
+def game_window(exe: str = "deadlock.exe"):
+    """The game's main window: the largest visible titled top-level window of `exe` (None if not running)."""
     found = []
     WNDENUMPROC = ctypes.WINFUNCTYPE(wintypes.BOOL, wintypes.HWND, wintypes.LPARAM)
 
     def cb(hwnd, _):
-        if u32.IsWindowVisible(hwnd):
+        if u32.IsWindowVisible(hwnd) and u32.GetWindowTextLengthW(hwnd) > 0:
             pid = wintypes.DWORD()
             u32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
             h = k32.OpenProcess(0x1000, False, pid.value)
@@ -91,18 +91,68 @@ def focus_game(exe: str = "deadlock.exe") -> bool:
                 k32.QueryFullProcessImageNameW(h, 0, buf, ctypes.byref(n))
                 k32.CloseHandle(h)
                 if os.path.basename(buf.value).lower() == exe:
-                    found.append(hwnd)
+                    r = wintypes.RECT()
+                    u32.GetWindowRect(hwnd, ctypes.byref(r))
+                    found.append(((r.right - r.left) * (r.bottom - r.top), hwnd))
         return True
 
     u32.EnumWindows(WNDENUMPROC(cb), 0)
-    if not found:
+    return max(found)[1] if found else None
+
+
+def focus_game(exe: str = "deadlock.exe", verbose: bool = False) -> bool:
+    """Brings the game's main window to the front (only when asked; runs never refocus on their own).
+    Tries escalating methods, because a fullscreen 'Windows Input Experience' (textinputhost) window can sit in
+    front and a plain SetForegroundWindow is then refused."""
+    hwnd = game_window(exe)
+    if hwnd is None:
         return False
-    # Windows only lets the process that received the last input change the foreground: a bare Alt tap counts
+
+    def ok(name):
+        time.sleep(0.3)
+        good = foreground_exe() == exe
+        if verbose:
+            print("focus_game: %s -> %s (foreground %s)" % (name, good, foreground_exe()))
+        return good
+
+    if foreground_exe() == exe:
+        return True
+    # 1. Windows only lets the process that received the last input change the foreground: a bare Alt tap counts
     u32.keybd_event(0x12, 0, 0, 0)
     u32.keybd_event(0x12, 0, KEYEVENTF_KEYUP, 0)
-    u32.SetForegroundWindow(found[0])
-    time.sleep(0.3)
-    return foreground_exe() == exe
+    u32.SetForegroundWindow(hwnd)
+    if ok("alt + SetForegroundWindow"):
+        return True
+    # 2. share input state with the current foreground thread, then raise and activate
+    fg_tid = u32.GetWindowThreadProcessId(u32.GetForegroundWindow(), None)
+    me = k32.GetCurrentThreadId()
+    attached = bool(fg_tid) and fg_tid != me and u32.AttachThreadInput(me, fg_tid, True)
+    try:
+        u32.BringWindowToTop(hwnd)
+        u32.ShowWindow(hwnd, 5)  # SW_SHOW
+        u32.SetForegroundWindow(hwnd)
+        u32.SetActiveWindow(hwnd)
+        u32.SetFocus(hwnd)
+    finally:
+        if attached:
+            u32.AttachThreadInput(me, fg_tid, False)
+    if ok("AttachThreadInput"):
+        return True
+    # 3. a click activates the window under it without any foreground-lock checks. The input host that steals the
+    # foreground is cloaked (invisible), so the game is what is hit at its centre; only click when that is true.
+    # In game this is one primary-fire click (sandbox only).
+    r = wintypes.RECT()
+    u32.GetWindowRect(hwnd, ctypes.byref(r))
+    pt = wintypes.POINT((r.left + r.right) // 2, (r.top + r.bottom) // 2)
+    if u32.GetAncestor(u32.WindowFromPoint(pt), 2) != hwnd:  # GA_ROOT
+        if verbose:
+            print("focus_game: something else is at the game's centre, not clicking")
+        return False
+    u32.SetCursorPos(pt.x, pt.y)
+    u32.mouse_event(0x0002, 0, 0, 0, 0)  # MOUSEEVENTF_LEFTDOWN
+    time.sleep(0.03)
+    u32.mouse_event(0x0004, 0, 0, 0, 0)  # MOUSEEVENTF_LEFTUP
+    return ok("click at the game's centre")
 
 
 def check_abort() -> None:
