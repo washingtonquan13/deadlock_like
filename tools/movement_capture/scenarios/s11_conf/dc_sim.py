@@ -20,7 +20,7 @@ def sim(n):
     p = os.path.join(out, n + ".json"); json.dump(s, open(p, "w"), indent=1)
     c = os.path.join(out, n + ".csv")
     subprocess.run([GD, "--headless", "--path", ROOT, "-s", "res://tools_fit/route_export.gd", "--",
-                    "--scenario=" + p.replace("\\", "/"), "--out=" + c.replace("\\", "/")], capture_output=True)
+                    "--scenario=" + p.replace("\\", "/"), "--out=" + c.replace("\\", "/")], capture_output=True, check=True)
     R = list(csv.DictReader(open(c)))
     return np.array([float(r["tick"]) for r in R]), np.array([float(r["speed_h"]) for r in R])
 
