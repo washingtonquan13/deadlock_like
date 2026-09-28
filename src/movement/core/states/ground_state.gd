@@ -44,6 +44,7 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 		if crouch:
 			if slide_ok:
 				enter_slide(sim, s, MoveState.SlideKind.NORMAL, -1.0)
+				s.slide_from_ground = true
 			else:
 				enter_crouch(sim, s)
 	elif s.loco == L.CROUCH:
@@ -53,6 +54,7 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 				s.loco = L.GROUND
 		elif slide_ok:
 			enter_slide(sim, s, MoveState.SlideKind.NORMAL, -1.0)
+			s.slide_from_ground = true
 	elif s.loco == L.SLIDE:
 		# spec: movement.md §13 exits: crouch release, low speed (jump handled above)
 		if not crouch:
@@ -84,6 +86,7 @@ static func enter_slide(sim: MovementSim, s: MoveState, kind: int, speed: float,
 	s.crouched = true
 	s.slide_ticks = 0
 	s.slide_kind = kind
+	s.slide_from_ground = false   # set by the GROUND/CROUCH crouch-press callers
 	s.mantle_glide = false   # G09: only the mantle glide slide (flag set by the caller after this) is a superglide
 	if speed >= 0.0:
 		var d := Vector3(dir.x, 0.0, dir.z)
@@ -132,7 +135,7 @@ static func slide_physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	var dh := Vector3(n.x, 0.0, n.z)
 	if n.y < 0.99999 and n.y > 1e-3:
 		v += dh.normalized() * sim.cp.gravity(s) * dh.length() / n.y * dt
-	var onset := sim.cp.slide_onset_ticks(s.slide_kind, sim.cp.slide_bonus(s))
+	var onset := sim.cp.slide_onset_ticks(s.slide_kind, sim.cp.slide_bonus(s), s.slide_from_ground)
 	var f := p.slide_friction_dash if s.slide_kind == MoveState.SlideKind.DASH else p.slide_friction
 	# measured session 7 (s7_ramp RRUN/RBOT/RDASH, one 26.5 deg ramp): before the penalty, the net downhill accel is
 	# g*tan(theta) for a normal slide (no friction) and ~0.24/s friction for a dash slide.

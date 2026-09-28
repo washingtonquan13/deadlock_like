@@ -48,6 +48,7 @@ var dash_jump_bonus_ticks: int = 0
 # slide (spec: movement.md §13)
 var slide_ticks: int = 0
 var slide_kind: int = SlideKind.NORMAL
+var slide_from_ground: bool = false   # started by a crouch press in GROUND/CROUCH (own penalty onset; session 7)
 # down dash detection
 var last_air_crouch_press_tick: int = -1
 # mantle (spec: movement.md §15)

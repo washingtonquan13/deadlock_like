@@ -305,6 +305,21 @@ func test_fp1_dash_jump_landing_slide() -> void:
 	done()
 
 
+## session 7 (s7_open SE340/SE360): a crouch press on flat ground slides above 350 u/s and hits the penalty
+## ~38 ticks (0.60 s) after the press, earlier than a landing slide.
+func test_fp1_standing_slide_onset() -> void:
+	var h := new_harness(&"flat")
+	await h.ready()
+	h.state.velocity = Vector3(0.0, 0.0, -9.0)
+	h.run(80, hold(B_CROUCH))
+	var start := first_event(h.trace, MoveEvents.SLIDE_START)
+	assert_true(start >= 0, "crouch at 354 u/s slides")
+	if start >= 0:
+		var pen := first_event(h.trace, MoveEvents.SLIDE_PENALTY, "", null, start)
+		assert_true(pen - start >= 34 and pen - start <= 42, "penalty ~38 ticks after the press (got %d)" % (pen - start))
+	done()
+
+
 ## session 4 (sback): S during a slide steers (to the camera's right) at the normal turn rate; speed is unchanged.
 func test_fp1_slide_s_steers_right() -> void:
 	for yaw in [0.0, 1.0, -2.5]:

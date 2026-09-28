@@ -106,9 +106,12 @@ static func _res_signature(r: Resource) -> String:
 # --- lookups ------------------------------------------------------------------
 
 ## spec: movement.md §13 slide penalty onset by Slide Bonus (largest table entry <= bonus).
-func slide_onset_ticks(slide_kind: int, slide_bonus: float) -> int:
+## from_ground: a NORMAL slide started by a crouch press on the ground (measured session 7, s7_open SE*).
+func slide_onset_ticks(slide_kind: int, slide_bonus: float, from_ground: bool = false) -> int:
 	var table: Array[float] = params.slide_onset_table
-	if slide_kind == MoveState.SlideKind.DASH_JUMP:
+	if slide_kind == MoveState.SlideKind.NORMAL and from_ground:
+		table = params.slide_onset_table_ground
+	elif slide_kind == MoveState.SlideKind.DASH_JUMP:
 		table = params.slide_onset_table_dash_jump
 	elif slide_kind == MoveState.SlideKind.DASH:
 		table = params.slide_onset_table_dash

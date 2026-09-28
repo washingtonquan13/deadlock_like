@@ -161,7 +161,7 @@ extends Resource
 @export var air_drag: float = 0.2                                # measured session 5 (vz0 pinned by airtime): 0.196-0.228 on jumps, dash jumps, after an air dash
 
 # --- slide ----------------------------------------------------------------------
-@export var slide_entry_speed: float = 8.89                      # spec: movement.md §13 (350 u/s)
+@export var slide_entry_speed: float = 8.89                      # 350 u/s; measured session 7 (s7_open SE*): slides at 350.2-350.7, no slide at <=347.5 (sim-aligned, ~4-tick HUD lag)
 @export var slide_slope_min_angle_deg: float = 5.0               # spec: movement.md §13
 @export var slide_friction: float = 0.1875                       # spec: movement.md §13; session 1 measured 0.189 on landing slides
 # measured session 3: a ground-dash slide decays at 0.694/s (video_guides: ~0.6 since 2026-03-06, ~0.18 before)
@@ -177,6 +177,9 @@ extends Resource
 # measured session 4 (lslide): a landing slide hits the penalty 44 ticks (0.69 s) after touchdown (spec 0.75);
 # the spec's +0.25 s per bonus step is kept
 @export var slide_onset_table: Array[float] = [0.69, 0.94, 1.19, 1.44]
+# measured session 7 (s7_open SE340/SE360): a slide started by a crouch press on the ground (GROUND/CROUCH) hits
+# the penalty 38-39 ticks (0.60 s) after the press; the bonus steps keep +0.25 s and are unmeasured
+@export var slide_onset_table_ground: Array[float] = [0.60, 0.85, 1.10, 1.35]
 # measured session 5: the penalty starts 1.00 s into a ground-dash slide (session 3's 0.96 was paired with the low 636 entry)
 @export var slide_onset_table_dash: Array[float] = [1.00, 1.25, 1.50, 1.75]  # knee - t(643) median 62.95 ticks; bonus steps unmeasured
 @export var slide_onset_table_dash_jump: Array[float] = [1.00, 1.25, 1.50, 1.75]  # spec: movement.md §13; unused since session 4
@@ -289,8 +292,8 @@ func validate() -> PackedStringArray:
 		w.append("ground_dash_durations must have 3 entries (dash buckets 1..3)")
 	if air_dash_durations.size() != 3:
 		w.append("air_dash_durations must have 3 entries (dash buckets 1..3)")
-	if slide_bonus_table.size() != slide_onset_table.size() or slide_bonus_table.size() != slide_onset_table_dash_jump.size() or slide_bonus_table.size() != slide_onset_table_dash.size():
-		w.append("slide_bonus_table / slide_onset_table / slide_onset_table_dash_jump lengths differ")
+	if slide_bonus_table.size() != slide_onset_table.size() or slide_bonus_table.size() != slide_onset_table_dash_jump.size() or slide_bonus_table.size() != slide_onset_table_dash.size() or slide_bonus_table.size() != slide_onset_table_ground.size():
+		w.append("slide_bonus_table / slide_onset_table(_ground/_dash/_dash_jump) lengths differ")
 	for i in range(1, slide_bonus_table.size()):
 		if slide_bonus_table[i] < slide_bonus_table[i - 1]:
 			w.append("slide_bonus_table is not monotonic at index %d" % i)
