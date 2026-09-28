@@ -1,0 +1,73 @@
+{
+  "t0_perf": 82270.8685149,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.00019540000357665122,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "a",
+      "tick": 1
+    },
+    {
+      "t_real": 2.5002979999990202,
+      "t_plan": 2.5,
+      "kind": "up",
+      "arg": "a",
+      "tick": 161
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2486.34,
+    "pos_y": -285.12,
+    "pos_z": 102.16,
+    "ang_pitch": 14.69,
+    "ang_yaw": 147.66,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 409.36
+  },
+  "start_yaw": 147.66,
+  "late_ms_max": 0.29799999902024865,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\s7_open\\FSA.json",
+  "mark": "street_y148",
+  "mark_value": {
+    "pawn": [
+      2391.6800000000003,
+      -265.99,
+      102.08000000000001
+    ],
+    "hud": [
+      2486.34,
+      -285.12,
+      102.12
+    ],
+    "yaw": 147.66,
+    "pitch": 14.69,
+    "cam_offset": [
+      94.65999999999985,
+      -19.129999999999995,
+      0.03999999999999204
+    ],
+    "return_error_u": 0.0
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 507,
+  "pre_real_s": 0.3
+}

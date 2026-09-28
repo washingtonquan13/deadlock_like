@@ -1,0 +1,23 @@
+{
+  "frames": 611,
+  "parsed": 611,
+  "duplicates": 115,
+  "outlier_values_rejected": 0,
+  "valid_rows": 496,
+  "velocity_source": "derived-from-position",
+  "vel_readout_vs_derived": null,
+  "source": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\rec_auto\\s7_open\\SHH12\\ts1_t3_frames.npz",
+  "timescale": 1.0,
+  "time": "game seconds from the first input",
+  "units_per_meter": 39.3701,
+  "up_axis": "z",
+  "frames_captured": 611,
+  "frames_distinct": 611,
+  "cleaning": {
+    "hampel_window": 3,
+    "hampel_k": 4.0,
+    "tol_pos": 3.0,
+    "tol_vel": 3.0,
+    "tol_ang": 1.0
+  }
+}

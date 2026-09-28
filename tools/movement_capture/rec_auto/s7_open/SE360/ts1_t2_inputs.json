@@ -1,0 +1,87 @@
+{
+  "t0_perf": 80739.5327496,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.0002055000077234581,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.6096473000070546,
+      "t_plan": 0.609375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 40
+    },
+    {
+      "t_real": 0.6102329999994254,
+      "t_plan": 0.609375,
+      "kind": "down",
+      "arg": "lctrl",
+      "tick": 40
+    },
+    {
+      "t_real": 2.1096662000054494,
+      "t_plan": 2.109375,
+      "kind": "up",
+      "arg": "lctrl",
+      "tick": 136
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2486.38,
+    "pos_y": -285.03,
+    "pos_z": 102.09,
+    "ang_pitch": 14.66,
+    "ang_yaw": 147.72,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 412.49
+  },
+  "start_yaw": 147.72,
+  "late_ms_max": 0.857999999425374,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\s7_open\\SE360.json",
+  "mark": "street_y148",
+  "mark_value": {
+    "pawn": [
+      2391.6800000000003,
+      -265.99,
+      102.08000000000001
+    ],
+    "hud": [
+      2486.34,
+      -285.12,
+      102.12
+    ],
+    "yaw": 147.66,
+    "pitch": 14.69,
+    "cam_offset": [
+      94.65999999999985,
+      -19.129999999999995,
+      0.03999999999999204
+    ],
+    "return_error_u": 0.0
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 458,
+  "pre_real_s": 0.3
+}

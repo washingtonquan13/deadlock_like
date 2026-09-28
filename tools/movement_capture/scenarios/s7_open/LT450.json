@@ -1,0 +1,73 @@
+{
+ "_comment": "street_y148: dash jump 31, S 40..48 in the air (9 ticks), crouch 61..250 (landing slide)",
+ "name": "LT450",
+ "clip": "LT450",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 260,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 31,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 31,
+   "to": 31,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 40,
+   "to": 48,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 61,
+   "to": 250,
+   "buttons": [
+    "crouch"
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}
