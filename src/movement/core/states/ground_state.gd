@@ -54,7 +54,8 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 				enter_crouch(sim, s)
 	elif s.loco == L.CROUCH:
 		if not crouch:
-			if sim.mover.can_stand(s.position):
+			# measured session 11: a slide jump holds the crouch until slide_jump_crouch_until
+			if s.tick >= s.slide_jump_crouch_until and sim.mover.can_stand(s.position):
 				s.crouched = false
 				s.loco = L.GROUND
 		elif slide_ok:
@@ -108,6 +109,7 @@ static func enter_crouch(sim: MovementSim, s: MoveState) -> void:
 static func enter_slide(sim: MovementSim, s: MoveState, kind: int, speed: float, dir: Vector3 = Vector3.ZERO) -> void:
 	s.loco = L.SLIDE
 	s.crouched = true
+	s.slide_jump_crouch_until = -1
 	s.slide_ticks = 0
 	s.slide_penalty_ticks = 0
 	s.slide_kind = kind

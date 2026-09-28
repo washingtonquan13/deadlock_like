@@ -38,6 +38,7 @@ var combat_penalty_ticks: int = 320
 var in_combat_ticks: int = 192
 var damage_slow_ticks: int = 64
 var slide_jump_store_crouch_ticks: int = 14
+var slide_jump_crouch_ticks: int = 55
 var slide_hop_min_ticks: int = 32       # PROVISIONAL (G09)
 var slide_hop_penalty_ticks: int = -1   # PROVISIONAL (G09): <0 = until landing
 var slide_hop_clear_ticks: int = 16     # PROVISIONAL (G09)
@@ -88,6 +89,7 @@ static func build(p_params: MovementParams, p_hero: HeroMovementStats) -> Compil
 	c.in_combat_ticks = MoveUnits.ticks(p.in_combat_time)                  # spec: movement.md §14
 	c.damage_slow_ticks = MoveUnits.ticks(p.damage_slow_duration)
 	c.slide_jump_store_crouch_ticks = MoveUnits.ticks(p.slide_jump_store_crouch_time)
+	c.slide_jump_crouch_ticks = MoveUnits.ticks(p.slide_jump_crouch_time)
 	c.slide_hop_min_ticks = MoveUnits.ticks(p.slide_hop_min_time)                     # PROVISIONAL (G09)
 	c.slide_hop_penalty_ticks = -1 if p.slide_hop_penalty_time < 0.0 else MoveUnits.ticks(p.slide_hop_penalty_time)
 	c.slide_hop_clear_ticks = maxi(1, MoveUnits.ticks(p.slide_hop_clear_time))

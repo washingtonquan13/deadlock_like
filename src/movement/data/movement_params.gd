@@ -200,6 +200,11 @@ extends Resource
 # jump (lands crouched, no slide); earlier ones land back into a slide. PROVISIONAL: threshold between
 # 11 and 18 ticks (SHJ10 slid, SHJ19 did not).
 @export var slide_jump_store_crouch_time: float = 0.22
+# measured session 11 (SE*, SL*, SC*): a slide jump keeps the hero crouched for this long, even with crouch released
+# in the air. Landing inside it, the HUD coasts on ground friction alone (crouch wishspeed below the speed) and the
+# run ramp resumes at the same time after the jump (~55 ticks) whether the landing came 5 or 9 ticks earlier.
+# Sprint is kept. 0 disables.
+@export var slide_jump_crouch_time: float = 0.86
 # G09 slide-hop penalty ("slide drag", slide_and_slopes.md rule 13; V4 0:47/2:13, V5 1:49, V15 1:14/1:39).
 # Any slide jump sets the flag (not a dash-cancel short hop, not a superglide); with the flag set, a
 # slide jump earlier than slide_hop_min_time into the slide pulls the air speed toward slide_hop_penalty_target.

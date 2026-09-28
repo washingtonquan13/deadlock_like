@@ -96,6 +96,7 @@ var dash_jump_locked: bool = false           # G07: jump pressed before the wind
 var dash_jump_window_open: bool = false      # for DASH_JUMP_WINDOW open/close events
 var dash_jumped_this_airtime: bool = false   # landing slide kind DASH_JUMP (spec §13)
 var air_dashed_this_airtime: bool = false    # landing slide kind AIR (spec §13)
+var slide_jump_crouch_until: int = -1        # measured session 11 (SE/SL/SC): tick until which a slide jump keeps the crouch
 var zip_knockoff_pending: bool = false       # stun applied on landing (spec §16)
 var wall_fatigue_peak: float = 0.0           # linear fatigue recovery (spec §14)
 var wall_fatigue_recover_ticks: int = 0

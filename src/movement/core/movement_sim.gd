@@ -111,8 +111,9 @@ func simulate(s: MoveState, cmd: InputCmd) -> void:
 
 	# --- 4. transitions -------------------------------------------------------------
 	_transitions(s, ctx)
-	# spec: movement.md §3 crouching resets sprint; sliding (and an air crouch) keeps it
-	if s.loco == L.CROUCH:
+	# spec: movement.md §3 crouching resets sprint; sliding (and an air crouch) keeps it. Measured session 11: the
+	# crouch held by a slide jump (slide_jump_crouch_time) keeps it too (the run ramp resumes to full speed).
+	if s.loco == L.CROUCH and s.tick >= s.slide_jump_crouch_until:
 		reset_sprint(s, ctx, &"crouch")
 
 	# --- 5. state physics ----------------------------------------------------------
@@ -327,7 +328,8 @@ func _update_sprint(s: MoveState, ctx: Ctx) -> void:
 	var p := cp.params
 	# Crouching resets only when the result is CROUCH (checked here and again after transitions),
 	# so a crouch press that starts a slide keeps sprint (spec: movement.md §3 persists through slides).
-	if s.loco == L.CROUCH:
+	# (> : on the tick the slide-jump crouch ends the hero stands up in the transitions below, keeping sprint)
+	if s.loco == L.CROUCH and s.tick > s.slide_jump_crouch_until:
 		reset_sprint(s, ctx, &"crouch")
 	elif (ctx.mask & (ControlLocks.MOVE | ControlLocks.SPRINT)) != 0:
 		reset_sprint(s, ctx, &"cc")
@@ -605,6 +607,9 @@ func _land(s: MoveState, ctx: Ctx, g: Dictionary) -> void:
 					GroundState.enter_slide(self, s, kind, -1.0)
 				else:
 					GroundState.enter_crouch(self, s)
+			elif s.tick < s.slide_jump_crouch_until:
+				# measured session 11 (SE*, SL*, SC*): landing inside slide_jump_crouch_time stays crouched
+				GroundState.enter_crouch(self, s)
 			else:
 				try_uncrouch(s)
 
@@ -709,6 +714,8 @@ func clamp_horizontal(s: MoveState, max_speed: float) -> void:
 ## Normal jump (ground, slide or ended dash). spec: movement.md §10.
 func do_ground_jump(s: MoveState, ctx: Ctx, kind: StringName) -> void:
 	var early_slide_jump := s.loco == L.SLIDE and s.slide_ticks < cp.slide_jump_store_crouch_ticks
+	if s.loco == L.SLIDE and cp.slide_jump_crouch_ticks > 0:
+		s.slide_jump_crouch_until = s.tick + cp.slide_jump_crouch_ticks
 	if s.loco == L.SLIDE:
 		_slide_hop(s)
 		emit(s, MoveEvents.SLIDE_END)
