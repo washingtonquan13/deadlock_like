@@ -9,8 +9,9 @@ extends Node3D
 @export var shoulder_offset: Vector3 = Vector3(0.88, 0.15, 0.0)
 @export var distance: float = 2.37
 @export var collision_radius: float = 0.2
-## Horizontal FOV, as Source games specify it (Camera3D is set to KEEP_WIDTH). Godot's default KEEP_HEIGHT
-## would make 90 a vertical FOV, ~121 deg horizontal at 16:9.
+## FOV the Source way: horizontal degrees on a 4:3 screen, widened for wider screens (Hor+). The game's own config
+## (machine_convars.vcfg) has citadel_camera_hero_fov 90, which is ~106 deg horizontal / ~74 deg vertical at 16:9.
+## Treating 90 as the 16:9 horizontal FOV (as before) zoomed the view ~1.33x and made the camera feel too close.
 @export var fov_deg: float = 90.0
 ## How fast (fraction of full boom per second) the camera eases back out after being pulled in.
 @export var pull_out_speed: float = 6.0
@@ -32,9 +33,14 @@ func _ready() -> void:
 		_camera = Camera3D.new()
 		_camera.name = "Camera3D"
 		add_child(_camera)
-	_camera.keep_aspect = Camera3D.KEEP_WIDTH
-	_camera.fov = fov_deg
+	_camera.keep_aspect = Camera3D.KEEP_HEIGHT
+	_camera.fov = _vertical_fov(fov_deg)
 	_camera.near = 0.05
+
+
+## Vertical FOV for a horizontal FOV defined on a 4:3 screen.
+static func _vertical_fov(fov_4x3: float) -> float:
+	return rad_to_deg(2.0 * atan(tan(deg_to_rad(fov_4x3) * 0.5) * 0.75))
 
 
 func set_target(p: PlayerCharacter) -> void:
@@ -72,7 +78,7 @@ func _process(delta: float) -> void:
 	var pivot := _target.get_eye_position()
 	var view_basis := Basis.from_euler(Vector3(pitch, yaw, 0.0))   # YXZ: yaw then pitch
 	global_transform = Transform3D(view_basis, pivot)
-	_camera.fov = fov_deg
+	_camera.fov = _vertical_fov(fov_deg)
 
 	var local_boom := shoulder_offset + Vector3(0.0, 0.0, distance)
 	var hit_fraction := _cast_boom(pivot, view_basis * local_boom)
