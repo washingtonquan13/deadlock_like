@@ -134,3 +134,33 @@ Scenarios are in `scenarios/double/gen.py`: walk W, ground jump at tick 40, then
   - D from rest (DBR) traces the same lateral path as a plain air strafe (RD): −12 u at 0.2 s and −28 u at 0.4 s in both.
   - S from the air jump (DBS) decelerates at the same ~800 u/s² as plain air S (AS).
 - **Not measured:** stamina cost, and air jumps after a dash jump or a wall jump.
+
+## Slide hops and bunny hops (Haze, mark street_y148)
+
+Scenarios are in `scenarios/hop/gen.py`. The dash slide is W 1..23, dash at 4, crouch from 24 (S0), running at ~635 u/s. The jump in SHJk is pressed at S0+k. Two trials each. The helpers are `ser.py` (series) and `hsp.py` (horizontal speed after a jump).
+
+- **No vertical boost.** The apex is ~54 u above standing, the same as a plain jump. The session-1 "82 u" was the crouched camera, which sits 29 u lower in a slide.
+- **Jumping out of a dash slide cuts horizontal speed to ×~0.75.** The cut lands within ~2 ticks of the press. After it, the air decay is normal (not an extra drag). Held, released or re-pressed crouch makes no difference.
+
+  | Jump | Slide speed | After | Ratio |
+  |---|---|---|---|
+  | SHJ3 | 637 | 477–482 | 0.75–0.76 |
+  | SHJ10 | 602–606 | 446–448 | 0.74 |
+  | SHJ19 / 19R / 19P | 545–552 | 403–410 | 0.74–0.75 |
+  | SHJ40 | 435 | 331–332 | 0.76 |
+  | SHJ60 | 351–354 | 267–276 | 0.76–0.79 |
+
+- **No cut from a landing slide (SLDJ).** This is a dash jump, landing into a slide, then a jump 20 ticks later: 538 → 541 at takeoff.
+  - The later drop to ~420 at the apex is the street geometry: the camera's lateral motion goes to exactly 0, so it is a wall clip.
+- **Walking jumps:** no cut (~355 at takeoff).
+- **A held jump does not re-hop (BHH):** one jump only.
+- **Bhop (BHP2, BHP8, walk jump then jump again 2 or 8 ticks after landing):** horizontal speed is kept through the re-jump (~340 → ~340). Ground ticks only apply normal walk friction and accel.
+- **Landing with crouch held after a slide jump:**
+  - **Jumped at slide tick 19, 40 or 60:** no slide. The hero lands crouched and brakes to 0 (~430 → 0 in ~40 ticks), the same as with crouch released (SHJ19R).
+  - **SHJ19P (crouch released at the jump, pressed again in the air):** landed at ~270, under the slide entry speed, and braked as well.
+  - **Jumped at slide tick 3 or 10:** the hero lands into a slide at ~380 / 353 that decays slowly (~0.15–0.19/s, landing-slide friction). The slide ends near tick 145 in both, which is ~65–68 ticks after landing and ~121 after S0, then it brakes.
+  - So a late slide jump stores crouch like a ground jump does (G40), and an early one does not. The threshold lies between slide ticks 11 and 18.
+- **Open:**
+  - A non-dash (normal) slide jump.
+  - Chained slide hops (the G09 second-hop penalty).
+  - Whether the early/late threshold counts slide ticks or time since the dash.

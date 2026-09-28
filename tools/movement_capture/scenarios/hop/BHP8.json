@@ -1,0 +1,47 @@
+{
+ "_comment": "walk W, jump at 40 (lands ~88), jump pressed again at 88+8",
+ "name": "BHP8",
+ "clip": "BHP8",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 200,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 170,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 40,
+   "to": 40,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 96,
+   "to": 96,
+   "buttons": [
+    "jump"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "_comment": "slide jump 0.3 s in, crouch released at the jump, pressed again 30 ticks later (landing slide?)",
+ "name": "SHJ19P",
+ "clip": "SHJ19P",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 200,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 23,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 24,
+   "to": 42,
+   "buttons": [
+    "crouch"
+   ]
+  },
+  {
+   "from": 43,
+   "to": 43,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 73,
+   "to": 190,
+   "buttons": [
+    "crouch"
+   ]
+  }
+ ]
+}
