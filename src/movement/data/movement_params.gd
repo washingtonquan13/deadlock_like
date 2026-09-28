@@ -115,15 +115,15 @@ extends Resource
 # PROVISIONAL (G01): V8 2:16 cap = per-bucket dash speed (732/670/642 u/s; ours derive from
 # air_dash_distance / air_dash_durations, SM-scaled); Hyp A contradicts Leif's angle data (best angle
 # 75 deg, not 90) so mode selection is pending recording clips A1, A2, A3.
-# 3 = measured ramp (session2_findings.md, probes A_probe_b1..b3): v_perp kept; each dash tick
-# v_par += min((rate / duration - damping * v_par) * dt, target - v_par), with
-# target = target_frac[bucket] * bucket air dash speed + entry_frac * v_par at the dash start.
+# 3 = measured ramp (session2_findings.md, probes A_probe_b1..b3; refit session 5): v_perp kept; each dash tick
+# v_par += min((rate - damping_c * (v_par - v_par0)) / duration * dt, target - v_par), with v_par0 the speed along
+# the dash at its start and target = target_frac[bucket] * bucket air dash speed + entry_frac * v_par0.
 @export var air_dash_cap_mode: int = 3
 @export var air_dash_cap_override: float = -1.0                  # PROVISIONAL (G01): <= 0 = cap C is the bucket's air dash speed (V8); gap table's flat 17.78 m/s (700 u/s) is the alternative; pending A1-A3
-@export var air_dash_ramp_rate: float = 48.0                     # measured: accel x duration = 1865/1918/1887 u/s (B1/B2/B3), ~48 m/s
-@export var air_dash_ramp_damping: float = 1.6                   # measured: 1/s on v_par on top of air drag (fit 1.55/1.84/1.39)
-@export var air_dash_ramp_target_fracs: Array[float] = [0.746, 0.758, 0.771]  # measured peak intercepts 546.7/508.2/476.4 u/s over 8 m / duration
-@export var air_dash_ramp_entry_frac: float = 0.176              # measured peak slope vs entry v_par (0.151/0.183/0.193)
+@export var air_dash_ramp_rate: float = 49.0                     # measured session 5: 49 m/s (accel x duration)
+@export var air_dash_ramp_damping_c: float = 0.85                # measured session 5: damps on the speed gained since the dash start, not on v_par (36 trials, rms 3.9)
+@export var air_dash_ramp_target_fracs: Array[float] = [0.759, 0.776, 0.789]  # measured session 5: peak intercepts 554.1/516.1/484.7 u/s over 8 m / duration
+@export var air_dash_ramp_entry_frac: float = 0.26               # measured session 5: peak slope vs entry v_par (0.240/0.260/0.266); entries above ~80 u/s unmeasured
 @export var air_dash_keeps_air_drag: bool = true                 # measured: speed decays ~0.19/s during the dash (spec §11 suspends drag)
 @export var air_dash_drag: float = 0.2                           # measured session 4: 1/s during the air dash only (A_air_b1 572 -> 538 over 0.31 s)
 # G02 end drag at the airborne end of an air dash. 0 = off, 1 = V8 (a) v' = max(min(v, floor), v - frac*(v - offset)),

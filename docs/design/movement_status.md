@@ -269,6 +269,7 @@ Values marked L in the design's parameter table are guesses. They need in-game m
   - `air_jump_speed` (Open Q4) is a guess. `dash_jump_vertical_speed` is 425 u/s (G05); `dash_jump_set_speed` 611 u/s is provisional (G17).
   - T04 checks self-consistency with these values, not ground truth.
 - **Air control:** `air_accel` 10 (PROVISIONAL, G26), `air_wishspeed_cap` 2.032 m/s and 1.27 m/s above 700 u/s (PROVISIONAL, G26). `air_drag` 0.2 (measured session 5); the air dash has its own `air_dash_drag` 0.2.
+- **Air dash ramp (mode 3):** refit session 5. The ramp damps on the speed gained since the dash start (`air_dash_ramp_rate` 49, `air_dash_ramp_damping_c` 0.85), and the peak target is fracs 0.759/0.776/0.789 plus 0.26 × entry speed. Entries above ~80 u/s are unmeasured.
 - **Dash:** `down_dash_speed` 15 m/s (Open Q7) and the exit clamp (Open Q6). The down dash cost is settled at 0.5 (G28), and the scaling mode is settled as speed (ground_dash.md rule 6).
 - **Wall jump:** speeds, kicks and fatigue amounts (Open Q12). The 0.125 s min interval is provisional (G33). Fatigue is measured (S4-WF).
 - **Mantle:** `mantle_reach` 0.6 m (the 212 u "activation distance" is unresolved); `mantle_glide_speed` is 13.97 m/s (G11).

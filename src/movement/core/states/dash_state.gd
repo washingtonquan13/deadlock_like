@@ -131,10 +131,11 @@ static func _start_air_dash_ramp(sim: MovementSim, s: MoveState, dir: Vector3) -
 	s.dash_dir = d
 	var vpar0 := Vector3(s.velocity.x, 0.0, s.velocity.z).dot(d)
 	var b := clampi(sim.cp.hero.dash_bucket, 1, 3) - 1
+	s.air_dash_ramp_v0 = vpar0
 	s.air_dash_ramp_target = p.air_dash_ramp_target_fracs[b] * s.dash_speed + p.air_dash_ramp_entry_frac * vpar0
 
 
-## One tick of the mode 3 ramp: v_par gains (rate / duration - damping * v_par) * dt, stopping at the
+## One tick of the mode 3 ramp: v_par gains (rate - damping_c * (v_par - v_par0)) / duration * dt, stopping at the
 ## target; v_perp is kept. The dash's own drag (air_dash_drag) applies when air_dash_keeps_air_drag is set.
 static func _air_dash_ramp_tick(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	var p := sim.cp.params
@@ -144,7 +145,7 @@ static func _air_dash_ramp_tick(sim: MovementSim, s: MoveState, ctx: Ctx) -> voi
 	if not s.air_dash_ramp_done and d.length_squared() > 1e-9:
 		var vpar := vh.dot(d)
 		var dur := maxf(sim.cp.air_dash_ticks_for(s) * MoveUnits.DT, 1e-6)
-		var gain := maxf(0.0, (p.air_dash_ramp_rate / dur - p.air_dash_ramp_damping * vpar) * dt)
+		var gain := maxf(0.0, (p.air_dash_ramp_rate - p.air_dash_ramp_damping_c * (vpar - s.air_dash_ramp_v0)) / dur * dt)
 		if vpar + gain >= s.air_dash_ramp_target:
 			# the ramp stops at the target (or at once when entering above it); the speed then decays
 			gain = maxf(0.0, s.air_dash_ramp_target - vpar)
