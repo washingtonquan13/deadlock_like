@@ -94,11 +94,6 @@ func test_measured_wall_jump_launch() -> void:
 		assert_eq(first_event(h.trace, MoveEvents.WALL_JUMP), 0, key + ": wall jump")
 		var v: Vector3 = h.trace[0]["vel"] / 0.0254
 		assert_near(v.y, 519.0, 20.0, key + ": launch up")
-		# W also gets this tick's air accel back toward the wall (air_accel is still provisional), so only check it is
-		# below the neutral kick
-		if key == "w":
-			assert_true(-v.x > 100.0 and -v.x < 268.0, "w: weaker kick off the wall (got %.1f)" % -v.x)
-		else:
-			assert_near(-v.x, float(c[2]), 15.0, key + ": kick off the wall")
+		assert_near(-v.x, float(c[2]), 20.0, key + ": kick off the wall")
 		assert_near(absf(v.z), float(c[3]), 15.0, key + ": kick along the wall")
 	done()

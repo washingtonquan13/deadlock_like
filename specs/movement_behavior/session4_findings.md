@@ -1,0 +1,35 @@
+# Session 4 findings: air steering (Haze, sandbox)
+
+Clean-room measurements: private sandbox, `cl_showpos` HUD OCR via `tools/movement_capture/driver`.
+Units: u and u/s (1 u = 0.0254 m).
+
+## Setup
+
+Mark `street`, long open run. Walk W for ticks 1–40, jump at tick 40, hold the key under test from tick 41 to 130.
+Takeoff speed is ~345–365 u/s (the jump comes before full walk speed). Airtime is ~0.72 s.
+The generator is `tools/movement_capture/scenarios/air/gen.py`.
+The fits are `scenarios/air/fitair.py` (v0 + constant accel) and `scenarios/air/velser.py` (velocity series).
+
+| Scenario | Held in air | Result |
+|---|---|---|
+| AW | W (already faster than the cap) | Only drag: −71 to −87 u/s² at ~365 u/s (0.2/s × 365 = −73) |
+| A0 | nothing | Drag only, −37 to −56 u/s² (noisy) |
+| AS | S | A straight line from +344 to −80 u/s in ~0.5 s, ~800 u/s² (drag included). It then holds at −80 |
+| AD | D | Lateral goes 0 → ~−75 u/s and holds. Forward keeps drag only |
+| RW | W after a standing jump | 0 → ~75 u/s in ~0.1 s, then holds ~76–82 |
+| RD | D after a standing jump | Same as RW, sideways, ~−75 to −80 |
+
+## Conclusions (applied)
+
+- **Air accel:** ~780 u/s², the same for every key direction and any current speed. This matches the ~740 u/s²
+  pull after a wall jump (session 3).
+  - In the Source-style formula `accel = air_accel × walk speed`, that is `air_accel` 2.0 for Haze (386 u/s), down from 10.
+  - Scaling with the hero's walk speed is assumed, not measured. A different-speed hero would tell.
+- **Wish cap:** 80 u/s along the wish, confirmed (`air_wishspeed_cap` 2.032 unchanged). Holding a key only adds
+  speed until the velocity's component along the wish reaches 80.
+- **Drag:** 0.2/s is consistent with AW.
+
+## Open
+
+- The 50 u/s cap above 700 u/s (`air_wishspeed_cap_fast`) is untested here.
+- Mouse-turn air strafing (turning while holding A/D) is untested. It should follow from the cap and accel.

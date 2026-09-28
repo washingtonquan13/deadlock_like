@@ -21,6 +21,27 @@ func test_t10_air_drag() -> void:
 	done()
 
 
+## Measured air steering (session4_findings.md): holding S against 344 u/s bleeds ~800 u/s^2 (drag included) and
+## tops out near 80 u/s backwards; W from rest reaches the same ~80 u/s within ~0.1 s. Loose on purpose.
+func test_measured_air_steering() -> void:
+	for my: int in [-1, 1]:
+		var haze := hero_with(1, 0.0)
+		haze.base_move_speed = 386.0 * 0.0254   # measured on Haze
+		var h := new_harness(&"flat", null, haze)
+		await h.ready()
+		h.spawn(Vector3(0.0, 50.0, 0.0), 0.0)
+		h.state.velocity = Vector3(0.0, 0.0, -344.0 * 0.0254) if my < 0 else Vector3.ZERO
+		h.run(40, func(t: int) -> InputCmd: return cmd(t, 0, 0, my))
+		var fwd := func(i: int) -> float: return -float(h.trace[i]["vel"].z) / 0.0254
+		if my < 0:
+			assert_near(fwd.call(15), 344.0 - 800.0 * 16.0 / 64.0, 40.0, "S: ~800 u/s^2 against the motion")
+			assert_near(fwd.call(39), -80.0, 10.0, "S: caps near 80 u/s backwards")
+		else:
+			assert_near(fwd.call(6), 75.0, 15.0, "W: ~80 u/s within ~0.1 s")
+			assert_near(fwd.call(39), 80.0, 10.0, "W: caps near 80 u/s")
+	done()
+
+
 func _down_dash_run(second_press: int) -> SimHarness:
 	var h := new_harness(&"flat")
 	await h.ready()

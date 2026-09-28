@@ -59,11 +59,11 @@ The fit helpers are `analyze.py`, `fitwj.py`, `prepress.py` and `fitacc.py`.
   - Diagonals measure ~130 against ~104 predicted, so the tangential part may not scale with the plain component.
 - **Vertical:** ~519 + k·vz_before, with k ≈ 0.30 when falling and ≈ 0.12 when rising.
 
-### Air accel (not applied)
+### Air accel (applied in session 4)
 
 - With W held, the pull back toward the wall after a wall jump is ~740 u/s².
 - The sim's provisional `air_accel` 10 gives ~3860 u/s² there (10 × walk speed).
-- A Source-style fit suggests `air_accel` ≈ 1.9. Check this against plain air-strafe recordings before changing it.
+- A Source-style fit suggests `air_accel` ≈ 1.9. Plain air recordings confirmed ~780 u/s², so `air_accel` is now 2.0 (see `session4_findings.md`).
 
 ## Open
 

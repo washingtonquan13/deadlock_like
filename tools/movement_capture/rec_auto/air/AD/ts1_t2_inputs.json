@@ -1,0 +1,101 @@
+{
+  "t0_perf": 49211.068609,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.0001975999985006638,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.6097515000001295,
+      "t_plan": 0.609375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 40
+    },
+    {
+      "t_real": 0.6254113999966648,
+      "t_plan": 0.625,
+      "kind": "up",
+      "arg": "w",
+      "tick": 41
+    },
+    {
+      "t_real": 0.6258888000011211,
+      "t_plan": 0.625,
+      "kind": "down",
+      "arg": "d",
+      "tick": 41
+    },
+    {
+      "t_real": 0.6345932999975048,
+      "t_plan": 0.634375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 41
+    },
+    {
+      "t_real": 2.0314748999953736,
+      "t_plan": 2.03125,
+      "kind": "up",
+      "arg": "d",
+      "tick": 131
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2445.06,
+    "pos_y": -346.5,
+    "pos_z": 102.12,
+    "ang_pitch": 14.69,
+    "ang_yaw": 102.62,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 409.95
+  },
+  "start_yaw": 102.62,
+  "late_ms_max": 0.8888000011211261,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\air\\AD.json",
+  "mark": "street",
+  "mark_value": {
+    "pawn": [
+      2391.69,
+      -266.01000000000005,
+      102.02000000000001
+    ],
+    "hud": [
+      2445.19,
+      -346.41,
+      102.09
+    ],
+    "yaw": 102.72,
+    "pitch": 14.69,
+    "cam_offset": [
+      53.5,
+      -80.39999999999998,
+      0.06999999999999318
+    ],
+    "return_error_u": 0.07
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 359,
+  "pre_real_s": 0.3
+}

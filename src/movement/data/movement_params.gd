@@ -139,7 +139,7 @@ extends Resource
 @export var down_dashes_per_airtime: int = 1                     # spec: movement.md §11
 
 # --- air control ----------------------------------------------------------------
-@export var air_accel: float = 10.0                              # PROVISIONAL (G26): accel rate unknown (video_guides.md: keep provisional); pending A5
+@export var air_accel: float = 2.0                               # measured session 4 (Haze): ~780 u/s^2 = 2.0 x walk 386 u/s; scaling with walk speed is Source-style, assumed
 @export var air_wishspeed_cap: float = 2.032                     # PROVISIONAL (G26): 80 u/s (V8, V3, V6, V16; spec 30 u/s contradicted, K26); pending recording clip A5
 @export var air_wishspeed_cap_fast: float = 1.27                 # PROVISIONAL (G26): 50 u/s above air_fast_threshold (V8); pending A5
 @export var air_fast_threshold: float = 17.78                    # PROVISIONAL (G26): 700 u/s horizontal (V8); pending A5
