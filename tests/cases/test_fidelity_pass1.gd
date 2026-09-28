@@ -303,3 +303,23 @@ func test_fp1_dash_jump_landing_slide() -> void:
 			var pen := first_event(h.trace, MoveEvents.SLIDE_PENALTY, "", null, land)
 			assert_true(pen - land >= 38 and pen - land <= 50, "penalty ~44 ticks after landing (got %d)" % (pen - land))
 	done()
+
+
+## session 4 (sback): S during a slide steers (to the camera's right) at the normal turn rate; speed is unchanged.
+func test_fp1_slide_s_steers_right() -> void:
+	for yaw in [0.0, 1.0, -2.5]:
+		var hs: Array[SimHarness] = []
+		for back in [false, true]:
+			var h := new_harness(&"flat")
+			await h.ready()
+			h.run(60, func(t: int) -> InputCmd:
+				return cmd(t, (B_DASH if t == 1 else 0) | (B_CROUCH if t >= 11 else 0), 0, -1 if (back and t >= 20) else 0, yaw))
+			hs.append(h)
+		var a: Dictionary = hs[0].trace[50]
+		var b: Dictionary = hs[1].trace[50]
+		assert_eq(int(b["loco"]), L.SLIDE, "still sliding (yaw %.1f)" % yaw)
+		assert_true(absf(float(b["hspeed"]) / float(a["hspeed"]) - 1.0) < 0.02, "speed unchanged (yaw %.1f)" % yaw)
+		var right := Basis(Vector3.UP, yaw) * Vector3.RIGHT
+		var v: Vector3 = b["vel"]
+		assert_true(v.dot(right) > 0.3 * float(b["hspeed"]), "turned right (yaw %.1f)" % yaw)
+	done()

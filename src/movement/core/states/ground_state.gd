@@ -132,6 +132,11 @@ static func slide_physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 		var w := Vector2(ctx.wish.x, ctx.wish.z)
 		if h.length_squared() > 1e-8 and w.length_squared() > 1e-8:
 			var ang := h.angle_to(w)
+			# measured session 4 (sback): a wish straight behind the slide (plain S) turns it to the camera's right,
+			# at the same rate and speed as any other steer
+			if absf(ang) > PI - 1e-3:
+				var r := Basis(Vector3.UP, s.yaw) * Vector3.RIGHT
+				ang = signf(h.angle_to(Vector2(r.x, r.z))) * PI
 			var step := deg_to_rad(p.slide_turn_rate_deg) * dt
 			h = h.rotated(clampf(ang, -step, step))
 			v = Vector3(h.x, v.y, h.y)
