@@ -4,9 +4,13 @@ extends Node3D
 ## eye position and is rotated by the sampler's unquantized view angles. The Camera3D child is
 ## pushed back along the shoulder offset and pulled in by a sphere cast against WORLD.
 
-@export var shoulder_offset: Vector3 = Vector3(0.55, 0.15, 0.0)
-@export var distance: float = 2.6
+# measured session 4 (driver mark calibration, Haze): the game camera sits ~90 u behind and ~35 u right of
+# the hero at 14.7 deg pitch, so a boom of ~93 u = 2.37 m and a right offset of ~35 u = 0.88 m.
+@export var shoulder_offset: Vector3 = Vector3(0.88, 0.15, 0.0)
+@export var distance: float = 2.37
 @export var collision_radius: float = 0.2
+## Horizontal FOV, as Source games specify it (Camera3D is set to KEEP_WIDTH). Godot's default KEEP_HEIGHT
+## would make 90 a vertical FOV, ~121 deg horizontal at 16:9.
 @export var fov_deg: float = 90.0
 ## How fast (fraction of full boom per second) the camera eases back out after being pulled in.
 @export var pull_out_speed: float = 6.0
@@ -28,6 +32,7 @@ func _ready() -> void:
 		_camera = Camera3D.new()
 		_camera.name = "Camera3D"
 		add_child(_camera)
+	_camera.keep_aspect = Camera3D.KEEP_WIDTH
 	_camera.fov = fov_deg
 	_camera.near = 0.05
 

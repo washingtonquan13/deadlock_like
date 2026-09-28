@@ -16,6 +16,7 @@ top_level = true
 script = ExtResource("3_cr")
 
 [node name="Camera3D" type="Camera3D" parent="CameraRig"]
+keep_aspect = 0
 fov = 90.0
 near = 0.05
 
