@@ -323,3 +323,42 @@ Heights are the camera rise, which matches the ledge height within a few u.
   - SX520: the press at 567 fails and 614 fires.
   - Later spends did not delay the timer.
 - This matches the spec (4.5 s) and the sim (sequential progress from the first spend), so there is no model change.
+
+## Mixed route R1 and the diagonal air jump (Haze, mark street_y148)
+
+Route R1 (`scenarios/route/gen.py`) is 580 ticks of mixed input: walk, dash, S reversal, jump, S+D air jump, crouch, S dash.
+Two trials, very consistent. `route/simrun.sh` replays it in the sim (`tools_fit/route_export.gd`), and `route/compare.py` prints
+sim against game. The replay must start with sprint on (`start.sprint_on`), since the game has sprint from standstill.
+
+- With the Haze hero and sprint on at the start, the sim matches these within ~15 u/s at every 10-tick sample:
+  walk, dash, dash end, S reversal, ground jump, slide hop, crouch walk and S dash.
+- **The one large gap is the S+D air jump:** 381 u/s horizontal in the game (HUD) against ~300 in the sim.
+- The obstacle at ~(fwd −146, left −196) stopped the planned slide, and the ground behind the mark is uneven, so those parts are not compared.
+
+**Camera slopes overstate air speed.** After an air jump, horizontal speed from camera-position slopes reads 4–13% above the HUD
+(e.g. DGRWD 278 vs 246). On the ground they agree (DGGSD 386 vs 386). Air speeds below come from the HUD alone:
+`double/hudfit.py` fits HUD² = h² + (vz0 − g·τ)² with g = 795 over the rise (rms 1–2 u/s).
+
+Diagonal probes (`double/gen.py`: DGBSD/DGBSD0, DGBSA, DGWD, DGRWD, DGRSD, DGGSD). Two trials each, with the key held from 56 and the air jump at 66.
+The table also refits the older 1-D cases.
+
+| Case | Before: h, direction | Wish | After h (HUD) |
+|---|---|---|---|
+| DBRW | ~44, fwd | W | 239 |
+| DGRWD | ~20–80, along the wish | W+D | 246 |
+| DGRSD | ~50–90, along the wish | S+D | 236 |
+| DBL | 341, fwd | D | 374 |
+| DGWD | 338, fwd | W+D | 378 |
+| DGBSA | ~335, back | S+A | 371 |
+| DGBSD | 338, back | S+D | 396 |
+| R1 | 310, back | S+D | 381 |
+| DBW24 | 339, fwd | W | 328 (= DB0 no key, 329) |
+
+- Ground S+D (DGGSD) is exactly 45° and reaches 386 u/s: the ground diagonal is normal.
+- **Rule that fits:** when v·wish is below ~280, the air jump adds ~200 u/s along the wish. The horizontal speed is then capped
+  at max(old speed, run speed ≈ 386). Otherwise nothing changes (DBW24).
+  - From rest, this gives ~240. The old "raise v·wish to 280" came from camera slopes.
+  - With speed, the result is at the run-speed cap (371–396).
+- The camera directions after the jump are about 11–19° off the old velocity toward the wish. The rule predicts 17°.
+- **Open:** S+D lands ~20 u/s above its mirror S+A (396 vs 371, two trials each). The cause is unknown.
+- **Open:** earlier air accel values (~780 u/s²) came from camera slopes and may be a few % high.

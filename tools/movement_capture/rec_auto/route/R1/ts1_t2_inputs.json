@@ -1,0 +1,241 @@
+{
+  "t0_perf": 64532.2924357,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.0002902999985963106,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.17211619999579852,
+      "t_plan": 0.171875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 12
+    },
+    {
+      "t_real": 0.1971655000015744,
+      "t_plan": 0.196875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 13
+    },
+    {
+      "t_real": 0.7815479999990202,
+      "t_plan": 0.78125,
+      "kind": "up",
+      "arg": "w",
+      "tick": 51
+    },
+    {
+      "t_real": 0.7819155999968643,
+      "t_plan": 0.78125,
+      "kind": "down",
+      "arg": "s",
+      "tick": 51
+    },
+    {
+      "t_real": 1.4690067999981693,
+      "t_plan": 1.46875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 95
+    },
+    {
+      "t_real": 1.4939854999975068,
+      "t_plan": 1.49375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 96
+    },
+    {
+      "t_real": 1.9534536999999546,
+      "t_plan": 1.953125,
+      "kind": "down",
+      "arg": "d",
+      "tick": 126
+    },
+    {
+      "t_real": 2.1720673000017996,
+      "t_plan": 2.171875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 140
+    },
+    {
+      "t_real": 2.1972950999988825,
+      "t_plan": 2.196875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 141
+    },
+    {
+      "t_real": 2.344177099999797,
+      "t_plan": 2.34375,
+      "kind": "up",
+      "arg": "d",
+      "tick": 151
+    },
+    {
+      "t_real": 2.344549100002041,
+      "t_plan": 2.34375,
+      "kind": "up",
+      "arg": "s",
+      "tick": 151
+    },
+    {
+      "t_real": 3.5159654000017326,
+      "t_plan": 3.515625,
+      "kind": "down",
+      "arg": "w",
+      "tick": 226
+    },
+    {
+      "t_real": 4.95333589999791,
+      "t_plan": 4.953125,
+      "kind": "down",
+      "arg": "lctrl",
+      "tick": 318
+    },
+    {
+      "t_real": 5.1410490999987815,
+      "t_plan": 5.140625,
+      "kind": "down",
+      "arg": "a",
+      "tick": 330
+    },
+    {
+      "t_real": 5.390787099997397,
+      "t_plan": 5.390625,
+      "kind": "up",
+      "arg": "a",
+      "tick": 346
+    },
+    {
+      "t_real": 5.531522999997833,
+      "t_plan": 5.53125,
+      "kind": "down",
+      "arg": "space",
+      "tick": 355
+    },
+    {
+      "t_real": 5.556411699995806,
+      "t_plan": 5.55625,
+      "kind": "up",
+      "arg": "space",
+      "tick": 356
+    },
+    {
+      "t_real": 5.625237000000197,
+      "t_plan": 5.625,
+      "kind": "up",
+      "arg": "lctrl",
+      "tick": 361
+    },
+    {
+      "t_real": 5.860054600001604,
+      "t_plan": 5.859375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 376
+    },
+    {
+      "t_real": 5.860389599998598,
+      "t_plan": 5.859375,
+      "kind": "down",
+      "arg": "s",
+      "tick": 376
+    },
+    {
+      "t_real": 6.4690830999970785,
+      "t_plan": 6.46875,
+      "kind": "down",
+      "arg": "lctrl",
+      "tick": 415
+    },
+    {
+      "t_real": 6.953322499997739,
+      "t_plan": 6.953125,
+      "kind": "up",
+      "arg": "lctrl",
+      "tick": 446
+    },
+    {
+      "t_real": 7.140792899997905,
+      "t_plan": 7.140625,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 458
+    },
+    {
+      "t_real": 7.165866700001061,
+      "t_plan": 7.165625,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 459
+    },
+    {
+      "t_real": 7.7351505999977235,
+      "t_plan": 7.734375,
+      "kind": "up",
+      "arg": "s",
+      "tick": 496
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2486.38,
+    "pos_y": -285.12,
+    "pos_z": 102.09,
+    "ang_pitch": 14.66,
+    "ang_yaw": 147.66,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 407.8
+  },
+  "start_yaw": 147.66,
+  "late_ms_max": 1.014599998597987,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\route\\R1.json",
+  "mark": "street_y148",
+  "mark_value": {
+    "pawn": [
+      2391.6800000000003,
+      -265.99,
+      102.08000000000001
+    ],
+    "hud": [
+      2486.34,
+      -285.12,
+      102.12
+    ],
+    "yaw": 147.66,
+    "pitch": 14.69,
+    "cam_offset": [
+      94.65999999999985,
+      -19.129999999999995,
+      0.03999999999999204
+    ],
+    "return_error_u": 0.0
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 1198,
+  "pre_real_s": 0.3
+}

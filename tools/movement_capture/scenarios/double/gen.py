@@ -47,3 +47,30 @@ for name, (key, walk, aj) in X.items():
     if aj:
         s["timeline"].append({"from": 66, "to": 66, "buttons": ["jump"]})
     json.dump(s, open(name + ".json", "w"), indent=1)
+# Route R1 showed a diagonal (S+D) air jump adding far more than the 1-D rule predicts. Diagonal probes, same timing:
+#  DGBSD/DGBSD0: backpedal S, jump 40, S+D from 56, air jump 66 (control without)
+#  DGWD: walk W, jump 40, W+D from 56, air jump 66;  DGRWD: standing jump 40, W+D from 56, air jump 66
+G = {"DGBSD": ([0, -1], [1, -1], True, True), "DGBSD0": ([0, -1], [1, -1], True, False),
+     "DGWD": ([0, 1], [1, 1], True, True), "DGRWD": (None, [1, 1], False, True)}
+for name, (pre, key, walk, aj) in G.items():
+    s = base(name, "%s jump 40, keys %s from 56%s" % ("walk %s," % pre if walk else "standing", key, ", air jump 66" if aj else " (control)"))
+    if walk:
+        s["timeline"].append({"from": 1, "to": 55, "move": pre})
+    s["timeline"] += [{"from": 40, "to": 40, "buttons": ["jump"]}, {"from": 56, "to": 170, "move": key}]
+    if aj:
+        s["timeline"].append({"from": 66, "to": 66, "buttons": ["jump"]})
+    json.dump(s, open(name + ".json", "w"), indent=1)
+# Backward diagonals added more, skewed toward the side key. Mirror, from rest, and the ground direction of S+D:
+#  DGBSA: backpedal S, jump 40, S+A from 56, air jump 66;  DGRSD: standing jump 40, S+D from 56, air jump 66
+#  DGGSD: ground S+D from standstill 1..90 (no jump)
+G2 = {"DGBSA": ([0, -1], [-1, -1], True), "DGRSD": (None, [1, -1], False)}
+for name, (pre, key, walk) in G2.items():
+    s = base(name, "%s jump 40, keys %s from 56, air jump 66" % ("walk %s," % pre if walk else "standing", key))
+    if walk:
+        s["timeline"].append({"from": 1, "to": 55, "move": pre})
+    s["timeline"] += [{"from": 40, "to": 40, "buttons": ["jump"]}, {"from": 56, "to": 170, "move": key},
+                      {"from": 66, "to": 66, "buttons": ["jump"]}]
+    json.dump(s, open(name + ".json", "w"), indent=1)
+s = base("DGGSD", "ground S+D from standstill 1..90, no jump (ground direction of the diagonal)", T=120)
+s["timeline"] = [{"from": 1, "to": 90, "move": [1, -1]}]
+json.dump(s, open("DGGSD.json", "w"), indent=1)

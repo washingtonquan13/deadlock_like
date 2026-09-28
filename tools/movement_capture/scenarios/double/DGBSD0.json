@@ -1,0 +1,48 @@
+{
+ "_comment": "walk [0, -1], jump 40, keys [1, -1] from 56 (control)",
+ "name": "DGBSD0",
+ "clip": "DGBSD0",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 200,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 55,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 40,
+   "to": 40,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 56,
+   "to": 170,
+   "move": [
+    1,
+    -1
+   ]
+  }
+ ]
+}

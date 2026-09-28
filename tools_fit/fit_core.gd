@@ -281,6 +281,12 @@ func simulate(x: PackedFloat64Array) -> Dictionary:
 		s.velocity = _v3(st["vel_mps"])
 	if st.has("stamina"):
 		s.stamina = float(st["stamina"])
+	if bool(st.get("sprint_on", false)):
+		# out of combat for a long time: sprint already on at full bonus (the recordings start that way)
+		s.sprint_active = true
+		s.sprint_timer_ticks = 100000
+		s.sprint_ramp_ticks = 100000
+		s.sprint_bonus_current = cp.sprint_total(s)
 	var out_t := PackedFloat64Array([0.0])
 	var out_p: Array[Vector3] = [s.position]
 	var out_v: Array[Vector3] = [s.velocity]

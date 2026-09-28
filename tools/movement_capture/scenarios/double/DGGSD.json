@@ -1,0 +1,33 @@
+{
+ "_comment": "ground S+D from standstill 1..90, no jump (ground direction of the diagonal)",
+ "name": "DGGSD",
+ "clip": "DGGSD",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 120,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 90,
+   "move": [
+    1,
+    -1
+   ]
+  }
+ ]
+}
