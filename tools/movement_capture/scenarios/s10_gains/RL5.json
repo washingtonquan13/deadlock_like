@@ -1,0 +1,51 @@
+{
+ "_comment": "ramp1_slope: W 1..5 from rest, crouch 6..205 (slow-entry slide down the ramp)",
+ "name": "RL5",
+ "clip": "RL5",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 205,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 5,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 6,
+   "to": 205,
+   "buttons": [
+    "crouch"
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}

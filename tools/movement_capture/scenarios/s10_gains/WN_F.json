@@ -1,0 +1,58 @@
+{
+ "_comment": "wallAd: W 1..84, jump 60, wall jump 104, no keys after: W released at 84, press at 104 (falling)",
+ "name": "WN_F",
+ "clip": "WN_F",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 200,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 84,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 60,
+   "to": 60,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 104,
+   "to": 104,
+   "buttons": [
+    "jump"
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}

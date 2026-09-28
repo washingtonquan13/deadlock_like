@@ -1,0 +1,80 @@
+{
+ "_comment": "street_y058b: W 1..31, dash 4, dash jump 31, crouch 61..103, slide hop 103, no keys 106..160, S brake 170..220",
+ "name": "FA_N",
+ "clip": "FA_N",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 230,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 31,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 31,
+   "to": 31,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 61,
+   "to": 103,
+   "buttons": [
+    "crouch"
+   ]
+  },
+  {
+   "from": 103,
+   "to": 103,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 170,
+   "to": 220,
+   "move": [
+    0,
+    -1
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+{
+  "frames": 643,
+  "parsed": 643,
+  "duplicates": 318,
+  "outlier_values_rejected": 1,
+  "valid_rows": 325,
+  "velocity_source": "derived-from-position",
+  "vel_readout_vs_derived": null,
+  "source": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\rec_auto\\s10_gains\\RL8\\ts1_t1_frames.npz",
+  "timescale": 1.0,
+  "time": "game seconds from the first input",
+  "units_per_meter": 39.3701,
+  "up_axis": "z",
+  "frames_captured": 643,
+  "frames_distinct": 643,
+  "cleaning": {
+    "hampel_window": 3,
+    "hampel_k": 4.0,
+    "tol_pos": 3.0,
+    "tol_vel": 3.0,
+    "tol_ang": 1.0
+  }
+}
