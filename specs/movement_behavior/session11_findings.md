@@ -130,6 +130,12 @@
   be told apart.
 - `down_dash_speed` 15.0 m/s (set) -> 12.7 m/s (added).
 
+## Air dash vertical (G25): confirmed, no change
+
+- AV_R (air dash 7 ticks after the jump, rising at ~+250) and AV_F (35 ticks after, falling): the game height is
+  flat for the whole ~30-tick burst in both, then gravity resumes. vy is zeroed at the start and held at 0, as the sim
+  already does. HUD speed and landing time match (rms 20 over both, lag 4.5).
+
 ## Contaminated hero from ~15:47 (RUN)
 
 - By the end of the session the sandbox Haze was level 19 with 6 items (~$25,600,

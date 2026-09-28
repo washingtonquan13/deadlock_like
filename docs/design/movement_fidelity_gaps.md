@@ -59,7 +59,7 @@ Counts: **13 fixed-settled, 19 provisional, 18 open** (50 gaps, including the ne
 | G16 | open | structure confirmed (V13 0:04); kick values under G32 | W2 |
 | G19 | open | constant profile kept; no curve parameter yet | D1 |
 | G23 | open | facing kept; no evidence | D1 neutral rep |
-| G25 | open | zero-and-hold confirmed (V9 0:48); hold duration vs 0.13 s accel phase unknown; no code change | A1 |
+| G25 | measured | session 11 AV_R/AV_F: vy zeroed and held for the whole burst, rising or falling; sim unchanged | AV_* (done) |
 | G27 | open | sets vy; horizontal nudge (V3 5:20) not implemented | A6 |
 | G29 | measured | session 11: adds 500 u/s to vy, horizontal kept; ground run x0.8 for 28 ticks after | DD_* (done) |
 | G30 | open | unknown | A7 (with SM) |
