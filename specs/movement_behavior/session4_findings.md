@@ -209,3 +209,19 @@ Curb crossings behave the same way. SLC, LSJ20 and SHJ3/10 reach 680 u at 86–1
 
 This agrees with the shot list's "a slope resets the window to 0.6 s" (V15). The landing reset is ~0.69 s.
 
+
+## S during a slide (Haze, mark street_y148, sim already matches)
+
+Scenarios are in `scenarios/sback`: a dash slide with crouch from 24, plus:
+- SB0: no input.
+- SBS: S from 32.
+- SBSD: S+D from 32.
+- SBS60: S from 60.
+
+The helper `fl.py` prints forward and lateral velocity from camera differences.
+
+- **S does not brake.** The HUD speed matches SB0 tick for tick until the penalty onset (~90).
+- **It steers instead,** at the normal slide turn rate: the heading reaches ~−90° about 1 s after the press (~90°/s).
+- **Plain S always turns to the camera's right,** in both trials of SBS and SBS60. S+D turns the same way at the same rate.
+- **After the slide ends,** velocity snaps to the wish at crouch-walk speed (~187 u/s): straight back for S, back-right for S+D.
+- **The sim already turns under S,** but which side it picks came from float noise. It now breaks the tie to the right.
