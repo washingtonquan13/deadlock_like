@@ -4,8 +4,10 @@ import json
 D = 4
 def base(name, comment, T=220):
     return {"_comment": comment, "name": name, "clip": name, "up_axis": "z",
-            "start": {"pos_m": [0, 0, 0], "yaw_deg": 0.0, "stamina": 3.0}, "ticks": T,
-            "default": {"move": [0, 0], "buttons": []}, "timeline": []}
+            "start": {"pos_m": [0, 0, 0], "yaw_deg": 0.0, "stamina": 3.0, "sprint_on": True}, "ticks": T,
+            "default": {"move": [0, 0], "buttons": []}, "timeline": [],
+            "suppress_sprint": False, "hero": "res://data/movement/heroes/hero_haze.tres",
+            "params": [{"name": "air_accel", "min": 0, "max": 100, "note": "placeholder: the sim replay needs one (value unchanged)"}]}
 def dj(name, comment, jumps, after=None, crouch_from=None):
     s = base(name, comment)
     last = max(jumps) if jumps else 60

@@ -10,7 +10,8 @@
    0
   ],
   "yaw_deg": 0.0,
-  "stamina": 3.0
+  "stamina": 3.0,
+  "sprint_on": true
  },
  "ticks": 220,
  "default": {
@@ -50,6 +51,16 @@
     0,
     1
    ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
   }
  ]
 }
