@@ -135,7 +135,7 @@ static func walk_physics(sim: MovementSim, s: MoveState, ctx: Ctx, wishspeed: fl
 		var ns := maxf(0.0, speed - drop)
 		v *= ns / speed
 	if ctx.has_move and wishspeed > 0.0:
-		# spec: movement.md §2 backpedal/strafe multipliers (1.0 until measured)
+		# spec: movement.md §2 backpedal/strafe multipliers; both measured 1.0 (sessions 7, 9)
 		if ctx.move_y < 0:
 			wishspeed *= p.backpedal_mult
 		elif ctx.move_y == 0 and ctx.move_x != 0:
