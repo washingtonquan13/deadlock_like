@@ -559,7 +559,6 @@ func _land(s: MoveState, ctx: Ctx, g: Dictionary) -> void:
 	if s.velocity.y < 0.0:
 		s.velocity.y = 0.0
 	emit(s, MoveEvents.LANDED, {"impact_speed": maxf(0.0, impact)})
-	var dash_jumped := s.dash_jumped_this_airtime
 	var air_dashed := s.air_dashed_this_airtime
 	refresh_air(s)
 	s.last_air_crouch_press_tick = -1
@@ -587,11 +586,10 @@ func _land(s: MoveState, ctx: Ctx, g: Dictionary) -> void:
 				# G40: crouch held since the dash or takeoff: no slide on landing
 				GroundState.enter_crouch(self, s)
 			elif ctx.is_held(InputCmd.BTN_CROUCH):
-				# spec: movement.md §13 slide on landing / air slide / dash-jump slide
+				# spec: movement.md §13 slide on landing / air slide. Measured session 4 (lslide): a dash-jump landing
+				# is a normal landing slide (speed or slope needed; same friction, penalty and onset).
 				var kind := -1
-				if dash_jumped:
-					kind = MoveState.SlideKind.DASH_JUMP
-				elif air_dashed:
+				if air_dashed:
 					kind = MoveState.SlideKind.AIR
 				elif s.horizontal_speed() > p.slide_entry_speed or on_slide_slope(s):
 					kind = MoveState.SlideKind.NORMAL

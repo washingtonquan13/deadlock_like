@@ -282,3 +282,24 @@ func test_fp1_dash_slide_jump() -> void:
 		if land > j:
 			assert_eq(int(h.trace[land]["loco"]), L.SLIDE if k == 2 else L.CROUCH, "landing loco (k=%d)" % k)
 	done()
+
+
+## session 4 (lslide): a dash-jump landing with crouch held slides only above the entry speed; the penalty
+## starts ~0.69 s after touchdown. With S held in the air (landing slow) it lands crouched instead.
+func test_fp1_dash_jump_landing_slide() -> void:
+	for slow in [false, true]:
+		var h := new_harness(&"flat")
+		await h.ready()
+		h.run(160, func(t: int) -> InputCmd:
+			var my := -1 if (slow and t >= 30 and t < 60) else 0
+			return cmd(t, (B_DASH if t == 1 else 0) | (B_JUMP if t == 21 else 0) | (B_CROUCH if t >= 40 else 0), 0, my))
+		assert_true(first_event(h.trace, MoveEvents.JUMPED, "kind", &"dash_jump") > 0, "dash jump (slow=%s)" % slow)
+		var land := first_event(h.trace, MoveEvents.LANDED)
+		assert_true(land > 0, "landed (slow=%s)" % slow)
+		if land <= 0:
+			continue
+		assert_eq(int(h.trace[land]["loco"]), L.CROUCH if slow else L.SLIDE, "landing loco (slow=%s)" % slow)
+		if not slow:
+			var pen := first_event(h.trace, MoveEvents.SLIDE_PENALTY, "", null, land)
+			assert_true(pen - land >= 38 and pen - land <= 50, "penalty ~44 ticks after landing (got %d)" % (pen - land))
+	done()

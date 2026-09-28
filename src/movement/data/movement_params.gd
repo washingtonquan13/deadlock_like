@@ -156,15 +156,17 @@ extends Resource
 # measured session 3: a ground-dash slide decays at 0.694/s (video_guides: ~0.6 since 2026-03-06, ~0.18 before)
 @export var slide_friction_dash: float = 0.694
 @export var slide_penalty_friction: float = 3.1875               # spec: movement.md §13
-@export var slide_penalty_friction_dash_jump: float = 0.6875     # spec: movement.md §13
+@export var slide_penalty_friction_dash_jump: float = 0.6875     # spec: movement.md §13; unused since session 4 (landings no longer make DASH_JUMP slides)
 # measured session 3: with a move key held, slide velocity turns toward the key direction at this rate,
 # speed unchanged; the mouse alone does not steer. 0 disables.
 @export var slide_turn_rate_deg: float = 92.0
 @export var slide_bonus_table: Array[float] = [0.0, 0.35, 0.50, 0.80]        # spec: movement.md §13
-@export var slide_onset_table: Array[float] = [0.75, 1.00, 1.25, 1.50]       # spec: movement.md §13
+# measured session 4 (lslide): a landing slide hits the penalty 44 ticks (0.69 s) after touchdown (spec 0.75);
+# the spec's +0.25 s per bonus step is kept
+@export var slide_onset_table: Array[float] = [0.69, 0.94, 1.19, 1.44]
 # measured session 3: the penalty starts ~0.96 s into a ground-dash slide (shot list: ~1.0 s window for dash slides)
 @export var slide_onset_table_dash: Array[float] = [0.96, 1.21, 1.46, 1.71]
-@export var slide_onset_table_dash_jump: Array[float] = [1.00, 1.25, 1.50, 1.75]  # spec: movement.md §13
+@export var slide_onset_table_dash_jump: Array[float] = [1.00, 1.25, 1.50, 1.75]  # spec: movement.md §13; unused since session 4
 # measured session 4 (hop): a jump out of a ground-dash slide cuts horizontal speed to x0.75 (0.74-0.79 at
 # 350-640 u/s); jumps out of a landing slide or from walking are not cut.
 @export var slide_jump_speed_mult_dash: float = 0.75
