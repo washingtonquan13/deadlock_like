@@ -90,10 +90,10 @@ extends Resource
 @export var gravity: float = 20.32                               # measured 798-801 u/s^2 on plain jumps (session2_findings.md); spec §10 was 24.562 (967 u/s^2)
 @export var air_jump_speed: float = 13.26                        # measured session 4: vz set to ~522 u/s (was 7.493 = 295)
 @export var air_jump_sets_vertical: bool = true                  # measured session 4: set, not added (rise ~168 u for any vz before)
-# measured session 4 (DBX/DBL/DBRW/DBB): one accelerate step along the wish on the air jump; v.wish rises toward
-# 280 u/s by at most 205 u/s (only DBB pins the step), other components kept, nothing with no key held.
-@export var air_jump_wish_speed: float = 7.112
-@export var air_jump_wish_add_max: float = 5.207
+# measured session 4 (DB*/DG* HUD fits): if v.wish < gate (~280 u/s) the air jump adds a fixed ~200 u/s along the
+# wish, then caps horizontal speed at max(old speed, run speed); nothing at/above the gate or with no key held.
+@export var air_jump_wish_speed: float = 7.112                   # gate on v.wish (280 u/s; between 240 and 339 measured)
+@export var air_jump_wish_add_max: float = 5.08                  # the step (200 u/s)
 @export var air_jumps_per_airtime: int = 1                       # spec: movement.md §10
 @export var coyote_time: float = 0.0                             # spec: movement.md §10 (Open Q20)
 @export var jump_buffer_time: float = 0.0                        # spec: movement.md §10 (Open Q20)

@@ -86,11 +86,11 @@ func test_t18_air_jump() -> void:
 	done()
 
 
-## Measured air jump horizontal (session4_findings.md): one accelerate step along the held key raises v.wish toward
-## ~280 u/s by at most ~205 u/s; other components are kept. Loose on purpose.
+## Measured air jump horizontal (session4_findings.md, HUD fits): below the gate a fixed ~200 u/s step along the held
+## key, then horizontal speed capped at max(old speed, run speed). Loose on purpose.
 func test_measured_air_jump_wish_accel() -> void:
 	var u := 0.0254
-	for c: Array in [[1, 0, Vector3(82.0, 0.0, -330.0)], [0, -1, Vector3(0.0, 0.0, -210.0)]]:
+	for c: Array in [[1, 0, Vector3(0.0, 0.0, -340.0)], [0, -1, Vector3(0.0, 0.0, -210.0)], [0, 1, Vector3(0.0, 0.0, -40.0)]]:
 		var h := new_harness(&"flat")
 		await h.ready()
 		h.spawn(Vector3(0.0, 50.0, 0.0), 0.0)
@@ -98,9 +98,12 @@ func test_measured_air_jump_wish_accel() -> void:
 		h.state.velocity = c[2] * u
 		h.run(2, func(t: int) -> InputCmd: return cmd(t, B_JUMP if t == 2 else 0, c[0], c[1]))
 		var v: Vector3 = h.state.velocity / u
+		var hs := Vector2(v.x, v.z).length()
 		if c[0] == 1:
-			assert_near(v.x, 280.0, 25.0, "D: lateral raised to ~280")
-			assert_near(-v.z, 330.0, 25.0, "D: forward kept")
+			assert_true(v.x > 120.0, "D: lateral gained")
+			assert_true(hs > 330.0 and hs < 400.0, "D: capped near max(old, run speed), got %.0f" % hs)
+		elif c[1] == -1:
+			assert_near(-v.z, 0.0, 30.0, "S against 210: one ~200 step, to ~0")
 		else:
-			assert_near(-v.z, 0.0, 30.0, "S against 210: raised by ~205 only, to ~0")
+			assert_near(hs, 240.0, 30.0, "W from ~40: ~240")
 	done()
