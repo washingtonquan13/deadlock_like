@@ -263,7 +263,7 @@ These are decisions made where the spec is silent or where the design was adjust
 
 Values marked L in the design's parameter table are guesses. They need in-game measurement (use the R1–R4 recorder recipes and `specs/movement.md` measurement protocol) before they are trusted:
 
-- **Ground feel:** `ground_accel` 4.0 and `ground_friction` 4.0 (Open Q1), `stop_speed` 2.54 m/s.
+- **Ground feel:** `ground_friction` 4.0 and `stop_speed` 2.54 m/s are measured. The accel step is a constant `ground_accel` × `ground_accel_ref_speed` = 1600 u/s² for every hero (measured session 5, was 4 × wishspeed). Wishspeeds above 400 u/s and crouch-walk accel are unmeasured.
 - **Jump:**
   - `gravity` 24.562 m/s² is inferred from 295 u/s and 45 u.
   - `air_jump_speed` (Open Q4) is a guess. `dash_jump_vertical_speed` is 425 u/s (G05); `dash_jump_set_speed` 611 u/s is provisional (G17).

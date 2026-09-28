@@ -103,8 +103,10 @@ static func walk_physics(sim: MovementSim, s: MoveState, ctx: Ctx, wishspeed: fl
 			wishspeed *= p.strafe_mult
 		var cur := v.dot(ctx.wish)
 		var add := wishspeed - cur
+		# measured session 5: the accel step is the same ~1600 u/s^2 for every hero (Haze, Infernus, Abrams), not
+		# ground_accel * wishspeed
 		if add > 0.0:
-			v += ctx.wish * minf(add, p.ground_accel * wishspeed * dt)
+			v += ctx.wish * minf(add, p.ground_accel * p.ground_accel_ref_speed * dt)
 	s.velocity = Vector3(v.x, 0.0, v.z)
 
 

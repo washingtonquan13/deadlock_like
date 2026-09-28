@@ -23,6 +23,10 @@ extends Resource
 
 # --- ground locomotion ----------------------------------------------------------
 @export var ground_accel: float = 4.0                            # spec: movement.md §2 (Open Q1)
+# measured session 5 (Haze k 4.15, Infernus k 4.9 -> k * run = 1601 u/s^2): accel = ground_accel * this, for every
+# hero. With friction 4 the ground steady state is 400 u/s; wishspeeds above that are unmeasured. Crouch-walk accel is
+# unmeasured too (it uses the same constant).
+@export var ground_accel_ref_speed: float = 10.16                # 400 u/s
 @export var ground_friction: float = 4.0                         # spec: movement.md §2 (Open Q1)
 @export var stop_speed: float = 2.54                             # spec: movement.md §2 (100 u/s)
 @export var backpedal_mult: float = 1.0                          # spec: movement.md §2 (Open Q2)
@@ -272,7 +276,7 @@ extends Resource
 func validate() -> PackedStringArray:
 	var w := PackedStringArray()
 	if ground_accel < ground_friction:
-		w.append("ground_accel (%f) < ground_friction (%f): steady speed falls short of wishspeed" % [ground_accel, ground_friction])
+		w.append("ground_accel (%f) < ground_friction (%f): ground steady speed %f m/s falls short of ground_accel_ref_speed" % [ground_accel, ground_friction, ground_accel * ground_accel_ref_speed / ground_friction])
 	if ground_dash_durations.size() != 3:
 		w.append("ground_dash_durations must have 3 entries (dash buckets 1..3)")
 	if air_dash_durations.size() != 3:
