@@ -133,4 +133,4 @@
 
 - The RRUN slide edge transient (one edge; needs a second ramp top to tell geometry from physics).
 - The air strafe cap above 700 u/s (the reachable flight is too short; see FF_*).
-- The end drag after a 90 deg air dash (game keeps ~50 u/s more than the sim).
+- ~~The end drag after a 90 deg air dash~~: closed in session 11 (the HUD speed matches the sim; the ~50 u/s was the camera).

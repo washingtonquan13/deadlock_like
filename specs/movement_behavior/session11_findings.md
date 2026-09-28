@@ -170,6 +170,12 @@
   (air input under the same 115 u/s cap, vz held at 0). HM_A/HM_AW recovery-window rms 4.3 u/s (was ~25 with the
   zero lock). Cooldown onsets are unchanged (HM_C/HM_C2 162/162).
 
+## 90 deg air dash end drag (session 10 FF_N): no gap
+
+- The session-10 "game keeps ~50 u/s more after the dash" came from pos-derived (camera) speed. The HUD speed (3D in
+  the air) of the same FF_N recordings matches the sim speed3d at lag 2.7-4.5: dash plateau 855-865 vs 857, post-dash
+  663-702 vs 661-694, same landing tick (~95). No change.
+
 ## Still open
 
 - HM_W's extra ~13 u when the heavy starts from a run.
