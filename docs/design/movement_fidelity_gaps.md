@@ -57,17 +57,17 @@ Counts: **13 fixed-settled, 19 provisional, 18 open** (50 gaps, including the ne
 | G50 | provisional | jump press during an air dash dropped, PROVISIONAL (G50) in dash_state.gd | A9 |
 | G15 | open | no code change; V13 1:18 contradicts 'extra drag' (low confidence) | W1 |
 | G16 | open | structure confirmed (V13 0:04); kick values under G32 | W2 |
-| G19 | open | constant profile kept; no curve parameter yet | D1 |
-| G23 | open | facing kept; no evidence | D1 neutral rep |
+| G19 | measured | session 2: constant 635 u/s plateau (B1), then the measured tail; no curve needed | D1 (done) |
+| G23 | measured | session 2: a dash with no move key does nothing, ground or air (`neutral_dash_does_nothing`) | D1 (done) |
 | G25 | measured | session 11 AV_R/AV_F: vy zeroed and held for the whole burst, rising or falling; sim unchanged | AV_* (done) |
-| G27 | open | sets vy; horizontal nudge (V3 5:20) not implemented | A6 |
+| G27 | measured | session 5/6: sets vy; adds up to 200 u/s along the previous wish (`air_jump_wish_add_max`) | A6 (done) |
 | G29 | measured | session 11: adds 500 u/s to vy, horizontal kept; ground run x0.8 for 28 ticks after | DD_* (done) |
 | G30 | open | unknown | A7 (with SM) |
 | G32 | open | up 7.0 and kicks 2.0/4.5/6.5 m/s unsourced | W1 (neutral), W2 |
 | G34 | open | 0.3048 m unknown | W1 side note |
 | G35 | open | not implemented | W5 |
 | G37 | open | 0.6 m unknown | M1 |
-| G41 | open | no steering; needs slide_turn_rate | S3 |
+| G41 | measured | session 3: a held key turns the slide ~92 deg/s at kept speed (`slide_turn_rate_deg`) | S3 (done) |
 | G42 | open | not implemented | none scheduled (low priority) |
 | G43 | open | values match; form and the 0.6/0.75/1.0 s windows (V15 0:27) not modelled | S1; S2 side read |
 | G44 | open | 5 degrees unknown; 830 u/s slope cap evidence (V15 0:16) | none scheduled (low priority) |
