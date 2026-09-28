@@ -14,7 +14,7 @@ func test_t02_walk_accel() -> void:
 		if float(h.trace[i]["hspeed"]) >= 6.84:
 			first = i + 1
 			break
-	assert_true(first > 0 and first < 30, "95% of run speed within ~0.4 s (tick %d)" % first)
+	assert_true(first > 0 and first < 30, "95%% of run speed within ~0.4 s (tick %d)" % first)
 	assert_true(absf(h.state.horizontal_speed() - 7.2) < 1e-4, "steady 7.2 after 400 ticks (got %.6f)" % h.state.horizontal_speed())
 	assert_true(h.state.grounded, "grounded while walking")
 	done()

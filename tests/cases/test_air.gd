@@ -118,3 +118,22 @@ func test_measured_air_jump_diagonal_world_clamp() -> void:
 	assert_near(got[0], 283.0, 25.0, "W+D on a world diagonal: ~200*sqrt2, got %.0f" % got[0])
 	assert_near(got[1], 200.0, 25.0, "W+D on a world axis: ~200, got %.0f" % got[1])
 	done()
+
+
+## Measured landing into a slide (session6_findings.md): below ~450 u/s it loses one ground-friction tick (~6%),
+## above ~470 nothing. Loose on purpose.
+func test_measured_landing_slide_loss() -> void:
+	var u := 0.0254
+	for c: Array in [[400.0, 0.90, 0.965], [520.0, 0.975, 1.01]]:
+		var h := new_harness(&"flat")
+		await h.ready()
+		h.spawn(Vector3(0.0, 0.3, 0.0), 0.0)
+		h.state.velocity = Vector3(0.0, -2.0, -float(c[0]) * u)
+		for i in 30:
+			h.run(1, hold(B_CROUCH))
+			if h.state.grounded:
+				break
+		assert_eq(h.state.loco, L.SLIDE, "landed into a slide at %.0f" % c[0])
+		var r: float = Vector2(h.state.velocity.x, h.state.velocity.z).length() / u / float(c[0])
+		assert_true(r > c[1] and r < c[2], "landing at %.0f keeps %.3f" % [c[0], r])
+	done()

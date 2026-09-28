@@ -190,9 +190,11 @@ func test_fpp_g09_slide_hop_penalty() -> void:
 		if variant == "early":
 			assert_eq(first_event(h.trace, MoveEvents.SLIDE_DRAG), 0, "early: slide drag")
 			var r: float = float(h.trace[1]["hspeed"]) / float(h.trace[0]["hspeed"])
-			assert_near(r, 1.0 - (0.2 + 0.8) * DT, 1e-6, "early: air drag 0.2 + 0.8 penalty")
-			h.run(80, hold())
-			assert_true(h.state.grounded and not h.state.slide_hop_penalty_active, "penalty ends on landing")
+			assert_true(r < 1.0 - 0.2 * DT - 0.5 * DT, "early: air drag plus a penalty")
+			h.run(30, hold())
+			assert_true(not h.state.slide_hop_penalty_active, "timed penalty ends in the air (session 6: ~20 ticks)")
+			h.run(50, hold())
+			assert_true(h.state.grounded, "landed")
 			h.run(20, hold())
 			assert_true(not h.state.slide_hop_flag, "ground time not sliding clears the flag")
 		else:
