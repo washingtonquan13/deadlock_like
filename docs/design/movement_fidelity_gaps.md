@@ -61,7 +61,7 @@ Counts: **13 fixed-settled, 19 provisional, 18 open** (50 gaps, including the ne
 | G23 | open | facing kept; no evidence | D1 neutral rep |
 | G25 | open | zero-and-hold confirmed (V9 0:48); hold duration vs 0.13 s accel phase unknown; no code change | A1 |
 | G27 | open | sets vy; horizontal nudge (V3 5:20) not implemented | A6 |
-| G29 | open | -15 m/s unknown | A7 |
+| G29 | measured | session 11: adds 500 u/s to vy, horizontal kept; ground run x0.8 for 28 ticks after | DD_* (done) |
 | G30 | open | unknown | A7 (with SM) |
 | G32 | open | up 7.0 and kicks 2.0/4.5/6.5 m/s unsourced | W1 (neutral), W2 |
 | G34 | open | 0.3048 m unknown | W1 side note |

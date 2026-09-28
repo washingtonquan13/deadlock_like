@@ -115,6 +115,21 @@
 - HUD-vs-sim rms over all SE/SL/SC trials: 54.0 (off) -> 28.1. A 50/53/55/57-tick scan gives 48.4/36.7/28.1/28.2.
   The remaining worst points are the SC dash-jump tick and the SE landing tick, where the HUD reads 3D speed.
 
+## Down dash (G29, U4)
+
+- DD_S (standing jump), DD_A (jump + air jump), DD_W / DD_R (running, W held / released), DD_1 and DD_1W (one
+  crouch tap: no down dash, sprint kept), DD_AW (running, air jump, long fall). 3 trials each. HUD vs sim with a
+  4.5-tick shift: these recordings run ~2 ticks behind the usual 2.7, the jump ascent before the tap included.
+- The down dash ADDS about -500 u/s to vy; it does not set it. From the HUD slopes before and after the tap (gravity
+  12.5 u/s per tick on both sides): DD_S 504, DD_A 497/501/501. In DD_A the hero is still rising at ~+230 and
+  ends at ~-270, which a set speed can't give. Gravity carries on as normal afterwards; horizontal speed is kept.
+- After the landing, ground run speed is held at ~326 (0.79x the ~414 run) until ~30 ticks after the dash, then
+  climbs as normal (DD_W lands ~8 ticks after the dash). DD_AW lands ~27 ticks after the dash and climbs at once.
+  This fits the wiki's "down dash 28 ticks" as a duration. Model: `down_dash_slow_time` 0.4375 s,
+  `down_dash_ground_speed_mult` 0.8. On this contaminated hero, a 0.8 multiplier and losing the sprint bonus can't
+  be told apart.
+- `down_dash_speed` 15.0 m/s (set) -> 12.7 m/s (added).
+
 ## Contaminated hero from ~15:47 (RUN)
 
 - By the end of the session the sandbox Haze was level 19 with 6 items (~$25,600,
@@ -143,3 +158,4 @@
 - The ground accel above 400 u/s on a buffed hero (RUN; needs a clean hero).
 - The heavy's air recovery (and whether gravity applies).
 - The light melee.
+- The down-dash ground slow on a clean hero: a 0.8 multiplier or the sprint bonus removed.
