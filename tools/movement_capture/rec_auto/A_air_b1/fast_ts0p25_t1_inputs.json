@@ -1,0 +1,101 @@
+{
+  "t0_perf": 32427.1883163,
+  "timescale": 0.25,
+  "inputs": [
+    {
+      "t_real": 0.0002511000020604115,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.18772960000205785,
+      "t_plan": 0.1875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 4
+    },
+    {
+      "t_real": 0.25015390000044135,
+      "t_plan": 0.25,
+      "kind": "up",
+      "arg": "space",
+      "tick": 5
+    },
+    {
+      "t_real": 0.937821300001815,
+      "t_plan": 0.9375,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 16
+    },
+    {
+      "t_real": 1.000332999999955,
+      "t_plan": 1.0,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 17
+    },
+    {
+      "t_real": 1.1253126000010525,
+      "t_plan": 1.125,
+      "kind": "up",
+      "arg": "w",
+      "tick": 19
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2445.19,
+    "pos_y": -346.41,
+    "pos_z": 102.12,
+    "ang_pitch": 14.69,
+    "ang_yaw": 102.72,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 411.31
+  },
+  "start_yaw": 102.72,
+  "late_ms_max": 0.3329999999550637,
+  "scenario": "C:\\Users\\QUANWA~1\\AppData\\Local\\Temp\\air_b3.json",
+  "mark": "street",
+  "mark_value": {
+    "pawn": [
+      2391.69,
+      -266.01000000000005,
+      102.02000000000001
+    ],
+    "hud": [
+      2445.19,
+      -346.41,
+      102.09
+    ],
+    "yaw": 102.72,
+    "pitch": 14.69,
+    "cam_offset": [
+      53.5,
+      -80.39999999999998,
+      0.06999999999999318
+    ],
+    "return_error_u": 0.07
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 779,
+  "pre_real_s": 0.3
+}

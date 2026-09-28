@@ -1,0 +1,72 @@
+{
+  "clip": "B3_abrams",
+  "cost_best": 0.028530654299391,
+  "cost_init": 0.0954444068979984,
+  "evals": 266,
+  "gaps": [
+    "G19",
+    "G22",
+    "G23"
+  ],
+  "measured": "tools/movement_capture/rec_auto/B3_abrams/wshort_ts0p25_t3.csv",
+  "optimizer": {
+    "max_evals": 300.0,
+    "method": "nelder_mead",
+    "restarts": 2.0
+  },
+  "params": [
+    {
+      "at_bound": false,
+      "best": 0.712147886479688,
+      "default": 0.72,
+      "gap": "G19",
+      "init": 0.72,
+      "max": 0.9,
+      "min": 0.4,
+      "name": "ground_dash_durations[2]",
+      "note": "s, B3 (Abrams)",
+      "sensitivity_rel": 2.69929702548973
+    },
+    {
+      "at_bound": false,
+      "best": 9.89390053838142,
+      "default": 10.0,
+      "gap": "G19",
+      "init": 10.0,
+      "max": 14.0,
+      "min": 6.0,
+      "name": "ground_dash_distance",
+      "note": "m; speed = distance / duration",
+      "sensitivity_rel": 1.2043291243373
+    }
+  ],
+  "rmse_best": {
+    "pos_h": 28.9269685209955,
+    "pos_v": 0.532508898308046,
+    "speed_3d": 6.65000771497758,
+    "speed_h": 291.461313537271,
+    "vel_v": 5.8304285292207
+  },
+  "rmse_init": {
+    "pos_h": 28.8971334959474,
+    "pos_v": 0.532508457451432,
+    "speed_3d": 12.1630229207278,
+    "speed_h": 291.06153773589,
+    "vel_v": 5.8304285292207
+  },
+  "samples": 495,
+  "scenario": "C:\\Users\\QUANWA~1\\AppData\\Local\\Temp/nc_b3.json",
+  "seconds": 3.33,
+  "skipped_params": [],
+  "t0_measured": 0.0256544847967787,
+  "warnings": [],
+  "weights": {
+    "h_across": 0.0,
+    "h_along": 0.0,
+    "pos_h": 0.0,
+    "pos_v": 0.0,
+    "speed_3d": 1.0,
+    "speed_h": 0.0,
+    "vel_v": 0.0
+  }
+}

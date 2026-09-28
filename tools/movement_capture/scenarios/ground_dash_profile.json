@@ -2,33 +2,95 @@
   "_comment": [
     "Clip D1 (recording_shot_list.md): standing still, ground dash with W, no jump or crouch, then no input for 1 s.",
     "W is held for the dash (B1 0.62 s = 40 ticks) and released after; edit 'to' if the trial held it longer or shorter.",
+    "Dash at tick 4, 3 ticks after W: measured 2026-09-27, a dash pressed in the same tick as the first W from standstill, or with no movement key held (standing or coasting), does not dash. W is held 40 ticks past the dash.",
+    "Fit and alignment use speed_3d (the HUD's own speed readout; equals horizontal speed on flat ground). The HUD position is the camera, which lags the hero and overshoots at the dash start (derived speed reached 991 u/s against a readout of 635), so derived speed_h and pos_h are unusable here. Alignment: first rising crossing of speed_3d through value_u.",
     "Neutral-dash rep (G23): set that move entry to [0, 0] and compare the travel heading with facing.",
     "The sim has no dash-curve parameter yet: constant speed then a drop is the null hypothesis. Keep residuals.csv from",
     "the best fit; the measured speed_h trace is the sampled curve G19 would use.",
-    "Alignment: first rising crossing of speed_h through value_u (the ground dash start).",
     "Bounds are search limits, not game limits: a result on a bound is flagged in the report."
   ],
   "name": "Ground dash speed profile (D1)",
   "clip": "D1",
-  "gaps": ["G19", "G22", "G23"],
+  "gaps": [
+    "G19",
+    "G22",
+    "G23"
+  ],
   "hero": "res://data/movement/heroes/hero_default_b1.tres",
   "params_resource": "res://data/movement/movement_params.tres",
   "layout": "flat",
   "suppress_sprint": true,
   "up_axis": "z",
-  "start": {"pos_m": [0.0, 0.0, 0.0], "yaw_deg": 0.0, "stamina": 3.0},
+  "start": {
+    "pos_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "yaw_deg": 0.0,
+    "stamina": 3.0
+  },
   "ticks": 72,
-  "default": {"move": [0, 0], "buttons": []},
+  "default": {
+    "move": [
+      0,
+      0
+    ],
+    "buttons": []
+  },
   "timeline": [
-    {"from": 1, "to": 40, "move": [0, 1]},
-    {"from": 1, "to": 1, "buttons": ["dash"]}
+    {
+      "from": 1,
+      "to": 43,
+      "move": [
+        0,
+        1
+      ]
+    },
+    {
+      "from": 4,
+      "to": 4,
+      "buttons": [
+        "dash"
+      ]
+    }
   ],
-  "align": {"mode": "threshold", "channel": "speed_h", "value_u": 200.0, "direction": 1},
-  "fit_window": [0.0, 1.0],
-  "weights": {"speed_h": 1.0, "pos_h": 1.0},
+  "align": {
+    "mode": "threshold",
+    "channel": "speed_3d",
+    "value_u": 200.0,
+    "direction": 1
+  },
+  "fit_window": [
+    0.0,
+    1.0
+  ],
+  "weights": {
+    "speed_3d": 1.0,
+    "speed_h": 0.0,
+    "vel_v": 0.0,
+    "pos_h": 0.0,
+    "pos_v": 0.0
+  },
   "params": [
-    {"name": "ground_dash_durations[0]", "min": 0.4, "max": 0.9, "gap": "G19", "note": "s, B1 (use [2] for B3 trials)"},
-    {"name": "ground_dash_distance", "min": 6.0, "max": 14.0, "gap": "G19", "note": "m; speed = distance / duration"}
+    {
+      "name": "ground_dash_durations[0]",
+      "min": 0.4,
+      "max": 0.9,
+      "gap": "G19",
+      "note": "s, B1 (use [2] for B3 trials)"
+    },
+    {
+      "name": "ground_dash_distance",
+      "min": 6.0,
+      "max": 14.0,
+      "gap": "G19",
+      "note": "m; speed = distance / duration"
+    }
   ],
-  "optimizer": {"method": "nelder_mead", "max_evals": 300, "restarts": 2}
+  "optimizer": {
+    "method": "nelder_mead",
+    "max_evals": 300,
+    "restarts": 2
+  }
 }

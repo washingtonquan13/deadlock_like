@@ -1,0 +1,395 @@
+{
+  "t0_perf": 45493.2548186,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.00018149999959859997,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.047319299999799114,
+      "t_plan": 0.046875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 4
+    },
+    {
+      "t_real": 0.07228179999947315,
+      "t_plan": 0.071875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 5
+    },
+    {
+      "t_real": 0.35986209999828134,
+      "t_plan": 0.359375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 24
+    },
+    {
+      "t_real": 0.3602641000034055,
+      "t_plan": 0.359375,
+      "kind": "down",
+      "arg": "lctrl",
+      "tick": 24
+    },
+    {
+      "t_real": 0.4851057999985642,
+      "t_plan": 0.484375,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 32
+    },
+    {
+      "t_real": 0.486090400001558,
+      "t_plan": 0.484375,
+      "kind": "down",
+      "arg": "d",
+      "tick": 32
+    },
+    {
+      "t_real": 0.50073120000161,
+      "t_plan": 0.5,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 33
+    },
+    {
+      "t_real": 0.5162829000037163,
+      "t_plan": 0.515625,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 34
+    },
+    {
+      "t_real": 0.5318895000018529,
+      "t_plan": 0.53125,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 35
+    },
+    {
+      "t_real": 0.5470365000001038,
+      "t_plan": 0.546875,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 36
+    },
+    {
+      "t_real": 0.5626917000045069,
+      "t_plan": 0.5625,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 37
+    },
+    {
+      "t_real": 0.5783263000048464,
+      "t_plan": 0.578125,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 38
+    },
+    {
+      "t_real": 0.5939255999983288,
+      "t_plan": 0.59375,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 39
+    },
+    {
+      "t_real": 0.6095725999985007,
+      "t_plan": 0.609375,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 40
+    },
+    {
+      "t_real": 0.6252497000023141,
+      "t_plan": 0.625,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 41
+    },
+    {
+      "t_real": 0.6408691000033286,
+      "t_plan": 0.640625,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 42
+    },
+    {
+      "t_real": 0.6568856000012602,
+      "t_plan": 0.65625,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 43
+    },
+    {
+      "t_real": 0.672093599998334,
+      "t_plan": 0.671875,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 44
+    },
+    {
+      "t_real": 0.6881069000010029,
+      "t_plan": 0.6875,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 45
+    },
+    {
+      "t_real": 0.7033207999993465,
+      "t_plan": 0.703125,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 46
+    },
+    {
+      "t_real": 0.7189160999987507,
+      "t_plan": 0.71875,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 47
+    },
+    {
+      "t_real": 0.7345361999978195,
+      "t_plan": 0.734375,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 48
+    },
+    {
+      "t_real": 0.7502701999983401,
+      "t_plan": 0.75,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 49
+    },
+    {
+      "t_real": 0.7658264999990934,
+      "t_plan": 0.765625,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 50
+    },
+    {
+      "t_real": 0.7814216000042506,
+      "t_plan": 0.78125,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 51
+    },
+    {
+      "t_real": 0.7970655000026454,
+      "t_plan": 0.796875,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 52
+    },
+    {
+      "t_real": 0.8127278000029037,
+      "t_plan": 0.8125,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 53
+    },
+    {
+      "t_real": 0.8283278000017162,
+      "t_plan": 0.828125,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 54
+    },
+    {
+      "t_real": 0.8439297000004444,
+      "t_plan": 0.84375,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 55
+    },
+    {
+      "t_real": 0.8595570000034058,
+      "t_plan": 0.859375,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 56
+    },
+    {
+      "t_real": 0.8751548000000184,
+      "t_plan": 0.875,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 57
+    },
+    {
+      "t_real": 0.8908025999990059,
+      "t_plan": 0.890625,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 58
+    },
+    {
+      "t_real": 0.9064268000001903,
+      "t_plan": 0.90625,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 59
+    },
+    {
+      "t_real": 0.9220475000038277,
+      "t_plan": 0.921875,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 60
+    },
+    {
+      "t_real": 0.9377135000031558,
+      "t_plan": 0.9375,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 61
+    },
+    {
+      "t_real": 0.9533960999979172,
+      "t_plan": 0.953125,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 62
+    },
+    {
+      "t_real": 0.9690687000038452,
+      "t_plan": 0.96875,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 63
+    },
+    {
+      "t_real": 0.984616100002313,
+      "t_plan": 0.984375,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 64
+    },
+    {
+      "t_real": 1.0004742000019178,
+      "t_plan": 1.0,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 65
+    },
+    {
+      "t_real": 1.0159856000027503,
+      "t_plan": 1.015625,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 66
+    },
+    {
+      "t_real": 1.0316448000012315,
+      "t_plan": 1.03125,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 67
+    },
+    {
+      "t_real": 1.0470340000028955,
+      "t_plan": 1.046875,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 68
+    },
+    {
+      "t_real": 1.0627786000040942,
+      "t_plan": 1.0625,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 69
+    },
+    {
+      "t_real": 1.0786799999987124,
+      "t_plan": 1.078125,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 70
+    },
+    {
+      "t_real": 1.093988000000536,
+      "t_plan": 1.09375,
+      "kind": "mouse",
+      "arg": 43,
+      "tick": 71
+    },
+    {
+      "t_real": 2.031437999998161,
+      "t_plan": 2.03125,
+      "kind": "up",
+      "arg": "d",
+      "tick": 131
+    },
+    {
+      "t_real": 2.031830699997954,
+      "t_plan": 2.03125,
+      "kind": "up",
+      "arg": "lctrl",
+      "tick": 131
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2445.16,
+    "pos_y": -346.44,
+    "pos_z": 102.12,
+    "ang_pitch": 14.69,
+    "ang_yaw": 102.69,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 411.05
+  },
+  "start_yaw": 102.69,
+  "late_ms_max": 1.7154000015580095,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\slide_steer\\SLDM.json",
+  "mark": "street",
+  "mark_value": {
+    "pawn": [
+      2391.69,
+      -266.01000000000005,
+      102.02000000000001
+    ],
+    "hud": [
+      2445.19,
+      -346.41,
+      102.09
+    ],
+    "yaw": 102.72,
+    "pitch": 14.69,
+    "cam_offset": [
+      53.5,
+      -80.39999999999998,
+      0.06999999999999318
+    ],
+    "return_error_u": 0.07
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 373,
+  "pre_real_s": 0.3
+}

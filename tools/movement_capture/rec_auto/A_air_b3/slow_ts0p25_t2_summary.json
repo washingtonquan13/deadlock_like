@@ -1,0 +1,23 @@
+{
+  "frames": 779,
+  "parsed": 779,
+  "duplicates": 56,
+  "outlier_values_rejected": 0,
+  "valid_rows": 723,
+  "velocity_source": "derived-from-position",
+  "vel_readout_vs_derived": null,
+  "source": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\rec_auto\\A_air_b3\\slow_ts0p25_t2_frames.npz",
+  "timescale": 0.25,
+  "time": "game seconds from the first input",
+  "units_per_meter": 39.3701,
+  "up_axis": "z",
+  "frames_captured": 779,
+  "frames_distinct": 779,
+  "cleaning": {
+    "hampel_window": 3,
+    "hampel_k": 4.0,
+    "tol_pos": 3.0,
+    "tol_vel": 3.0,
+    "tol_ang": 1.0
+  }
+}

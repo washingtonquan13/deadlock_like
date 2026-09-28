@@ -1,0 +1,33 @@
+{
+ "_comment": "45 deg walk into the wall (wallA45)",
+ "name": "BWW",
+ "clip": "BWW",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 200,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 200,
+   "move": [
+    0,
+    1
+   ]
+  }
+ ]
+}

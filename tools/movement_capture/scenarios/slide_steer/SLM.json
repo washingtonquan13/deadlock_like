@@ -1,0 +1,247 @@
+{
+ "_comment": "mouse turn right 60 deg over 40 ticks from tick 32, no keys",
+ "name": "SLM",
+ "clip": "SLM",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 130,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 23,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 24,
+   "to": 130,
+   "buttons": [
+    "crouch"
+   ]
+  },
+  {
+   "from": 32,
+   "to": 32,
+   "yaw_deg": -1.5
+  },
+  {
+   "from": 33,
+   "to": 33,
+   "yaw_deg": -3.0
+  },
+  {
+   "from": 34,
+   "to": 34,
+   "yaw_deg": -4.5
+  },
+  {
+   "from": 35,
+   "to": 35,
+   "yaw_deg": -6.0
+  },
+  {
+   "from": 36,
+   "to": 36,
+   "yaw_deg": -7.5
+  },
+  {
+   "from": 37,
+   "to": 37,
+   "yaw_deg": -9.0
+  },
+  {
+   "from": 38,
+   "to": 38,
+   "yaw_deg": -10.5
+  },
+  {
+   "from": 39,
+   "to": 39,
+   "yaw_deg": -12.0
+  },
+  {
+   "from": 40,
+   "to": 40,
+   "yaw_deg": -13.5
+  },
+  {
+   "from": 41,
+   "to": 41,
+   "yaw_deg": -15.0
+  },
+  {
+   "from": 42,
+   "to": 42,
+   "yaw_deg": -16.5
+  },
+  {
+   "from": 43,
+   "to": 43,
+   "yaw_deg": -18.0
+  },
+  {
+   "from": 44,
+   "to": 44,
+   "yaw_deg": -19.5
+  },
+  {
+   "from": 45,
+   "to": 45,
+   "yaw_deg": -21.0
+  },
+  {
+   "from": 46,
+   "to": 46,
+   "yaw_deg": -22.5
+  },
+  {
+   "from": 47,
+   "to": 47,
+   "yaw_deg": -24.0
+  },
+  {
+   "from": 48,
+   "to": 48,
+   "yaw_deg": -25.5
+  },
+  {
+   "from": 49,
+   "to": 49,
+   "yaw_deg": -27.0
+  },
+  {
+   "from": 50,
+   "to": 50,
+   "yaw_deg": -28.5
+  },
+  {
+   "from": 51,
+   "to": 51,
+   "yaw_deg": -30.0
+  },
+  {
+   "from": 52,
+   "to": 52,
+   "yaw_deg": -31.5
+  },
+  {
+   "from": 53,
+   "to": 53,
+   "yaw_deg": -33.0
+  },
+  {
+   "from": 54,
+   "to": 54,
+   "yaw_deg": -34.5
+  },
+  {
+   "from": 55,
+   "to": 55,
+   "yaw_deg": -36.0
+  },
+  {
+   "from": 56,
+   "to": 56,
+   "yaw_deg": -37.5
+  },
+  {
+   "from": 57,
+   "to": 57,
+   "yaw_deg": -39.0
+  },
+  {
+   "from": 58,
+   "to": 58,
+   "yaw_deg": -40.5
+  },
+  {
+   "from": 59,
+   "to": 59,
+   "yaw_deg": -42.0
+  },
+  {
+   "from": 60,
+   "to": 60,
+   "yaw_deg": -43.5
+  },
+  {
+   "from": 61,
+   "to": 61,
+   "yaw_deg": -45.0
+  },
+  {
+   "from": 62,
+   "to": 62,
+   "yaw_deg": -46.5
+  },
+  {
+   "from": 63,
+   "to": 63,
+   "yaw_deg": -48.0
+  },
+  {
+   "from": 64,
+   "to": 64,
+   "yaw_deg": -49.5
+  },
+  {
+   "from": 65,
+   "to": 65,
+   "yaw_deg": -51.0
+  },
+  {
+   "from": 66,
+   "to": 66,
+   "yaw_deg": -52.5
+  },
+  {
+   "from": 67,
+   "to": 67,
+   "yaw_deg": -54.0
+  },
+  {
+   "from": 68,
+   "to": 68,
+   "yaw_deg": -55.5
+  },
+  {
+   "from": 69,
+   "to": 69,
+   "yaw_deg": -57.0
+  },
+  {
+   "from": 70,
+   "to": 70,
+   "yaw_deg": -58.5
+  },
+  {
+   "from": 71,
+   "to": 130,
+   "yaw_deg": -60.0
+  }
+ ]
+}

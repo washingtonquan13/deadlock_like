@@ -1,0 +1,101 @@
+{
+  "t0_perf": 47404.7605353,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.0002136999974027276,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 1.1721357999995234,
+      "t_plan": 1.171875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 76
+    },
+    {
+      "t_real": 1.1973294999988866,
+      "t_plan": 1.196875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 77
+    },
+    {
+      "t_real": 1.2971473999932641,
+      "t_plan": 1.296875,
+      "kind": "up",
+      "arg": "w",
+      "tick": 84
+    },
+    {
+      "t_real": 1.3127664999992703,
+      "t_plan": 1.3125,
+      "kind": "down",
+      "arg": "space",
+      "tick": 85
+    },
+    {
+      "t_real": 1.3377380999954767,
+      "t_plan": 1.3375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 86
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2544.34,
+    "pos_y": 75.47,
+    "pos_z": 94.28,
+    "ang_pitch": 10.0,
+    "ang_yaw": 0.03,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 0.0
+  },
+  "start_yaw": 0.03,
+  "late_ms_max": 0.4544999988866927,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\wall\\WJ0E.json",
+  "mark": "wallA",
+  "mark_value": {
+    "pawn": [
+      2635.9900000000002,
+      110.0,
+      94.75
+    ],
+    "hud": [
+      2544.34,
+      75.47,
+      94.5
+    ],
+    "yaw": 0.03,
+    "pitch": 10.0,
+    "cam_offset": [
+      -91.65000000000009,
+      -34.53,
+      -0.25
+    ],
+    "return_error_u": 0.22
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 315,
+  "pre_real_s": 0.3
+}

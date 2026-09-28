@@ -1,0 +1,32 @@
+{
+ "name": "TD",
+ "clip": "TD",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 128,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 128,
+   "move": [
+    1,
+    1
+   ]
+  }
+ ]
+}

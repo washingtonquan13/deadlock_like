@@ -1,0 +1,87 @@
+{
+  "t0_perf": 47122.8244552,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.00014959999680286273,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.45343689999572234,
+      "t_plan": 0.453125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 30
+    },
+    {
+      "t_real": 0.4784074999988661,
+      "t_plan": 0.478125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 31
+    },
+    {
+      "t_real": 3.1253563999998732,
+      "t_plan": 3.125,
+      "kind": "up",
+      "arg": "w",
+      "tick": 201
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2567.38,
+    "pos_y": 40.03,
+    "pos_z": 94.28,
+    "ang_pitch": 10.0,
+    "ang_yaw": 24.94,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 399.5
+  },
+  "start_yaw": 24.94,
+  "late_ms_max": 0.356399999873247,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\wall\\ADW.json",
+  "mark": "wallA25",
+  "mark_value": {
+    "pawn": [
+      2635.9399999999996,
+      109.97,
+      94.75
+    ],
+    "hud": [
+      2567.47,
+      40.03,
+      94.5
+    ],
+    "yaw": 24.97,
+    "pitch": 10.0,
+    "cam_offset": [
+      -68.4699999999998,
+      -69.94,
+      -0.25
+    ],
+    "return_error_u": 0.23
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 544,
+  "pre_real_s": 0.3
+}

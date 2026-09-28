@@ -1,0 +1,115 @@
+{
+  "t0_perf": 33043.6458008,
+  "timescale": 0.25,
+  "inputs": [
+    {
+      "t_real": 0.00022060000628698617,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.18770110000332352,
+      "t_plan": 0.1875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 4
+    },
+    {
+      "t_real": 0.25022590000298806,
+      "t_plan": 0.25,
+      "kind": "up",
+      "arg": "space",
+      "tick": 5
+    },
+    {
+      "t_real": 0.8126667000033194,
+      "t_plan": 0.8125,
+      "kind": "up",
+      "arg": "w",
+      "tick": 14
+    },
+    {
+      "t_real": 0.8130770999996457,
+      "t_plan": 0.8125,
+      "kind": "down",
+      "arg": "s",
+      "tick": 14
+    },
+    {
+      "t_real": 0.9379575999992085,
+      "t_plan": 0.9375,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 16
+    },
+    {
+      "t_real": 1.0001896000030683,
+      "t_plan": 1.0,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 17
+    },
+    {
+      "t_real": 1.1254618000020855,
+      "t_plan": 1.125,
+      "kind": "up",
+      "arg": "s",
+      "tick": 19
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2443.41,
+    "pos_y": -352.12,
+    "pos_z": 111.31,
+    "ang_pitch": 14.69,
+    "ang_yaw": 102.72,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 502.48
+  },
+  "start_yaw": 102.72,
+  "late_ms_max": 0.5770999996457249,
+  "scenario": "C:\\Users\\QUANWA~1\\AppData\\Local\\Temp\\claude_air\\probes\\back.json",
+  "mark": "street_inf",
+  "mark_value": {
+    "pawn": [
+      2391.7,
+      -265.99,
+      112.19
+    ],
+    "hud": [
+      2443.41,
+      -352.12,
+      111.75
+    ],
+    "yaw": 102.72,
+    "pitch": 14.69,
+    "cam_offset": [
+      51.710000000000036,
+      -86.13,
+      -0.4399999999999977
+    ],
+    "return_error_u": 0.41
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 774,
+  "pre_real_s": 0.3
+}

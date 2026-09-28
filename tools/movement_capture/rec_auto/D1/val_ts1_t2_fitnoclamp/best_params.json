@@ -1,0 +1,72 @@
+{
+  "clip": "D1",
+  "cost_best": 0.034513158602127,
+  "cost_init": 0.146910371620551,
+  "evals": 222,
+  "gaps": [
+    "G19",
+    "G22",
+    "G23"
+  ],
+  "measured": "C:/Godot Projects/deadlock_like/deadlock_like/tools/movement_capture/rec_auto/D1/val_ts1_t2.csv",
+  "optimizer": {
+    "max_evals": 300.0,
+    "method": "nelder_mead",
+    "restarts": 2.0
+  },
+  "params": [
+    {
+      "at_bound": false,
+      "best": 0.602917335126012,
+      "default": 0.62,
+      "gap": "G19",
+      "init": 0.62,
+      "max": 0.9,
+      "min": 0.4,
+      "name": "ground_dash_durations[0]",
+      "note": "s, B1 (use [2] for B3 trials)",
+      "sensitivity_rel": 3.0971554625781
+    },
+    {
+      "at_bound": false,
+      "best": 9.72269685581304,
+      "default": 10.0,
+      "gap": "G19",
+      "init": 10.0,
+      "max": 14.0,
+      "min": 6.0,
+      "name": "ground_dash_distance",
+      "note": "m; speed = distance / duration",
+      "sensitivity_rel": 1.32926572392786
+    }
+  ],
+  "rmse_best": {
+    "pos_h": 36.937685094908,
+    "pos_v": 0.819054173927699,
+    "speed_3d": 7.31406199210141,
+    "speed_h": 296.172898195256,
+    "vel_v": 5.60425839129948
+  },
+  "rmse_init": {
+    "pos_h": 36.9564669809402,
+    "pos_v": 0.819054173927699,
+    "speed_3d": 15.0901136985417,
+    "speed_h": 295.989733468044,
+    "vel_v": 5.60425839129948
+  },
+  "samples": 129,
+  "scenario": "C:/Users/QUANWA~1/AppData/Local/Temp/nc_D1.json",
+  "seconds": 1.973,
+  "skipped_params": [],
+  "t0_measured": 0.0424917817299566,
+  "warnings": [],
+  "weights": {
+    "h_across": 0.0,
+    "h_along": 0.0,
+    "pos_h": 0.0,
+    "pos_v": 0.0,
+    "speed_3d": 1.0,
+    "speed_h": 0.0,
+    "vel_v": 0.0
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "t0_perf": 41134.2748197,
+  "timescale": 0.25,
+  "inputs": [
+    {
+      "t_real": 0.00018090000230586156,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.187697900000785,
+      "t_plan": 0.1875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 4
+    },
+    {
+      "t_real": 0.2501966000054381,
+      "t_plan": 0.25,
+      "kind": "up",
+      "arg": "space",
+      "tick": 5
+    },
+    {
+      "t_real": 0.9376972000027308,
+      "t_plan": 0.9375,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 16
+    },
+    {
+      "t_real": 1.0001892000000225,
+      "t_plan": 1.0,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 17
+    },
+    {
+      "t_real": 6.250347400004102,
+      "t_plan": 6.25,
+      "kind": "up",
+      "arg": "w",
+      "tick": 101
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2459.5,
+    "pos_y": -370.09,
+    "pos_z": 126.06,
+    "ang_pitch": 14.69,
+    "ang_yaw": 102.72,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 462.49
+  },
+  "start_yaw": 102.72,
+  "late_ms_max": 0.3474000041023828,
+  "scenario": "C:\\Users\\QUANWA~1\\AppData\\Local\\Temp\\claude_air\\probes\\whold.json",
+  "mark": "street_abr",
+  "mark_value": {
+    "pawn": [
+      2391.6899999999996,
+      -265.98999999999995,
+      126.85
+    ],
+    "hud": [
+      2459.47,
+      -370.09,
+      126.44
+    ],
+    "yaw": 102.72,
+    "pitch": 14.69,
+    "cam_offset": [
+      67.7800000000002,
+      -104.10000000000002,
+      -0.4099999999999966
+    ],
+    "return_error_u": 0.38
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 1516,
+  "pre_real_s": 0.3
+}

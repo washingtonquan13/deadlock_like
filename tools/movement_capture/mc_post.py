@@ -100,7 +100,7 @@ def process(frames: list[int], t: np.ndarray, raw: dict[str, list[float]], layou
     """Builds output rows. opts: hampel_window, hampel_k, tol_pos, tol_vel, tol_ang."""
     n = len(frames)
     vals = {k: np.array(v, dtype=np.float64) for k, v in raw.items()}
-    for k in ["pos_x", "pos_y", "pos_z", "vel_x", "vel_y", "vel_z", "vel_scalar", "ang_pitch", "ang_yaw", "ang_roll"]:
+    for k in ["pos_x", "pos_y", "pos_z", "vel_x", "vel_y", "vel_z", "vel_scalar", "vel_scalar2", "ang_pitch", "ang_yaw", "ang_roll"]:
         vals.setdefault(k, np.full(n, NAN))
     parsed = np.isfinite(vals["pos_x"]) & np.isfinite(vals["pos_y"]) & np.isfinite(vals["pos_z"])
     dup_keys = [k for k in vals if np.isfinite(vals[k]).any()]
@@ -157,6 +157,7 @@ def process(frames: list[int], t: np.ndarray, raw: dict[str, list[float]], layou
             "speed_h": math.hypot(v[ha], v[hb]) if math.isfinite(v[ha]) and math.isfinite(v[hb]) else NAN,
             "speed_v": v[vv],
             "vel_scalar": vals["vel_scalar"][i],
+            "vel_scalar2": vals["vel_scalar2"][i],
             "vel_x_derived": der["x"][i], "vel_y_derived": der["y"][i], "vel_z_derived": der["z"][i],
             "ang_pitch": vals["ang_pitch"][i], "ang_yaw": vals["ang_yaw"][i], "ang_roll": vals["ang_roll"][i],
             "vel_source": src,
@@ -183,7 +184,7 @@ def process(frames: list[int], t: np.ndarray, raw: dict[str, list[float]], layou
 
 
 COLUMNS = ["frame", "t", "pos_x", "pos_y", "pos_z", "vel_x", "vel_y", "vel_z", "speed_h", "speed_v",
-           "vel_scalar", "vel_x_derived", "vel_y_derived", "vel_z_derived",
+           "vel_scalar", "vel_scalar2", "vel_x_derived", "vel_y_derived", "vel_z_derived",
            "ang_pitch", "ang_yaw", "ang_roll", "vel_source", "dup", "valid", "flags"]
 
 

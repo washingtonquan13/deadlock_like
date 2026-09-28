@@ -1,0 +1,27 @@
+{
+  "_comment": "Edit keys to match your in-game binds. roi is x, y, w, h in physical screen pixels.",
+  "exe": "deadlock.exe",
+  "console_key": "f7",
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "yaw_sign": 1.0,
+  "min_press_ms": 25,
+  "yaw_tolerance_deg": 0.1,
+  "still_speed": 1.0,
+  "grid_templates": "layouts/showpos_grid_1080p.npz"
+}

@@ -1,0 +1,55 @@
+{
+ "_comment": "W+D held from tick 32",
+ "name": "SLWD",
+ "clip": "SLWD",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 130,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 23,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 24,
+   "to": 130,
+   "buttons": [
+    "crouch"
+   ]
+  },
+  {
+   "from": 32,
+   "to": 130,
+   "move": [
+    1,
+    1
+   ]
+  }
+ ]
+}

@@ -11,12 +11,16 @@
     "up_axis          : which position/velocity component is vertical in the game's frame (Source engines use z).",
     "units_per_meter  : 39.3701 = 1 u / 0.0254 m (protocol R0 must confirm this).",
     "binarize         : used by the template backend and by line segmentation. Text is assumed brighter than its background.",
-    "label_separator  : template backend only; after this character only digits . - + are recognised (empty string disables)."
+    "label_separator  : template backend only; after this character only digits . - + are recognised (empty string disables).",
+    "Verified 2026-09-27 on C0 (1080p120): 'name: <player>' / 'pos: x y z' / 'ang: pitch yaw roll' / 'vel: S (S2)'.",
+    "vel is two scalars, not a vector. S (vel_scalar) is the current speed: 385.83 = Haze 8.2 + 1.6 m/s sprint.",
+    "S2 (vel_scalar2) holds the peak speed for ~1.9 s after slowing down. S is 3D speed (session 1: S rises and falls with vz through jump arcs),",
+    "so horizontal speed = sqrt(S^2 - vz^2) with vz from the z trace. Velocity components come from the position derivative."
   ],
   "fields": [
     {"key": "pos", "label": "^\\W*p[o0]s\\w*\\s*[:;.]?", "names": ["pos_x", "pos_y", "pos_z"]},
     {"key": "ang", "label": "^\\W*ang\\w*\\s*[:;.]?", "names": ["ang_pitch", "ang_yaw", "ang_roll"], "optional": true},
-    {"key": "vel", "label": "^\\W*ve[l1i]\\w*\\s*[:;.]?", "names": ["vel_x", "vel_y", "vel_z"], "alt_names": [["vel_scalar"]]}
+    {"key": "vel", "label": "^\\W*ve[l1i]\\w*\\s*[:;.]?", "names": ["vel_scalar", "vel_scalar2"], "alt_names": [["vel_x", "vel_y", "vel_z"], ["vel_scalar"]]}
   ],
   "decimals": 2,
   "up_axis": "z",

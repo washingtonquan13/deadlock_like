@@ -1,0 +1,72 @@
+{
+  "clip": "B2_infernus",
+  "cost_best": 0.0265142219165238,
+  "cost_init": 0.12564233801054,
+  "evals": 208,
+  "gaps": [
+    "G19",
+    "G22",
+    "G23"
+  ],
+  "measured": "tools/movement_capture/rec_auto/B2_infernus/wshort_ts0p25_t3.csv",
+  "optimizer": {
+    "max_evals": 300.0,
+    "method": "nelder_mead",
+    "restarts": 2.0
+  },
+  "params": [
+    {
+      "at_bound": false,
+      "best": 0.66818513952283,
+      "default": 0.68,
+      "gap": "G19",
+      "init": 0.68,
+      "max": 0.9,
+      "min": 0.4,
+      "name": "ground_dash_durations[1]",
+      "note": "s, B2 (Infernus)",
+      "sensitivity_rel": 3.23662314035964
+    },
+    {
+      "at_bound": false,
+      "best": 9.8166235237848,
+      "default": 10.0,
+      "gap": "G19",
+      "init": 10.0,
+      "max": 14.0,
+      "min": 6.0,
+      "name": "ground_dash_distance",
+      "note": "m; speed = distance / duration",
+      "sensitivity_rel": 1.43389862908716
+    }
+  ],
+  "rmse_best": {
+    "pos_h": 30.4947385444253,
+    "pos_v": 0.593034686849038,
+    "speed_3d": 6.41070403035925,
+    "speed_h": 419.768102656271,
+    "vel_v": 5.92677656066102
+  },
+  "rmse_init": {
+    "pos_h": 30.5702199521205,
+    "pos_v": 0.593034686849038,
+    "speed_3d": 13.9551429017536,
+    "speed_h": 419.505920248867,
+    "vel_v": 5.92677656066102
+  },
+  "samples": 495,
+  "scenario": "C:\\Users\\QUANWA~1\\AppData\\Local\\Temp/nc_b2.json",
+  "seconds": 2.539,
+  "skipped_params": [],
+  "t0_measured": 0.0265177806258257,
+  "warnings": [],
+  "weights": {
+    "h_across": 0.0,
+    "h_along": 0.0,
+    "pos_h": 0.0,
+    "pos_v": 0.0,
+    "speed_3d": 1.0,
+    "speed_h": 0.0,
+    "vel_v": 0.0
+  }
+}
