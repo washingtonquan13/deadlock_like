@@ -1,0 +1,115 @@
+{
+  "t0_perf": 53946.8756173,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.0001503000021330081,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.6098377000016626,
+      "t_plan": 0.609375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 40
+    },
+    {
+      "t_real": 0.6348722999973688,
+      "t_plan": 0.634375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 41
+    },
+    {
+      "t_real": 0.9846542000013869,
+      "t_plan": 0.984375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 64
+    },
+    {
+      "t_real": 0.9849361000015051,
+      "t_plan": 0.984375,
+      "kind": "down",
+      "arg": "s",
+      "tick": 64
+    },
+    {
+      "t_real": 0.9851726999986568,
+      "t_plan": 0.984375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 64
+    },
+    {
+      "t_real": 1.00963519999641,
+      "t_plan": 1.009375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 65
+    },
+    {
+      "t_real": 2.6566326999964076,
+      "t_plan": 2.65625,
+      "kind": "up",
+      "arg": "s",
+      "tick": 171
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2445.16,
+    "pos_y": -346.44,
+    "pos_z": 102.12,
+    "ang_pitch": 14.69,
+    "ang_yaw": 102.69,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 405.45
+  },
+  "start_yaw": 102.69,
+  "late_ms_max": 0.7976999986567535,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\double\\DBS.json",
+  "mark": "street",
+  "mark_value": {
+    "pawn": [
+      2391.69,
+      -266.01000000000005,
+      102.02000000000001
+    ],
+    "hud": [
+      2445.19,
+      -346.41,
+      102.09
+    ],
+    "yaw": 102.72,
+    "pitch": 14.69,
+    "cam_offset": [
+      53.5,
+      -80.39999999999998,
+      0.06999999999999318
+    ],
+    "return_error_u": 0.07
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 446,
+  "pre_real_s": 0.3
+}

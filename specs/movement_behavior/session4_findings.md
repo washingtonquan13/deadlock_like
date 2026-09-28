@@ -113,3 +113,24 @@ Scenarios are in `scenarios/mantle/gen.py` (the face is ~250 u ahead, contact at
   - The airborne trigger window (MJ050 climbed with the jump pressed 12 ticks before contact).
   - The pop threshold.
   - Taller ledges and the maximum mantle height (only a 66 u ledge was tested).
+
+## Double (air) jump (Haze, mark street)
+
+Scenarios are in `scenarios/double/gen.py`: walk W, ground jump at tick 40, then an air jump k ticks later. Two trials each. The fit helpers are `vzfit.py` and `dsum.py`.
+
+- **vz is set, not added.** The rise from the press to the apex is 164.7–175.9 u for every k:
+
+  | k | vz before the press | Rise to apex |
+  |---|---|---|
+  | 8 | +188 | 174 |
+  | 16 | | 169 |
+  | 24 | ~0 | 168 |
+  | 36 | −135 | 166 |
+
+  - The standing case (DBR, no horizontal speed) fits vz0 = 516–527 at g = 790–797.
+  - So the air jump sets **vz ≈ 522 u/s** (13.26 m/s). The sim had 295.
+- **Horizontal velocity is untouched.** There is no impulse and no redirect:
+  - W held and no key (DBW24, DB0) give the same forward speed afterwards.
+  - D from rest (DBR) traces the same lateral path as a plain air strafe (RD): −12 u at 0.2 s and −28 u at 0.4 s in both.
+  - S from the air jump (DBS) decelerates at the same ~800 u/s² as plain air S (AS).
+- **Not measured:** stamina cost, and air jumps after a dash jump or a wall jump.

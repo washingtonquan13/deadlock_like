@@ -1,0 +1,47 @@
+{
+ "_comment": "standing jump, air jump at +24 with D from the air jump (burst from rest?)",
+ "name": "DBR",
+ "clip": "DBR",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 200,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 40,
+   "to": 40,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 64,
+   "to": 64,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 64,
+   "to": 170,
+   "move": [
+    1,
+    0
+   ]
+  }
+ ]
+}
