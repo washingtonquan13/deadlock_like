@@ -442,8 +442,8 @@ extends RefCounted
 func _init(world: World3D, params: MovementParams) -> void   # creates stand + crouch probe bodies (layer 0, mask WORLD)
 func dispose() -> void                                        # frees probe RIDs
 func move(state: MoveState, motion: Vector3, crouched: bool) -> Dictionary
-    # collide-and-slide (<= max_bumps), crease handling, backtrack kill, two-pass step-up when grounded
-    # returns { "position": Vector3, "velocity": Vector3, "blocked": bool, "hit_normals": PackedVector3Array }
+	# collide-and-slide (<= max_bumps), crease handling, backtrack kill, two-pass step-up when grounded
+	# returns { "position": Vector3, "velocity": Vector3, "blocked": bool, "hit_normals": PackedVector3Array }
 func probe_ground(pos: Vector3, crouched: bool) -> Dictionary   # 2 u probe + center ray; { "hit": bool, "normal": Vector3, "distance": float }
 func step_down(pos: Vector3, crouched: bool) -> Vector3          # conditional snap down up to step_height
 func can_stand(pos: Vector3) -> bool
@@ -768,10 +768,10 @@ The `.tres` values are authored by hand from the spec tables. `data/reference/*.
 - **InputSampler** (`extends Node`):
   - Exports: `mouse_sensitivity: float = 0.0022` (rad per pixel), `invert_y: bool = false`, `heavy_hold_time: float = 0.2`.
   - Methods:
-    - `build_cmd(tick: int) -> InputCmd`, which returns `InputCmd.create(...)` and then clears the latches;
-    - `get_view_yaw() -> float` and `get_view_pitch() -> float`, which are unquantized for the camera;
-    - `set_view(yaw: float, pitch: float) -> void`;
-    - `set_mouse_captured(on: bool) -> void`.
+	- `build_cmd(tick: int) -> InputCmd`, which returns `InputCmd.create(...)` and then clears the latches;
+	- `get_view_yaw() -> float` and `get_view_pitch() -> float`, which are unquantized for the camera;
+	- `set_view(yaw: float, pitch: float) -> void`;
+	- `set_mouse_captured(on: bool) -> void`.
   - It reads the Input singleton and InputEventMouseMotion only.
   - Any button press seen since the last `build_cmd` is ORed into held bits for that cmd (the tap latch).
   - It never touches MoveState.
@@ -793,12 +793,12 @@ The `.tres` values are authored by hand from the spec tables. `data/reference/*.
 - **MovementDebugOverlay** (`extends CanvasLayer`, scene `scenes/debug/movement_debug_overlay.tscn`). Exports `player_path: NodePath`.
   - Readout: loco, phase and state_ticks; horizontal speed in m/s and u/s; vertical speed; the velocity vector; stamina (float and bars); regen progress; per-airtime counters; sprint state and bonus; active modifiers with remaining time; the lock mask; grounded and floor angle; tick; and `Engine.time_scale`.
   - Toggles (actions from section 5):
-    - F1 shows or hides the overlay.
-    - F2 cycles timescale 1, 0.5, 0.25, 0.1 through `Engine.time_scale`.
-    - F3 toggles infinite stamina via `player.debug_set_infinite_stamina(bool)`.
-    - F4 teleports to the next Marker3D in group `&"teleport_points"`, sorted by node name. F8 teleports to the first one.
-    - F5 toggles `player.sim_paused`. F6 calls `player.step_ticks(1)` while paused.
-    - F7 starts or stops the MeasurementRecorder on the selected recipe. An OptionButton selects R1 to R4.
+	- F1 shows or hides the overlay.
+	- F2 cycles timescale 1, 0.5, 0.25, 0.1 through `Engine.time_scale`.
+	- F3 toggles infinite stamina via `player.debug_set_infinite_stamina(bool)`.
+	- F4 teleports to the next Marker3D in group `&"teleport_points"`, sorted by node name. F8 teleports to the first one.
+	- F5 toggles `player.sim_paused`. F6 calls `player.step_ticks(1)` while paused.
+	- F7 starts or stops the MeasurementRecorder on the selected recipe. An OptionButton selects R1 to R4.
   - It uses the `ticked(tick, state)` signal only and never mutates state except through the public PlayerCharacter methods above.
 - **SpeedGraph** (`extends Control`):
   - Methods: `push_sample(tick: int, h_speed: float, v_speed: float, loco: int) -> void`, `clear() -> void`.
@@ -807,15 +807,15 @@ The `.tres` values are authored by hand from the spec tables. `data/reference/*.
 - **MeasurementRecorder** (`extends Node`):
   - `const CSV_HEADER := "measurement_id,recipe,date,game_build,patch_date,context,cheats_used,hero,items,quantity,trial,value,units,distance_m,conditions,method,fps,frame_start,frame_end,evidence_ref,measured_by,source_type,confidence,notes"`.
   - Methods:
-    - `start(recipe: StringName, player: PlayerCharacter) -> void`;
-    - `stop() -> Array[Dictionary]`, which returns and writes the rows;
-    - `get_output_path() -> String`, which is `user://measurements/sim_predictions.csv` and appends, writing the header if the file is new.
+	- `start(recipe: StringName, player: PlayerCharacter) -> void`;
+	- `stop() -> Array[Dictionary]`, which returns and writes the rows;
+	- `get_output_path() -> String`, which is `user://measurements/sim_predictions.csv` and appends, writing the header if the file is new.
   - Rows use `source_type = sim-prediction`, `method = sim-trace`, `fps = 64`, `game_build = sim`, `measured_by = sim` and `confidence = high`.
   - The quantity names come from the protocol:
-    - R1: move_speed_forward, move_speed_back, move_speed_strafe, sprint_speed, accel_time_to_max (time to 95%).
-    - R2: ground_dash_distance, ground_dash_duration, air_dash_distance, air_dash_duration, stamina_regen_time.
-    - R3: slide_entry_speed, slide_speed_t0.5, slide_speed_t1.0, slide_distance, slide_duration.
-    - R4: jump_apex_height, jump_airtime, mantle_max_height.
+	- R1: move_speed_forward, move_speed_back, move_speed_strafe, sprint_speed, accel_time_to_max (time to 95%).
+	- R2: ground_dash_distance, ground_dash_duration, air_dash_distance, air_dash_duration, stamina_regen_time.
+	- R3: slide_entry_speed, slide_speed_t0.5, slide_speed_t1.0, slide_distance, slide_duration.
+	- R4: jump_apex_height, jump_airtime, mantle_max_height.
   - The recorder observes what the player does. It does not script inputs. The detection rules follow `specs/_measurement_protocol.md`, for example dash start and end from DASHED/STATE_CHANGED events, and apex as the maximum y between JUMPED and LANDED.
 
 ## 11. ARENA contract
@@ -857,8 +857,8 @@ The `.tres` values are authored by hand from the spec tables. `data/reference/*.
   - Hooks: `before_each() -> void`, `after_each() -> void`, which frees the harness.
 - `SimHarness`:
   - `static func create(tree: SceneTree, layout: StringName = &"flat", params: MovementParams = null, hero: HeroMovementStats = null) -> SimHarness`. Null means `.new()` defaults.
-    - It adds a root Node3D to `tree.root` and builds `ArenaBuilder` geometry (`&"flat"` = floor only, `&"full"` = everything, `&"none"` = no geometry).
-    - It must be followed by `await harness.ready()`, which awaits `tree.physics_frame` twice so the space contains the new bodies.
+	- It adds a root Node3D to `tree.root` and builds `ArenaBuilder` geometry (`&"flat"` = floor only, `&"full"` = everything, `&"none"` = no geometry).
+	- It must be followed by `await harness.ready()`, which awaits `tree.physics_frame` twice so the space contains the new bodies.
   - `var sim: MovementSim`, `var state: MoveState`, `var trace: Array[Dictionary]`. Each trace entry is `{tick, pos, vel, loco, stamina, events}`.
   - `func run(ticks: int, cmd_fn: Callable) -> void`. `cmd_fn(tick: int) -> InputCmd` is called synchronously for each tick, then `sim.simulate(state, cmd)` runs.
   - `func free_all() -> void`.

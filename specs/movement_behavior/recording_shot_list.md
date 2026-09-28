@@ -72,7 +72,8 @@ Order: C0, A1, A2, A3, W1, D3, D1, S2. Clip time: about 36 min. Setup: about 5 m
 - **Read:** the `pos` and `vel` lines as shown (screenshot one frame). Also the steady walk speed, and the position change against the time.
 - **Reps:** 2.
 - **Consumer:** `extract.py calibrate` (writes the ROI JSON), then `extract.py label-dump` and `train-templates` from these frames. Check `layouts/showpos_default.json` against the screenshot and fix `names` / `full_regex` if the format differs. No fit scenario.
-- **Pass:** walk speed reads the hero's base speed (Haze about 283 u/s in our data), and position change / time equals the velocity readout within 1%. If not, stop and fix the layout or the units before recording anything else.
+- **Pass:** walk speed reads the hero's base speed (Haze 385.83 u/s = 8.2 + 1.6 m/s sprint; the sprint bonus is on out of combat), and position change / time equals the velocity readout within 1%. If not, stop and fix the layout or the units before recording anything else.
+- **Result 2026-09-27 (1080p120, build not logged): PASS.** Overlay is `pos: x y z` / `ang: p y r` / `vel: S (P)`. S is the current speed (385.83 plateau, 1 u = 0.0254 m confirmed). P holds the peak speed for about 1.9 s after stopping, so it is not a velocity component. Position change / time = 0.9985 x readout. The game ran at about 79 fps, below the 120 fps recording, so many frames are duplicates.
 
 ### A1: Air dash from rest, forward (5 min)
 - **Goal:** the dash impulse and cap per bucket, the acceleration phase, vertical hold, and the end-drag formula.
