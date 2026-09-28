@@ -61,8 +61,19 @@ Horizontal speeds below come from the HUD speed (3D) with vz from the height tra
 The edges are exact: the window is k = 20–35, the same as the model's 0.30–0.55 s (open tick 20, close tick 35). The early-press lock matches too. The sim buffered a late press into
 a plain jump when the dash ends (tick 39); the game does not (fixed in 38bc2ed).
 
-## Landing (not applied yet)
+## Landing: no dash-jump landing cut (retracted)
 
-- **Dash-jump landing cut:** after a dash jump, touchdown cuts horizontal speed from ~570 to ~85 u/s within ~4 ticks, then normal friction follows.
-  - This happens with no key, with W, and with crouch held from mid-air (no dash-jump slide appears).
-- **Other landings keep their speed:** an air-dash landing at ~480 keeps ~440, and a plain jump landing at ~355 keeps ~330.
+The apparent cut (~570 → ~85 u/s at touchdown) is **an obstacle on the street line, not a mechanic**:
+
+- **Landing spot decides it.** DJ27, DJW and DJC land at camera-f ≈ −200 and collapse at once. DJ20 and DJ22 land ~15 u shorter and keep 466 → 392 for ~0.1 s before collapsing. DJ33–35 hit it mid-air (h = 0 before landing).
+- **DJW settles at ~70 u/s with W held.** That is the tangential remainder of walking into an angled wall.
+- **Short landings just take ground friction:**
+  - DJSb (a dash jump slowed by S to ~300 before touchdown): 264 → 223 → 149.
+  - DJ44–52 (plain jumps).
+- **Walking check (runway RW):** walking along the street yaw also stops. At yaws 58 and 148 from the same spot, walk speed holds to ~32 m. So the landing and slide scenarios are re-recorded on mark `street_y148` (`scenarios/dj148`).
+
+## Jumping after the dash
+
+- Presses at k = 36 and 40 give nothing.
+- Presses at k = 44, 48 and 52 give a plain jump: vz ~283 (the measured plain jump is ~300), peak 54 u. Speed is kept (DJ44 takes off at ~600 3D).
+- k = 41–43 are recorded on `street_y148` to find the edge.

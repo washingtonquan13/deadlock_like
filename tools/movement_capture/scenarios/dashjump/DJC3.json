@@ -1,0 +1,54 @@
+{
+ "_comment": "dash jump at 27, crouch held from ~2 ticks after touchdown",
+ "name": "DJC3",
+ "clip": "DJC3",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 220,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 31,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 31,
+   "to": 31,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 103,
+   "to": 215,
+   "buttons": [
+    "crouch"
+   ]
+  }
+ ]
+}

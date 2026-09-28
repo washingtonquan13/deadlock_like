@@ -1,0 +1,101 @@
+{
+  "t0_perf": 50753.7157292,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.0002406999992672354,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.04709030000230996,
+      "t_plan": 0.046875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 4
+    },
+    {
+      "t_real": 0.07216519999929005,
+      "t_plan": 0.071875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 5
+    },
+    {
+      "t_real": 0.7971392000035848,
+      "t_plan": 0.796875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 52
+    },
+    {
+      "t_real": 0.8126521000012872,
+      "t_plan": 0.8125,
+      "kind": "up",
+      "arg": "w",
+      "tick": 53
+    },
+    {
+      "t_real": 0.8220804000011412,
+      "t_plan": 0.821875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 53
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2445.06,
+    "pos_y": -346.5,
+    "pos_z": 102.12,
+    "ang_pitch": 14.69,
+    "ang_yaw": 102.62,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 410.53
+  },
+  "start_yaw": 102.62,
+  "late_ms_max": 0.29019999929005835,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\dashjump\\DJ48.json",
+  "mark": "street",
+  "mark_value": {
+    "pawn": [
+      2391.69,
+      -266.01000000000005,
+      102.02000000000001
+    ],
+    "hud": [
+      2445.19,
+      -346.41,
+      102.09
+    ],
+    "yaw": 102.72,
+    "pitch": 14.69,
+    "cam_offset": [
+      53.5,
+      -80.39999999999998,
+      0.06999999999999318
+    ],
+    "return_error_u": 0.07
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 474,
+  "pre_real_s": 0.3
+}

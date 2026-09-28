@@ -1,0 +1,73 @@
+{
+  "t0_perf": 51427.461734,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.00020310000400058925,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 4.53169920000073,
+      "t_plan": 4.53125,
+      "kind": "up",
+      "arg": "w",
+      "tick": 291
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2472.16,
+    "pos_y": -212.59,
+    "pos_z": 102.12,
+    "ang_pitch": 14.69,
+    "ang_yaw": 192.62,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 411.31
+  },
+  "start_yaw": 192.62,
+  "late_ms_max": 0.44920000073034316,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\runway\\RW.json",
+  "mark": "street_y193",
+  "mark_value": {
+    "pawn": [
+      2391.68,
+      -266.0,
+      102.08000000000001
+    ],
+    "hud": [
+      2472.12,
+      -212.56,
+      102.12
+    ],
+    "yaw": 192.66,
+    "pitch": 14.69,
+    "cam_offset": [
+      80.44000000000005,
+      53.44,
+      0.03999999999999204
+    ],
+    "return_error_u": 0.0
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 754,
+  "pre_real_s": 0.3
+}

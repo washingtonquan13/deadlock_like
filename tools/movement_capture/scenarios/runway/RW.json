@@ -1,0 +1,8 @@
+{
+ "_comment": "runway check: W held 4.5 s from rest; speed should stay at walk speed if the path is clear",
+ "name": "RW", "clip": "RW", "up_axis": "z",
+ "start": {"pos_m": [0, 0, 0], "yaw_deg": 0.0, "stamina": 3.0},
+ "ticks": 290,
+ "default": {"move": [0, 0], "buttons": []},
+ "timeline": [{"from": 1, "to": 290, "move": [0, 1]}]
+}
