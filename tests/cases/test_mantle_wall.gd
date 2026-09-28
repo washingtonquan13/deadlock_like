@@ -8,11 +8,11 @@ func _ledge_x(i: int) -> float:
 	return 4.0 * float(i)
 
 
-## spec: movement.md §15 mantle heights 32-160 u. Measured session 4: climb ~215.6 u/s, so the
+## spec: movement.md §15 mantle heights 32-160 u; measured session 7: a 162 u ledge mantles. Measured session 4: climb ~215.6 u/s, so the
 ## duration grows with the height (64 u from the ground took ~0.5 s with the exit phase).
 func test_t25_mantle_bands() -> void:
 	var h := new_harness(&"flat")
-	var hs: Array[int] = [24, 32, 64, 96, 128, 160, 170]
+	var hs: Array[int] = [24, 32, 64, 96, 128, 162, 170]
 	var mantles: Array[bool] = [false, true, true, true, true, true, false]
 	var prev_n := 0
 	for i in hs.size():
@@ -35,7 +35,7 @@ func test_t25_mantle_bands() -> void:
 		prev_n = n
 		if hs[i] == 64:
 			assert_true(n >= 24 and n <= 40, tag + " ~0.4-0.6 s (got %d ticks)" % n)
-		if hs[i] == 160:
+		if hs[i] == 162:
 			# measured 162 u: ~32 climb ticks plus the exit (a 215.6 u/s climb would take ~64 here)
 			assert_true(n >= 34 and n <= 54, tag + " faster climb on tall ledges (got %d ticks)" % n)
 		if n > 0:
