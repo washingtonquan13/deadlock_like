@@ -94,6 +94,27 @@
   entry, so there is no second slide to hop out of.
 - A redesign needs a live dash slide (crouch at dash tick 20 or later, scripted tick 24+).
 
+## G09 clear time (SL): at most 0.5 s, not narrowed
+
+- SL4..SL48 (live dash slide: crouch 24..32, slide hop 30; hop 1 lands at ~77 near 393 u/s; W held, crouch 77+k,
+  hop 6 ticks later).
+- For k <= 24 the HUD is below 350 at the crouch (the landing coast below), so hop 2 is a crouch jump, not a
+  slide hop. k 32 and 48 slide and hop clean.
+- So the flag clears within ~0.5 s of ground time. That is consistent with the sim's 0.25 s but does not narrow it.
+
+## Slide jump keeps the crouch (SE, SL, SC)
+
+- After a slide jump (dash slide or normal slide), landing with crouch released and W held, the HUD coasts on ground
+  friction alone for a while. Then the normal run ramp resumes, with sprint kept (it climbs back to ~399, not the
+  crouch-walk 187).
+- The coast ends ~55 ticks after the slide jump in all three families: SE (hop 26) ~80, SL (hop 30) ~85,
+  SC (hop 103) ~158. That is 5, 7 and 9 ticks after landing for SE40, SL48 and SC, so it is keyed to the jump,
+  not the landing.
+- Model: `slide_jump_crouch_time` 0.86 s. A slide jump holds crouch until then, even with crouch released in the air.
+  Landing inside that window enters CROUCH (friction only, no sprint reset); the hero stands at its end.
+- HUD-vs-sim rms over all SE/SL/SC trials: 54.0 (off) -> 28.1. A 50/53/55/57-tick scan gives 48.4/36.7/28.1/28.2.
+  The remaining worst points are the SC dash-jump tick and the SE landing tick, where the HUD reads 3D speed.
+
 ## Contaminated hero from ~15:47 (RUN)
 
 - By the end of the session the sandbox Haze was level 19 with 6 items (~$25,600,
@@ -118,7 +139,7 @@
 ## Still open
 
 - HM_W's extra ~13 u when the heavy starts from a run.
-- The G09 clear time (needs a live-slide redesign of SE).
+- The G09 clear time below 0.5 s (SL k <= 24 never reach a slide; needs a faster hop-1 landing).
 - The ground accel above 400 u/s on a buffed hero (RUN; needs a clean hero).
 - The heavy's air recovery (and whether gravity applies).
 - The light melee.
