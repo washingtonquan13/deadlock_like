@@ -226,7 +226,8 @@ static func _ground_dash_transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -
 	var on_ground := s.grounded or s.airborne_ticks <= 1 or coyote < 0 or s.airborne_ticks <= coyote
 	if ctx.is_pressed(InputCmd.BTN_JUMP) and (ctx.mask & ControlLocks.JUMP) == 0:
 		# G07: a jump pressed before the window opens locks out the dash-jump for this dash
-		# (ground_dash.md rule 12). What the early press does instead is undocumented: it stays buffered.
+		# (ground_dash.md rule 12). Measured session 4: that press, and one after the window, does nothing
+		# (no jump, not buffered).
 		# PROVISIONAL (G06/G07): the open tick carries the G06 window conflict (0.30 vs 0.35 s).
 		if k < sim.cp.dash_jump_open_tick:
 			s.dash_jump_locked = true
@@ -239,8 +240,6 @@ static func _ground_dash_transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -
 			# hop keeps the dash's momentum (video_guides V9 3:03, ground_dash.md rule 12b; gap G22).
 			sim.do_ground_jump(s, ctx, &"dash_cancel")
 			return
-		s.action_buffer_button |= InputCmd.BTN_JUMP
-		s.action_buffer_ticks = sim.cp.action_buffer_ticks
 	# G20: a crouch press at any time during the dash starts the dash slide at the current speed
 	# (ground_dash.md rules 7-8). Crouch already held at dash start is stored and gives no press (rule 9).
 	if ctx.is_pressed(InputCmd.BTN_CROUCH) and s.grounded and (ctx.mask & ControlLocks.CROUCH) == 0:
