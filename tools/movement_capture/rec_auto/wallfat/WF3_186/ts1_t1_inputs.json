@@ -1,0 +1,129 @@
+{
+  "t0_perf": 57968.0896342,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.00020620000577764586,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.9221380000017234,
+      "t_plan": 0.921875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 60
+    },
+    {
+      "t_real": 0.9473504999987199,
+      "t_plan": 0.946875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 61
+    },
+    {
+      "t_real": 1.35977190000267,
+      "t_plan": 1.359375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 88
+    },
+    {
+      "t_real": 1.3845994000002975,
+      "t_plan": 1.384375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 89
+    },
+    {
+      "t_real": 2.1876508999994257,
+      "t_plan": 2.1875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 141
+    },
+    {
+      "t_real": 2.2127021999986027,
+      "t_plan": 2.2125,
+      "kind": "up",
+      "arg": "space",
+      "tick": 142
+    },
+    {
+      "t_real": 2.8909136000002036,
+      "t_plan": 2.890625,
+      "kind": "down",
+      "arg": "space",
+      "tick": 186
+    },
+    {
+      "t_real": 2.915998299999046,
+      "t_plan": 2.915625,
+      "kind": "up",
+      "arg": "space",
+      "tick": 187
+    },
+    {
+      "t_real": 4.375212800005102,
+      "t_plan": 4.375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 281
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2544.41,
+    "pos_y": 75.34,
+    "pos_z": 94.31,
+    "ang_pitch": 10.03,
+    "ang_yaw": 0.09,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 396.86
+  },
+  "start_yaw": 0.09,
+  "late_ms_max": 0.4754999987198749,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\wallfat\\WF3_186.json",
+  "mark": "wallA",
+  "mark_value": {
+    "pawn": [
+      2635.9900000000002,
+      110.0,
+      94.75
+    ],
+    "hud": [
+      2544.34,
+      75.47,
+      94.5
+    ],
+    "yaw": 0.03,
+    "pitch": 10.0,
+    "cam_offset": [
+      -91.65000000000009,
+      -34.53,
+      -0.25
+    ],
+    "return_error_u": 0.22
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 621,
+  "pre_real_s": 0.3
+}

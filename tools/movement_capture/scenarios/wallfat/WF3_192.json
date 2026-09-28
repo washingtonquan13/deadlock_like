@@ -1,0 +1,61 @@
+{
+ "_comment": "wall jumps at 88, 141 and 192, W held",
+ "name": "WF3_192",
+ "clip": "WF3_192",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 300,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 280,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 60,
+   "to": 60,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 88,
+   "to": 88,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 141,
+   "to": 141,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 192,
+   "to": 192,
+   "buttons": [
+    "jump"
+   ]
+  }
+ ]
+}

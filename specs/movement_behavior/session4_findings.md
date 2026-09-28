@@ -225,3 +225,32 @@ The helper `fl.py` prints forward and lateral velocity from camera differences.
 - **Plain S always turns to the camera's right,** in both trials of SBS and SBS60. S+D turns the same way at the same rate.
 - **After the slide ends,** velocity snaps to the wish at crouch-walk speed (~187 u/s): straight back for S, back-right for S+D.
 - **The sim already turns under S,** but which side it picks came from float noise. It now breaks the tie to the right.
+
+## Wall-jump fatigue (Haze, mark wallA, head-on)
+
+Scenarios are in `scenarios/wallfat`. The setup is the same as WJW: W held throughout, ground jump at 60, first wall jump at 88. W pulls the hero back to the wall, so re-contact comes at ~133.
+- WF2_P: a second wall jump at P = 138, 141 or 144.
+- WF3_P: presses at 88, 141 and P = 186 or 192.
+
+`fitj.py` fits camera z with a fixed 800 u/s² gravity (and forward position linearly) over 8-tick windows before and after each press.
+
+| Jump | Ticks since the previous press | vz before | vz after |
+|---|---|---|---|
+| 1st | – | −31 to −44 | 518–543 (the session-3 rule gives ~507) |
+| 2nd | 50 / 53 / 56 | −99 / −128 to −142 / −170 to −181 | 165–180 / 169–186 / 183–191 |
+| 3rd | 45 / 51 | −363 to −382 / −404 to −425 | 71 / 95–96 |
+
+- **The kick off the wall is not fatigued.** The forward speed after every jump is −150 to −171 over the same window.
+- **Only the vertical is fatigued, and it recovers with time since the last wall jump.** A press 6 ticks later gains ~37 u/s in both the 2nd and the 3rd jump. The 3rd jump is not worse than the 2nd once you allow for its timing and its faster fall.
+- **Model that fits all 14 samples (rms ~8 u/s):**
+  - vz = 519·(1 − f) + 0.30·vz_before (falling), where f is the fatigue left at the press.
+  - Each wall jump sets f = 1.
+  - f recovers linearly to 0 over ~125 ticks (1.95 s).
+  - The fall-speed term is not scaled.
+- **Other fits:**
+  - Scaling the whole launch, fall-speed term included, cannot fit the 2nd and 3rd jumps together.
+  - A free linear fit reaches zero recovery at ~8 ticks after the press, which is close to the 0.125 s wall-jump lockout.
+- **Open:**
+  - Rising-contact repeats.
+  - Whether a landing clears the fatigue (the sim assumes it does).
+  - Whether an airborne melee adds fatigue.

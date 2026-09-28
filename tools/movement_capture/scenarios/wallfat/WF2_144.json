@@ -1,0 +1,54 @@
+{
+ "_comment": "wall jumps at 88 and 144, W held",
+ "name": "WF2_144",
+ "clip": "WF2_144",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 300,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 280,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 60,
+   "to": 60,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 88,
+   "to": 88,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 144,
+   "to": 144,
+   "buttons": [
+    "jump"
+   ]
+  }
+ ]
+}
