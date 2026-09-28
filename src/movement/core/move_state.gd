@@ -30,6 +30,7 @@ var combat_regen_penalty_ticks: int = 0
 var air_jumps_used: int = 0
 var air_dashes_used: int = 0
 var down_dashes_used: int = 0
+var down_dash_slow_until: int = -1
 var wall_jumps_done: int = 0
 var wall_fatigue: float = 0.0
 var airborne_ticks: int = 0

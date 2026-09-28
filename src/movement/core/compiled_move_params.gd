@@ -14,6 +14,7 @@ var air_dash_ticks_exact: float = 27.52
 var ground_dash_speed: float = 0.0
 var air_dash_speed: float = 0.0
 var down_dash_window_ticks: int = 28
+var down_dash_slow_ticks: int = 28
 var sprint_delay_ticks: int = 192
 # extra precomputed values (CORE additions)
 var action_buffer_ticks: int = 7
@@ -66,6 +67,7 @@ static func build(p_params: MovementParams, p_hero: HeroMovementStats) -> Compil
 	c.ground_dash_speed = p.ground_dash_distance / gd
 	c.air_dash_speed = p.air_dash_distance / ad
 	c.down_dash_window_ticks = MoveUnits.ticks(p.down_dash_double_tap_window)
+	c.down_dash_slow_ticks = MoveUnits.ticks(p.down_dash_slow_time)
 	c.sprint_delay_ticks = MoveUnits.ticks(p.sprint_delay)
 	c.action_buffer_ticks = MoveUnits.ticks(p.action_buffer_time)
 	c.jump_buffer_ticks = MoveUnits.ticks(p.jump_buffer_time)

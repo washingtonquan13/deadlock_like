@@ -149,7 +149,12 @@ extends Resource
 # PROVISIONAL (G02): V2 1:36 says a 2-3 u rise breaks it; the exact tolerance is pending clip A2.
 @export var air_dash_iad_level_normal_y: float = 0.9999
 @export var down_dash_double_tap_window: float = 0.4375          # spec: movement.md §11 (28 ticks)
-@export var down_dash_speed: float = 15.0                        # spec: movement.md §11 (Open Q7)
+@export var down_dash_speed: float = 12.7                        # measured session 11 (DD_S/DD_A HUD slopes): 496-504 u/s, added to vy
+# measured session 11 (DD_W vs DD_AW, DD_1W): for this long after a down dash, ground run speed is scaled by
+# down_dash_ground_speed_mult. DD_W lands ~8 ticks after the dash and holds ~326 (a run reaches ~406) until ~30 ticks
+# after it; DD_AW lands ~27 ticks after and climbs at once. A single air crouch tap (DD_1W) has no effect. 0 disables.
+@export var down_dash_slow_time: float = 0.4375
+@export var down_dash_ground_speed_mult: float = 0.8
 @export var down_dashes_per_airtime: int = 1                     # spec: movement.md §11
 
 # --- air control ----------------------------------------------------------------

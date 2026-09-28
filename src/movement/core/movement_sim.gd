@@ -419,7 +419,10 @@ func _transitions(s: MoveState, ctx: Ctx) -> void:
 func _physics(s: MoveState, ctx: Ctx) -> void:
 	match s.loco:
 		L.GROUND:
-			GroundState.walk_physics(self, s, ctx, cp.effective_move_speed(s, ctx.firing))
+			var run := cp.effective_move_speed(s, ctx.firing)
+			if s.tick < s.down_dash_slow_until:
+				run *= cp.params.down_dash_ground_speed_mult   # measured session 11 (DD_W): after a down dash
+			GroundState.walk_physics(self, s, ctx, run)
 		L.CROUCH:
 			GroundState.walk_physics(self, s, ctx, cp.effective_crouch_speed(s))
 		L.SLIDE:

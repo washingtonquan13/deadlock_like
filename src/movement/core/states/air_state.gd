@@ -22,8 +22,11 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 		var down_max := p.down_dashes_per_airtime + (sim.cp.air_dashes_max(s) - p.air_dashes_per_airtime)
 		if s.loco == L.AIR and last >= 0 and ctx.tick_no - last <= sim.cp.down_dash_window_ticks and s.down_dashes_used < down_max and sim.spend(s, p.cost_down_dash):
 			s.loco = L.DOWN_DASH
-			s.velocity.y = -p.down_dash_speed
+			# measured session 11 (DD_S, DD_A): the down dash ADDS -down_dash_speed to vy (rising at +230 it ends at
+			# ~-270); horizontal is kept and gravity carries on as normal.
+			s.velocity.y -= p.down_dash_speed
 			s.down_dashes_used += 1
+			s.down_dash_slow_until = s.tick + sim.cp.down_dash_slow_ticks
 			s.last_air_crouch_press_tick = -1
 			sim.emit(s, MoveEvents.DASHED, {"kind": &"down", "bucket": sim.cp.hero.dash_bucket})
 			return
