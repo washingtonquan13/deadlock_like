@@ -16,7 +16,8 @@
     "right": "d",
     "dash": "lshift",
     "jump": "space",
-    "crouch": "lctrl"
+    "crouch": "lctrl",
+    "melee": "q"
   },
   "deg_per_count": 0.03522,
   "yaw_sign": 1.0,
