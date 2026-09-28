@@ -298,7 +298,8 @@ def run_trial(hud: Hud, cfg, mark: dict, events: list, timescale: float, tail_ga
     miss = math.dist((v["pos_x"], v["pos_y"], v["pos_z"]), mark["hud"])
     if miss > 2.0:
         raise RuntimeError("after setpos + turn the HUD is %.1f u from the mark's HUD point" % miss)
-    time.sleep(max(0.3, 0.6 / timescale))  # stamina/landing settle after the turn
+    # stamina/landing settle after the turn; DL_SETTLE=S waits longer (stamina regen is 4.5 s per charge)
+    time.sleep(max(0.3, 0.6 / timescale, float(os.environ.get("DL_SETTLE", 0))))
     start_state = hud.wait_still(timeout=5, need=2)
 
     cap = hud.cap

@@ -91,12 +91,46 @@
   ~70–90 u/s ahead until the bottom and peaks 33 high. Not modelled: the cause is unknown (possibly the edge or a lip
   in the stair-ramp collision), and the edge is one geometry.
 
+## Air strafe above 700 u/s after a 90 deg air dash (FF_*; G26 still open)
+
+- **Scenarios FF_N, FF_SA, FF_WD, FF_SAE** (mark `street_y058b`, `DL_SETTLE=10` so both dashes have stamina):
+  1. Dash 4, dash jump 26, A held 38..42 with an air dash at 40 (90 deg left of the view).
+  2. Then no keys (N), S+A or W+D from 76 (after the dash), or S+A from 44 through the dash (SAE).
+- **Analysis:** `ff_sim.py` gives the pos-derived velocity, lag-shifted, and each keyed run's velocity minus FF_N's
+  (the "strafe index").
+- **The dash itself matches.**
+  - The windowed speeds read ~975 u/s in the game vs ~850 in the sim during the dash, but that is the camera catching
+    up (it lags in dashes).
+  - Displacement from 0.55 to 1.15 s: game (377 fwd, 245 left) vs sim (371, 263). That is 450 vs 453 u.
+  - The heading after the dash is 37 deg left of the view in the game and ~40 deg in the sim.
+- **After the dash the game keeps ~50 u/s more.**
+  - 1.15 to 1.40 s: game ~690 u/s vs sim ~640, in the same direction.
+  - The landing time matches (~1.5 s).
+  - The end drag for a sideways dash looks smaller than the session-6 fit (sim: 815 to 672). Not modelled: one
+    geometry, and the dash-end speed is not separable from the drag with this camera.
+- **No strafe accel during the air dash.** FF_SAE's index stays at noise (7 to 20) until the dash ends, like the sim.
+- **Strafe index, after the dash:**
+
+  | Run | Game plateau | Sim, cap 80 | Sim, cap 50 throughout |
+  |---|---|---|---|
+  | FF_SA, FF_SAE | 128 to 130 | 127 | 98 |
+
+  - FF_SAE rises 42, 65, 97 at 845, 745 and 714 u/s. The rate is normal above 700, so there is no high-speed accel
+    factor up to ~850.
+- **The cap is not settled.** The game's flight drops through 700 u/s at ~1.15 to 1.20 s, just as the index reaches
+  the ~98 where a 50 cap would bind. A sim with the threshold moved to match the game's timing is identical to cap 80.
+  A clean test needs >700 u/s flight lasting >0.3 s with a key exactly square to the motion. This dash chain can't
+  give that: the heading is ~37 deg, and keys come in 45 deg steps.
+
 ## Capture tooling
 
 - `gameio.focus_game` minimizes the ESET popup (egui.exe) and any Godot window covering the game before a recording.
   It never closes or answers the popup.
+- `DL_SETTLE=S` (driver) waits S seconds before each trial. Scenarios with two dashes need ~10 s for stamina
+  (4.5 s per charge). Without it trials 2 and 3 of FF_* had no air dash.
 
 ## Still open
 
 - The RRUN slide edge transient (one edge; needs a second ramp top to tell geometry from physics).
-- The air strafe above 700 u/s.
+- The air strafe cap above 700 u/s (the reachable flight is too short; see FF_*).
+- The end drag after a 90 deg air dash (game keeps ~50 u/s more than the sim).
