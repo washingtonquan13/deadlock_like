@@ -1,0 +1,381 @@
+{
+  "t0_perf": 61477.5715586,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.00029099999665049836,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.6098206999959075,
+      "t_plan": 0.609375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 40
+    },
+    {
+      "t_real": 0.6346801999970921,
+      "t_plan": 0.634375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 41
+    },
+    {
+      "t_real": 0.797214600002917,
+      "t_plan": 0.796875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 52
+    },
+    {
+      "t_real": 0.8222607999996399,
+      "t_plan": 0.821875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 53
+    },
+    {
+      "t_real": 0.9845904999965569,
+      "t_plan": 0.984375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 64
+    },
+    {
+      "t_real": 1.009759499997017,
+      "t_plan": 1.009375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 65
+    },
+    {
+      "t_real": 1.1721037000024808,
+      "t_plan": 1.171875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 76
+    },
+    {
+      "t_real": 1.1971671999999671,
+      "t_plan": 1.196875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 77
+    },
+    {
+      "t_real": 1.3596690999984276,
+      "t_plan": 1.359375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 88
+    },
+    {
+      "t_real": 1.3848236999983783,
+      "t_plan": 1.384375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 89
+    },
+    {
+      "t_real": 1.547377900002175,
+      "t_plan": 1.546875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 100
+    },
+    {
+      "t_real": 1.572123099998862,
+      "t_plan": 1.571875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 101
+    },
+    {
+      "t_real": 1.734747199996491,
+      "t_plan": 1.734375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 112
+    },
+    {
+      "t_real": 1.7597624999980326,
+      "t_plan": 1.759375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 113
+    },
+    {
+      "t_real": 1.9221074000015506,
+      "t_plan": 1.921875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 124
+    },
+    {
+      "t_real": 1.9470860000001267,
+      "t_plan": 1.946875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 125
+    },
+    {
+      "t_real": 2.1096785999980057,
+      "t_plan": 2.109375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 136
+    },
+    {
+      "t_real": 2.134591599999112,
+      "t_plan": 2.134375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 137
+    },
+    {
+      "t_real": 2.297288900001149,
+      "t_plan": 2.296875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 148
+    },
+    {
+      "t_real": 2.3222543000010774,
+      "t_plan": 2.321875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 149
+    },
+    {
+      "t_real": 2.4847195999973337,
+      "t_plan": 2.484375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 160
+    },
+    {
+      "t_real": 2.509590000001481,
+      "t_plan": 2.509375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 161
+    },
+    {
+      "t_real": 2.672104799996305,
+      "t_plan": 2.671875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 172
+    },
+    {
+      "t_real": 2.697136099995987,
+      "t_plan": 2.696875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 173
+    },
+    {
+      "t_real": 2.859672099999443,
+      "t_plan": 2.859375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 184
+    },
+    {
+      "t_real": 2.884592700000212,
+      "t_plan": 2.884375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 185
+    },
+    {
+      "t_real": 3.0473013000009814,
+      "t_plan": 3.046875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 196
+    },
+    {
+      "t_real": 3.0721791999967536,
+      "t_plan": 3.071875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 197
+    },
+    {
+      "t_real": 3.2345655000026454,
+      "t_plan": 3.234375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 208
+    },
+    {
+      "t_real": 3.259595099996659,
+      "t_plan": 3.259375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 209
+    },
+    {
+      "t_real": 3.4221535999968182,
+      "t_plan": 3.421875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 220
+    },
+    {
+      "t_real": 3.447239699999045,
+      "t_plan": 3.446875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 221
+    },
+    {
+      "t_real": 3.6096885000006296,
+      "t_plan": 3.609375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 232
+    },
+    {
+      "t_real": 3.634536500001559,
+      "t_plan": 3.634375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 233
+    },
+    {
+      "t_real": 3.797411200001079,
+      "t_plan": 3.796875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 244
+    },
+    {
+      "t_real": 3.8220636999976705,
+      "t_plan": 3.821875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 245
+    },
+    {
+      "t_real": 3.98452620000171,
+      "t_plan": 3.984375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 256
+    },
+    {
+      "t_real": 4.009554199998092,
+      "t_plan": 4.009375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 257
+    },
+    {
+      "t_real": 4.172005000000354,
+      "t_plan": 4.171875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 268
+    },
+    {
+      "t_real": 4.197063200001139,
+      "t_plan": 4.196875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 269
+    },
+    {
+      "t_real": 4.359798500001489,
+      "t_plan": 4.359375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 280
+    },
+    {
+      "t_real": 4.384618099997169,
+      "t_plan": 4.384375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 281
+    },
+    {
+      "t_real": 4.547076000002562,
+      "t_plan": 4.546875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 292
+    },
+    {
+      "t_real": 4.572369299996353,
+      "t_plan": 4.571875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 293
+    },
+    {
+      "t_real": 4.687739900000452,
+      "t_plan": 4.6875,
+      "kind": "up",
+      "arg": "w",
+      "tick": 301
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2647.62,
+    "pos_y": -426.31,
+    "pos_z": 117.75,
+    "ang_pitch": 24.97,
+    "ang_yaw": 73.94,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 432.02
+  },
+  "start_yaw": 73.94,
+  "late_ms_max": 0.5362000010791235,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\mantle2\\TSPAM.json",
+  "mark": "truckA",
+  "mark_value": {
+    "pawn": [
+      2637.99,
+      -335.0,
+      109.75
+    ],
+    "hud": [
+      2647.62,
+      -426.31,
+      117.75
+    ],
+    "yaw": 73.94,
+    "pitch": 24.97,
+    "cam_offset": [
+      9.63000000000011,
+      -91.31,
+      8.0
+    ],
+    "return_error_u": 0.0
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 705,
+  "pre_real_s": 0.3
+}

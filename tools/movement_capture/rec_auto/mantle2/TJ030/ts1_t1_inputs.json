@@ -1,0 +1,87 @@
+{
+  "t0_perf": 61578.6773022,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.0003899000003002584,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.45329230000061216,
+      "t_plan": 0.453125,
+      "kind": "down",
+      "arg": "space",
+      "tick": 30
+    },
+    {
+      "t_real": 0.47827060000417987,
+      "t_plan": 0.478125,
+      "kind": "up",
+      "arg": "space",
+      "tick": 31
+    },
+    {
+      "t_real": 2.3441225999995368,
+      "t_plan": 2.34375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 151
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2647.62,
+    "pos_y": -426.31,
+    "pos_z": 117.75,
+    "ang_pitch": 24.97,
+    "ang_yaw": 73.94,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 437.49
+  },
+  "start_yaw": 73.94,
+  "late_ms_max": 0.3899000003002584,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\mantle2\\TJ030.json",
+  "mark": "truckA",
+  "mark_value": {
+    "pawn": [
+      2637.99,
+      -335.0,
+      109.75
+    ],
+    "hud": [
+      2647.62,
+      -426.31,
+      117.75
+    ],
+    "yaw": 73.94,
+    "pitch": 24.97,
+    "cam_offset": [
+      9.63000000000011,
+      -91.31,
+      8.0
+    ],
+    "return_error_u": 0.0
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 399,
+  "pre_real_s": 0.3
+}

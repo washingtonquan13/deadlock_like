@@ -291,3 +291,24 @@ Two trials each. `stam/dashes.py` counts dashes (HUD ≥ 600 within 12 ticks of 
   - Only DBB pins the ~205 limit; every other case reaches 280.
   - The earlier "no redirect" result (DBD, DBS, DBR) came from the key being pressed on the same tick as the air jump, so it was not registered.
 - **The air strafe caps at ~82 u/s.** The lateral speed from D before the air jump (DBL, DBL0) flattens at 80–87 u/s. This supports the provisional 80 u/s air wishspeed cap (G26).
+
+## Taller mantles (Haze, box truck: cargo top ~162 u, cab roof ~94 u; marks truckA, truckB)
+
+The scenarios are in `scenarios/mantle2/gen.py`. `B` names are the same inputs at the cab (truckB).
+The helpers are `climb.py`, `ser.py` and `vz.py`; `driver/goto.py` teleports and faces a direction for scouting.
+Heights are the camera rise, which matches the ledge height within a few u.
+
+- **The climb is not one constant speed.** There are two phases, then the usual exit.
+  - Phase A: 66 u, vz rises ~185 → 216. 94 u, ~225–229 flat after a one-tick spike. 162 u, ~430–450 decaying at about gravity to ~305.
+  - Phase B is a flat HUD plateau: **215.6** (66 u), **236.3** (94 u), **256.0** (162 u).
+  - Exit: ~176–177 u/s forward for ~9–11 ticks at all three heights. The speed is kept afterwards.
+- **Climb-up time from a ground press at the face:** 66 u ~20 ticks, 94 u ~24 ticks (TJ050B/TJ060B, 2 trials each), 162 u ~32 ticks.
+  - So the average climb speed rises with the height: ~211, ~249 and ~328 u/s.
+  - A straight line fits all three within ~5 u/s: **v_avg ≈ 132 + 1.2·H u/s**.
+  - Airborne presses at the cab (TJ040B) climb the remaining height with the same two plateaus and the same exit.
+- **Reach:** 162 u mantles from a ground press, which is at the spec's 160 u top within measurement error. The true maximum is not measured.
+- **Not repeatable at the truck** (TJ040 t2, TJ046 t1, TJ060): some presses at 162 u give a plain jump that slides up the face with no mantle.
+  - One case had feet ~10 u up at contact (the ledge ~152 u above the feet). A successful one had them ~30 u up.
+  - A ground press 2 ticks after contact also failed while 7 ticks after succeeded, so the cause is unclear. It is not modeled.
+- **TJ030B:** a jump too early to reach the cab face lands short (apex ~54): no mantle, as expected.
+- **Walking into the truck face (TW):** it slides along the face at ~104 u/s with no mantle, same as the crate.

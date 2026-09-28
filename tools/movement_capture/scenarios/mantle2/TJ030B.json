@@ -1,0 +1,40 @@
+{
+ "_comment": "W held, jump at tick 30",
+ "name": "TJ030B",
+ "clip": "TJ030B",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 150,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 150,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 30,
+   "to": 30,
+   "buttons": [
+    "jump"
+   ]
+  }
+ ]
+}
