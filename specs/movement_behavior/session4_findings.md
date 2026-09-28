@@ -380,3 +380,5 @@ HUD-only fits (`scenarios/double/hudfit.py`, g = 795 fixed) over consecutive win
   (A_air_b1: 572 → 538 over 0.31 s). This is a property of the dash, not of air movement.
 - DJ22's HUD-only h after launch is 615–625, below the 703 read earlier from HUD plus the camera height track. Recheck the
   dash-jump launch.
+
+> **Correction (session 5):** the "no air drag" section above is wrong. That windowed fit cannot see proportional drag; with vz0 pinned by airtime every flight shows ~0.20/s. The DG-table air-jump h values are biased low by the same artifact. See `session5_audit.md`.
