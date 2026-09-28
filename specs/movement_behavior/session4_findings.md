@@ -76,4 +76,16 @@ The apparent cut (~570 → ~85 u/s at touchdown) is **an obstacle on the street 
 
 - Presses at k = 36 and 40 give nothing.
 - Presses at k = 44, 48 and 52 give a plain jump: vz ~283 (the measured plain jump is ~300), peak 54 u. Speed is kept (DJ44 takes off at ~600 3D).
-- k = 41–43 are recorded on `street_y148` to find the edge.
+- k = 41, 42 and 43 (on `street_y148`) give plain jumps too. So jumping works again from k = 41; the sim allows it from k = 40.
+  - That difference is within the ~1 tick input-phase uncertainty, so there is no change.
+
+## Dash-jump landing on a clear runway (`street_y148`, sim already matches)
+
+| Case | Game | Sim |
+|---|---|---|
+| No key (DJ27) | Lands at ~565, then ground friction: 435 → 141 over 0.28 s | 0.31 ratio |
+| Crouch held from mid-air or just before touchdown (DJC, DJC2) | Slide at the landing speed (no boost): 567 → 506 over 0.61 s, ~100 u/s² | DASH_JUMP landing slide, 568 → 502 over 0.70 s, ~94 u/s² |
+| Crouch pressed ~2 ticks after touchdown (DJC3) | ~6 ticks of ground friction first, then a slide from ~385 | Slides from ~530 |
+
+- **Late part of DJC and DJC2:** the drop after ~0.65 s of slide is the end of the runway (~33 m), so the penalty onset is not measured here.
+- **Open (DJC3):** the gap may be a crouch-to-slide delay on the ground, or the landing tick being off by ~2 ticks. It needs a ground test: run, then a crouch press.
