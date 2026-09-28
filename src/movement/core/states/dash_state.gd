@@ -262,9 +262,11 @@ static func _ground_dash_transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -
 
 
 ## G21: the dash slide starts at dash_slide_speed along the dash direction in every bucket (video_guides
-## V5 0:17). PROVISIONAL (G21): single source, dead slide before 0.3 s not modeled; pending clip D2.
+## V5 0:17). A crouch before dash_slide_dead_before gives the slower "dead slide" (measured session 11, S11-DC).
 static func enter_dash_slide(sim: MovementSim, s: MoveState) -> void:
-	GroundState.enter_slide(sim, s, MoveState.SlideKind.DASH, sim.cp.params.dash_slide_speed, s.dash_dir)
+	var p := sim.cp.params
+	var v := p.dash_slide_dead_speed if s.dash_ticks * MoveUnits.DT < p.dash_slide_dead_before else p.dash_slide_speed
+	GroundState.enter_slide(sim, s, MoveState.SlideKind.DASH, v, s.dash_dir)
 
 
 ## spec: movement.md §9 dash-jump: +1 stamina, horizontal speed per G17, air-control bonus.

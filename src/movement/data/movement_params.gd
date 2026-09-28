@@ -86,8 +86,11 @@ extends Resource
 @export var dash_jump_air_control_time: float = 0.25             # spec: movement.md §9
 # G21 dash slide start speed: SET along the dash direction on every dash-slide entry, all buckets
 # (video_guides V5 0:17 "always starts at 650 u/s"; Leif). < 0 = keep the current dash speed (K15, ground_dash.md
-# rule 7 wording). PROVISIONAL (G21): single source; the "dead slide" before 0.3 s is not modeled; pending clip D2.
+# rule 7 wording). Dead slide measured session 11 (S11-DC): a crouch 8 or 16 dash ticks in slides at ~449 u/s,
+# 20 ticks in keeps 650; W held or released makes no difference.
 @export var dash_slide_speed: float = 16.511                   # measured session 5: 650 u/s; friction on the entry tick makes the first slide tick read 643 (game 641-643)
+@export var dash_slide_dead_before: float = 0.3                # measured session 11: dead between 0.25 and 0.3125 s into the dash (V5 1:21 says 0.3 s)
+@export var dash_slide_dead_speed: float = 11.405              # measured session 11: 449 u/s (game HUD 442 two ticks after the crouch, then the normal dash-slide decay)
 
 # --- jump / gravity -------------------------------------------------------------
 @export var jump_speed: float = 7.62                             # measured ~300 u/s on plain jumps (session2_findings.md); spec §10 was 7.493 (295 u/s)

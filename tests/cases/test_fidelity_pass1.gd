@@ -174,8 +174,16 @@ func test_fp1_g20_dash_slide_on_press() -> void:
 	await h.ready()
 	h.run(20, func(t: int) -> InputCmd: return cmd(t, B_DASH if t == 1 else (B_CROUCH if t >= 11 else 0)))
 	assert_eq(first_event(h.trace, MoveEvents.SLIDE_START, "kind", MoveState.SlideKind.DASH), 10, "dash slide on the press tick (k=10)")
-	# measured session 3: the dash slide starts at ~643 u/s
-	assert_near(float(h.trace[10]["hspeed"]) / 0.0254, 643.0, 10.0, "dash slide starts near 643 u/s")
+	# measured session 11 (S11-DC): a crouch before 0.3 s gives the dead slide at ~444 u/s
+	assert_near(float(h.trace[10]["hspeed"]) / 0.0254, 444.0, 10.0, "early crouch: dead slide near 444 u/s")
+	var h1 := new_harness(&"flat")
+	await h1.ready()
+	h1.run(30, func(t: int) -> InputCmd: return cmd(t, B_DASH if t == 1 else (B_CROUCH if t >= 22 else 0)))
+	var i1 := first_event(h1.trace, MoveEvents.SLIDE_START, "kind", MoveState.SlideKind.DASH)
+	assert_true(i1 > 0, "late crouch: dash slide")
+	if i1 > 0:
+		# measured session 3: the dash slide starts at ~643 u/s
+		assert_near(float(h1.trace[i1]["hspeed"]) / 0.0254, 643.0, 10.0, "late crouch: dash slide starts near 643 u/s")
 	var h2 := new_harness(&"flat")
 	await h2.ready()
 	h2.run(40, hold(B_DASH | B_CROUCH))
@@ -296,8 +304,8 @@ func test_fp1_dash_slide_jump() -> void:
 	for k in [2, 25]:
 		var h := new_harness(&"flat")
 		await h.ready()
-		var jt: int = 11 + k
-		h.run(90, func(t: int) -> InputCmd: return cmd(t, (B_DASH if t == 1 else 0) | (B_CROUCH if t >= 11 else 0) | (B_JUMP if t == jt else 0)))
+		var jt: int = 22 + k
+		h.run(100, func(t: int) -> InputCmd: return cmd(t, (B_DASH if t == 1 else 0) | (B_CROUCH if t >= 22 else 0) | (B_JUMP if t == jt else 0)))
 		var j := first_event(h.trace, MoveEvents.JUMPED)
 		assert_true(j > 0, "jumped (k=%d)" % k)
 		if j <= 0:
