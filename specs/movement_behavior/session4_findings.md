@@ -53,13 +53,13 @@ Horizontal speeds below come from the HUD speed (3D) with vz from the height tra
 
 | Jump press after the dash (ticks) | Result |
 |---|---|
-| 12, 18 | No jump at all |
-| 20, 22, 27, 33 | Dash jump |
+| 12, 18, 19 | No jump at all |
+| 20, 22, 27, 33, 34, 35 | Dash jump |
 | 36, 40 | No jump at all (the press is dropped, not buffered into a plain jump) |
 | 12 then 27 (DJL) | No jump: the early press locks the dash jump out |
 
-The model's window 0.30–0.55 s (ticks ~19–35) and the early-press lock match. The sim buffers a late press into
-a plain jump when the dash ends (tick 39); the game does not.
+The edges are exact: the window is k = 20–35, the same as the model's 0.30–0.55 s (open tick 20, close tick 35). The early-press lock matches too. The sim buffered a late press into
+a plain jump when the dash ends (tick 39); the game does not (fixed in 38bc2ed).
 
 ## Landing (not applied yet)
 
