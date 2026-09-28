@@ -1,10 +1,10 @@
-# Session 11: heavy melee (lunge, recovery, cooldown) and the wall-jump press interval
+# Session 11: heavy melee, the wall-jump press interval, and the dead dash slide
 
 - Setup: Haze, Sandbox map, recorded by the driver with no one at the keyboard (3 trials each, mark `street_y058b`
   for melee, `wallAd` for wall jumps).
 - Recordings: `tools/movement_capture/rec_auto/s11_conf/`.
 - Scenarios and fit scripts: `tools/movement_capture/scenarios/s11_conf/` (`gen.py`, `hm_an.py`, `hm_sim.py`,
-  `hm_sim2.py`, `wi_sim.py`).
+  `hm_sim2.py`, `wi_sim.py`, `se_sim.py`, `se_hop1.py`, `dc_sim.py`, `run_fit.py`).
 - The game's melee bind is AbilityMelee (the driver key `melee` = q). Held, it is the heavy. The heavy commits after
   ~13-14 ticks of hold (the sim's `heavy_hold_time` 0.2 s).
 - Scripted tick = game tick (t·64 + 1) − 2.7 (the session-10 recording lag).
@@ -71,8 +71,54 @@
 - PROVISIONAL: whether a press held into the wall's reach at the interval end gives a second wall jump. The WI runs
   are already off the wall by then.
 
+## Dead dash slide (G21)
+
+- **Scenarios DC12/20/24 W and R** (mark `street_y058b`): W from tick 1, dash at 4, crouch held from tick c for 40
+  ticks, W held through (W) or released at c − 1 (R), then an S brake.
+- **Result** (`dc_sim.py`, HUD speed):
+  - A crouch 8 or 16 dash ticks in (DC12, DC20): HUD drops 635 → ~442 within 2 ticks, then follows the normal
+    dash-slide decay (437 → 292 over 37 ticks).
+  - A crouch 20 dash ticks in (DC24): keeps ~640 and decays by the same ratio (0.67 over 37 ticks).
+  - W held or released makes no difference.
+  - So the dead window ends between 0.25 and 0.3125 s into the dash, matching Leif's 0.3 s.
+- **Model:** `dash_slide_dead_before` 0.3 s, `dash_slide_dead_speed` 11.405 m/s (449 u/s). A dash slide entered
+  earlier starts at the dead speed, otherwise at `dash_slide_speed` 650. DC12/DC20 replay within ~5 u/s, with the
+  sim ~1.5 ticks early.
+- **SE (slide hop out of an early dash slide):** the hop-1 mismatch was this dead slide. After the model change the
+  SE2 hop-1 apex is 292 (game HUD 293).
+
+## G09 clear time (SC, SE): not measured
+
+- SC6/14/24/36 are invalid: hop 1 lands near the runway end, where the hero hits scenery.
+- SE2/8/12/16/24/40 can't measure it either: out of the dead slide, hop 1 lands at ~280 u/s, below the 350 slide
+  entry, so there is no second slide to hop out of.
+- A redesign needs a live dash slide (crouch at dash tick 20 or later, scripted tick 24+).
+
+## Contaminated hero from ~15:47 (RUN)
+
+- By the end of the session the sandbox Haze was level 19 with 6 items (~$25,600,
+  `citadel_hero_testing_infinite_money true`). `selecthero` to another hero and back does not reset level or items.
+- **RUN** (plain W run from rest): the HUD reaches ~414 u/s by 1.5 s, where the clean run (sessions 5-7) plateaus at
+  386.
+
+  | t (s) | 0.2 | 0.3 | 0.4 | 0.5 | 0.6 | 0.8 | 1.0 | 1.5 | 2.0 |
+  |---|---|---|---|---|---|---|---|---|---|
+  | Game (mean of 3) | 221 | 287 | 330 | 359 | 378 | 399 | 408 | 414 | 405 |
+  | Sim | 230 | 288 | 326 | 351 | 367 | 386 | 386 | 386 | 386 |
+  | Sim, base 8.916 m/s | 230 | 288 | 326 | 351 | 367 | 386 | 394 | 399 | 400 |
+
+- The early ramp matches the constant 1600 u/s² accel, yet the game ends above the 400 u/s ceiling that constant
+  accel (with friction 4) imposes. No single override fits (`run_fit.py`: raising the accel reference fits the
+  plateau but overshoots the ramp). This is a buffed hero, so the model was not changed on it. It does show 400 u/s
+  is not a hard ground ceiling once move speed is raised.
+- Dash and slide values in DC/SE are unaffected (they match the clean session-9 numbers).
+- The heavy-melee runs (from 15:47) are also on this hero. HM_W's lunge profile does not change with the base speed
+  override, so its extra ~13 u is not explained by the run speed.
+
 ## Still open
 
 - HM_W's extra ~13 u when the heavy starts from a run.
+- The G09 clear time (needs a live-slide redesign of SE).
+- The ground accel above 400 u/s on a buffed hero (RUN; needs a clean hero).
 - The heavy's air recovery (and whether gravity applies).
 - The light melee.

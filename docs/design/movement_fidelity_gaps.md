@@ -48,7 +48,7 @@ Counts: **13 fixed-settled, 19 provisional, 18 open** (50 gaps, including the ne
 | G14 | provisional | wall-jump coyote 2 ticks, emergent edge boost (V12, V13) | W4 |
 | G17 | provisional | mode 1 sets 611 u/s globally (V9 0:19) | D3 |
 | G18 | provisional | coyote = whole window (dash_jump_coyote_time -1) | D4 |
-| G21 | provisional | 650 u/s all buckets (V5 0:17); dead slide not modelled | D2 |
+| G21 | done | 650 u/s all buckets (V5 0:17); dead slide 449 u/s before 0.3 s (measured S11-DC) | - |
 | G26 | provisional | wishspeed caps 80/50 u/s above 700 (V8); accel rate unknown | A5 |
 | G33 | provisional | vertical-only fatigue, 0.25 floor and 0.125 s min interval are placeholders | W5 |
 | G36 | provisional | -600 u/s cap; trigger conditions unsourced | W6 |
@@ -218,7 +218,7 @@ Verdicts:
 | K12 | `dash_state.gd:97` | Ability-cancel jump clamps to walk speed | unknown | G22 Status: removed in the review fixes (no source for the clamp). |
 | K13 | `dash_state.gd:111-112` | Dash-jump keeps dash horizontal, sets vy 295 u/s | horizontal unknown, vertical **contradicted** | G17, G05 Status: mode 1 (default) sets 611 u/s along the dash direction, PROVISIONAL (G17); mode 0 keeps the legacy multiplier. |
 | K14 | `dash_state.gd:131-132` | Buffered jump at dash end clamps to walk speed | unknown (the dash hop suggests no clamp) | G22 Status: removed in the review fixes (V9 3:03, ground_dash.md rule 12b). |
-| K15 | `dash_state.gd:137` | Dash slide inherits dash speed | **contradicted** (M-L: 650 u/s, dead slide) | G21 Status: dash slide set to 650 u/s in every bucket, PROVISIONAL (G21); dead slide not modelled yet. |
+| K15 | `dash_state.gd:137` | Dash slide inherits dash speed | **contradicted** (M-L: 650 u/s, dead slide) | G21 Status: dash slide 650 u/s in every bucket; dead slide 449 u/s before 0.3 s (session 11). |
 | K16 | `dash_state.gd:140-141` | Ground dash exit clamp to walk speed | supported (ends at walk speed) | - |
 | K17 | `dash_state.gd:147` | Crouch-stored dash exits clamped to crouch speed | unknown | - Status: removed in the review fixes; the slide block until crouch release is kept. |
 | K18 | `dash_state.gd:60` | Air dash adds impulse with **no cap** | **contradicted** | G01 Status: mode 1 (Hyp A cap) is the default, PROVISIONAL (G01). |

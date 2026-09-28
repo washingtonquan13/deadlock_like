@@ -9,16 +9,21 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..",
 GODOT = "D:/PortablePrograms/Godot_v4.4.1-stable_win64.exe/Godot_v4.4.1-stable_win64_console.exe"
 OUT = os.path.join(ROOT, "tools_fit", "_out", "s11_hm"); os.makedirs(OUT, exist_ok=True)
 HOLD = 13
+FIX = {}
+for a in [x for x in sys.argv[1:] if x.startswith("--set=")]:
+    sys.argv.remove(a)
+    for kv in a[6:].split(","):
+        k, v = kv.split("="); FIX[k] = float(v)
 def sim(name):
     s = json.load(open(os.path.join(os.path.dirname(__file__), name + ".json")))
-    s["start"]["pitch_deg"] = -14.7
+    s["start"]["pitch_deg"] = -14.7; s["fixed"] = FIX
     for e in s["timeline"]:
         if e.get("buttons") == ["melee"]:
             e["from"] = e["to"] = e["from"] + HOLD; e["buttons"] = ["melee_heavy"]
     sp = os.path.join(OUT, name + ".json"); json.dump(s, open(sp, "w"), indent=1)
     out = os.path.join(OUT, name + ".csv")
     subprocess.run([GODOT, "--headless", "--path", ROOT, "-s", "res://tools_fit/route_export.gd", "--",
-                    "--scenario=" + sp, "--out=" + out], capture_output=True)
+                    "--scenario=" + sp, "--out=" + out], capture_output=True, check=True)
     a = np.genfromtxt(out, delimiter=",", names=True)
     return a
 for name in sys.argv[1:] or ["HM_S", "HM_W", "HM_J"]:
