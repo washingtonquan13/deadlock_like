@@ -4,7 +4,7 @@ extends MoveTestCase
 const R := 0.4064   # capsule radius, spec: movement.md §20
 
 
-## spec: movement.md §13 slope slide from rest on 20 degrees (T21)
+## measured session 7 (s7_ramp RS0): crouching at rest on a 20 degree slope does not slide (T21)
 func test_t21_slope_slide() -> void:
 	var h := new_harness(&"flat")
 	ArenaBuilder.add_ramp(h.root, Vector3.ZERO, 20.0, 40.0, 6.0)
@@ -12,8 +12,8 @@ func test_t21_slope_slide() -> void:
 	var d := 25.0
 	h.spawn(Vector3(0.0, d * tan(deg_to_rad(20.0)) + slope_rest_offset(R, 20.0), -d), 0.0)
 	h.run(48, hold(B_CROUCH))
-	assert_eq(h.state.loco, L.SLIDE, "sliding down the slope")
-	assert_true(h.state.velocity.length() > 3.0, "gains speed sliding down 20 degrees")
+	assert_eq(h.state.loco, L.CROUCH, "crouched, not sliding")
+	assert_true(h.state.velocity.length() < 1.0, "stays put on the slope")
 	done()
 
 

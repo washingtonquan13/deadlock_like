@@ -100,15 +100,11 @@ func test_rf_crouch_storage_no_slide() -> void:
 	var run := 16.0 * cos(deg_to_rad(20.0))
 	h.spawn(Vector3(10.0, (run - 1.0) * tan(deg_to_rad(20.0)), -run + 1.0), PI)
 	h.run(80, func(t: int) -> InputCmd: return cmd(t, B_CROUCH | (B_DASH if t == 3 else 0), 0, 1, PI))
-	# pressing crouch on a slide slope before the dash slides legitimately; only the time after the dash counts
+	# only the time after the dash counts
 	var dash_k := first_event(h.trace, MoveEvents.DASHED)
-	assert_true(dash_k >= 0, "slope: dashed out of the slope slide")
+	assert_true(dash_k >= 0, "slope: dashed")
 	assert_eq(first_loco(h.trace, L.SLIDE, dash_k), -1, "slope: no slide after a crouch-stored dash")
 	assert_eq(h.state.loco, L.CROUCH, "slope: crouching on the slide slope while crouch stays held")
-	# releasing and pressing crouch again allows a slide on the slope
-	h.run(2, hold(0, 0, 1, PI))
-	h.run(4, hold(B_CROUCH, 0, 1, PI))
-	assert_true(count_loco(h.trace, L.SLIDE) > 0 or not h.state.grounded, "re-pressed crouch may slide again")
 	done()
 
 

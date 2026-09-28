@@ -26,7 +26,9 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	# spec: movement.md §6 crouch storage blocks slides until crouch is released
 	if not crouch:
 		s.slide_block_until_crouch_release = false
-	var slide_ok := (s.horizontal_speed() > p.slide_entry_speed or sim.on_slide_slope(s)) and not s.slide_block_until_crouch_release
+	# measured session 7 (s7_ramp RS0/RSW): a crouch press on a ~20-26 degree ramp at rest or at crouch-walk speed
+	# does not slide (HUD stays 0 / 187 all the way down), so a slope is no exception to slide_entry_speed here.
+	var slide_ok := s.horizontal_speed() > p.slide_entry_speed and not s.slide_block_until_crouch_release
 	if s.loco == L.GROUND and s.crouched and not crouch:
 		# safety net: never stay on the crouch capsule in GROUND (e.g. after a crouched mantle)
 		if sim.mover.can_stand(s.position):

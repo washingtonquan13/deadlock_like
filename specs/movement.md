@@ -16,7 +16,7 @@ Deadlock movement is a Source-style kinematic character controller (capsule, gro
 - **Stamina** is a pool of discrete charges ("bars", base 2–4 per hero) that regenerate one at a time (4.2–6 s per bar; 4.5 s for most). Stamina pays for **dashes** (ground/air, 1 bar), **air jumps** (1 bar), **dash-jumps** (1 extra bar), and **wall jumps after the first** (0.5 bar).
 - **Ground dash** sets velocity to a fixed value for a fixed time (covers 10 m); speed depends on a hero's "dash bucket". **Air dash** is an additive impulse (covers ~8 m), usable once per airtime (twice with Stamina Mastery).
 - **Dash-jump**: jumping in a short window (0.3–0.5 s after a ground dash starts) converts dash momentum into a long, fast leap for 1 extra stamina.
-- **Slide**: pressing crouch while moving faster than 350 u/s (8.9 m/s), or on a slope, enters a low-friction slide. After ~0.75 s the slide's friction jumps sharply (the "late slide penalty"). You can jump out of a slide (since 2026-03-06). Sliding does not cost stamina.
+- **Slide**: pressing crouch while moving faster than 350 u/s (8.9 m/s) enters a low-friction slide. After ~0.75 s the slide's friction jumps sharply (the "late slide penalty"). You can jump out of a slide (since 2026-03-06). Sliding does not cost stamina.
 - **Air**: 1 air jump + 1 air dash per airtime by default (refreshed on landing or zipline attach). Air strafing exists but is deliberately weak, especially above 450 u/s.
 - **Wall jump**: first wall jump per airtime is free, then 0.5 stamina each with "fatigue" that shrinks vertical launch; fatigue recovers over 1.25 s and resets on landing.
 - **Mantle**: automatic ledge climb (hold forward + jump) for ledges 32–160 u above, 0.2–0.5 s, player is not actionable during it.
@@ -67,7 +67,7 @@ Deadlock movement is a Source-style kinematic character controller (capsule, gro
 
 ### 6. Crouch
 - Hold crouch (default Ctrl). Crouch-walk speed is fixed **4.8 m/s** (4.4 m/s Grey Talon/Warden) and not affected by the firing penalty.
-- Crouch while horizontal speed > 350 u/s, or on a slope, → slide (§8).
+- Crouch while horizontal speed > 350 u/s → slide (§8); a slope alone does not start one (session 7).
 - "Crouch storage": holding crouch before a ground dash prevents the dash from turning into a slide on any surface.
 - Crouch cancels sprint.
 
@@ -121,7 +121,7 @@ Deadlock movement is a Source-style kinematic character controller (capsule, gro
 - Implementation: Source-style `air_accelerate` with a wishspeed cap, plus a speed-dependent multiplier that drops above 450 u/s, plus a small linear air drag.
 
 ### 13. Slide
-- **Entry**: crouch pressed while grounded and horizontal speed > **350 u/s (8.9 m/s)**, OR any speed on a slope/ramp. Also triggered after a ground dash if crouch is pressed/held (dash slide). "Slide storage": buffer crouch while airborne to slide instantly on landing on ramps/edges.
+- **Entry**: crouch pressed while grounded and horizontal speed > **350 u/s (8.9 m/s)**, NOT at any speed on a slope: measured session 7 (s7_ramp RS0/RSW), a fresh crouch press on a ~20-26° ramp at rest or at crouch-walk speed does not slide. A slope may still lower the threshold on landing (a 261 u/s curb-slope landing slid, session 6); untested between 187 and 350 u/s mid-slope. Also triggered after a ground dash if crouch is pressed/held (dash slide). "Slide storage": buffer crouch while airborne to slide instantly on landing on ramps/edges.
 - **Cost**: none. Visual trail.
 - **Friction**: base slide friction coefficient **0.1875** (vs normal ground). After **0.75 s** of sliding a "late slide penalty" raises friction to **~3.1875** (dash slide) or **0.6875** (dash-jump slide, penalty begins at 1.0 s).
 - Slide-distance items delay the penalty: +35% (Fleetfoot) → 1.00 s (1.25 s dash-jump), +50% (Burst Fire) → 1.25 s (1.50 s), legendary +80% (Electric Slippers) further.
