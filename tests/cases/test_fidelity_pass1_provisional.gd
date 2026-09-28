@@ -169,7 +169,7 @@ func _run_until_slide(h: SimHarness, max_ticks: int) -> void:
 
 
 ## G09: the first slide jump is exempt and sets the flag; a flagged slide jump under 0.5 s adds the
-## slide-drag air drag until landing; ground time clears the flag; zip immunity blocks it. Pending S2.
+## slide drag (a pull toward ~215 u/s) until landing; ground time clears the flag; zip immunity blocks it. Pending S2.
 func test_fpp_g09_slide_hop_penalty() -> void:
 	for variant in ["early", "late", "zip"]:
 		var h := new_harness(&"flat")
@@ -191,10 +191,9 @@ func test_fpp_g09_slide_hop_penalty() -> void:
 			assert_eq(first_event(h.trace, MoveEvents.SLIDE_DRAG), 0, "early: slide drag")
 			var r: float = float(h.trace[1]["hspeed"]) / float(h.trace[0]["hspeed"])
 			assert_true(r < 1.0 - 0.2 * DT - 0.5 * DT, "early: air drag plus a penalty")
-			h.run(30, hold())
-			assert_true(not h.state.slide_hop_penalty_active, "timed penalty ends in the air (session 6: ~20 ticks)")
-			h.run(50, hold())
+			h.run(80, hold())
 			assert_true(h.state.grounded, "landed")
+			assert_true(not h.state.slide_hop_penalty_active, "penalty ends on landing")
 			h.run(20, hold())
 			assert_true(not h.state.slide_hop_flag, "ground time not sliding clears the flag")
 		else:

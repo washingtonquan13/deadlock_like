@@ -192,13 +192,18 @@ extends Resource
 @export var slide_jump_store_crouch_time: float = 0.22
 # G09 slide-hop penalty ("slide drag", slide_and_slopes.md rule 13; V4 0:47/2:13, V5 1:49, V15 1:14/1:39).
 # Any slide jump sets the flag (not a dash-cancel short hop, not a superglide); with the flag set, a
-# slide jump earlier than slide_hop_min_time into the slide adds slide_hop_penalty_drag to air drag.
+# slide jump earlier than slide_hop_min_time into the slide pulls the air speed toward slide_hop_penalty_target.
 # The flag clears after slide_hop_clear_time on the ground not sliding, or on a downhill slide jump.
 # The zip exit drag immunity blocks it. PROVISIONAL (G09): pending recording clip S2.
 @export var slide_hop_enabled: bool = true
 @export var slide_hop_min_time: float = 0.5                      # measured session 7 (s7_open SHH*): penalized at hop delays 6-30 ticks, not at 40 (bracket 0.47-0.63 s); 0.5 s from V4 0:34, V15 1:14, Eskay V7
-@export var slide_hop_penalty_drag: float = 1.34                 # measured session 7 (s7_open SHH6/12/20/30): h after the penalty is x0.652-0.661 of drag-only at takeoff 357-376 u/s; box 1.34 x 20 ticks gives ~0.658 (the in-flight extra drag decays, ~1.4/s at ticks 2-8 to 0 by ~26)
-@export var slide_hop_penalty_time: float = 0.3125               # 20 ticks (sessions 6-7; drag x time ~0.42 fits the plateau; the box shape is PROVISIONAL); < 0 = until landing
+# measured session 9 (s9_open SHL6/SHL12 at ~470 u/s + s7_open SHH6/12/20/30 at ~360-380): the penalty pulls the
+# horizontal speed toward slide_hop_penalty_target at slide_hop_penalty_drag per second of the excess (on top of
+# air drag), so every penalized hop flattens near the same ~220-250 u/s whatever its takeoff speed. Joint rms 8
+# (SHH own fits 2-3 u/s) vs 12.5 for the best fixed-drag box. No speed limit: a 470 u/s hop is penalized too.
+@export var slide_hop_penalty_drag: float = 5.25                 # measured session 9 (joint fit, per-scenario 5.25-6.25)
+@export var slide_hop_penalty_target: float = 5.461              # measured session 9: 215 u/s (joint fit, per-scenario 215-235 u/s)
+@export var slide_hop_penalty_time: float = -1.0                 # < 0 = until landing (a 20-24 tick window fits the flights equally; landing ~214 on SHH6 favours no end)
 # measured session 6: a landing into a NORMAL slide below this speed loses one ground-friction tick (x0.9375).
 # measured session 7 (s7_open LT440-465): loses at 439-461, keeps at 471-476; bracketed 461-471, midpoint used
 @export var landing_slide_friction_speed: float = 11.836          # 466 u/s
@@ -331,7 +336,7 @@ func validate() -> PackedStringArray:
 			["wall_jump_tangent_keep", wall_jump_tangent_keep],
 			["wall_jump_min_interval", wall_jump_min_interval], ["air_wishspeed_cap", air_wishspeed_cap],
 			["air_wishspeed_cap_fast", air_wishspeed_cap_fast],
-			["slide_hop_penalty_drag", slide_hop_penalty_drag], ["slide_hop_min_time", slide_hop_min_time],
+			["slide_hop_penalty_drag", slide_hop_penalty_drag], ["slide_hop_penalty_target", slide_hop_penalty_target], ["slide_hop_min_time", slide_hop_min_time],
 			["slide_hop_clear_time", slide_hop_clear_time], ["dash_jump_set_speed", dash_jump_set_speed],
 			["heavy_lunge_time", heavy_lunge_time], ["air_accel", air_accel], ["air_drag", air_drag]]:
 		if float(pair[1]) < 0.0:

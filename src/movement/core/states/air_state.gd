@@ -160,11 +160,14 @@ static func air_physics(sim: MovementSim, s: MoveState, ctx: Ctx, allow_input: b
 	# PROVISIONAL (G46): persistence until landing and no slow scaling are assumptions (research Q3).
 	if s.zip_exit_momentum_ticks <= 0:
 		var drag := sim.cp.params.zip_exit_drag if s.zip_exit_drag_active else sim.cp.effective_air_drag(s)
-		# G09 slide drag: extra air drag after an early chained slide jump; blocked by the zip window
-		# above. PROVISIONAL (G09): size pending recording clip S2.
-		if s.slide_hop_penalty_active:
-			drag += p.slide_hop_penalty_drag
 		v *= maxf(0.0, 1.0 - drag * dt)
+		# G09 slide drag after an early chained slide jump (blocked by the zip window above).
+		# measured session 9 (s9_open SHL, s7_open SHH): pulls h toward slide_hop_penalty_target, not a drag box.
+		if s.slide_hop_penalty_active:
+			var sp := v.length()
+			var excess := sp - p.slide_hop_penalty_target
+			if excess > 0.0 and sp > 1e-6:
+				v *= (sp - minf(excess, excess * p.slide_hop_penalty_drag * dt)) / sp
 	# air dash end drag mode 4 (measured): step the horizontal speed down toward the floor
 	if s.air_dash_end_drag_ticks_left > 0:
 		s.air_dash_end_drag_ticks_left -= 1
