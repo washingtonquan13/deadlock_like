@@ -45,7 +45,8 @@ func _run() -> void:
 	var off := deg_to_rad(float(_arg("fall_off", "7.8")))
 	var drop := 127.7 * U
 	var run := drop / tan(deg_to_rad(ang))
-	var edge_d := 141.0 * U
+	# top start to the top edge; RRUN/RJ were recorded from a mark ~19 u closer (game edge at 117 u vs 136 u; sim drop starts 2.5 u past edge_d)
+	var edge_d := float(_arg("edge", "141")) * U
 	var pivot := Node3D.new()
 	pivot.name = "RampPivot"
 	pivot.position = Vector3(0.0, 0.0, -edge_d)
