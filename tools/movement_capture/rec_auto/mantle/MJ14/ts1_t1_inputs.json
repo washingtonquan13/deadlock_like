@@ -1,0 +1,87 @@
+{
+  "t0_perf": 52427.365371,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.0002767999976640567,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.2032961000004434,
+      "t_plan": 0.203125,
+      "kind": "down",
+      "arg": "space",
+      "tick": 14
+    },
+    {
+      "t_real": 0.22851939999964088,
+      "t_plan": 0.228125,
+      "kind": "up",
+      "arg": "space",
+      "tick": 15
+    },
+    {
+      "t_real": 2.3440436000018963,
+      "t_plan": 2.34375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 151
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2450.94,
+    "pos_y": 611.03,
+    "pos_z": 94.25,
+    "ang_pitch": 10.0,
+    "ang_yaw": 160.0,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 398.42
+  },
+  "start_yaw": 160.0,
+  "late_ms_max": 0.39439999964088757,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\mantle\\MJ14.json",
+  "mark": "taxi",
+  "mark_value": {
+    "pawn": [
+      2353.0,
+      610.0,
+      94.16
+    ],
+    "hud": [
+      2450.94,
+      611.03,
+      94.25
+    ],
+    "yaw": 160.0,
+    "pitch": 10.0,
+    "cam_offset": [
+      97.94000000000005,
+      1.0299999999999727,
+      0.060000000000002274
+    ],
+    "return_error_u": 0.03
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 435,
+  "pre_real_s": 0.3
+}

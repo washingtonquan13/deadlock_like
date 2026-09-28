@@ -1,0 +1,87 @@
+{
+  "t0_perf": 52908.4769431,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.00015689999418100342,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.6721331000007922,
+      "t_plan": 0.671875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 44
+    },
+    {
+      "t_real": 0.6970801999996183,
+      "t_plan": 0.696875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 45
+    },
+    {
+      "t_real": 3.438114199998381,
+      "t_plan": 3.4375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 221
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2539.53,
+    "pos_y": -343.16,
+    "pos_z": 86.28,
+    "ang_pitch": 5.03,
+    "ang_yaw": 344.31,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 386.31
+  },
+  "start_yaw": 344.31,
+  "late_ms_max": 0.614199998381082,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\mantle\\MJ044.json",
+  "mark": "crateA",
+  "mark_value": {
+    "pawn": [
+      2638.0000000000005,
+      -335.01000000000005,
+      86.22
+    ],
+    "hud": [
+      2539.53,
+      -343.16,
+      86.22
+    ],
+    "yaw": 344.31,
+    "pitch": 5.03,
+    "cam_offset": [
+      -98.47000000000025,
+      -8.149999999999977,
+      0.030000000000001137
+    ],
+    "return_error_u": 0.03
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 582,
+  "pre_real_s": 0.3
+}

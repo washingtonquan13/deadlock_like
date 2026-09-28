@@ -220,7 +220,8 @@ def cmd_mark(a, cfg):
     v3 = hud.wait_still(timeout=15)
     back = math.dist((v3["pos_x"], v3["pos_y"], v3["pos_z"]), h)
     marks = load_json(MARKS, {})
-    marks[a.name] = {"pawn": list(pawn), "hud": list(h), "yaw": v["ang_yaw"], "pitch": v["ang_pitch"],
+    # store where the HUD actually lands after the return teleport: that is what a later setpos reproduces
+    marks[a.name] = {"pawn": list(pawn), "hud": [v3["pos_x"], v3["pos_y"], v3["pos_z"]], "yaw": v["ang_yaw"], "pitch": v["ang_pitch"],
                      "cam_offset": list(o), "return_error_u": round(back, 3)}
     save_json(MARKS, marks)
     print("mark %s = %s" % (a.name, json.dumps(marks[a.name])))

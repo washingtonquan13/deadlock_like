@@ -89,3 +89,27 @@ The apparent cut (~570 → ~85 u/s at touchdown) is **an obstacle on the street 
 
 - **Late part of DJC and DJC2:** the drop after ~0.65 s of slide is the end of the runway (~33 m), so the penalty onset is not measured here.
 - **Open (DJC3):** the gap may be a crouch-to-slide delay on the ground, or the landing tick being off by ~2 ticks. It needs a ground test: run, then a crouch press.
+
+## Mantles (Haze, crate top 66 u above the sidewalk, mark crateA)
+
+Scenarios are in `scenarios/mantle/gen.py` (the face is ~250 u ahead, contact at ~tick 57); the summary helper is `sumry.py`.
+
+- **No jump, W into the face (MW):** no mantle. The hero slides along the angled face at ~105 u/s.
+- **Climb** (jump pressed at contact, or shortly before it, with W held; MJ050/MJ056/MJ070):
+  - Horizontal motion stops, and the hero rises straight up at a constant ~206–216 u/s (the HUD reads 215.6 steady).
+  - From the ground, 64 u takes ~0.32 s. MJ050 made contact mid-air with 34 u left and climbed it in 0.164 s.
+  - So the duration scales with the remaining height; it is **not** a fixed band.
+- **Exit:** a constant ~176–177 u/s forward for ~0.16–0.18 s (~11 ticks, ~30 u).
+  - That speed is then **kept**, and W accelerates normally from it. The sim ended at 0.
+  - The whole mantle takes ~0.5 s from the ground; the sim took 0.3 s.
+- **Crouch held (MJ056C):** same climb and exit phase, then a slide at ~535–540 u/s, held roughly constant for ~0.2 s until the next wall. The sim applied 550 at mantle end.
+- **W released at the jump (MJ056R):** plain jump with no climb; the hero falls back. The climb needs W.
+- **Early jumps** that reach the face with feet ~12–24 u below the top (MJ030/038/044):
+  - The hero pops onto the top and keeps its horizontal speed (~330–350).
+  - This happens with W released too (MJ044R, 2 trials), so it behaves like a step-up or pop, not the climb.
+  - With crouch held (MJ044C): pop, then crouch-walk at 187 u/s.
+- **Not repeatable at the same inputs (MJ056 t1, MJ070 t1):** a plain jump (apex ~62 u camera) followed by a pop onto the top without input. The cause may be the crate seam or the lateral slide position.
+- **Open:**
+  - The airborne trigger window (MJ050 climbed with the jump pressed 12 ticks before contact).
+  - The pop threshold.
+  - Taller ledges and the maximum mantle height (only a 66 u ledge was tested).
