@@ -35,6 +35,7 @@ extends Resource
 @export var sprint_ramp_rate: float = 0.6                        # spec: movement.md §3
 @export var sprint_reset_on_opposing_input: bool = true          # spec: movement.md §3 (opposing keys held, InputCmd.BTN_OPPOSE_X/Y)
 @export var sprint_stop_speed: float = 0.254                      # spec: movement.md §3 "stopping": no move input and below 10 u/s (value not in spec)
+@export var sprint_reset_on_stop: bool = false                   # measured: sprint survives a 1 s stop and is on from standstill (session2_findings.md); true = spec §3 "stopping"
 
 # --- stacking / slows -----------------------------------------------------------
 @export var move_bonus_dr_k: float = 12.0                        # spec: movement.md §4
@@ -61,10 +62,12 @@ extends Resource
 
 # --- ground dash / dash-jump ----------------------------------------------------
 @export var ground_dash_distance: float = 10.0                   # spec: movement.md §8
-@export var ground_dash_durations: Array[float] = [0.62, 0.68, 0.72]  # spec: movement.md §8
+@export var ground_dash_durations: Array[float] = [0.62, 0.68, 0.72]  # spec: movement.md §8. Speed = distance / duration matches B1-B3 exactly (session2_findings.md)
 @export var dash_neutral_uses_facing: bool = true                # spec: movement.md §8
 @export var dash_distance_scale_mode: int = 1                    # 0 = scale duration, 1 = scale speed; 1 per ground_dash.md rule 6 (dash slow scales speed, not duration)
-@export var ground_dash_exit_clamp: bool = true                  # spec: movement.md §8 (Open Q6)
+@export var ground_dash_exit_clamp: bool = false                 # Open Q6 settled: no clamp, speed decays by ground friction (session2_findings.md)
+@export var ground_dash_whole_ticks: bool = true                 # floor(duration x 64) full ticks, no fractional last tick: fits B1-B3 (session2_findings.md)
+@export var neutral_dash_does_nothing: bool = true              # measured: a ground or air dash with no move input does nothing (session2_findings.md); false = spec §8 dash toward facing
 @export var dash_jump_window_open: float = 0.3                   # G06: 0.30 s per the 2026-06-30 notes (ground_dash.md rule 11, ziplines_melee_misc E15); PROVISIONAL (G06): conflicts with V17 "0.05 s later" (0.35 s, video_guides.md), pending clip D-series
 @export var dash_jump_window_length: float = 0.25                # G06: window 0.30-0.55 s (ground_dash.md rule 11; K55)
 @export var dash_jump_vertical_speed: float = 10.795             # G05: 425 u/s (ground_dash.md rule 13; K13 vertical)
@@ -80,11 +83,11 @@ extends Resource
 # G21 dash slide start speed: SET along the dash direction on every dash-slide entry, all buckets
 # (video_guides V5 0:17 "always starts at 650 u/s"; Leif). < 0 = keep the current dash speed (K15, ground_dash.md
 # rule 7 wording). PROVISIONAL (G21): single source; the "dead slide" before 0.3 s is not modeled; pending clip D2.
-@export var dash_slide_speed: float = 16.51
+@export var dash_slide_speed: float = 16.332                   # measured session 3: dash slide peaks at 643 u/s (was 16.51 = 650, V5)
 
 # --- jump / gravity -------------------------------------------------------------
-@export var jump_speed: float = 7.493                            # spec: movement.md §10 (295 u/s)
-@export var gravity: float = 24.562                              # spec: movement.md §10 (967 u/s^2)
+@export var jump_speed: float = 7.62                             # measured ~300 u/s on plain jumps (session2_findings.md); spec §10 was 7.493 (295 u/s)
+@export var gravity: float = 20.32                               # measured 798-801 u/s^2 on plain jumps (session2_findings.md); spec §10 was 24.562 (967 u/s^2)
 @export var air_jump_speed: float = 7.493                        # spec: movement.md §10 (Open Q4)
 @export var air_jump_sets_vertical: bool = true                  # spec: movement.md §10
 @export var air_jumps_per_airtime: int = 1                       # spec: movement.md §10
@@ -95,6 +98,7 @@ extends Resource
 # --- air dash / down dash -------------------------------------------------------
 @export var air_dash_distance: float = 8.0                       # spec: movement.md §11
 @export var air_dash_durations: Array[float] = [0.43, 0.47, 0.51]  # spec: movement.md §11
+@export var air_dash_whole_ticks: bool = false                   # as ground_dash_whole_ticks; measured air dashes do not fit it (session2_findings.md)
 @export var air_dashes_per_airtime: int = 1                      # spec: movement.md §11
 @export var air_dash_suspends_gravity: bool = true               # spec: movement.md §11
 @export var air_dash_zero_vertical: bool = true                  # design §7.10: air dash zeroes vy (spec §11 says impulse; see deviations)
@@ -104,13 +108,24 @@ extends Resource
 # PROVISIONAL (G01): V8 2:16 cap = per-bucket dash speed (732/670/642 u/s; ours derive from
 # air_dash_distance / air_dash_durations, SM-scaled); Hyp A contradicts Leif's angle data (best angle
 # 75 deg, not 90) so mode selection is pending recording clips A1, A2, A3.
-@export var air_dash_cap_mode: int = 1
+# 3 = measured ramp (session2_findings.md, probes A_probe_b1..b3): v_perp kept; each dash tick
+# v_par += min((rate / duration - damping * v_par) * dt, target - v_par), with
+# target = target_frac[bucket] * bucket air dash speed + entry_frac * v_par at the dash start.
+@export var air_dash_cap_mode: int = 3
 @export var air_dash_cap_override: float = -1.0                  # PROVISIONAL (G01): <= 0 = cap C is the bucket's air dash speed (V8); gap table's flat 17.78 m/s (700 u/s) is the alternative; pending A1-A3
+@export var air_dash_ramp_rate: float = 48.0                     # measured: accel x duration = 1865/1918/1887 u/s (B1/B2/B3), ~48 m/s
+@export var air_dash_ramp_damping: float = 1.6                   # measured: 1/s on v_par on top of air drag (fit 1.55/1.84/1.39)
+@export var air_dash_ramp_target_fracs: Array[float] = [0.746, 0.758, 0.771]  # measured peak intercepts 546.7/508.2/476.4 u/s over 8 m / duration
+@export var air_dash_ramp_entry_frac: float = 0.176              # measured peak slope vs entry v_par (0.151/0.183/0.193)
+@export var air_dash_keeps_air_drag: bool = true                 # measured: speed decays ~0.19/s during the dash (spec §11 suspends drag)
 # G02 end drag at the airborne end of an air dash. 0 = off, 1 = V8 (a) v' = max(min(v, floor), v - frac*(v - offset)),
-# 2 = V9 (b) v' = v - frac*max(0, v - floor), 3 = flat v' = v*(1 - frac) ("20% of total", V1/V6).
+# 2 = V9 (b) v' = v - frac*max(0, v - floor), 3 = flat v' = v*(1 - frac) ("20% of total", V1/V6),
+# 4 = measured: the excess over floor is removed in equal steps over air_dash_end_drag_ticks airborne ticks
+# (537 -> ~482 u/s for B1, 497 -> ~482 for B2, none below 480; session2_findings.md).
 # Skipped in the zip exit window, when landed before the dash ends (IAD), and when another air dash
 # starts first; a wall jump does not cancel it (V10 3:18). PROVISIONAL (G02): pending recording clip A2.
-@export var air_dash_end_drag_mode: int = 1
+@export var air_dash_end_drag_mode: int = 4
+@export var air_dash_end_drag_ticks: int = 7                     # measured: ~7 ticks for B1 and B2
 @export var air_dash_end_drag_frac: float = 0.2                  # PROVISIONAL (G02): 20% (V8 2:38, V9 1:09, V2 3:03); pending A2
 @export var air_dash_end_drag_offset: float = 2.032              # PROVISIONAL (G02): 80 u/s, formula (a) only (V8 2:38); pending A2
 @export var air_dash_end_drag_floor: float = 12.192              # PROVISIONAL (G02): 480 u/s, no drag below (V8, V9 1:09); pending A2
@@ -137,11 +152,18 @@ extends Resource
 # --- slide ----------------------------------------------------------------------
 @export var slide_entry_speed: float = 8.89                      # spec: movement.md §13 (350 u/s)
 @export var slide_slope_min_angle_deg: float = 5.0               # spec: movement.md §13
-@export var slide_friction: float = 0.1875                       # spec: movement.md §13
+@export var slide_friction: float = 0.1875                       # spec: movement.md §13; session 1 measured 0.189 on landing slides
+# measured session 3: a ground-dash slide decays at 0.694/s (video_guides: ~0.6 since 2026-03-06, ~0.18 before)
+@export var slide_friction_dash: float = 0.694
 @export var slide_penalty_friction: float = 3.1875               # spec: movement.md §13
 @export var slide_penalty_friction_dash_jump: float = 0.6875     # spec: movement.md §13
+# measured session 3: with a move key held, slide velocity turns toward the key direction at this rate,
+# speed unchanged; the mouse alone does not steer. 0 disables.
+@export var slide_turn_rate_deg: float = 92.0
 @export var slide_bonus_table: Array[float] = [0.0, 0.35, 0.50, 0.80]        # spec: movement.md §13
 @export var slide_onset_table: Array[float] = [0.75, 1.00, 1.25, 1.50]       # spec: movement.md §13
+# measured session 3: the penalty starts ~0.96 s into a ground-dash slide (shot list: ~1.0 s window for dash slides)
+@export var slide_onset_table_dash: Array[float] = [0.96, 1.21, 1.46, 1.71]
 @export var slide_onset_table_dash_jump: Array[float] = [1.00, 1.25, 1.50, 1.75]  # spec: movement.md §13
 # G09 slide-hop penalty ("slide drag", slide_and_slopes.md rule 13; V4 0:47/2:13, V5 1:49, V15 1:14/1:39).
 # Any slide jump sets the flag (not a dash-cancel short hop, not a superglide); with the flag set, a
@@ -157,10 +179,13 @@ extends Resource
 # --- wall jump ------------------------------------------------------------------
 @export var wall_detect_distance: float = 0.3048                 # spec: movement.md §14 (Open Q12)
 @export var wall_max_normal_y: float = 0.3                       # spec: movement.md §14
-@export var wall_jump_up_speed: float = 7.0                      # spec: movement.md §14 (Open Q12)
-@export var wall_jump_kick_toward: float = 2.0                   # spec: movement.md §14
-@export var wall_jump_kick_neutral: float = 4.5                  # spec: movement.md §14
-@export var wall_jump_kick_away: float = 6.5                     # spec: movement.md §14
+@export var wall_jump_up_speed: float = 13.183                   # measured session 3: ~519 u/s launch at vz = 0 before the press
+@export var wall_jump_up_vz_gain_fall: float = 0.30              # measured session 3: launch vz += gain * vz before the press while falling (-221 -> 453)
+@export var wall_jump_up_vz_gain_rise: float = 0.12              # measured session 3: same while rising (+215 -> 542)
+@export var wall_jump_kick_toward: float = 5.461                 # measured session 3: 215 u/s off the wall with W held straight in (d = -1)
+@export var wall_jump_kick_neutral: float = 6.807                # measured session 3: 268 u/s with no key; the kick is interpolated linearly in d = wish.normal
+@export var wall_jump_kick_away: float = 9.169                   # measured session 3: 361 u/s with S held straight away (d = +1)
+@export var wall_jump_kick_tangent: float = 3.734                 # measured session 3: 147 u/s along the wall per unit of the wish's tangential component (A/D)
 @export var wall_jump_free_count: int = 1                        # spec: movement.md §14
 @export var wall_slide_max_fall: float = 15.24                   # G36: -600 u/s fall cap on a wall (walls_and_ledges.md rule 21); PROVISIONAL (G36): trigger (airborne + wall contact + falling) pending recording
 @export var wall_jump_fatigue_per_jump: float = 0.25             # spec: movement.md §14
@@ -172,20 +197,10 @@ extends Resource
 @export var wall_jump_min_interval: float = 0.125
 @export var wall_jump_fatigue_recovery: float = 1.25             # spec: movement.md §14
 @export var wall_jump_fatigue_recovery_exponent: float = 1.0      # spec: movement.md §14 recovery curve shape (1 = linear; spec gives no curve)
-@export var corner_boost_mult: float = 0.8                       # PROVISIONAL (G04): 2025-10-02 nerf (-20%) applied to the vertical (tilt) part only (V14 1:08); size vs V6 19:05 / V7 15:07 "huge height" pending W3
 # G03 wall jump: incoming velocity is split into normal and tangential parts; tangential is kept
 # (V13 0:18, V6 17:09, V7 8:19). PROVISIONAL (G03): pending recording clip W1.
-@export var wall_jump_tangent_keep: float = 1.0                  # PROVISIONAL (G03): 1.0 interim; pending W1
+@export var wall_jump_tangent_keep: float = 0.95                 # measured session 3: incoming tangent kept at ~0.9-1.0 (165 -> 147 at 25 deg, 250 -> 245 at 45 deg)
 @export var wall_jump_normal_mode: int = 0                       # PROVISIONAL (G03): 0 = normal axis set to the kick, 1 = kick added to the incoming normal speed; pending W1
-# G04 corner boost: a wall jump off slanted collision (contact normal y between wall_max_normal_y and
-# the floor limit, e.g. a ledge-top edge) pushes along that upward-tilted contact normal: the kick is
-# applied along n' = contact normal, its vertical part scaled by corner_boost_mult. Tilt comes from the
-# geometry, no constant. No coyote window. 0 = legacy redirect of approach speed (K24, contradicted).
-# PROVISIONAL (G04): V11, V14; pending recording clip W3.
-@export var corner_boost_mode: int = 1
-# G14 edge boost: a wall-jump coyote window after losing wall contact, using the last contact's
-# normal (V12 0:04, V13 0:26, V6 17:01, V7 7:44). Emergent with G03/G13; no dedicated impulse.
-@export var wall_jump_coyote_time: float = 0.03125               # PROVISIONAL (G14): 2 ticks ("a few ticks" in V13's visual); pending recording clip W4
 
 # --- mantle ---------------------------------------------------------------------
 @export var mantle_min_height_u: int = 32                        # spec: movement.md §15
@@ -246,7 +261,7 @@ func validate() -> PackedStringArray:
 		w.append("ground_dash_durations must have 3 entries (dash buckets 1..3)")
 	if air_dash_durations.size() != 3:
 		w.append("air_dash_durations must have 3 entries (dash buckets 1..3)")
-	if slide_bonus_table.size() != slide_onset_table.size() or slide_bonus_table.size() != slide_onset_table_dash_jump.size():
+	if slide_bonus_table.size() != slide_onset_table.size() or slide_bonus_table.size() != slide_onset_table_dash_jump.size() or slide_bonus_table.size() != slide_onset_table_dash.size():
 		w.append("slide_bonus_table / slide_onset_table / slide_onset_table_dash_jump lengths differ")
 	for i in range(1, slide_bonus_table.size()):
 		if slide_bonus_table[i] < slide_bonus_table[i - 1]:
@@ -264,14 +279,16 @@ func validate() -> PackedStringArray:
 	for d in air_dash_durations:
 		if d <= 0.0:
 			w.append("air dash duration must be > 0")
-	if air_dash_cap_mode < 0 or air_dash_cap_mode > 2:
-		w.append("air_dash_cap_mode must be 0..2")
-	if air_dash_end_drag_mode < 0 or air_dash_end_drag_mode > 3:
-		w.append("air_dash_end_drag_mode must be 0..3")
+	if air_dash_cap_mode < 0 or air_dash_cap_mode > 3:
+		w.append("air_dash_cap_mode must be 0..3")
+	if air_dash_ramp_target_fracs.size() != 3:
+		w.append("air_dash_ramp_target_fracs must have 3 entries (dash buckets 1..3)")
+	if air_dash_end_drag_mode < 0 or air_dash_end_drag_mode > 4:
+		w.append("air_dash_end_drag_mode must be 0..4")
+	if air_dash_end_drag_ticks < 1:
+		w.append("air_dash_end_drag_ticks must be >= 1")
 	if wall_jump_normal_mode < 0 or wall_jump_normal_mode > 1:
 		w.append("wall_jump_normal_mode must be 0..1")
-	if corner_boost_mode < 0 or corner_boost_mode > 1:
-		w.append("corner_boost_mode must be 0..1")
 	if dash_jump_speed_mode < 0 or dash_jump_speed_mode > 1:
 		w.append("dash_jump_speed_mode must be 0..1")
 	# value sanity checks (not gameplay caps): fractions in [0, 1], magnitudes and times >= 0
@@ -279,9 +296,9 @@ func validate() -> PackedStringArray:
 		if float(pair[1]) < 0.0 or float(pair[1]) > 1.0:
 			w.append("%s must be in [0, 1] (got %f)" % [pair[0], float(pair[1])])
 	for pair in [["air_dash_end_drag_floor", air_dash_end_drag_floor], ["air_dash_end_drag_offset", air_dash_end_drag_offset],
-			["wall_jump_tangent_keep", wall_jump_tangent_keep], ["wall_jump_coyote_time", wall_jump_coyote_time],
+			["wall_jump_tangent_keep", wall_jump_tangent_keep],
 			["wall_jump_min_interval", wall_jump_min_interval], ["air_wishspeed_cap", air_wishspeed_cap],
-			["air_wishspeed_cap_fast", air_wishspeed_cap_fast], ["corner_boost_mult", corner_boost_mult],
+			["air_wishspeed_cap_fast", air_wishspeed_cap_fast],
 			["slide_hop_penalty_drag", slide_hop_penalty_drag], ["slide_hop_min_time", slide_hop_min_time],
 			["slide_hop_clear_time", slide_hop_clear_time], ["dash_jump_set_speed", dash_jump_set_speed],
 			["heavy_lunge_time", heavy_lunge_time], ["air_accel", air_accel], ["air_drag", air_drag]]:

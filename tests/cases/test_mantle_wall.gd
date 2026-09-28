@@ -59,7 +59,7 @@ func test_t26_wall_jump() -> void:
 	var h := new_harness(&"flat", p)
 	ArenaBuilder.add_wall(h.root, Vector3(1.25, 5.0, 0.0), Vector3(0.5, 10.0, 10.0))
 	await h.ready()
-	h.spawn(Vector3(1.0 - R - 0.1, 3.0, 0.0), 0.0)
+	h.spawn(Vector3(1.0 - R - 0.05, 3.0, 0.0), 0.0)
 	assert_eq(h.state.loco, L.AIR, "starts airborne next to the wall")
 	h.run(4, func(t: int) -> InputCmd: return cmd(t, B_JUMP if (t == 1 or t == 3) else 0))
 	var i1 := first_event(h.trace, MoveEvents.WALL_JUMP, "count", 1)
@@ -69,7 +69,7 @@ func test_t26_wall_jump() -> void:
 	if i1 >= 0:
 		assert_near(h.trace[i1]["stamina"], 3.0, 1e-9, "first wall jump is free")
 		var vx: float = (h.trace[i1]["vel"] as Vector3).x
-		assert_near(vx, -4.5, 0.05, "neutral kick away from the wall")
+		assert_near(vx, -6.807, 0.05, "neutral kick away from the wall")
 	if i1 >= 0 and i2 >= 0:
 		assert_near(h.trace[i2]["stamina"], 2.5, 1e-9, "second wall jump costs 0.5")
 		assert_true((h.trace[i2]["vel"] as Vector3).y < (h.trace[i1]["vel"] as Vector3).y, "fatigue lowers the second jump")
@@ -77,4 +77,28 @@ func test_t26_wall_jump() -> void:
 	assert_true(h.state.grounded, "landed")
 	assert_near(h.state.wall_fatigue, 0.0, 1e-9, "fatigue cleared on landing")
 	assert_eq(h.state.wall_jumps_done, 0, "wall jump count cleared on landing")
+	done()
+
+
+## Measured wall jump (session3_findings.md): ~519 u/s up from a hover, off-wall kick 268 / 215 (W) / 361 (S),
+## A adds ~147 u/s along the wall. Deliberately loose: the model is still being fit against recordings.
+func test_measured_wall_jump_launch() -> void:
+	var cases := {"none": [0, 0, 268.0, 0.0], "w": [0, 1, 215.0, 0.0], "s": [0, -1, 361.0, 0.0], "a": [-1, 0, 268.0, 147.0]}
+	for key: String in cases:
+		var c: Array = cases[key]
+		var h := new_harness(&"flat")
+		ArenaBuilder.add_wall(h.root, Vector3(1.25, 25.0, 0.0), Vector3(0.5, 50.0, 20.0))
+		await h.ready()
+		h.spawn(Vector3(1.0 - 0.4064 - 0.1, 30.0, 0.0), -PI / 2.0)
+		h.run(1, func(t: int) -> InputCmd: return cmd(t, B_JUMP, int(c[0]), int(c[1]), -PI / 2.0))
+		assert_eq(first_event(h.trace, MoveEvents.WALL_JUMP), 0, key + ": wall jump")
+		var v: Vector3 = h.trace[0]["vel"] / 0.0254
+		assert_near(v.y, 519.0, 20.0, key + ": launch up")
+		# W also gets this tick's air accel back toward the wall (air_accel is still provisional), so only check it is
+		# below the neutral kick
+		if key == "w":
+			assert_true(-v.x > 100.0 and -v.x < 268.0, "w: weaker kick off the wall (got %.1f)" % -v.x)
+		else:
+			assert_near(-v.x, float(c[2]), 15.0, key + ": kick off the wall")
+		assert_near(absf(v.z), float(c[3]), 15.0, key + ": kick along the wall")
 	done()

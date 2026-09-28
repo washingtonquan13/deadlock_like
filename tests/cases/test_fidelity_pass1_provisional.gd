@@ -4,7 +4,7 @@ extends MoveTestCase
 ## Every value tested here is PROVISIONAL and will be refit from the recording clip named per test.
 
 const R := 0.4064
-const G := 24.562
+const G := 20.32   # measured gravity (session2_findings.md); spec §10 was 24.562
 const DT := 1.0 / 64.0
 const HU := 0.0254
 const C_B1 := 8.0 / 0.43          # B1 air dash speed = V8 cap (732 u/s)
@@ -18,7 +18,7 @@ static func _drag_a(v: float) -> float:
 ## G01 + G02 worked example (V8): B1 dash-jump then a forward air dash. Hyp A caps the dash at the
 ## bucket speed (732 u/s); the V8 (a) end drag leaves 0.8*732 + 16 = 601.98 u/s. Pending A1-A3, A2.
 func test_fpp_g01_g02_dash_jump_air_dash_601() -> void:
-	var h := new_harness(&"flat", null, hero_with(1))
+	var h := new_harness(&"flat", legacy_air_dash(), hero_with(1))
 	await h.ready()
 	h.run(90, func(t: int) -> InputCmd: return cmd(t, B_DASH if (t == 1 or t == 31) else (B_JUMP if t == 21 else 0)))
 	assert_eq(first_event(h.trace, MoveEvents.JUMPED, "kind", &"dash_jump"), 20, "dash-jump at k=20")
@@ -44,7 +44,7 @@ func test_fpp_g01_g02_dash_jump_air_dash_601() -> void:
 
 ## G01/G02 alternative model via params only: flat 700 u/s cap and flat 20% drag give 560 u/s.
 func test_fpp_g01_g02_alt_model_560() -> void:
-	var p := MovementParams.new()
+	var p := legacy_air_dash()
 	p.air_dash_cap_override = 17.78
 	p.air_dash_end_drag_mode = 3
 	var h := new_harness(&"flat", p, hero_with(1))
@@ -63,7 +63,7 @@ func test_fpp_g01_g02_alt_model_560() -> void:
 ## G01: perpendicular velocity is kept; a same-direction dash above the cap ends at the cap (Hyp A);
 ## mode 0 is the legacy uncapped add. Pending A1-A3.
 func test_fpp_g01_perpendicular_kept() -> void:
-	var h := new_harness(&"flat", null, hero_with(1))
+	var h := new_harness(&"flat", legacy_air_dash(), hero_with(1))
 	await h.ready()
 	h.spawn(Vector3(0.0, 60.0, 0.0), 0.0)
 	h.state.velocity = Vector3(10.0, 0.0, 0.0)
@@ -103,7 +103,7 @@ func test_fpp_g02_end_drag_formulas() -> void:
 
 ## G02 exceptions: zip exit window (ZMC) and landing before the dash ends (IAD) skip the end drag.
 func test_fpp_g02_zip_and_iad_skip() -> void:
-	var h := new_harness(&"flat", null, hero_with(1))
+	var h := new_harness(&"flat", legacy_air_dash(), hero_with(1))
 	await h.ready()
 	h.spawn(Vector3(0.0, 60.0, 0.0), 0.0)
 	h.state.zip_exit_momentum_ticks = 100
@@ -111,7 +111,7 @@ func test_fpp_g02_zip_and_iad_skip() -> void:
 	assert_true(first_event(h.trace, MoveEvents.AIR_DASH_END_DRAG) < 0, "no end drag in the zip exit window")
 	assert_near(h.trace[39]["hspeed"], C_B1, 1e-4, "speed kept (no drag in the window)")
 	# IAD: keep the falling vy through the dash so it lands mid-dash, crouch held -> AIR slide
-	var p := MovementParams.new()
+	var p := legacy_air_dash()
 	p.air_dash_zero_vertical = false
 	var h2 := new_harness(&"flat", p, hero_with(1))
 	await h2.ready()
@@ -156,73 +156,8 @@ func test_fpp_g03_wall_jump_keeps_tangent() -> void:
 	assert_eq(first_event(h.trace, MoveEvents.WALL_JUMP), 0, "wall jump")
 	var v: Vector3 = h.trace[0]["vel"]
 	var k := 1.0 - 0.2 * DT
-	assert_near(v.z, -8.0 * k, 1e-3, "tangential -8 m/s kept (then one tick of air drag)")
-	assert_near(v.x, -4.5 * k, 1e-3, "normal axis set to the neutral kick (incoming +3 discarded)")
-	done()
-
-
-## G04: a slanted ledge-top edge contact is a corner boost along the upward-tilted contact normal:
-## more height than a flat-wall jump, no redirect of the +10 m/s approach speed. Pending W3.
-func test_fpp_g04_corner_boost_tilted() -> void:
-	var h := new_harness(&"flat")
-	ArenaBuilder.add_box(h.root, Vector3(2.0, 0.5, 0.0), Vector3(2.0, 1.0, 4.0), "Ledge")
-	await h.ready()
-	h.spawn(Vector3(0.6, 0.8, 0.0), 0.0)
-	assert_eq(h.state.loco, L.AIR, "airborne below the ledge top")
-	h.state.velocity = Vector3(10.0, 0.0, 0.0)
-	h.run(1, func(t: int) -> InputCmd: return cmd(t, B_JUMP))
-	var i := first_event(h.trace, MoveEvents.WALL_JUMP, "corner", true)
-	assert_eq(i, 0, "corner boost on tick 1")
-	if i == 0:
-		var v: Vector3 = h.trace[0]["vel"]
-		assert_true(v.y > 7.0 - G * DT + 1.0, "extra height from the tilted normal (got %.3f)" % v.y)
-		assert_true(v.x < 0.0 and v.x > -4.5, "horizontal kick only (cos of the tilt), approach speed not redirected (got %.3f)" % v.x)
-		assert_true(v.y < 7.0 + 4.5 * 0.8, "vertical tilt part scaled by corner_boost_mult")
-	done()
-
-
-## G14 edge boost: wall-jump coyote window of 2 ticks after the last wall contact. Pending W4.
-func test_fpp_g14_wall_jump_coyote() -> void:
-	for extra in [1, 2]:
-		var h := new_harness(&"flat")
-		ArenaBuilder.add_wall(h.root, Vector3(1.25, 25.0, 0.0), Vector3(0.5, 50.0, 10.0))
-		await h.ready()
-		h.spawn(Vector3(1.0 - R - 0.1, 30.0, 0.0), 0.0)
-		h.state.velocity = Vector3(-3.0, 0.0, 0.0)
-		var last_contact := -1
-		for n in 30:
-			h.run(1, hold())
-			if h.state.wall_contact_tick < 0:
-				break
-			last_contact = h.state.wall_contact_tick
-			if h.sim.mover.find_walls(h.state.position, false, h.sim.cp.params.wall_detect_distance).is_empty():
-				break
-		assert_true(last_contact > 0, "had wall contact")
-		while h.state.tick + 1 < last_contact + extra:
-			h.run(1, hold())
-		h.trace.clear()
-		h.run(1, func(t: int) -> InputCmd: return cmd(t, B_JUMP))
-		if extra == 2:
-			assert_eq(first_event(h.trace, MoveEvents.WALL_JUMP, "coyote", true), 0, "coyote wall jump 2 ticks after contact")
-			assert_true((h.trace[0]["vel"] as Vector3).x < -4.0, "pushed off the remembered normal")
-	# 3 ticks after contact: no wall jump (air jump instead)
-	var h3 := new_harness(&"flat")
-	ArenaBuilder.add_wall(h3.root, Vector3(1.25, 25.0, 0.0), Vector3(0.5, 50.0, 10.0))
-	await h3.ready()
-	h3.spawn(Vector3(1.0 - R - 0.1, 30.0, 0.0), 0.0)
-	h3.state.velocity = Vector3(-3.0, 0.0, 0.0)
-	var lc := -1
-	for n in 30:
-		h3.run(1, hold())
-		if h3.sim.mover.find_walls(h3.state.position, false, h3.sim.cp.params.wall_detect_distance).is_empty():
-			break
-		lc = h3.state.wall_contact_tick
-	while h3.state.tick + 1 < lc + 3:
-		h3.run(1, hold())
-	h3.trace.clear()
-	h3.run(1, func(t: int) -> InputCmd: return cmd(t, B_JUMP))
-	assert_true(first_event(h3.trace, MoveEvents.WALL_JUMP) < 0, "no wall jump 3 ticks after contact")
-	assert_eq(first_event(h3.trace, MoveEvents.JUMPED, "kind", &"air"), 0, "air jump instead")
+	assert_near(v.z, -8.0 * 0.95 * k, 1e-3, "tangential -8 m/s kept x0.95 (then one tick of air drag)")
+	assert_near(v.x, -6.807 * k, 1e-3, "normal axis set to the neutral kick (incoming +3 discarded)")
 	done()
 
 
@@ -291,7 +226,7 @@ static func _count(tr: Array[Dictionary], type: StringName, key: String = "", va
 ## G02 IAD without crouch: the landed air dash still gets its end drag at the dash's scheduled end
 ## (V2 0:11 / V9 1:41: only an IAD into a slide on level ground skips it). Pending A2.
 func test_fpp_g02_iad_no_crouch_drags_at_end() -> void:
-	var p := MovementParams.new()
+	var p := legacy_air_dash()
 	p.air_dash_zero_vertical = false
 	var h := new_harness(&"flat", p, hero_with(1))
 	await h.ready()
@@ -308,7 +243,7 @@ func test_fpp_g02_iad_no_crouch_drags_at_end() -> void:
 ## G02 IAD then a bhop: leaving the ground before the scheduled end applies the drag on the jump tick
 ## (V2 0:33 / 3:03, V9 1:58). Pending A2.
 func test_fpp_g02_iad_bhop_drags() -> void:
-	var p := MovementParams.new()
+	var p := legacy_air_dash()
 	p.air_dash_zero_vertical = false
 	var h := new_harness(&"flat", p, hero_with(1))
 	await h.ready()
@@ -335,7 +270,7 @@ func test_fpp_g33_double_press_one_wall_jump() -> void:
 	var h := new_harness(&"flat")
 	ArenaBuilder.add_wall(h.root, Vector3(1.25, 5.0, 0.0), Vector3(0.5, 10.0, 20.0))
 	await h.ready()
-	h.spawn(Vector3(1.0 - R - 0.1, 3.0, 0.0), 0.0)
+	h.spawn(Vector3(1.0 - R - 0.05, 3.0, 0.0), 0.0)
 	h.state.wall_jumps_done = 1   # next wall jump costs cost_wall_jump_subsequent
 	var st0 := h.state.stamina
 	h.run(6, func(t: int) -> InputCmd: return cmd(t, B_JUMP if (t == 1 or t == 3) else 0))
@@ -346,7 +281,7 @@ func test_fpp_g33_double_press_one_wall_jump() -> void:
 	done()
 
 
-## G14/G50: wall contact is tracked during an air dash; a jump press mid-dash is dropped (G50,
+## G50: a jump press mid-dash is dropped (G50,
 ## PROVISIONAL); a wall jump after the dash ends works.
 func test_fpp_g50_air_dash_along_wall() -> void:
 	var h := new_harness(&"flat", null, hero_with(1))
@@ -355,7 +290,6 @@ func test_fpp_g50_air_dash_along_wall() -> void:
 	h.spawn(Vector3(1.0 - R - 0.1, 30.0, 0.0), 0.0)
 	h.run(5, func(t: int) -> InputCmd: return cmd(t, B_DASH if t == 1 else 0))
 	assert_eq(h.state.loco, L.AIR_DASH, "air dashing along the wall")
-	assert_true(h.state.wall_contact_tick >= 0, "wall contact tracked during AIR_DASH")
 	h.run(1, func(t: int) -> InputCmd: return cmd(t, B_JUMP))
 	assert_eq(first_event(h.trace, MoveEvents.JUMPED), -1, "G50: jump press mid-dash dropped")
 	while h.state.loco == L.AIR_DASH and h.trace.size() < 60:

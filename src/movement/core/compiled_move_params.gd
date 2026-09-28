@@ -38,7 +38,6 @@ var damage_slow_ticks: int = 64
 var slide_hop_min_ticks: int = 32       # PROVISIONAL (G09)
 var slide_hop_penalty_ticks: int = -1   # PROVISIONAL (G09): <0 = until landing
 var slide_hop_clear_ticks: int = 16     # PROVISIONAL (G09)
-var wall_jump_coyote_ticks: int = 2     # PROVISIONAL (G14)
 var wall_jump_min_interval_ticks: int = 8   # PROVISIONAL (G33)
 var floor_min_normal_y: float = 0.7
 var slide_slope_min_normal_y: float = 0.996
@@ -86,7 +85,6 @@ static func build(p_params: MovementParams, p_hero: HeroMovementStats) -> Compil
 	c.slide_hop_min_ticks = MoveUnits.ticks(p.slide_hop_min_time)                     # PROVISIONAL (G09)
 	c.slide_hop_penalty_ticks = -1 if p.slide_hop_penalty_time < 0.0 else MoveUnits.ticks(p.slide_hop_penalty_time)
 	c.slide_hop_clear_ticks = maxi(1, MoveUnits.ticks(p.slide_hop_clear_time))
-	c.wall_jump_coyote_ticks = MoveUnits.ticks(p.wall_jump_coyote_time)               # PROVISIONAL (G14)
 	c.wall_jump_min_interval_ticks = MoveUnits.ticks(p.wall_jump_min_interval)        # PROVISIONAL (G33)
 	c.floor_min_normal_y = cos(deg_to_rad(p.max_floor_angle_deg))
 	c.slide_slope_min_normal_y = cos(deg_to_rad(p.slide_slope_min_angle_deg))
@@ -107,7 +105,11 @@ static func _res_signature(r: Resource) -> String:
 
 ## spec: movement.md §13 slide penalty onset by Slide Bonus (largest table entry <= bonus).
 func slide_onset_ticks(slide_kind: int, slide_bonus: float) -> int:
-	var table: Array[float] = params.slide_onset_table_dash_jump if slide_kind == MoveState.SlideKind.DASH_JUMP else params.slide_onset_table
+	var table: Array[float] = params.slide_onset_table
+	if slide_kind == MoveState.SlideKind.DASH_JUMP:
+		table = params.slide_onset_table_dash_jump
+	elif slide_kind == MoveState.SlideKind.DASH:
+		table = params.slide_onset_table_dash
 	var idx := 0
 	for i in params.slide_bonus_table.size():
 		if params.slide_bonus_table[i] <= slide_bonus + 1e-6:

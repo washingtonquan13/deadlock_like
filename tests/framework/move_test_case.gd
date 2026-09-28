@@ -16,6 +16,9 @@ var tree: SceneTree
 var harness: SimHarness
 var failures: PackedStringArray = PackedStringArray()
 var completed: bool = false
+## Most dash tests predate the measured neutral-dash rule and press dash with no move input to mean
+## "dash toward facing" (spec §8). new_harness keeps that rule unless a test sets this to true.
+var measured_neutral_dash: bool = false
 
 
 func before_each() -> void:
@@ -32,6 +35,9 @@ func after_each() -> void:
 func new_harness(layout: StringName = &"flat", params: MovementParams = null, hero: HeroMovementStats = null) -> SimHarness:
 	if harness != null:
 		harness.free_all()
+	if params == null:
+		params = MovementParams.new()
+	params.neutral_dash_does_nothing = measured_neutral_dash
 	harness = SimHarness.create(tree, layout, params, hero)
 	return harness
 
@@ -85,6 +91,16 @@ static func hero_with(bucket: int = 1, gravity_scale: float = 1.0) -> HeroMoveme
 	h.dash_bucket = bucket
 	h.gravity_scale = gravity_scale
 	return h
+
+
+## Params with the pre-measurement air dash (G01 Hyp A cap, V8 (a) end drag) for tests that pin that model.
+static func legacy_air_dash(p: MovementParams = null) -> MovementParams:
+	if p == null:
+		p = MovementParams.new()
+	p.air_dash_cap_mode = 1
+	p.air_dash_end_drag_mode = 1
+	p.air_dash_keeps_air_drag = false
+	return p
 
 
 static func count_loco(tr: Array[Dictionary], loco: int) -> int:

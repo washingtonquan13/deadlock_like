@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://c1oki71uuean4"]
 
-[ext_resource type="Script" path="res://src/arena/movement_arena.gd" id="1_arena"]
+[ext_resource type="Script" uid="uid://s5ypfx8b70nf" path="res://src/arena/movement_arena.gd" id="1_arena"]
 
 [node name="MovementArena" type="Node3D"]
 script = ExtResource("1_arena")

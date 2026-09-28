@@ -332,7 +332,7 @@ func _update_sprint(s: MoveState, ctx: Ctx) -> void:
 	elif p.sprint_reset_on_opposing_input and (ctx.cmd.buttons & (InputCmd.BTN_OPPOSE_X | InputCmd.BTN_OPPOSE_Y)) != 0:
 		# spec: movement.md §3 holding opposing inputs
 		reset_sprint(s, ctx, &"opposing")
-	elif not ctx.has_move and s.horizontal_speed() < p.sprint_stop_speed:
+	elif p.sprint_reset_on_stop and not ctx.has_move and s.horizontal_speed() < p.sprint_stop_speed:
 		# spec: movement.md §3 stopping
 		reset_sprint(s, ctx, &"stop")
 	if not ctx.sprint_reset:
@@ -566,6 +566,7 @@ func _land(s: MoveState, ctx: Ctx, g: Dictionary) -> void:
 	s.zip_exit_drag_active = false   # G46: zip exit drag lasts until landing
 	s.slide_hop_penalty_active = false   # PROVISIONAL (G09): slide drag lasts until landing
 	s.slide_hop_penalty_ticks = 0
+	s.air_dash_end_drag_ticks_left = 0   # end drag mode 4 is airborne only; ground friction takes over
 	# G02 IAD: an air dash that lands keeps its end drag pending until the dash's scheduled end; see
 	# _iad_end_drag. PROVISIONAL (G02): V2 0:11 / 0:33 / 3:03, V9 1:41 / 1:58; pending clip A2.
 	if s.loco == L.AIR_DASH and s.air_dash_drag_pending:
@@ -573,7 +574,6 @@ func _land(s: MoveState, ctx: Ctx, g: Dictionary) -> void:
 	else:
 		s.air_dash_drag_pending = false
 		s.air_dash_drag_land_ticks = -1
-	s.wall_contact_tick = -1
 	s.last_wall_jump_tick = -1
 	# spec: movement.md §16 knock-off stun starts on landing
 	if s.zip_knockoff_pending:
@@ -775,8 +775,7 @@ func _iad_end_drag(s: MoveState) -> void:
 	DashState.apply_air_dash_end_drag(self, s)
 
 
-## G09: ground time not sliding clears the slide-hop flag; G14: remember the last airborne wall
-## contact for the wall-jump coyote window. Runs in bookkeeping, after categorize.
+## G09: ground time not sliding clears the slide-hop flag. Runs in bookkeeping, after categorize.
 func _track_contacts(s: MoveState, ctx: Ctx) -> void:
 	if s.grounded and (s.loco == L.GROUND or s.loco == L.CROUCH or s.loco == L.GROUND_DASH):
 		if s.slide_hop_flag:
@@ -786,24 +785,6 @@ func _track_contacts(s: MoveState, ctx: Ctx) -> void:
 				s.slide_hop_ground_ticks = 0
 	else:
 		s.slide_hop_ground_ticks = 0
-	if s.grounded:
-		s.wall_contact_tick = -1
-		return
-	# G14 memory covers every free-flight airborne state (AIR, AIR_DASH, DOWN_DASH). Not on the tick of a
-	# wall jump: that would re-arm the contact try_wall_jump just cleared (G33, V7 14:14).
-	if cp.wall_jump_coyote_ticks <= 0 or not (s.loco == L.AIR or s.loco == L.AIR_DASH or s.loco == L.DOWN_DASH):
-		return
-	if s.last_wall_jump_tick == ctx.tick_no:
-		return
-	var walls := mover.find_walls(s.position, s.crouched, cp.params.wall_detect_distance)
-	if walls.is_empty():
-		return
-	var best: Dictionary = walls[0]
-	for w in walls:
-		if float(w["distance"]) < float(best["distance"]):
-			best = w
-	s.wall_contact_normal = best["normal"]
-	s.wall_contact_tick = ctx.tick_no
 
 
 ## Ground/air state from the current grounded flag.

@@ -128,13 +128,20 @@ func test_rf_sprint_resets() -> void:
 	h.run(1, hold(InputCmd.BTN_OPPOSE_X, 0, 1))
 	assert_true(not h.state.sprint_active and h.state.sprint_timer_ticks == 0, "opposing keys reset sprint")
 	assert_true(first_event(h.trace, MoveEvents.SPRINT_RESET, "reason", &"opposing") >= 0, "SPRINT_RESET(opposing)")
-	# stopping
+	# stopping (measured default: no reset, session2_findings.md)
 	h.state = snap.duplicate_state()
 	h.run(120, hold())
 	assert_near(h.state.horizontal_speed(), 0.0, 1e-6, "stopped")
-	assert_eq(h.state.sprint_timer_ticks, 0, "stopping resets the sprint timer")
+	assert_true(h.state.sprint_timer_ticks > 0, "stopping keeps the sprint timer (measured)")
 	h.run(1, hold(0, 0, 1))
-	assert_true(not h.state.sprint_active, "no instant re-sprint after stopping")
+	assert_true(h.state.sprint_active, "sprint back on the first tick after a stop (measured)")
+	# spec §3 rule, still available behind sprint_reset_on_stop
+	h.sim.cp.params.sprint_reset_on_stop = true
+	h.state = snap.duplicate_state()
+	h.run(120, hold())
+	assert_eq(h.state.sprint_timer_ticks, 0, "sprint_reset_on_stop: stopping resets the sprint timer")
+	h.run(1, hold(0, 0, 1))
+	assert_true(not h.state.sprint_active, "sprint_reset_on_stop: no instant re-sprint after stopping")
 	done()
 
 

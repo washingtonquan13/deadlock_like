@@ -105,10 +105,12 @@ var slide_hop_flag: bool = false             # PROVISIONAL (G09): set by a slide
 var slide_hop_penalty_active: bool = false   # PROVISIONAL (G09): slide-drag air drag active
 var slide_hop_penalty_ticks: int = 0         # PROVISIONAL (G09): remaining ticks when the penalty is timed
 var slide_hop_ground_ticks: int = 0          # PROVISIONAL (G09): ground ticks not sliding (clears the flag)
-var wall_contact_normal: Vector3 = Vector3.ZERO  # PROVISIONAL (G14): last airborne wall contact normal
-var wall_contact_tick: int = -1              # PROVISIONAL (G14): tick of that contact (-1 = none)
 var last_wall_jump_tick: int = -1            # PROVISIONAL (G33): tick of the last wall jump this airtime (-1 = none)
 var air_dash_drag_land_ticks: int = -1       # PROVISIONAL (G02): ticks left of an air dash that landed (IAD) while its end drag is pending (-1 = not landed)
+var air_dash_ramp_target: float = 0.0        # air dash cap mode 3: along-dash speed the ramp stops at
+var air_dash_ramp_done: bool = false         # air dash cap mode 3: target reached, only air drag for the rest of the dash
+var air_dash_end_drag_ticks_left: int = 0    # end drag mode 4: airborne ticks of the stepped end drag still to run
+var air_dash_end_drag_step: float = 0.0      # end drag mode 4: horizontal speed removed per tick
 
 # transient (not serialized, cleared at start of each tick)
 var events: Array[Dictionary] = []

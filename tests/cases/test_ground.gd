@@ -41,15 +41,15 @@ func test_t03_walk_stop() -> void:
 	done()
 
 
-## spec: movement.md §10 Jump: 7.493 m/s, gravity 24.562, half-step integration (T04)
+## spec: movement.md §10 Jump, half-step integration (T04); jump 7.62 m/s and gravity 20.32 measured (session2_findings.md)
 func test_t04_standing_jump() -> void:
 	var h := new_harness(&"flat")
 	await h.ready()
 	h.run(60, func(t: int) -> InputCmd: return cmd(t, B_JUMP if t == 1 else 0))
 	var y19: float = (h.trace[18]["pos"] as Vector3).y
 	var y20: float = (h.trace[19]["pos"] as Vector3).y
-	assert_near(y19, 1.14211, 1e-4, "y(19)")
-	assert_near(y20, 1.14226, 1e-4, "y(20)")
+	assert_near(y19, 1.36674, 1e-4, "y(19)")
+	assert_near(y20, 1.38906, 1e-4, "y(20)")
 	var apex := 0
 	var best := -INF
 	for i in 45:
@@ -57,14 +57,14 @@ func test_t04_standing_jump() -> void:
 		if y > best:
 			best = y
 			apex = i + 1
-	assert_eq(apex, 20, "apex tick")
+	assert_eq(apex, 24, "apex tick")
 	var land := -1
 	for i in h.trace.size():
 		if i > 0 and bool(h.trace[i]["grounded"]):
 			land = i + 1
 			break
-	assert_eq(land, 39, "grounded again on tick")
-	assert_eq(first_event(h.trace, MoveEvents.LANDED) + 1, 39, "LANDED event tick")
+	assert_eq(land, 48, "grounded again on tick")
+	assert_eq(first_event(h.trace, MoveEvents.LANDED) + 1, 48, "LANDED event tick")
 	assert_eq(first_event(h.trace, MoveEvents.JUMPED, "kind", &"ground") + 1, 1, "JUMPED ground on tick 1")
 	done()
 

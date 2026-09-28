@@ -16,7 +16,9 @@ extends RefCounted
 ## Measured CSVs are extract.py output (game units, u and u/s); 1 u = MoveUnits.HU m.
 
 const U := 0.0254  # m per game unit (spec: movement.md §1, MovementParams.unit_m)
-const CHANNELS: Array[String] = ["speed_h", "vel_v", "pos_h", "pos_v", "h_along", "h_across"]
+## speed_3d is the overlay speed readout (cl_showpos "vel:" first number, the 3D speed); it does not
+## depend on the frame timing, unlike the velocities derived from position.
+const CHANNELS: Array[String] = ["speed_h", "vel_v", "pos_h", "pos_v", "h_along", "h_across", "speed_3d"]
 const POS_CHANNELS: Array[String] = ["pos_h", "pos_v"]
 const BUTTONS := {
 	"jump": InputCmd.BTN_JUMP, "crouch": InputCmd.BTN_CROUCH, "dash": InputCmd.BTN_DASH,
@@ -84,7 +86,7 @@ func setup(tree: SceneTree, p_scenario_path: String) -> String:
 	var err := _resolve_specs()
 	if err != "":
 		return err
-	weights = {"speed_h": 1.0, "vel_v": 1.0, "pos_h": 0.0, "pos_v": 0.0, "h_along": 0.0, "h_across": 0.0}
+	weights = {"speed_h": 1.0, "vel_v": 1.0, "pos_h": 0.0, "pos_v": 0.0, "h_along": 0.0, "h_across": 0.0, "speed_3d": 0.0}
 	for k: String in (scenario.get("weights", {}) as Dictionary).keys():
 		if not CHANNELS.has(k):
 			return "unknown channel in weights: %s (known: %s)" % [k, ", ".join(CHANNELS)]
@@ -157,9 +159,10 @@ func _resolve(name: String) -> Dictionary:
 		if not _is_array(v) or index >= v.size():
 			return {}
 		v = v[index]
-	if not (v is float or v is int):
+	if not (v is float or v is int or v is bool):
 		return {}
-	return {"name": name, "target": target, "prop": prop, "index": index, "is_int": v is int}
+	# a bool counts as an int: usable under "fixed" only, never optimized
+	return {"name": name, "target": target, "prop": prop, "index": index, "is_int": v is int or v is bool}
 
 
 static func _is_array(v: Variant) -> bool:
@@ -193,6 +196,8 @@ static func _set_value(params: MovementParams, hero: HeroMovementStats, e: Dicti
 		obj.set(e["prop"], arr)
 	elif cur is int:
 		obj.set(e["prop"], int(round(value)))
+	elif cur is bool:
+		obj.set(e["prop"], value != 0.0)  # "fixed" switches: 0 = false, anything else = true
 	else:
 		obj.set(e["prop"], value)
 
@@ -319,6 +324,7 @@ func load_measured(path: String) -> String:
 	var vh: Array[Vector2] = []
 	var vv := PackedFloat64Array()
 	var has_vel := PackedByteArray()
+	var s3 := PackedFloat64Array()
 	while not f.eof_reached():
 		var r := f.get_csv_line()
 		if r.size() < header.size():
@@ -344,9 +350,11 @@ func load_measured(path: String) -> String:
 		vh.append(Vector2(v.x, v.y))
 		vv.append(v.z)
 		has_vel.append(1 if hv else 0)
+		var sc := r[col["vel_scalar"]].strip_edges() if col.has("vel_scalar") else ""
+		s3.append(float(sc) * U if sc != "" and sc != "nan" else NAN)
 	if t.size() < 4:
 		return "measured CSV has fewer than 4 valid rows: %s" % path
-	measured = {"path": path, "t": t, "ph": ph, "pv": pv, "vh": vh, "vv": vv, "has_vel": has_vel}
+	measured = {"path": path, "t": t, "ph": ph, "pv": pv, "vh": vh, "vv": vv, "has_vel": has_vel, "s3": s3}
 	return ""
 
 
@@ -432,7 +440,7 @@ func _ref_dir(ts: PackedFloat64Array, vh: Array[Vector2], t0: float) -> Vector2:
 
 
 func _channels(ts: PackedFloat64Array, ph: Array[Vector2], pv: PackedFloat64Array, vh: Array[Vector2], vv: PackedFloat64Array,
-		t0: float, ph0: Vector2, pv0: float) -> Dictionary:
+		t0: float, ph0: Vector2, pv0: float, s3_in: PackedFloat64Array = PackedFloat64Array()) -> Dictionary:
 	var ref := _ref_dir(ts, vh, t0)
 	# local packed arrays, stored in the dictionary at the end (packed arrays are values)
 	var sh := PackedFloat64Array()
@@ -442,6 +450,7 @@ func _channels(ts: PackedFloat64Array, ph: Array[Vector2], pv: PackedFloat64Arra
 	var al := PackedFloat64Array()
 	var ac := PackedFloat64Array()
 	var trel := PackedFloat64Array()
+	var s3 := PackedFloat64Array()
 	for i in ts.size():
 		trel.append(ts[i] - t0)
 		sh.append(vh[i].length())
@@ -450,7 +459,8 @@ func _channels(ts: PackedFloat64Array, ph: Array[Vector2], pv: PackedFloat64Arra
 		dv.append(pv[i] - pv0)
 		al.append(vh[i].dot(ref) if ref != Vector2.ZERO else NAN)
 		ac.append(absf(vh[i].cross(ref)) if ref != Vector2.ZERO else NAN)
-	var ch := {"speed_h": sh, "vel_v": sv, "pos_h": dh, "pos_v": dv, "h_along": al, "h_across": ac}
+		s3.append(s3_in[i] if s3_in.size() == ts.size() else sqrt(vh[i].length_squared() + vv[i] * vv[i]))
+	var ch := {"speed_h": sh, "vel_v": sv, "pos_h": dh, "pos_v": dv, "h_along": al, "h_across": ac, "speed_3d": s3}
 	return {"t": trel, "ch": ch, "ref": ref}
 
 
@@ -458,7 +468,7 @@ func measured_channels(t0: float) -> Dictionary:
 	var ts: PackedFloat64Array = measured["t"]
 	var ph0 := _interp_v2(ts, measured["ph"], t0)
 	var pv0 := _interp_f(ts, measured["pv"], t0)
-	var out := _channels(ts, measured["ph"], measured["pv"], measured["vh"], measured["vv"], t0, ph0, pv0)
+	var out := _channels(ts, measured["ph"], measured["pv"], measured["vh"], measured["vv"], t0, ph0, pv0, measured.get("s3", PackedFloat64Array()))
 	# rows without a velocity readout (scalar/derived) carry derived velocity from extract.py only
 	# when present; otherwise velocity channels are NaN there
 	var hv: PackedByteArray = measured["has_vel"]
@@ -482,7 +492,7 @@ func align_t0(simc: Dictionary) -> float:
 		var val := float(al.get("value_u", 400.0)) * U
 		var dirn := int(al.get("direction", 1))
 		if not measured.has("_cross"):
-			var mc := _channels(measured["t"], measured["ph"], measured["pv"], measured["vh"], measured["vv"], 0.0, Vector2.ZERO, 0.0)
+			var mc := _channels(measured["t"], measured["ph"], measured["pv"], measured["vh"], measured["vv"], 0.0, Vector2.ZERO, 0.0, measured.get("s3", PackedFloat64Array()))
 			measured["_cross"] = _crossing(_finite_t(mc["t"], mc["ch"][c]), _finite_y(mc["ch"][c]), val, dirn, float(al.get("measured_after", -1e9)))
 		var ts := _crossing(simc["t"], simc["ch"][c], val, dirn, 0.0)
 		if is_nan(float(measured["_cross"])) or is_nan(ts):

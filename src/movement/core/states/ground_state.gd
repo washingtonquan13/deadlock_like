@@ -119,11 +119,21 @@ static func slide_physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 		v += (gv - n * gv.dot(n)) * dt
 	v -= n * v.dot(n)
 	var onset := sim.cp.slide_onset_ticks(s.slide_kind, sim.cp.slide_bonus(s))
-	var f := p.slide_friction
+	var f := p.slide_friction_dash if s.slide_kind == MoveState.SlideKind.DASH else p.slide_friction
 	if s.slide_ticks >= onset:
 		f = p.slide_penalty_friction_dash_jump if s.slide_kind == MoveState.SlideKind.DASH_JUMP else p.slide_penalty_friction
 		if s.slide_ticks == onset:
 			sim.emit(s, MoveEvents.SLIDE_PENALTY)
 	v *= maxf(0.0, 1.0 - f * dt)
+	# measured session 3: a held move key turns the horizontal velocity toward the wish direction at a capped
+	# rate without changing speed; with no key held the mouse does not steer.
+	if ctx.has_move and p.slide_turn_rate_deg > 0.0:
+		var h := Vector2(v.x, v.z)
+		var w := Vector2(ctx.wish.x, ctx.wish.z)
+		if h.length_squared() > 1e-8 and w.length_squared() > 1e-8:
+			var ang := h.angle_to(w)
+			var step := deg_to_rad(p.slide_turn_rate_deg) * dt
+			h = h.rotated(clampf(ang, -step, step))
+			v = Vector3(h.x, v.y, h.y)
 	s.velocity = v
 	s.slide_ticks += 1

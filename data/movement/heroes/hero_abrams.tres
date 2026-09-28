@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="HeroMovementStats" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/movement/data/hero_movement_stats.gd" id="1_hs"]
+
+[resource]
+script = ExtResource("1_hs")
+hero_id = &"abrams"
+base_move_speed = 6.4
+base_sprint_speed = 1.6
+crouch_speed = 4.75
+stamina_max = 3.0
+stamina_cooldown = 4.5
+dash_bucket = 3
+gravity_scale = 1.0
+spirit_move_coeff = 0.0

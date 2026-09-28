@@ -2,11 +2,8 @@ extends MoveTestCase
 ## Ground dash, dash-jump, dash slide, dash-jump slide, air dash (design §13.1).
 
 const DASH_SPEEDS: Array[float] = [16.129, 14.706, 13.889]
-const DASH_TICKS: Array[int] = [40, 44, 47]
-# PROVISIONAL (G21): the dash slide starts at 650 u/s = 16.51 m/s in every bucket (V5 0:17), pending D2;
-# 16.51 * (1 - 0.1875/64)^48 = 14.3412 at slide tick 48
-const SLIDE48_SPEEDS: Array[float] = [14.3412, 14.3412, 14.3412]
-const SLIDE_TOTAL: Array[int] = [70, 70, 70]
+# floor(duration x 64) whole ticks (ground_dash_whole_ticks, measured B1-B3 in session2_findings.md)
+const DASH_TICKS: Array[int] = [39, 43, 46]
 const AIR_DASH_SPEEDS: Array[float] = [18.605, 17.021, 15.686]
 const AIR_DASH_TICKS: Array[int] = [28, 31, 33]
 
@@ -24,7 +21,7 @@ func test_t05_ground_dash_buckets() -> void:
 		assert_eq(n, DASH_TICKS[b], tag + " ticks in GROUND_DASH")
 		if n > 0:
 			var p: Vector3 = h.trace[n - 1]["pos"]
-			assert_near(Vector2(p.x - start.x, p.z - start.z).length(), 10.0, 1e-3, tag + " dash displacement")
+			assert_near(Vector2(p.x - start.x, p.z - start.z).length(), DASH_SPEEDS[b] * DASH_TICKS[b] / 64.0, 2e-3, tag + " dash displacement")
 		assert_near(h.trace[0]["stamina"], 2.0, 1e-9, tag + " stamina after dash")
 		assert_true(first_event(h.trace, MoveEvents.DASHED, "kind", &"ground") == 0, tag + " DASHED event on tick 1")
 	done()
@@ -69,51 +66,41 @@ func test_t06_dash_jump_window() -> void:
 	done()
 
 
-## spec: movement.md §8 dash slide, §13 slide friction 0.1875 then penalty 3.1875 after 0.75 s (T07)
-func test_t07_dash_slide_buckets() -> void:
-	for b in 3:
-		var h := new_harness(&"flat", null, hero_with(b + 1))
+## Measured dash slide (session3_findings.md): starts near 643 u/s, decays like the game, turns toward a held
+## D at ~92 deg/s without losing speed, and ignores the mouse when no key is held.
+## Deliberately loose: the model is still being fit against recordings.
+func test_measured_dash_slide() -> void:
+	var runs := {}
+	for mode: String in ["none", "d", "yaw"]:
+		var h := new_harness(&"flat")
 		await h.ready()
-		h.run(200, func(t: int) -> InputCmd: return cmd(t, B_DASH if t == 1 else B_CROUCH))
-		var tag := "B%d" % (b + 1)
+		h.run(110, func(t: int) -> InputCmd:
+			var b := B_DASH if t == 1 else (B_CROUCH if t >= 21 else 0)
+			var mx := 1 if mode == "d" and t >= 30 else 0
+			var yaw := deg_to_rad(-60.0) if mode == "yaw" and t >= 30 else 0.0
+			return cmd(t, b, mx, 1 if t < 21 else 0, yaw))
+		runs[mode] = h
 		var s0 := first_loco(h.trace, L.SLIDE)
-		assert_true(s0 >= 0, tag + " slide entered after the dash")
+		assert_true(s0 >= 0, mode + ": dash slide entered")
 		if s0 < 0:
-			continue
-		assert_near(h.trace[s0 + 47]["hspeed"], SLIDE48_SPEEDS[b], 1e-3, tag + " speed at slide tick 48")
-		var n := 0
-		while s0 + n < h.trace.size() and int(h.trace[s0 + n]["loco"]) == L.SLIDE:
-			n += 1
-		assert_eq(n, SLIDE_TOTAL[b], tag + " slide ticks before exit")
-		if s0 + n < h.trace.size():
-			assert_eq(int(h.trace[s0 + n]["loco"]), L.CROUCH, tag + " exit to CROUCH")
-		assert_true(first_event(h.trace, MoveEvents.SLIDE_START, "kind", MoveState.SlideKind.DASH) == s0, tag + " SLIDE_START kind DASH")
-	done()
-
-
-## spec: movement.md §13 dash-jump slide: onset 1.0 s, penalty 0.6875 (T08)
-func test_t08_dash_jump_slide() -> void:
-	var h := new_harness(&"flat")
-	await h.ready()
-	var s := h.state
-	s.loco = L.SLIDE
-	s.crouched = true
-	s.slide_kind = MoveState.SlideKind.DASH_JUMP
-	s.slide_ticks = 0
-	s.velocity = Vector3(0.0, 0.0, -16.129)
-	h.run(300, hold(B_CROUCH))
-	assert_near(h.trace[63]["hspeed"], 13.368, 1e-3, "speed at slide tick 64")
-	var n := 0
-	while n < h.trace.size() and int(h.trace[n]["loco"]) == L.SLIDE:
-		n += 1
-	assert_eq(n - 64, 95, "penalty ticks at f=0.6875 until < 4.8")
+			return done()
+		assert_near(float(h.trace[s0]["hspeed"]) / 0.0254, 643.0, 10.0, mode + ": starts near 643 u/s")
+		# measured 0.5 s into the slide: ~455 u/s
+		assert_near(float(h.trace[s0 + 32]["hspeed"]) / 0.0254, 455.0, 30.0, mode + ": decays like the game")
+	var vd: Vector3 = runs["d"].trace[60]["vel"]
+	var vn: Vector3 = runs["none"].trace[60]["vel"]
+	var vy: Vector3 = runs["yaw"].trace[60]["vel"]
+	var turned := rad_to_deg(absf(Vector2(vn.x, vn.z).angle_to(Vector2(vd.x, vd.z))))
+	assert_near(turned, 92.0 * 30.0 / 64.0, 12.0, "D turns the slide at ~92 deg/s")
+	assert_near(Vector2(vd.x, vd.z).length(), Vector2(vn.x, vn.z).length(), 0.05, "turning keeps speed")
+	assert_near(Vector2(vy.x, vy.z).angle_to(Vector2(vn.x, vn.z)), 0.0, 1e-3, "mouse alone does not steer")
 	done()
 
 
 ## spec: movement.md §11 Air dash: 8 m in 0.43/0.47/0.51 s, adds velocity, suspends gravity (T09)
 func test_t09_air_dash_buckets() -> void:
 	for b in 3:
-		var h := new_harness(&"flat", null, hero_with(b + 1, 0.0))
+		var h := new_harness(&"flat", legacy_air_dash(), hero_with(b + 1, 0.0))
 		await h.ready()
 		h.spawn(Vector3(0.0, 5.0, 0.0), 0.0)
 		var tag := "B%d" % (b + 1)
@@ -127,4 +114,44 @@ func test_t09_air_dash_buckets() -> void:
 			var p: Vector3 = h.trace[n - 1]["pos"]
 			assert_near(Vector2(p.x - start.x, p.z - start.z).length(), 8.0, 1e-3, tag + " air dash displacement")
 			assert_near(p.y, start.y, 1e-6, tag + " no vertical motion")
+	done()
+
+
+## Measured air dash (session2_findings.md): speed ramps up instead of jumping, peaks roughly at the measured
+## 546/508/476 u/s from rest, stays level (no gravity), and is brought down toward 480 u/s afterwards.
+## Deliberately loose: the model is still being fit against recordings.
+func test_measured_air_dash_shape() -> void:
+	var peaks_u := [546.7, 508.2, 476.4]
+	for b in 3:
+		var h := new_harness(&"flat", null, hero_with(b + 1, 0.0))
+		await h.ready()
+		h.spawn(Vector3(0.0, 5.0, 0.0), 0.0)
+		var tag := "B%d" % (b + 1)
+		h.run(50, func(t: int) -> InputCmd: return cmd(t, B_DASH if t == 1 else 0))
+		var peak := 0.0
+		for tr in h.trace:
+			peak = maxf(peak, float(tr["hspeed"]))
+		assert_true(float(h.trace[0]["hspeed"]) < 0.5 * peak, tag + " ramps up, no instant impulse")
+		assert_near(peak / 0.0254, peaks_u[b], 15.0, tag + " peak near the measured value")
+		assert_near(float(h.trace[20]["pos"].y), 5.0, 1e-3, tag + " level during the dash")
+		assert_true(float(h.trace[49]["hspeed"]) / 0.0254 < 485.0, tag + " ends at or below ~480 u/s")
+	done()
+
+
+## Measured (session2_findings.md): a ground or air dash with no move input does nothing and costs nothing
+## here; with W held the same press dashes.
+func test_measured_neutral_dash_does_nothing() -> void:
+	measured_neutral_dash = true
+	for air: bool in [false, true]:
+		for move: int in [0, 1]:
+			var h := new_harness(&"flat", null, hero_with(1, 0.0 if air else 1.0))
+			await h.ready()
+			if air:
+				h.spawn(Vector3(0.0, 5.0, 0.0), 0.0)
+			h.run(10, func(t: int) -> InputCmd: return cmd(t, B_DASH if t == 1 else 0, 0, move))
+			var tag := "%s, move=%d" % ["air" if air else "ground", move]
+			var kind: StringName = &"air" if air else &"ground"
+			var dashed := first_event(h.trace, MoveEvents.DASHED, "kind", kind) == 0
+			assert_eq(dashed, move == 1, tag + ": dashed")
+			assert_near(h.trace[0]["stamina"], 3.0 - float(move), 1e-9, tag + ": stamina")
 	done()

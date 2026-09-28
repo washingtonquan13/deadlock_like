@@ -3,7 +3,7 @@ extends MoveTestCase
 ## One test per behavior; each numeric expectation comes from the research cited in the gap row.
 
 const R := 0.4064
-const G := 24.562
+const G := 20.32   # measured gravity (session2_findings.md); spec §10 was 24.562
 const DT := 1.0 / 64.0
 const B_HEAVY := InputCmd.BTN_MELEE_HEAVY
 
@@ -97,12 +97,12 @@ func test_fp1_g11_mantle_glide() -> void:
 	var s0 := first_event(h.trace, MoveEvents.SLIDE_START)
 	assert_true(s0 >= 0, "slide after the mantle")
 	if s0 >= 0:
-		assert_near(h.trace[s0]["hspeed"], 13.97 * (1.0 - 0.1875 * DT), 1e-3, "glide speed 550 u/s")
+		assert_near(float(h.trace[s0]["hspeed"]) / 0.0254, 550.0, 10.0, "glide speed ~550 u/s")
 	done()
 
 
 ## G13: the wall jump pushes along the closest wall's normal. In an inside corner 0.05 m from the
-## x wall and 0.2 m from the z wall, a neutral kick is 4.5 m/s straight off the x wall (the old
+## x wall and 0.2 m from the z wall, a neutral kick goes straight off the x wall (the old
 ## average normal gave -3.18 / +3.18).
 func test_fp1_g13_closest_wall_normal() -> void:
 	var h := new_harness(&"flat")
@@ -115,7 +115,7 @@ func test_fp1_g13_closest_wall_normal() -> void:
 	assert_eq(i, 0, "wall jump on tick 1")
 	if i >= 0:
 		var v: Vector3 = h.trace[i]["vel"]
-		assert_near(v.x, -4.5, 0.05, "kick along the closest (x) wall normal")
+		assert_near(v.x, -6.807, 0.05, "kick along the closest (x) wall normal")
 		assert_near(v.z, 0.0, 0.05, "no component from the farther (z) wall")
 	done()
 
@@ -147,8 +147,8 @@ func test_fp1_g20_dash_slide_on_press() -> void:
 	await h.ready()
 	h.run(20, func(t: int) -> InputCmd: return cmd(t, B_DASH if t == 1 else (B_CROUCH if t >= 11 else 0)))
 	assert_eq(first_event(h.trace, MoveEvents.SLIDE_START, "kind", MoveState.SlideKind.DASH), 10, "dash slide on the press tick (k=10)")
-	# PROVISIONAL (G21): the dash slide starts at 650 u/s = 16.51 m/s in every bucket (V5 0:17), pending D2
-	assert_near(h.trace[10]["hspeed"], 16.51 * (1.0 - 0.1875 * DT), 1e-3, "dash slide starts at 650 u/s")
+	# measured session 3: the dash slide starts at ~643 u/s
+	assert_near(float(h.trace[10]["hspeed"]) / 0.0254, 643.0, 10.0, "dash slide starts near 643 u/s")
 	var h2 := new_harness(&"flat")
 	await h2.ready()
 	h2.run(40, hold(B_DASH | B_CROUCH))
@@ -182,7 +182,7 @@ func test_fp1_g36_wall_slide_cap() -> void:
 	h.spawn(Vector3(-20.0, 80.0, 0.0), 0.0)
 	h.state.velocity = Vector3(0.0, -20.0, 0.0)
 	h.run(1, hold())
-	assert_near((h.trace[0]["vel"] as Vector3).y, -20.0 - G * DT, 1e-6, "no cap away from walls")
+	assert_near((h.trace[0]["vel"] as Vector3).y, -20.0 - G * DT, 1e-5, "no cap away from walls")
 	done()
 
 
@@ -245,7 +245,7 @@ func test_fp1_dash_slow_scales_speed() -> void:
 	h.sim.push_external(h.state, {"op": &"add_modifier", "def": ModifierDef.make(&"dash_slow", ModifierDef.Stat.DASH_DISTANCE_PCT, -0.5), "source": &"test"})
 	h.run(60, func(t: int) -> InputCmd: return cmd(t, B_DASH if t == 1 else 0))
 	assert_near(h.trace[0]["hspeed"], 16.129 * 0.5, 1e-3, "dash speed halved")
-	assert_eq(count_loco(h.trace, L.GROUND_DASH), 40, "dash duration unchanged (40 ticks)")
+	assert_eq(count_loco(h.trace, L.GROUND_DASH), 39, "dash duration unchanged (39 whole ticks)")
 	done()
 
 

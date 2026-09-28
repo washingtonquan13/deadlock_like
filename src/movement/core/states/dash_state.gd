@@ -13,9 +13,21 @@ static func _dash_dir(sim: MovementSim, s: MoveState, ctx: Ctx) -> Vector3:
 	return sim.facing(s)
 
 
-static func _setup_ticks(s: MoveState, t_exact: float) -> void:
-	var total := maxi(1, ceili(t_exact - 1e-6))
+## Measured (session2_findings.md): with no move input, a ground or air dash does nothing.
+## Checked before any stamina is spent; whether the game still spends stamina is not observable in cl_showpos.
+static func _neutral_blocked(sim: MovementSim, ctx: Ctx) -> bool:
+	return sim.cp.params.neutral_dash_does_nothing and not ctx.has_move
+
+
+## whole: the dash lasts floor(t_exact) full ticks (measured, session2_findings.md) instead of
+## ceil(t_exact) ticks with a fractional last tick (design §7.10).
+static func _setup_ticks(s: MoveState, t_exact: float, whole: bool) -> void:
 	s.dash_ticks = 0
+	if whole:
+		s.dash_total_ticks = maxi(1, floori(t_exact + 1e-6))
+		s.dash_last_fraction = 1.0
+		return
+	var total := maxi(1, ceili(t_exact - 1e-6))
 	s.dash_total_ticks = total
 	s.dash_last_fraction = clampf(t_exact - float(total - 1), 0.0, 1.0)
 
@@ -23,6 +35,8 @@ static func _setup_ticks(s: MoveState, t_exact: float) -> void:
 ## spec: movement.md §8 ground dash (sets velocity, costs 1).
 static func try_ground_dash(sim: MovementSim, s: MoveState, ctx: Ctx) -> bool:
 	var p := sim.cp.params
+	if _neutral_blocked(sim, ctx):
+		return false
 	if not sim.spend(s, p.cost_ground_dash):
 		return false
 	if s.loco == L.SLIDE:
@@ -32,7 +46,7 @@ static func try_ground_dash(sim: MovementSim, s: MoveState, ctx: Ctx) -> bool:
 	s.dash_crouch_stored = ctx.is_held(InputCmd.BTN_CROUCH)
 	if not s.dash_crouch_stored:
 		sim.try_uncrouch(s)
-	_setup_ticks(s, sim.cp.ground_dash_ticks_for(s))
+	_setup_ticks(s, sim.cp.ground_dash_ticks_for(s), p.ground_dash_whole_ticks)
 	s.dash_dir = dir
 	s.dash_speed = sim.cp.ground_dash_speed_for(s)
 	s.dash_jump_cancelled = false
@@ -56,14 +70,19 @@ static func try_air_dash(sim: MovementSim, s: MoveState, ctx: Ctx) -> bool:
 	var p := sim.cp.params
 	if s.air_dashes_used >= sim.cp.air_dashes_max(s):
 		return false
+	if _neutral_blocked(sim, ctx):
+		return false
 	if not sim.spend(s, p.cost_air_dash):
 		return false
 	var dir := _dash_dir(sim, s, ctx)
-	_setup_ticks(s, sim.cp.air_dash_ticks_for(s))
+	_setup_ticks(s, sim.cp.air_dash_ticks_for(s), p.air_dash_whole_ticks)
 	s.dash_dir = dir
 	s.dash_speed = sim.cp.air_dash_speed_for(s)
+	s.air_dash_end_drag_ticks_left = 0
 	if p.air_dash_cap_mode == 0:
 		s.velocity += dir * s.dash_speed   # legacy uncapped add (K18, contradicted)
+	elif p.air_dash_cap_mode == 3:
+		_start_air_dash_ramp(sim, s, dir)
 	else:
 		_apply_air_dash_cap(sim, s, dir, p.air_dash_cap_mode)
 	if p.air_dash_zero_vertical:
@@ -98,6 +117,45 @@ static func _apply_air_dash_cap(sim: MovementSim, s: MoveState, dir: Vector3, mo
 	s.velocity.z = nh.z
 
 
+## Cap mode 3 (measured, session2_findings.md "Session 2c"): no impulse at the start; the ramp in
+## physics() pushes v_par toward target = frac[bucket] * dash speed + entry_frac * v_par at dash start.
+static func _start_air_dash_ramp(sim: MovementSim, s: MoveState, dir: Vector3) -> void:
+	var p := sim.cp.params
+	var d := Vector3(dir.x, 0.0, dir.z)
+	s.air_dash_ramp_done = false
+	if d.length_squared() < 1e-9:
+		s.air_dash_ramp_target = 0.0
+		s.air_dash_ramp_done = true
+		return
+	d = d.normalized()
+	s.dash_dir = d
+	var vpar0 := Vector3(s.velocity.x, 0.0, s.velocity.z).dot(d)
+	var b := clampi(sim.cp.hero.dash_bucket, 1, 3) - 1
+	s.air_dash_ramp_target = p.air_dash_ramp_target_fracs[b] * s.dash_speed + p.air_dash_ramp_entry_frac * vpar0
+
+
+## One tick of the mode 3 ramp: v_par gains (rate / duration - damping * v_par) * dt, stopping at the
+## target; v_perp is kept. Air drag stays on during the dash when air_dash_keeps_air_drag is set.
+static func _air_dash_ramp_tick(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
+	var p := sim.cp.params
+	var dt := MoveUnits.DT * ctx.frac
+	var d := Vector3(s.dash_dir.x, 0.0, s.dash_dir.z)
+	var vh := Vector3(s.velocity.x, 0.0, s.velocity.z)
+	if not s.air_dash_ramp_done and d.length_squared() > 1e-9:
+		var vpar := vh.dot(d)
+		var dur := maxf(sim.cp.air_dash_ticks_for(s) * MoveUnits.DT, 1e-6)
+		var gain := maxf(0.0, (p.air_dash_ramp_rate / dur - p.air_dash_ramp_damping * vpar) * dt)
+		if vpar + gain >= s.air_dash_ramp_target:
+			# the ramp stops at the target (or at once when entering above it); the speed then decays
+			gain = maxf(0.0, s.air_dash_ramp_target - vpar)
+			s.air_dash_ramp_done = true
+		vh += d * gain
+	if p.air_dash_keeps_air_drag and s.zip_exit_momentum_ticks <= 0:
+		vh *= maxf(0.0, 1.0 - sim.cp.effective_air_drag(s) * dt)
+	s.velocity.x = vh.x
+	s.velocity.z = vh.z
+
+
 ## G02 end drag on the horizontal speed (PROVISIONAL (G02), V8 2:38 / V9 1:09 / V2 3:03 / V10 3:18;
 ## pending recording clip A2). Skipped in the zip exit zero-drag window.
 static func apply_air_dash_end_drag(sim: MovementSim, s: MoveState) -> void:
@@ -111,6 +169,15 @@ static func apply_air_dash_end_drag(sim: MovementSim, s: MoveState) -> void:
 	if v < 1e-9:
 		return
 	var nv := v
+	if p.air_dash_end_drag_mode == 4:
+		# measured (session2_findings.md "Session 2c"): the excess over the floor bleeds off over
+		# air_dash_end_drag_ticks airborne ticks (AirState.air_physics); the grounded case is unmeasured.
+		if s.grounded or v <= p.air_dash_end_drag_floor:
+			return
+		s.air_dash_end_drag_ticks_left = p.air_dash_end_drag_ticks
+		s.air_dash_end_drag_step = (v - p.air_dash_end_drag_floor) / float(p.air_dash_end_drag_ticks)
+		sim.emit(s, MoveEvents.AIR_DASH_END_DRAG, {"from": v, "to": p.air_dash_end_drag_floor})
+		return
 	match p.air_dash_end_drag_mode:
 		1:
 			nv = maxf(minf(v, p.air_dash_end_drag_floor), v - p.air_dash_end_drag_frac * (v - p.air_dash_end_drag_offset))
@@ -278,6 +345,8 @@ static func physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 		# (vy held at 0 per design §7.10, or kept constant when air_dash_zero_vertical is off)
 		if sim.cp.params.air_dash_zero_vertical:
 			s.velocity.y = 0.0
+		if sim.cp.params.air_dash_cap_mode == 3:
+			_air_dash_ramp_tick(sim, s, ctx)
 
 
 ## Counts completed dash ticks and emits the dash-jump window events (spec: movement.md §9).

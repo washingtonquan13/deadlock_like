@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://fesxdunm3a3"]
 
-[ext_resource type="PackedScene" path="res://scenes/arena/movement_arena.tscn" id="1_arena"]
+[ext_resource type="PackedScene" uid="uid://c1oki71uuean4" path="res://scenes/arena/movement_arena.tscn" id="1_arena"]
 [ext_resource type="PackedScene" path="res://scenes/player/player_character.tscn" id="2_player"]
 [ext_resource type="PackedScene" path="res://scenes/player/local_controller.tscn" id="3_ctrl"]
 [ext_resource type="PackedScene" path="res://scenes/debug/movement_debug_overlay.tscn" id="4_overlay"]
