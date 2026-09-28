@@ -251,7 +251,11 @@ static func _ground_dash_transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -
 	# (ground_dash.md rules 7-8). Crouch already held at dash start is stored and gives no press (rule 9).
 	if ctx.is_pressed(InputCmd.BTN_CROUCH) and s.grounded and (ctx.mask & ControlLocks.CROUCH) == 0:
 		close_window(sim, s)
-		enter_dash_slide(sim, s)
+		# measured session 7 (s7_ramp RUP): uphill on a slide slope the press ends the dash into crouch friction
+		if GroundState.moving_uphill_on_slide_slope(sim, s):
+			GroundState.enter_crouch(sim, s)
+		else:
+			enter_dash_slide(sim, s)
 		return
 	if k >= s.dash_total_ticks:
 		_end_ground_dash(sim, s, ctx)
@@ -307,7 +311,7 @@ static func _end_ground_dash(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 		sim.do_ground_jump(s, ctx, &"buffered")
 		return
 	# spec: movement.md §8 dash slide unless crouch was stored before the dash
-	if crouch and not s.dash_crouch_stored and s.grounded:
+	if crouch and not s.dash_crouch_stored and s.grounded and not GroundState.moving_uphill_on_slide_slope(sim, s):
 		enter_dash_slide(sim, s)
 		return
 	# spec: movement.md §8 exit clamp (Open Q6)

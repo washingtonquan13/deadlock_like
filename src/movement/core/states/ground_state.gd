@@ -29,6 +29,10 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	# measured session 7 (s7_ramp RS0/RSW): a crouch press on a ~20-26 degree ramp at rest or at crouch-walk speed
 	# does not slide (HUD stays 0 / 187 all the way down), so a slope is no exception to slide_entry_speed here.
 	var slide_ok := s.horizontal_speed() > p.slide_entry_speed and not s.slide_block_until_crouch_release
+	# measured session 7 (s7_ramp RUP): a crouch pressed while moving uphill on a slide slope gets crouch friction,
+	# not a slide. PROVISIONAL (S7-SL): a slide carried onto an upslope from the flat is unmeasured and not ended.
+	if moving_uphill_on_slide_slope(sim, s):
+		slide_ok = false
 	if s.loco == L.GROUND and s.crouched and not crouch:
 		# safety net: never stay on the crouch capsule in GROUND (e.g. after a crouched mantle)
 		if sim.mover.can_stand(s.position):
@@ -62,6 +66,11 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 			sim.emit(s, MoveEvents.SLIDE_END)
 			s.loco = L.CROUCH
 			s.velocity.y = 0.0
+
+
+## measured session 7 (s7_ramp RUP): no slide (normal or dash) starts while moving uphill on a slide slope.
+static func moving_uphill_on_slide_slope(sim: MovementSim, s: MoveState) -> bool:
+	return sim.on_slide_slope(s) and Vector2(s.velocity.x, s.velocity.z).dot(Vector2(s.ground_normal.x, s.ground_normal.z)) < 0.0
 
 
 static func enter_crouch(sim: MovementSim, s: MoveState) -> void:
@@ -117,13 +126,19 @@ static func slide_physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	var p := sim.cp.params
 	var dt := MoveUnits.DT
 	var n := s.ground_normal if s.grounded else Vector3.UP
-	var v := s.velocity
-	if n.y < 0.99999:
-		var gv := Vector3(0.0, -sim.cp.gravity(s), 0.0)
-		v += (gv - n * gv.dot(n)) * dt
-	v -= n * v.dot(n)
+	# measured session 7 (s7_ramp): slide velocity stays horizontal on a slope (the HUD reads horizontal speed there,
+	# with no speed change at the top or bottom); a slope adds a horizontal downhill accel of g*tan(theta).
+	var v := Vector3(s.velocity.x, 0.0, s.velocity.z)
+	var dh := Vector3(n.x, 0.0, n.z)
+	if n.y < 0.99999 and n.y > 1e-3:
+		v += dh.normalized() * sim.cp.gravity(s) * dh.length() / n.y * dt
 	var onset := sim.cp.slide_onset_ticks(s.slide_kind, sim.cp.slide_bonus(s))
 	var f := p.slide_friction_dash if s.slide_kind == MoveState.SlideKind.DASH else p.slide_friction
+	# measured session 7 (s7_ramp RRUN/RBOT/RDASH, one 26.5 deg ramp): before the penalty, the net downhill accel is
+	# g*tan(theta) for a normal slide (no friction) and ~0.24/s friction for a dash slide.
+	# PROVISIONAL (S7-SL): single-angle fit; a second ramp angle would separate accel scale from friction.
+	if sim.on_slide_slope(s):
+		f = p.slide_slope_friction_dash if s.slide_kind == MoveState.SlideKind.DASH else p.slide_slope_friction
 	if s.slide_ticks >= onset:
 		f = p.slide_penalty_friction_dash_jump if s.slide_kind == MoveState.SlideKind.DASH_JUMP else p.slide_penalty_friction
 		if s.slide_ticks == onset:

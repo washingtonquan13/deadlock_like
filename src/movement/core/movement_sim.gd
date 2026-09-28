@@ -450,13 +450,13 @@ func gravity_half(s: MoveState, ctx: Ctx) -> void:
 func _move(s: MoveState, ctx: Ctx) -> void:
 	var motion := s.velocity * MoveUnits.DT * ctx.frac
 	if s.grounded and is_ground_loco(s.loco):
-		motion = KinematicMover.project_on_ground(Vector3(motion.x, 0.0, motion.z), s.ground_normal) if s.loco != L.SLIDE else motion
+		motion = KinematicMover.project_on_ground(Vector3(motion.x, 0.0, motion.z), s.ground_normal)
 	if motion.length_squared() < 1e-14:
 		return
 	var r := mover.move(s, motion, s.crouched)
 	s.position = r["position"]
 	var v: Vector3 = r["velocity"]
-	if s.grounded and is_ground_loco(s.loco) and s.loco != L.SLIDE:
+	if s.grounded and is_ground_loco(s.loco):
 		v.y = 0.0
 	s.velocity = v
 
@@ -476,10 +476,9 @@ func _categorize(s: MoveState, ctx: Ctx) -> void:
 			return
 	var walking := s.loco == L.GROUND or s.loco == L.CROUCH or s.loco == L.SLIDE
 	if s.grounded and (walking or s.loco == L.GROUND_DASH or s.loco == L.HEAVY_LUNGE or s.loco == L.FORCED):
-		# impl notes: separation is an upward-speed test. Only SLIDE carries a surface-aligned 3D
-		# velocity, so it uses the normal component; the other ground states keep vy = 0 and a
+		# impl notes: separation is an upward-speed test. Ground states (SLIDE included, session 7) keep vy = 0 and a
 		# horizontal velocity whose dot with a downhill normal is positive and must not detach.
-		var separating := (s.velocity.dot(s.ground_normal) > LEAVE_GROUND_SPEED) if s.loco == L.SLIDE else (s.velocity.y > LEAVE_GROUND_SPEED)
+		var separating := s.velocity.y > LEAVE_GROUND_SPEED
 		if not separating:
 			var dist := p.step_height if ctx.grounded_start else p.ground_probe_distance
 			var g := _find_ground(s.position, s.crouched, dist)
@@ -488,8 +487,7 @@ func _categorize(s: MoveState, ctx: Ctx) -> void:
 				s.ground_normal = g["normal"]
 				s.grounded = true
 				if walking or s.loco == L.GROUND_DASH:
-					if s.loco != L.SLIDE:
-						s.velocity.y = 0.0
+					s.velocity.y = 0.0
 				elif s.velocity.y < 0.0:
 					s.velocity.y = 0.0
 				_finish_gravity(s, ctx)
