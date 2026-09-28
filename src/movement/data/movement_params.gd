@@ -151,12 +151,13 @@ extends Resource
 
 # --- air control ----------------------------------------------------------------
 @export var air_accel: float = 2.0                               # measured session 4 (Haze): ~780 u/s^2 = 2.0 x walk 386 u/s; scaling with walk speed is Source-style, assumed
-@export var air_wishspeed_cap: float = 2.032                     # PROVISIONAL (G26): 80 u/s (V8, V3, V6, V16; spec 30 u/s contradicted, K26); pending recording clip A5
+# measured session 10 (s10_gains FA_A/FA_D at ~560 u/s, FA_L at ~350): a held A/D plateaus at 80 u/s sideways at both speeds
+@export var air_wishspeed_cap: float = 2.032                     # 80 u/s (V8, V3, V6, V16; spec 30 u/s contradicted, K26)
 @export var air_wishspeed_cap_fast: float = 1.27                 # PROVISIONAL (G26): 50 u/s above air_fast_threshold (V8); pending A5
 @export var air_fast_threshold: float = 17.78                    # PROVISIONAL (G26): 700 u/s horizontal (V8); pending A5
 @export var air_strafe_threshold: float = 11.43                  # 450 u/s regime split (air_movement.md rule 27, wiki E8; conflicts with V8's 700, slide_and_slopes.md)
-# K26: the x0.5 accel above 450 u/s has no source (the wiki gives the split, not a factor; V8/Leif model
-# only the 700 u/s wishspeed cap), so it is neutral (1.0). PROVISIONAL (G26): pending A5.
+# measured session 10 (s10_gains FA_*): sideways 0 -> ~78 u/s takes ~0.12 s both at ~560 u/s and at ~350 u/s, the same
+# as the sim at 1.0, so no slowdown above 450 u/s (K26's x0.5 had no source). Above 700 u/s is still unmeasured.
 @export var air_accel_high_speed_mult: float = 1.0
 @export var air_drag: float = 0.2                                # measured session 5 (vz0 pinned by airtime): 0.196-0.228 on jumps, dash jumps, after an air dash
 

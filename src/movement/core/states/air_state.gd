@@ -147,7 +147,7 @@ static func air_physics(sim: MovementSim, s: MoveState, ctx: Ctx, allow_input: b
 	var v := Vector3(s.velocity.x, 0.0, s.velocity.z)
 	if allow_input and ctx.has_move:
 		var full := sim.cp.effective_move_speed(s, ctx.firing)
-		# G26: wishspeed cap 80 u/s, 50 u/s above 700 u/s (V8). PROVISIONAL (G26): pending A5.
+		# G26: wishspeed cap 80 u/s (measured session 10 up to ~560 u/s), 50 u/s above 700 u/s (V8). PROVISIONAL (G26): >700.
 		var cap := p.air_wishspeed_cap if v.length() <= p.air_fast_threshold else p.air_wishspeed_cap_fast
 		var ws := minf(full, cap)
 		var add := ws - v.dot(ctx.wish)
