@@ -1,0 +1,250 @@
+{
+ "_comment": "3 dashes (W/S/W) spend all charges, then a dash every 24 ticks alternating W/S: first success = regen time",
+ "name": "SCR2_0",
+ "clip": "SCR2_0",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 440,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 47,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 5,
+   "to": 5,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 48,
+   "to": 95,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 52,
+   "to": 52,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 96,
+   "to": 143,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 100,
+   "to": 100,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 144,
+   "to": 167,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 148,
+   "to": 148,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 168,
+   "to": 191,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 172,
+   "to": 172,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 192,
+   "to": 215,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 196,
+   "to": 196,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 216,
+   "to": 239,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 220,
+   "to": 220,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 240,
+   "to": 263,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 244,
+   "to": 244,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 264,
+   "to": 287,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 268,
+   "to": 268,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 288,
+   "to": 311,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 292,
+   "to": 292,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 312,
+   "to": 335,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 316,
+   "to": 316,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 336,
+   "to": 359,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 340,
+   "to": 340,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 360,
+   "to": 383,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 364,
+   "to": 364,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 384,
+   "to": 407,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 388,
+   "to": 388,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 408,
+   "to": 431,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 412,
+   "to": 412,
+   "buttons": [
+    "dash"
+   ]
+  }
+ ]
+}

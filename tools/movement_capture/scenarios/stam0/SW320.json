@@ -1,0 +1,115 @@
+{
+ "_comment": "SWnnn: dashes at 5/52/100 (W/S/W) spend the charges, no input until nnn, then 3 dashes 24 ticks apart (S/W/S):",
+ "name": "SW320",
+ "clip": "SW320",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 400,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 47,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 48,
+   "to": 95,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 96,
+   "to": 110,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 316,
+   "to": 339,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 340,
+   "to": 363,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 364,
+   "to": 387,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 5,
+   "to": 5,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 52,
+   "to": 52,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 100,
+   "to": 100,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 320,
+   "to": 320,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 344,
+   "to": 344,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 368,
+   "to": 368,
+   "buttons": [
+    "dash"
+   ]
+  }
+ ]
+}

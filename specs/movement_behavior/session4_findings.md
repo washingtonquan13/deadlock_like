@@ -273,7 +273,7 @@ Two trials each. `stam/dashes.py` counts dashes (HUD ≥ 600 within 12 ticks of 
 
 - **The air jump is free.** SAJ spends two charges on ground dashes, then does an air jump and an air dash before any regen. The air dash still fires (to ~570, z flat) in both trials, and the SAJ0 control matches. The sim charged 1.
 - **A dash jump costs 2 in total.** In SCDJ, a dash followed by a dash jump leaves one charge. This matches `cost_dash_jump_extra` 1.
-- **Regen is ~140 ticks after each use.** A 4th dash at +142 failed, while dashes at +148 and +196 fired. Fast stamina may still have been on, since the spec says 4.5 s, so the regen time is not applied.
+- **Regen is ~140 ticks after each use.** A 4th dash at +142 failed, while dashes at +148 and +196 fired. Fast stamina may still have been on, since the spec says 4.5 s, so the regen time is not applied. **Superseded:** see "Stamina regen (fast stamina off)" below: 4.5 s per charge.
 - **Air jump after a dash jump (DJAJ at +10 and +30):** allowed, and the ~620 horizontal speed is kept.
 - **Air jump after a wall jump (WJAJ):** vz is set to ~520–545, as in the plain air jump. The camera next to the wall is too unreliable to judge the horizontal.
 - **The air jump accelerates along the held direction.** Other components are kept:
@@ -312,3 +312,14 @@ Heights are the camera rise, which matches the ledge height within a few u.
   - A ground press 2 ticks after contact also failed while 7 ticks after succeeded, so the cause is unclear. It is not modeled.
 - **TJ030B:** a jump too early to reach the cab face lands short (apex ~54): no mantle, as expected.
 - **Walking into the truck face (TW):** it slides along the face at ~104 u/s with no mantle, same as the crate.
+
+## Stamina regen (fast stamina off; Haze, mark street_y148)
+
+- **The setup was wrong.** `driver.py setup` sent `citadel_enable_fast_stamina`, a command that turns fast stamina on, and `citadel_rapid_stamina_regen` was also true at one point (every dash fired). `find stamina` in the console lists `citadel_disable_fast_stamina`. The setup now sends that and `citadel_rapid_stamina_regen false`. The earlier ~140-tick regen came from fast stamina.
+- **A ground dash holds 635 u/s for ~40 ticks.** A press during that plateau reads as a dash to a "speed ≥ 600 soon after the press" check, so only presses made below dash speed count.
+- **Scenarios** (`scenarios/stam0/gen.py`): SWnnn and SXnnn spend all 3 charges with dashes at 5/52/100, wait until tick nnn, then press dash 3 more times (24 or 47 ticks apart). SCR2_0 repeats SCR2 with fast stamina off. Each was recorded after ~10 s of rest.
+- **Result: one charge every ~288 ticks (4.5 s), one at a time, timed from the first spend.** The first charge is back between 284 and 308 (5 + 288 = 293). The second is back between 567 and 614 (5 + 576 = 581).
+  - SX380 and SW380–520: one charge by T, and none back by 474 or 568 after using it.
+  - SX520: the press at 567 fails and 614 fires.
+  - Later spends did not delay the timer.
+- This matches the spec (4.5 s) and the sim (sequential progress from the first spend), so there is no model change.

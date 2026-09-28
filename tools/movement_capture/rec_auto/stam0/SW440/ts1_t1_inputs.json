@@ -1,0 +1,227 @@
+{
+  "t0_perf": 62822.2884136,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.0003240000005462207,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.06271559999731835,
+      "t_plan": 0.0625,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 5
+    },
+    {
+      "t_real": 0.08769780000147875,
+      "t_plan": 0.0875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 6
+    },
+    {
+      "t_real": 0.7345790000035777,
+      "t_plan": 0.734375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 48
+    },
+    {
+      "t_real": 0.7349104000022635,
+      "t_plan": 0.734375,
+      "kind": "down",
+      "arg": "s",
+      "tick": 48
+    },
+    {
+      "t_real": 0.7972259000016493,
+      "t_plan": 0.796875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 52
+    },
+    {
+      "t_real": 0.8221870999987004,
+      "t_plan": 0.821875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 53
+    },
+    {
+      "t_real": 1.4846705000018119,
+      "t_plan": 1.484375,
+      "kind": "up",
+      "arg": "s",
+      "tick": 96
+    },
+    {
+      "t_real": 1.4850795000020298,
+      "t_plan": 1.484375,
+      "kind": "down",
+      "arg": "w",
+      "tick": 96
+    },
+    {
+      "t_real": 1.5470552999977372,
+      "t_plan": 1.546875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 100
+    },
+    {
+      "t_real": 1.5721104000040214,
+      "t_plan": 1.571875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 101
+    },
+    {
+      "t_real": 1.7193404999998165,
+      "t_plan": 1.71875,
+      "kind": "up",
+      "arg": "w",
+      "tick": 111
+    },
+    {
+      "t_real": 6.797071000000869,
+      "t_plan": 6.796875,
+      "kind": "down",
+      "arg": "s",
+      "tick": 436
+    },
+    {
+      "t_real": 6.859782100000302,
+      "t_plan": 6.859375,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 440
+    },
+    {
+      "t_real": 6.884831600000325,
+      "t_plan": 6.884375,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 441
+    },
+    {
+      "t_real": 7.172065200000361,
+      "t_plan": 7.171875,
+      "kind": "up",
+      "arg": "s",
+      "tick": 460
+    },
+    {
+      "t_real": 7.172360700002173,
+      "t_plan": 7.171875,
+      "kind": "down",
+      "arg": "w",
+      "tick": 460
+    },
+    {
+      "t_real": 7.234567600004084,
+      "t_plan": 7.234375,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 464
+    },
+    {
+      "t_real": 7.259664299999713,
+      "t_plan": 7.259375,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 465
+    },
+    {
+      "t_real": 7.547299199999543,
+      "t_plan": 7.546875,
+      "kind": "up",
+      "arg": "w",
+      "tick": 484
+    },
+    {
+      "t_real": 7.547627200001443,
+      "t_plan": 7.546875,
+      "kind": "down",
+      "arg": "s",
+      "tick": 484
+    },
+    {
+      "t_real": 7.609574599999178,
+      "t_plan": 7.609375,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 488
+    },
+    {
+      "t_real": 7.6346415000007255,
+      "t_plan": 7.634375,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 489
+    },
+    {
+      "t_real": 7.922057499999937,
+      "t_plan": 7.921875,
+      "kind": "up",
+      "arg": "s",
+      "tick": 508
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2486.34,
+    "pos_y": -285.09,
+    "pos_z": 102.16,
+    "ang_pitch": 14.69,
+    "ang_yaw": 147.66,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 407.8
+  },
+  "start_yaw": 147.66,
+  "late_ms_max": 0.7522000014432706,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\stam0\\SW440.json",
+  "mark": "street_y148",
+  "mark_value": {
+    "pawn": [
+      2391.6800000000003,
+      -265.99,
+      102.08000000000001
+    ],
+    "hud": [
+      2486.34,
+      -285.12,
+      102.12
+    ],
+    "yaw": 147.66,
+    "pitch": 14.69,
+    "cam_offset": [
+      94.65999999999985,
+      -19.129999999999995,
+      0.03999999999999204
+    ],
+    "return_error_u": 0.0
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 1078,
+  "pre_real_s": 0.3
+}

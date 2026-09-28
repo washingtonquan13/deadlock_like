@@ -193,7 +193,7 @@ def release_all(cfg):
 # ----------------------------------------------------------------------------------------------
 
 def cmd_setup(a, cfg):
-    gio.console(["sv_cheats true", "cl_showpos 1", "citadel_enable_fast_stamina", "host_timescale %g" % a.timescale],
+    gio.console(["sv_cheats true", "cl_showpos 1", "citadel_disable_fast_stamina", "citadel_rapid_stamina_regen false", "host_timescale %g" % a.timescale],
                 cfg["console_key"], cfg["exe"])
     print("setup sent (timescale %g)" % a.timescale)
 

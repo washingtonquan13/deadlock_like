@@ -1,0 +1,479 @@
+{
+  "t0_perf": 62475.4530819,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.00045140000293031335,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.06275180000375258,
+      "t_plan": 0.0625,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 5
+    },
+    {
+      "t_real": 0.08775360000436194,
+      "t_plan": 0.0875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 6
+    },
+    {
+      "t_real": 0.7346631000036723,
+      "t_plan": 0.734375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 48
+    },
+    {
+      "t_real": 0.7349602000031155,
+      "t_plan": 0.734375,
+      "kind": "down",
+      "arg": "s",
+      "tick": 48
+    },
+    {
+      "t_real": 0.7971911999993608,
+      "t_plan": 0.796875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 52
+    },
+    {
+      "t_real": 0.8221439999979339,
+      "t_plan": 0.821875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 53
+    },
+    {
+      "t_real": 1.4846265000014682,
+      "t_plan": 1.484375,
+      "kind": "up",
+      "arg": "s",
+      "tick": 96
+    },
+    {
+      "t_real": 1.4851161999977194,
+      "t_plan": 1.484375,
+      "kind": "down",
+      "arg": "w",
+      "tick": 96
+    },
+    {
+      "t_real": 1.5471609000014723,
+      "t_plan": 1.546875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 100
+    },
+    {
+      "t_real": 1.572061400001985,
+      "t_plan": 1.571875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 101
+    },
+    {
+      "t_real": 2.2345843000002787,
+      "t_plan": 2.234375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 144
+    },
+    {
+      "t_real": 2.234894900000654,
+      "t_plan": 2.234375,
+      "kind": "down",
+      "arg": "s",
+      "tick": 144
+    },
+    {
+      "t_real": 2.2972354000012274,
+      "t_plan": 2.296875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 148
+    },
+    {
+      "t_real": 2.322081700003764,
+      "t_plan": 2.321875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 149
+    },
+    {
+      "t_real": 2.609689900004014,
+      "t_plan": 2.609375,
+      "kind": "up",
+      "arg": "s",
+      "tick": 168
+    },
+    {
+      "t_real": 2.61001060000126,
+      "t_plan": 2.609375,
+      "kind": "down",
+      "arg": "w",
+      "tick": 168
+    },
+    {
+      "t_real": 2.672179799999867,
+      "t_plan": 2.671875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 172
+    },
+    {
+      "t_real": 2.6970837999979267,
+      "t_plan": 2.696875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 173
+    },
+    {
+      "t_real": 2.9846632999979192,
+      "t_plan": 2.984375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 192
+    },
+    {
+      "t_real": 2.9850365000020247,
+      "t_plan": 2.984375,
+      "kind": "down",
+      "arg": "s",
+      "tick": 192
+    },
+    {
+      "t_real": 3.0472571999998763,
+      "t_plan": 3.046875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 196
+    },
+    {
+      "t_real": 3.0720597000035923,
+      "t_plan": 3.071875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 197
+    },
+    {
+      "t_real": 3.359541800004081,
+      "t_plan": 3.359375,
+      "kind": "up",
+      "arg": "s",
+      "tick": 216
+    },
+    {
+      "t_real": 3.3598124999989523,
+      "t_plan": 3.359375,
+      "kind": "down",
+      "arg": "w",
+      "tick": 216
+    },
+    {
+      "t_real": 3.4220882000008714,
+      "t_plan": 3.421875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 220
+    },
+    {
+      "t_real": 3.447212099999888,
+      "t_plan": 3.446875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 221
+    },
+    {
+      "t_real": 3.7346936000030837,
+      "t_plan": 3.734375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 240
+    },
+    {
+      "t_real": 3.7350501000037184,
+      "t_plan": 3.734375,
+      "kind": "down",
+      "arg": "s",
+      "tick": 240
+    },
+    {
+      "t_real": 3.7971294000017224,
+      "t_plan": 3.796875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 244
+    },
+    {
+      "t_real": 3.822175300003437,
+      "t_plan": 3.821875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 245
+    },
+    {
+      "t_real": 4.109628999998677,
+      "t_plan": 4.109375,
+      "kind": "up",
+      "arg": "s",
+      "tick": 264
+    },
+    {
+      "t_real": 4.110002400004305,
+      "t_plan": 4.109375,
+      "kind": "down",
+      "arg": "w",
+      "tick": 264
+    },
+    {
+      "t_real": 4.172081400000025,
+      "t_plan": 4.171875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 268
+    },
+    {
+      "t_real": 4.1970873000027495,
+      "t_plan": 4.196875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 269
+    },
+    {
+      "t_real": 4.484709800002747,
+      "t_plan": 4.484375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 288
+    },
+    {
+      "t_real": 4.485151300003054,
+      "t_plan": 4.484375,
+      "kind": "down",
+      "arg": "s",
+      "tick": 288
+    },
+    {
+      "t_real": 4.547330100002,
+      "t_plan": 4.546875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 292
+    },
+    {
+      "t_real": 4.572111599998607,
+      "t_plan": 4.571875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 293
+    },
+    {
+      "t_real": 4.8596443999995245,
+      "t_plan": 4.859375,
+      "kind": "up",
+      "arg": "s",
+      "tick": 312
+    },
+    {
+      "t_real": 4.860236300002725,
+      "t_plan": 4.859375,
+      "kind": "down",
+      "arg": "w",
+      "tick": 312
+    },
+    {
+      "t_real": 4.922133500003838,
+      "t_plan": 4.921875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 316
+    },
+    {
+      "t_real": 4.947308800001338,
+      "t_plan": 4.946875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 317
+    },
+    {
+      "t_real": 5.234741400003259,
+      "t_plan": 5.234375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 336
+    },
+    {
+      "t_real": 5.235102400001779,
+      "t_plan": 5.234375,
+      "kind": "down",
+      "arg": "s",
+      "tick": 336
+    },
+    {
+      "t_real": 5.29718850000063,
+      "t_plan": 5.296875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 340
+    },
+    {
+      "t_real": 5.322180800001661,
+      "t_plan": 5.321875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 341
+    },
+    {
+      "t_real": 5.609552599999006,
+      "t_plan": 5.609375,
+      "kind": "up",
+      "arg": "s",
+      "tick": 360
+    },
+    {
+      "t_real": 5.609825899999123,
+      "t_plan": 5.609375,
+      "kind": "down",
+      "arg": "w",
+      "tick": 360
+    },
+    {
+      "t_real": 5.672131200000877,
+      "t_plan": 5.671875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 364
+    },
+    {
+      "t_real": 5.6971113000035984,
+      "t_plan": 5.696875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 365
+    },
+    {
+      "t_real": 5.9847036999999546,
+      "t_plan": 5.984375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 384
+    },
+    {
+      "t_real": 5.98498610000388,
+      "t_plan": 5.984375,
+      "kind": "down",
+      "arg": "s",
+      "tick": 384
+    },
+    {
+      "t_real": 6.047203800000716,
+      "t_plan": 6.046875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 388
+    },
+    {
+      "t_real": 6.072089100001904,
+      "t_plan": 6.071875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 389
+    },
+    {
+      "t_real": 6.359555900002306,
+      "t_plan": 6.359375,
+      "kind": "up",
+      "arg": "s",
+      "tick": 408
+    },
+    {
+      "t_real": 6.359837600000901,
+      "t_plan": 6.359375,
+      "kind": "down",
+      "arg": "w",
+      "tick": 408
+    },
+    {
+      "t_real": 6.422096300004341,
+      "t_plan": 6.421875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 412
+    },
+    {
+      "t_real": 6.447481000002881,
+      "t_plan": 6.446875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 413
+    },
+    {
+      "t_real": 6.734721200002241,
+      "t_plan": 6.734375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 432
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2486.34,
+    "pos_y": -285.09,
+    "pos_z": 102.16,
+    "ang_pitch": 14.69,
+    "ang_yaw": 147.66,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 410.92
+  },
+  "start_yaw": 147.66,
+  "late_ms_max": 0.8613000027253293,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\stam0\\SCR2_0.json",
+  "mark": "street_y148",
+  "mark_value": {
+    "pawn": [
+      2391.6800000000003,
+      -265.99,
+      102.08000000000001
+    ],
+    "hud": [
+      2486.34,
+      -285.12,
+      102.12
+    ],
+    "yaw": 147.66,
+    "pitch": 14.69,
+    "cam_offset": [
+      94.65999999999985,
+      -19.129999999999995,
+      0.03999999999999204
+    ],
+    "return_error_u": 0.0
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 934,
+  "pre_real_s": 0.3
+}
