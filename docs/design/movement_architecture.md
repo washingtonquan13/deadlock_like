@@ -672,7 +672,7 @@ All fields are `@export`. Defaults are the frozen spec baseline. Confidence: H =
 | dash_jump_air_control_time | float | 0.25 | s | 9 | H |
 | jump_speed | float | 7.493 | m/s (295 u/s) | 10 | M |
 | gravity | float | 24.562 | m/s^2 (967 u/s^2) | 10 | L |
-| air_jump_speed | float | 7.493 | m/s | 10 (Open Q4) | L |
+| air_jump_speed | float | 13.26 | m/s (~522 u/s, measured session 4) | 10 | H |
 | air_jump_sets_vertical | bool | true | - | 10 | L |
 | air_jumps_per_airtime | int | 1 | count | 10 | H |
 | coyote_time | float | 0.0 | s | 10 (Open Q20) | L |
@@ -892,7 +892,7 @@ Common setup: `MovementParams.new()`, and a hero from `HeroMovementStats.new()` 
 | T15 | Vent | VENT active, sprinting → (7.2 x 1.7) + 1.6 = 13.84 [1e-6] |
 | T16 | Sprint ramp, hero sprint 4.0 | Sprint activates on tick 192 of no interaction with +2.5; reaches +4.0 exactly 160 ticks (2.5 s) later; crouch resets to 0 |
 | T17 | Down-dash double tap | Airborne, crouch presses 28 ticks apart → DOWN_DASH; 29 apart → none |
-| T18 | Air jump | 1 per airtime, costs 1, vy set to 7.493; second air jump refused; refreshed after landing |
+| T18 | Air jump | 1 per airtime, costs 1, vy set to air_jump_speed; second air jump refused; refreshed after landing |
 | T19 | Locks and parry | STUN lock blocks jump, dash and move (velocity decays by friction only); BTN_PARRY during GROUND_DASH → loco GROUND, horizontal speed 0 on that tick |
 | T20 | Crouch | Crouch-walk steady speed 4.8 [1e-4]; firing does not change it; slide not entered at 7.2 on flat; slide entered at 9.0 |
 

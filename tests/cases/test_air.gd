@@ -71,7 +71,7 @@ func test_t18_air_jump() -> void:
 	assert_eq(i + 1, 10, "air jump on tick 10")
 	if i >= 0:
 		var vy: float = (h.trace[i]["vel"] as Vector3).y
-		assert_near(vy, 7.493 - 20.32 / 64.0, 1e-4, "vertical speed after air jump (half-step gravity)")
+		assert_near(vy, 13.26 - 20.32 / 64.0, 1e-4, "vertical speed after air jump (half-step gravity)")
 		assert_near(h.trace[i]["stamina"], 2.0, 1e-9, "stamina after air jump")
 	assert_true(first_event(h.trace, MoveEvents.JUMPED, "kind", &"air", 10) < 0, "second air jump refused")
 	assert_eq(h.state.air_jumps_used, 1, "one air jump used")

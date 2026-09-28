@@ -88,8 +88,8 @@ extends Resource
 # --- jump / gravity -------------------------------------------------------------
 @export var jump_speed: float = 7.62                             # measured ~300 u/s on plain jumps (session2_findings.md); spec §10 was 7.493 (295 u/s)
 @export var gravity: float = 20.32                               # measured 798-801 u/s^2 on plain jumps (session2_findings.md); spec §10 was 24.562 (967 u/s^2)
-@export var air_jump_speed: float = 7.493                        # spec: movement.md §10 (Open Q4)
-@export var air_jump_sets_vertical: bool = true                  # spec: movement.md §10
+@export var air_jump_speed: float = 13.26                        # measured session 4: vz set to ~522 u/s (was 7.493 = 295)
+@export var air_jump_sets_vertical: bool = true                  # measured session 4: set, not added (rise ~168 u for any vz before)
 @export var air_jumps_per_airtime: int = 1                       # spec: movement.md §10
 @export var coyote_time: float = 0.0                             # spec: movement.md §10 (Open Q20)
 @export var jump_buffer_time: float = 0.0                        # spec: movement.md §10 (Open Q20)
