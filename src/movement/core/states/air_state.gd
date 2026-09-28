@@ -108,11 +108,16 @@ static func try_wall_jump(sim: MovementSim, s: MoveState, ctx: Ctx) -> bool:
 	var vy := maxf(0.0, base + vz0 * (p.wall_jump_up_vz_gain_fall if vz0 < 0.0 else p.wall_jump_up_vz_gain_rise))
 	sim.add_wall_fatigue(s, p.wall_jump_fatigue_per_jump)
 	# measured session 3: the kick off the wall is linear in d = wish.normal (W in = toward, S out = away)
-	var d := ctx.wish.dot(n) if ctx.has_move else 0.0
+	# measured session 9 (s9_open WK_*): the kick reads the previous tick's wish, like the air jump; a key pressed on the
+	# jump tick only (none, A, D, W+A, S+A) gives the neutral kick, plus that tick's ordinary air accel.
+	var wish := s.prev_wish
+	wish.y = 0.0
+	var has_wish := wish.length_squared() > 1e-8
+	var d := wish.dot(n) if has_wish else 0.0
 	var kick := p.wall_jump_kick_neutral + d * ((p.wall_jump_kick_away - p.wall_jump_kick_neutral) if d > 0.0 else (p.wall_jump_kick_neutral - p.wall_jump_kick_toward))
 	# measured session 3/7: a held key's component along the wall adds its own tangential kick, on top of the kept
 	# incoming tangent (session 7: the air strafe before the press is part of the launch)
-	var tan_kick := (ctx.wish - n * d) * p.wall_jump_kick_tangent if ctx.has_move else Vector3.ZERO
+	var tan_kick := (wish - n * d) * p.wall_jump_kick_tangent if has_wish else Vector3.ZERO
 	tan_kick.y = 0.0
 	# G03: split the incoming horizontal velocity into normal and tangential parts; the tangential
 	# part is kept (x wall_jump_tangent_keep), the normal axis is set to (or gets) the kick and the

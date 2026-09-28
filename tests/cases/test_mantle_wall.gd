@@ -91,7 +91,7 @@ func test_t26_wall_jump() -> void:
 	done()
 
 
-## Measured wall jump (session3_findings.md): ~519 u/s up from a hover, off-wall kick 268 / 215 (W) / 361 (S),
+## Measured wall jump (session3_findings.md): ~519 u/s up from a hover, off-wall kick 268 / 215 (W) / 361 (S) for a held key,
 ## A adds ~107 u/s along the wall on top of the incoming tangent (session 7b; none here, from a hover).
 ## Deliberately loose: the model is still being fit against recordings.
 func test_measured_wall_jump_launch() -> void:
@@ -102,9 +102,10 @@ func test_measured_wall_jump_launch() -> void:
 		ArenaBuilder.add_wall(h.root, Vector3(1.25, 25.0, 0.0), Vector3(0.5, 50.0, 20.0))
 		await h.ready()
 		h.spawn(Vector3(1.0 - 0.4064 - 0.1, 30.0, 0.0), -PI / 2.0)
-		h.run(1, func(t: int) -> InputCmd: return cmd(t, B_JUMP, int(c[0]), int(c[1]), -PI / 2.0))
-		assert_eq(first_event(h.trace, MoveEvents.WALL_JUMP), 0, key + ": wall jump")
-		var v: Vector3 = h.trace[0]["vel"] / 0.0254
+		# the key is held a tick before the press: the kick reads the previous tick's wish (session 9 WK_*)
+		h.run(2, func(t: int) -> InputCmd: return cmd(t, B_JUMP if t == 2 else 0, int(c[0]), int(c[1]), -PI / 2.0))
+		assert_eq(first_event(h.trace, MoveEvents.WALL_JUMP), 1, key + ": wall jump")
+		var v: Vector3 = h.trace[1]["vel"] / 0.0254
 		assert_near(v.y, 519.0, 20.0, key + ": launch up")
 		assert_near(-v.x, float(c[2]), 20.0, key + ": kick off the wall")
 		assert_near(absf(v.z), float(c[3]), 15.0, key + ": kick along the wall")
@@ -118,7 +119,7 @@ func test_wall_jump_fatigue_second_jump() -> void:
 	ArenaBuilder.add_wall(h.root, Vector3(1.25, 25.0, 0.0), Vector3(0.5, 50.0, 20.0))
 	await h.ready()
 	h.spawn(Vector3(1.0 - 0.4064 - 0.1, 30.0, 0.0), -PI / 2.0)
-	h.run(80, func(t: int) -> InputCmd: return cmd(t, B_JUMP if (t == 1 or (t >= 40 and t % 2 == 0)) else 0, 0, 1, -PI / 2.0))
+	h.run(80, func(t: int) -> InputCmd: return cmd(t, B_JUMP if (t == 2 or (t >= 40 and t % 2 == 0)) else 0, 0, 1, -PI / 2.0))
 	var i1 := first_event(h.trace, MoveEvents.WALL_JUMP, "count", 1)
 	var i2 := first_event(h.trace, MoveEvents.WALL_JUMP, "count", 2)
 	assert_true(i1 >= 0 and i2 >= 0, "two wall jumps (W pulls back to the wall)")
@@ -128,4 +129,19 @@ func test_wall_jump_fatigue_second_jump() -> void:
 		var r := v2.y / v1.y
 		assert_true(r > 0.25 and r < 0.5, "second jump vertical is fatigued (ratio %.2f)" % r)
 		assert_near(v2.x, v1.x, 20.0, "kick off the wall not fatigued")
+	done()
+
+
+## Measured session 9 (s9_open WK_*): a key pressed on the wall-jump tick only does not change the kick off the wall.
+func test_wall_jump_key_on_press_tick_ignored() -> void:
+	var kicks := {}
+	for key: String in ["none", "s"]:
+		var h := new_harness(&"flat")
+		ArenaBuilder.add_wall(h.root, Vector3(1.25, 25.0, 0.0), Vector3(0.5, 50.0, 20.0))
+		await h.ready()
+		h.spawn(Vector3(1.0 - 0.4064 - 0.1, 30.0, 0.0), -PI / 2.0)
+		var my := -1 if key == "s" else 0
+		h.run(2, func(t: int) -> InputCmd: return cmd(t, B_JUMP if t == 2 else 0, 0, my if t == 2 else 0, -PI / 2.0))
+		kicks[key] = -(h.trace[1]["vel"] as Vector3).x / 0.0254
+	assert_near(kicks["s"], kicks["none"], 20.0, "S on the press tick only: neutral kick")
 	done()
