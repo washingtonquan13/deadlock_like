@@ -1,0 +1,87 @@
+{
+ "_comment": "street_y058b: W 1..175, dash 4, crouch 24..32, slide hop 30, crouch 109..117, hop 115, S brake",
+ "name": "SL32",
+ "clip": "SL32",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 205,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 175,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 24,
+   "to": 32,
+   "buttons": [
+    "crouch"
+   ]
+  },
+  {
+   "from": 30,
+   "to": 30,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 109,
+   "to": 117,
+   "buttons": [
+    "crouch"
+   ]
+  },
+  {
+   "from": 115,
+   "to": 115,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 176,
+   "to": 205,
+   "move": [
+    0,
+    -1
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}

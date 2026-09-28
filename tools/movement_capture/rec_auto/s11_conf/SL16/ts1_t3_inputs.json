@@ -1,0 +1,159 @@
+{
+  "t0_perf": 107802.8465086,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.0002609999937703833,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.047159399997326545,
+      "t_plan": 0.046875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 4
+    },
+    {
+      "t_real": 0.07213879999471828,
+      "t_plan": 0.071875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 5
+    },
+    {
+      "t_real": 0.35964439999952447,
+      "t_plan": 0.359375,
+      "kind": "down",
+      "arg": "lctrl",
+      "tick": 24
+    },
+    {
+      "t_real": 0.45352909999201074,
+      "t_plan": 0.453125,
+      "kind": "down",
+      "arg": "space",
+      "tick": 30
+    },
+    {
+      "t_real": 0.4785014999943087,
+      "t_plan": 0.478125,
+      "kind": "up",
+      "arg": "space",
+      "tick": 31
+    },
+    {
+      "t_real": 0.5005591999943135,
+      "t_plan": 0.5,
+      "kind": "up",
+      "arg": "lctrl",
+      "tick": 33
+    },
+    {
+      "t_real": 1.437671899999259,
+      "t_plan": 1.4375,
+      "kind": "down",
+      "arg": "lctrl",
+      "tick": 93
+    },
+    {
+      "t_real": 1.5314527999871643,
+      "t_plan": 1.53125,
+      "kind": "down",
+      "arg": "space",
+      "tick": 99
+    },
+    {
+      "t_real": 1.5567842999880668,
+      "t_plan": 1.55625,
+      "kind": "up",
+      "arg": "space",
+      "tick": 100
+    },
+    {
+      "t_real": 1.5784924999898067,
+      "t_plan": 1.578125,
+      "kind": "up",
+      "arg": "lctrl",
+      "tick": 102
+    },
+    {
+      "t_real": 2.484665500000119,
+      "t_plan": 2.484375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 160
+    },
+    {
+      "t_real": 2.4851309999939986,
+      "t_plan": 2.484375,
+      "kind": "down",
+      "arg": "s",
+      "tick": 160
+    },
+    {
+      "t_real": 2.9533456999924965,
+      "t_plan": 2.953125,
+      "kind": "up",
+      "arg": "s",
+      "tick": 190
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2212.34,
+    "pos_y": -614.38,
+    "pos_z": 102.19,
+    "ang_pitch": 14.72,
+    "ang_yaw": 57.69,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 0.0
+  },
+  "start_yaw": 57.69,
+  "late_ms_max": 0.7559999939985573,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\s11_conf\\SL16.json",
+  "mark": "street_y058b",
+  "mark_value": {
+    "pawn": [
+      2231.41,
+      -519.73,
+      102.08
+    ],
+    "hud": [
+      2212.37,
+      -614.4200000000001,
+      102.11999999999999
+    ],
+    "yaw": 57.72,
+    "pitch": 14.69,
+    "cam_offset": [
+      -19.039999999999964,
+      -94.69,
+      0.03999999999999204
+    ],
+    "return_error_u": 0.0,
+    "note": "street_y058 moved 300 u back along the view (session 9 SHL runway)"
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl",
+    "melee": "q"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 585,
+  "pre_real_s": 0.3
+}

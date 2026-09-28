@@ -1,7 +1,7 @@
 """G09 flag clear time: SE2/8/12/16/24/40 sim replay vs game. Prints the horizontal speed around hop 2 (sim: speed_h;
 game: position-derived, lag-shifted 2.7), the sim landing ticks and the game's hop-1 landing tick (camera z back to
 the ground).
-Usage (from tools/movement_capture): python scenarios/s11_conf/se_sim.py [--set=name=value,...]"""
+Usage (from tools/movement_capture): python scenarios/s11_conf/se_sim.py [--set=name=value,...] [SE|SL]"""
 import csv, glob, json, os, subprocess, sys
 import numpy as np
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", ".."))
@@ -15,8 +15,9 @@ for a in sys.argv[1:]:
 out = os.path.join(ROOT, "tools_fit", "_out", "s11_se"); os.makedirs(out, exist_ok=True)
 OFF = list(range(-8, 48, 6))
 print("offsets from hop 2:", " ".join("%4d" % o for o in OFF))
-for k in (2, 8, 12, 16, 24, 40):
-    n = "SE%d" % k; hop = 73 + k + 6
+PRE = sys.argv[-1] if sys.argv[1:] and not sys.argv[-1].startswith("--") else "SE"
+for k in ((2, 8, 12, 16, 24, 40) if PRE == "SE" else (4, 8, 12, 16, 20, 24, 32, 48)):
+    n = PRE + "%d" % k; hop = (73 if PRE == "SE" else 77) + k + 6
     s = json.load(open(os.path.join(os.path.dirname(__file__), n + ".json"))); s["fixed"] = FIX
     p = os.path.join(out, n + ".json"); json.dump(s, open(p, "w"), indent=1)
     c = os.path.join(out, n + ".csv")

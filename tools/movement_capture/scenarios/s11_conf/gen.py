@@ -55,6 +55,14 @@ for k in (2, 8, 12, 16, 24, 40):
     s = base("SE%d" % k, "street_y058b: W 1..%d, dash 4, crouch 20..27, slide hop 26, crouch %d..%d, hop %d, S brake" % (h + 60, c, h + 2, h), T)
     add(s, 1, h + 60, move=[0, 1]); add(s, 4, 4, buttons=["dash"]); add(s, 20, 27, buttons=["crouch"]); add(s, 26, 26, buttons=["jump"])
     add(s, c, h + 2, buttons=["crouch"]); add(s, h, h, buttons=["jump"]); add(s, h + 61, T, move=[0, -1]); S["SE%d" % k] = s
+# L: SE with a live dash slide (crouch 24..32 = dash tick 20+, past the 0.3 s dead window), slide hop 30 (sets the
+# flag), lands ~77 (sim) at ~393 u/s, above slide entry. W held; crouch 77+k..hop+2, hop 6 ticks into that slide,
+# S brake 60 ticks after hop 2. Penalized hop 2 (flag still set) vs clean, by k.
+for k in (4, 8, 12, 16, 20, 24, 32, 48):
+    c = 77 + k; h = c + 6; T = h + 90
+    s = base("SL%d" % k, "street_y058b: W 1..%d, dash 4, crouch 24..32, slide hop 30, crouch %d..%d, hop %d, S brake" % (h + 60, c, h + 2, h), T)
+    add(s, 1, h + 60, move=[0, 1]); add(s, 4, 4, buttons=["dash"]); add(s, 24, 32, buttons=["crouch"]); add(s, 30, 30, buttons=["jump"])
+    add(s, c, h + 2, buttons=["crouch"]); add(s, h, h, buttons=["jump"]); add(s, h + 61, T, move=[0, -1]); S["SL%d" % k] = s
 # R: plain W run from rest (the s7 FSW check): runs since ~15:47 read ~396 u/s at 0.8 s vs 382 before; is the
 # hero faster now (buff, souls, item)?
 s = base("RUN", "street_y058b: W 1..180 from rest, S brake", 240)
