@@ -261,3 +261,24 @@ func test_fp1_dash_bucket_roster() -> void:
 	assert_eq(HeroMovementStats.dash_bucket_for("Abrams"), 3, "Abrams B3")
 	assert_eq(HeroMovementStats.dash_bucket_for("Mo & Krill"), 3, "Mo & Krill B3")
 	done()
+
+
+## Measured session 4 (hop): a dash-slide jump cuts horizontal speed to ~x0.75. With crouch held, a late
+## slide jump lands crouched (crouch stored); an early one lands back into a slide.
+func test_fp1_dash_slide_jump() -> void:
+	for k in [2, 25]:
+		var h := new_harness(&"flat")
+		await h.ready()
+		var jt: int = 11 + k
+		h.run(90, func(t: int) -> InputCmd: return cmd(t, (B_DASH if t == 1 else 0) | (B_CROUCH if t >= 11 else 0) | (B_JUMP if t == jt else 0)))
+		var j := first_event(h.trace, MoveEvents.JUMPED)
+		assert_true(j > 0, "jumped (k=%d)" % k)
+		if j <= 0:
+			continue
+		var ratio := float(h.trace[j]["hspeed"]) / float(h.trace[j - 1]["hspeed"])
+		assert_true(ratio > 0.7 and ratio < 0.8, "horizontal cut ~x0.75 (k=%d, got %.3f)" % [k, ratio])
+		var land := first_event(h.trace, MoveEvents.LANDED)
+		assert_true(land > j, "landed (k=%d)" % k)
+		if land > j:
+			assert_eq(int(h.trace[land]["loco"]), L.SLIDE if k == 2 else L.CROUCH, "landing loco (k=%d)" % k)
+	done()

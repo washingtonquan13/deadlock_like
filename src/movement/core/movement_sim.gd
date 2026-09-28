@@ -702,14 +702,20 @@ func clamp_horizontal(s: MoveState, max_speed: float) -> void:
 
 ## Normal jump (ground, slide or ended dash). spec: movement.md §10.
 func do_ground_jump(s: MoveState, ctx: Ctx, kind: StringName) -> void:
+	var early_slide_jump := s.loco == L.SLIDE and s.slide_ticks < cp.slide_jump_store_crouch_ticks
 	if s.loco == L.SLIDE:
 		_slide_hop(s)
 		emit(s, MoveEvents.SLIDE_END)
+		# measured session 4: a jump out of a ground-dash slide cuts horizontal speed
+		if s.slide_kind == MoveState.SlideKind.DASH:
+			s.velocity.x *= cp.params.slide_jump_speed_mult_dash
+			s.velocity.z *= cp.params.slide_jump_speed_mult_dash
 	try_uncrouch(s)
 	s.velocity.y = cp.params.jump_speed
 	s.grounded = false
-	# G40 (fixes K6): crouch held at takeoff is stored until released (SLIDE exempt, PROVISIONAL (G40))
-	if ctx.is_held(InputCmd.BTN_CROUCH) and s.loco != L.SLIDE:
+	# G40 (fixes K6): crouch held at takeoff is stored until released. Measured session 4: a slide jump
+	# stores it too, except one made early in the slide (that one lands back into a slide).
+	if ctx.is_held(InputCmd.BTN_CROUCH) and not early_slide_jump:
 		s.slide_block_until_crouch_release = true
 	s.ground_normal = Vector3.UP
 	s.coyote_ticks = 0

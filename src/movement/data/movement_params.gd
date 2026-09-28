@@ -165,6 +165,13 @@ extends Resource
 # measured session 3: the penalty starts ~0.96 s into a ground-dash slide (shot list: ~1.0 s window for dash slides)
 @export var slide_onset_table_dash: Array[float] = [0.96, 1.21, 1.46, 1.71]
 @export var slide_onset_table_dash_jump: Array[float] = [1.00, 1.25, 1.50, 1.75]  # spec: movement.md §13
+# measured session 4 (hop): a jump out of a ground-dash slide cuts horizontal speed to x0.75 (0.74-0.79 at
+# 350-640 u/s); jumps out of a landing slide or from walking are not cut.
+@export var slide_jump_speed_mult_dash: float = 0.75
+# measured session 4 (hop): a slide jump at least this far into the slide stores held crouch like a ground
+# jump (lands crouched, no slide); earlier ones land back into a slide. PROVISIONAL: threshold between
+# 11 and 18 ticks (SHJ10 slid, SHJ19 did not).
+@export var slide_jump_store_crouch_time: float = 0.22
 # G09 slide-hop penalty ("slide drag", slide_and_slopes.md rule 13; V4 0:47/2:13, V5 1:49, V15 1:14/1:39).
 # Any slide jump sets the flag (not a dash-cancel short hop, not a superglide); with the flag set, a
 # slide jump earlier than slide_hop_min_time into the slide adds slide_hop_penalty_drag to air drag.
