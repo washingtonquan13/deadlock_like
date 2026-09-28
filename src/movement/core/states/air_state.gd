@@ -117,7 +117,12 @@ static func try_wall_jump(sim: MovementSim, s: MoveState, ctx: Ctx) -> bool:
 	var kick := p.wall_jump_kick_neutral + d * ((p.wall_jump_kick_away - p.wall_jump_kick_neutral) if d > 0.0 else (p.wall_jump_kick_neutral - p.wall_jump_kick_toward))
 	# measured session 3/7: a held key's component along the wall adds its own tangential kick, on top of the kept
 	# incoming tangent (session 7: the air strafe before the press is part of the launch)
-	var tan_kick := (wish - n * d) * p.wall_jump_kick_tangent if has_wish else Vector3.ZERO
+	# measured session 10 (s10_gains WH_WA/WH_SA, wall face moved to the game's contact tick): a diagonal gets the full
+	# single-key tangent kick (~107, not 0.707 x 107), while its off-wall kick follows the normalized d. The tangent uses the
+	# unnormalized key vector clamped per world axis, like the air jump (session 6). PROVISIONAL (S10-WD): one yaw, facing
+	# the wall straight on, so view-space raw keys and the world-clamped vector are not separated.
+	var c := Vector3(clampf(s.prev_wish_raw.x, -1.0, 1.0), 0.0, clampf(s.prev_wish_raw.z, -1.0, 1.0))
+	var tan_kick := (c - n * c.dot(n)) * p.wall_jump_kick_tangent if has_wish else Vector3.ZERO
 	tan_kick.y = 0.0
 	# G03: split the incoming horizontal velocity into normal and tangential parts; the tangential
 	# part is kept (x wall_jump_tangent_keep), the normal axis is set to (or gets) the kick and the
