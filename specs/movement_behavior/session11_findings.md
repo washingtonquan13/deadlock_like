@@ -35,7 +35,7 @@
 - **Model:**
   - `heavy_recovery_max_speed` 2.921 m/s: ground walk physics under a horizontal clamp.
   - `heavy_self_slow` 0.
-  - The air recovery keeps the zero lock (unmeasured).
+  - The air recovery: see "Heavy air recovery" below.
 - **HM_C** (heavy held again from 70) and **HM_C2** (fresh hold from 115):
   - The second lunge starts at scripted tick 162 in both, 120 ticks after the first (42), whether the key was held
     through the cooldown or freshly pressed.
@@ -157,11 +157,23 @@
 - The heavy-melee runs (from 15:47) are also on this hero. HM_W's lunge profile does not change with the base speed
   override, so its extra ~13 u is not explained by the run speed.
 
+## Heavy air recovery (G12, HM_A and HM_AW)
+
+- **Setup:** jump 5, air jump 20, melee held 22..62, so the lunge ends ~157 u up and the recovery runs in the air.
+  HM_A has no keys; HM_AW holds W. The lunge edge lines up at lag 2.7 (these runs, unlike DD/AV).
+- **Vertical:** vz is held at 0 (camera z flat) for ~23 ticks after the lunge stops, then gravity resumes.
+- **Horizontal with W:** speed grows ~2 u/s per tick during the hold (3 -> 41 u/s), about 0.15-0.18 of the normal air
+  accel (~12 u/s per tick from rest); the first ~3 ticks barely move. It is back to normal right after the hold.
+- **Ground length re-fit (HM_R, lag 2.7):** the 115 u/s cap holds ~22 ticks after the lunge stops, not the spec's
+  18 (0.2833 s): recovery time scan rms 34.3 (0.2833), 22.2 (0.345), 23.9 (0.36).
+- **Model:** `heavy_recovery_time` 0.345, `heavy_recovery_time_air` 0.36, `heavy_recovery_air_accel_mult` 0.15
+  (air input under the same 115 u/s cap, vz held at 0). HM_A/HM_AW recovery-window rms 4.3 u/s (was ~25 with the
+  zero lock). Cooldown onsets are unchanged (HM_C/HM_C2 162/162).
+
 ## Still open
 
 - HM_W's extra ~13 u when the heavy starts from a run.
 - The G09 clear time below 0.5 s (SL k <= 24 never reach a slide; needs a faster hop-1 landing).
 - The ground accel above 400 u/s on a buffed hero (RUN; needs a clean hero).
-- The heavy's air recovery (and whether gravity applies).
 - The light melee.
 - The down-dash ground slow on a clean hero: a 0.8 multiplier or the sprint bonus removed.

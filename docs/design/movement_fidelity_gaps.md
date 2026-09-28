@@ -25,7 +25,7 @@ Counts: **13 fixed-settled, 19 provisional, 18 open** (50 gaps, including the ne
 |---|---|---|---|
 | G05 | fixed-settled | 10.795 m/s = 425 u/s (2026-06-30 notes, V17) | D3 check only |
 | G11 | fixed-settled | 13.97 m/s = 550 u/s (walls_and_ledges.md rule 30) | M1 check only |
-| G12 | fixed-settled | recovery 0.2833 s zeroes all velocity | - |
+| G12 | measured | lunge ends at 0; recovery 22 (ground) / 23 (air) ticks under a 115 u/s cap, air vz held at 0, air input 0.15x (session 11) | - |
 | G13 | fixed-settled | closest contact normal (walls_and_ledges.md rule 3, V13 0:12) | - |
 | G20 | fixed-settled | crouch press any time during the dash starts the dash slide (V5, V9) | - |
 | G22 | fixed-settled | invented clamps K12/K14 removed (V9 3:03); tail speed follows G19 | D1 check only |
