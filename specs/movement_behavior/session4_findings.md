@@ -45,7 +45,7 @@ Horizontal speeds below come from the HUD speed (3D) with vz from the height tra
 
 - **Horizontal:** 703 u/s in all 12 trials (DJ20/22/27, DJC, DJW; fit residual ~4 u/s). The dash plateau is 635, so this is ×1.107.
   - `dash_jump_set_speed` goes from 15.519 to 17.856 m/s.
-  - Whether it is a set value or a multiple of the bucket's dash speed needs a B2/B3 hero.
+  - It is **set, the same for every bucket**: Abrams (B3, dash plateau 547) launches at 703.3–703.7 (DJ22/DJ27 on `street_abr`, `scenarios/djabr`).
 - **Vertical:** ~412 u/s at the first airborne frame. That is consistent with 425 set minus one tick of gravity, so it is unchanged.
 - **In the air:** drag 0.2/s alone fits the horizontal decay (703 → ~570 at landing, airtime 1.03 s).
 

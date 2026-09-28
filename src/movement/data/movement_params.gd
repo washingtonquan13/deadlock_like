@@ -76,7 +76,7 @@ extends Resource
 # contradicted); 1 = SET to dash_jump_set_speed in every bucket, prior discarded (ground_dash.md rule 13 /
 # momentum table, video_guides V9 0:19 "same velocity for every bucket"). The value is measured (session 4).
 @export var dash_jump_speed_mode: int = 1
-@export var dash_jump_set_speed: float = 17.856                  # measured session 4 (Haze B1): 703 u/s in every trial (was ~611 from V9). Same for every bucket is still unmeasured
+@export var dash_jump_set_speed: float = 17.856                  # measured session 4: 703 u/s set for Haze (B1, dash 635) and Abrams (B3, dash 547); was ~611 from V9
 @export var dash_jump_horizontal_mult: float = 1.0               # legacy mode 0 only (K13, contradicted by V9 0:19)
 @export var dash_jump_air_control_bonus: float = 0.30            # spec: movement.md §9
 @export var dash_jump_air_control_time: float = 0.25             # spec: movement.md §9

@@ -264,7 +264,7 @@ static func _dash_jump(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	var h := Vector3(s.velocity.x, 0.0, s.velocity.z)
 	if p.dash_jump_speed_mode == 1:
 		# G17 (fixes K13): SET to one bucket-independent speed along the dash direction, prior discarded
-		# (ground_dash.md rule 13, video_guides V9 0:19). Measured session 4: 703 u/s for Haze; per-bucket still unmeasured.
+		# (ground_dash.md rule 13, video_guides V9 0:19). Measured session 4: 703 u/s for Haze (B1) and Abrams (B3).
 		var d := Vector3(s.dash_dir.x, 0.0, s.dash_dir.z)
 		if d.length_squared() < 1e-9:
 			d = h

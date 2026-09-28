@@ -1,0 +1,101 @@
+{
+  "t0_perf": 52066.1618379,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.00027709999994840473,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.047462299997278024,
+      "t_plan": 0.046875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 4
+    },
+    {
+      "t_real": 0.07206920000317041,
+      "t_plan": 0.071875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 5
+    },
+    {
+      "t_real": 0.3909179000038421,
+      "t_plan": 0.390625,
+      "kind": "down",
+      "arg": "space",
+      "tick": 26
+    },
+    {
+      "t_real": 0.406520399999863,
+      "t_plan": 0.40625,
+      "kind": "up",
+      "arg": "w",
+      "tick": 27
+    },
+    {
+      "t_real": 0.41576619999977993,
+      "t_plan": 0.415625,
+      "kind": "up",
+      "arg": "space",
+      "tick": 27
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2459.53,
+    "pos_y": -370.06,
+    "pos_z": 126.06,
+    "ang_pitch": 14.69,
+    "ang_yaw": 102.75,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 460.92
+  },
+  "start_yaw": 102.75,
+  "late_ms_max": 0.5872999972780235,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\djabr\\DJ22.json",
+  "mark": "street_abr",
+  "mark_value": {
+    "pawn": [
+      2391.6899999999996,
+      -265.98999999999995,
+      126.85
+    ],
+    "hud": [
+      2459.47,
+      -370.09,
+      126.44
+    ],
+    "yaw": 102.72,
+    "pitch": 14.69,
+    "cam_offset": [
+      67.7800000000002,
+      -104.10000000000002,
+      -0.4099999999999966
+    ],
+    "return_error_u": 0.38
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 306,
+  "pre_real_s": 0.3
+}
