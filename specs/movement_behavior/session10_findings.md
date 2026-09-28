@@ -72,14 +72,24 @@
     matches the whole run. No model change.
   - FA_D's landing stops much faster, probably something on the street edge.
 
-## Ramp entry (RBOT/RRUN, open)
+## Ramp entry (RBOT/RRUN/RJ)
 
 - s7 replay tag `s10` (`scenarios/s7_fit_ramp/run.sh s10`, `compare.py s10`): peaks RBOT 474 vs game 457, RRUN 547 vs
   514, RJ 480 vs 558, RDASH 718 vs 716.
-- RRUN, lag-shifted: the run-up matches to ~1 u/s and ~1 u through 0.6 s. The crouch press lands at the ramp edge in
-  both. The sim slides from 0.6 s. The game's speed dips (390 → 375 by 0.8 s) before it accelerates, so it crouches
-  first and slides later.
-- RJ's game peak is 78 u/s above the sim; unexplained.
+- **RJ is not a gap.** In the air the game HUD reads 3D speed: it falls while the pawn rises and climbs while it falls,
+  and at the apex (vz = 0) it equals the position-derived horizontal speed (~374). Its 558 peak is the fall, compared
+  against the sim's horizontal speed. The air decay from the jump to the apex (~404 → ~374 horizontal in 0.35 s) is
+  the 0.2/s air drag. RJ inherits RRUN's entry deficit (below) and nothing else.
+- **RBOT: replay geometry, not the slide model.** The slide accel matches (game 445 vs sim 447 at 1.15 s). The game's
+  speed stops rising at d ≈ 372–381 (455–457), while the replay ramp runs on to d 406. The camera-z slope also fades
+  from d ~380. The foot of the stair-ramp looks rounded or shorter than the straight replay plane, and that is worth
+  ~17 u/s at the peak.
+- **RRUN: an edge transient in the slide, open.** Crouch is pressed at 348 u/s at the top edge. The game slides and
+  gains to ~390 by 0.65 s (game time) like the sim. It then loses speed at a steady ~−225 u/s² for ~0.15 s (to 356),
+  then gains again at the normal slope rate. The shape is the same in all 5 trials and in RJ. Running over the same
+  edge (RWALK, RBOT) shows nothing, and a slide started on the slope (RBOT) has no dip. The sim has no dip, so it runs
+  ~70–90 u/s ahead until the bottom and peaks 33 high. Not modelled: the cause is unknown (possibly the edge or a lip
+  in the stair-ramp collision), and the edge is one geometry.
 
 ## Capture tooling
 
@@ -88,5 +98,5 @@
 
 ## Still open
 
-- The RBOT/RRUN ramp-entry excess, and RJ.
+- The RRUN slide edge transient (one edge; needs a second ramp top to tell geometry from physics).
 - The air strafe above 700 u/s.
