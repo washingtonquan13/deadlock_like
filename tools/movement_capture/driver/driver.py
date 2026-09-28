@@ -89,7 +89,9 @@ class Hud:
         self.cap = gio.Capture(cfg["roi"])
         self.reader = gio.HudReader(os.path.join(MC, cfg["layout"]), os.path.join(MC, cfg.get("grid_templates", "")))
 
-    def read(self, tries: int = 5, need=("pos_x", "pos_y", "pos_z", "ang_yaw")) -> dict:
+    def read(self, tries: int = 5, need=None) -> dict:
+        if need is None:  # DL_BLIND_TURN=1 (see run_trial): the ang line may be unreadable
+            need = ("pos_x", "pos_y", "pos_z") if os.environ.get("DL_BLIND_TURN") == "1" else ("pos_x", "pos_y", "pos_z", "ang_yaw")
         for _ in range(tries):
             v = self.reader.read(self.cap.grab())
             if all(k in v for k in need):
@@ -108,7 +110,10 @@ class Hud:
             gio.check_abort()
             v = self.read()
             p = (v["pos_x"], v["pos_y"], v["pos_z"])
-            still = self.speed(v) <= self.cfg["still_speed"] and last is not None and max(abs(a - b) for a, b in zip(p, last)) < 0.5
+            sp = self.speed(v)
+            if sp != sp and os.environ.get("DL_BLIND_TURN") == "1":
+                sp = 0.0  # vel line hidden too: position alone decides
+            still = sp <= self.cfg["still_speed"] and last is not None and max(abs(a - b) for a, b in zip(p, last)) < 0.5
             ok = ok + 1 if still else 0
             last = p
             if ok >= need:
@@ -269,15 +274,27 @@ def run_trial(hud: Hud, cfg, mark: dict, events: list, timescale: float, tail_ga
     exe = cfg["exe"]
     gio.require_game(exe)
     release_all(cfg)
-    hud.wait_still(timeout=15)
+    try:
+        hud.wait_still(timeout=15)
+    except RuntimeError:
+        if os.environ.get("DL_BLIND_TURN") != "1":
+            raise
+        time.sleep(2.0)  # the last trial ended where the HUD is unreadable (e.g. against a wall): wait it out
     if "pawn" not in mark:
         raise RuntimeError("old-format mark: re-create it with `driver.py mark NAME`")
     gio.console(["setpos %.3f %.3f %.3f" % tuple(mark["pawn"])], cfg["console_key"], exe)
     hud.wait_still(timeout=15)
-    turn_to(hud, cfg, mark["yaw"], mark["pitch"])
+    # DL_BLIND_TURN=1: when a bright background hides the ang line, keep the view already set by hand (setpos
+    # keeps the camera angles) and only check the position
+    blind = os.environ.get("DL_BLIND_TURN") == "1"
+    try:
+        turn_to(hud, cfg, mark["yaw"], mark["pitch"])
+    except RuntimeError:
+        if not blind:
+            raise
     time.sleep(0.15)
-    v = hud.read()
-    yaw = v["ang_yaw"]
+    v = hud.read(need=("pos_x", "pos_y", "pos_z") if blind else ("pos_x", "pos_y", "pos_z", "ang_yaw"))
+    yaw = v.get("ang_yaw", mark["yaw"])
     miss = math.dist((v["pos_x"], v["pos_y"], v["pos_z"]), mark["hud"])
     if miss > 2.0:
         raise RuntimeError("after setpos + turn the HUD is %.1f u from the mark's HUD point" % miss)

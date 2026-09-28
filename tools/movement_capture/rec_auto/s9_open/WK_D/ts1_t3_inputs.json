@@ -1,0 +1,115 @@
+{
+  "t0_perf": 91525.8909926,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.00021410000044852495,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.922148699988611,
+      "t_plan": 0.921875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 60
+    },
+    {
+      "t_real": 0.947159899995313,
+      "t_plan": 0.946875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 61
+    },
+    {
+      "t_real": 1.2970891000004485,
+      "t_plan": 1.296875,
+      "kind": "up",
+      "arg": "w",
+      "tick": 84
+    },
+    {
+      "t_real": 1.3597813999949722,
+      "t_plan": 1.359375,
+      "kind": "down",
+      "arg": "d",
+      "tick": 88
+    },
+    {
+      "t_real": 1.3601762999896891,
+      "t_plan": 1.359375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 88
+    },
+    {
+      "t_real": 1.3845526999939466,
+      "t_plan": 1.384375,
+      "kind": "up",
+      "arg": "d",
+      "tick": 89
+    },
+    {
+      "t_real": 1.3848595999879763,
+      "t_plan": 1.384375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 89
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2568.44,
+    "pos_y": 75.44,
+    "pos_z": 145.69,
+    "ang_pitch": 45.0,
+    "ang_yaw": 0.06,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 0.0
+  },
+  "start_yaw": 0.06,
+  "late_ms_max": 0.8012999896891415,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\s9_open\\WK_D.json",
+  "mark": "wallAd",
+  "mark_value": {
+    "pawn": [
+      2635.9900000000002,
+      110.0,
+      94.75
+    ],
+    "hud": [
+      2568.44,
+      75.44,
+      145.69
+    ],
+    "yaw": 0.06,
+    "pitch": 45.0,
+    "cam_offset": [
+      67.55,
+      34.56,
+      -50.94
+    ],
+    "return_error_u": 0.22
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 297,
+  "pre_real_s": 0.3
+}

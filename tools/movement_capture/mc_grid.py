@@ -19,10 +19,12 @@ import numpy as np
 
 CHARS = "0123456789.-() "
 LINES = {"pos": 1, "ang": 2, "vel": 3}
+# Values are '%.2f', so a line is complete at its last two decimals (or the closing paren); cells after it are
+# ignored, since a bright background there (white walls, windows) reads as stray glyphs.
 FMT = {
-    "pos": re.compile(r"^(-?\d+\.\d\d) (-?\d+\.\d\d) (-?\d+\.\d\d)$"),
-    "ang": re.compile(r"^(-?\d+\.\d\d) (-?\d+\.\d\d) (-?\d+\.\d\d)$"),
-    "vel": re.compile(r"^(-?\d+\.\d\d) \((-?\d+\.\d\d)\)$"),
+    "pos": re.compile(r"^(-?\d+\.\d\d) (-?\d+\.\d\d) (-?\d+\.\d\d)"),
+    "ang": re.compile(r"^(-?\d+\.\d\d) (-?\d+\.\d\d) (-?\d+\.\d\d)"),
+    "vel": re.compile(r"^(-?\d+\.\d\d) \((-?\d+\.\d\d)\)"),
 }
 NAMES = {"pos": ["pos_x", "pos_y", "pos_z"], "ang": ["ang_pitch", "ang_yaw", "ang_roll"],
          "vel": ["vel_scalar", "vel_scalar2"]}
