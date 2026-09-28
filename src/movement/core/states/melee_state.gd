@@ -49,7 +49,8 @@ static func try_light(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 ## spec: movement.md §19 heavy melee start. Returns true when started.
 static func try_heavy(sim: MovementSim, s: MoveState, ctx: Ctx) -> bool:
 	var p := sim.cp.params
-	if not ctx.is_pressed(InputCmd.BTN_MELEE_HEAVY) or s.heavy_cooldown_ticks > 0:
+	# measured session 11 (HM_C): a heavy held through the cooldown fires as soon as it ends
+	if not (ctx.is_pressed(InputCmd.BTN_MELEE_HEAVY) or ctx.is_held(InputCmd.BTN_MELEE_HEAVY)) or s.heavy_cooldown_ticks > 0:
 		return false
 	if not _melee_allowed(s) or s.loco == L.GROUND_DASH:
 		return false
@@ -71,6 +72,8 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 			if s.phase_ticks >= cp.heavy_windup_ticks:
 				s.phase = LP.LUNGE
 				s.phase_ticks = 0
+				# measured session 11 (HM_C, HM_C2): the miss cooldown runs from ~0.23 s into the lunge
+				s.heavy_cooldown_ticks = MoveUnits.ticks(cp.params.heavy_cooldown_start + cp.params.heavy_cooldown_miss)
 		LP.LUNGE:
 			# spec: movement.md §19 heavy melee can mantle ledges
 			if MantleState.try_start(sim, s, ctx, true):
@@ -88,9 +91,9 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 
 static func _finish(sim: MovementSim, s: MoveState) -> void:
 	var p := sim.cp.params
-	# spec: movement.md §19 self-slow after the heavy; cooldown 1.3 s (miss; hits are not simulated)
-	ModifierStack.add_raw(s, &"heavy_melee_slow", ModifierDef.Stat.SLOW, p.heavy_self_slow, p.heavy_self_slow_time, &"melee")
-	s.heavy_cooldown_ticks = MoveUnits.ticks(p.heavy_cooldown_miss)
+	# spec: movement.md §19 self-slow after the heavy (0 by default: not seen in session 11; the cooldown is set at the lunge start; hits are not simulated)
+	if p.heavy_self_slow > 0.0:
+		ModifierStack.add_raw(s, &"heavy_melee_slow", ModifierDef.Stat.SLOW, p.heavy_self_slow, p.heavy_self_slow_time, &"melee")
 	s.phase = 0
 	s.phase_ticks = 0
 	s.loco = L.GROUND if s.grounded else L.AIR
@@ -116,8 +119,14 @@ static func physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 		s.phase_ticks += 1
 		return
 	elif s.phase == LP.RECOVERY:
-		# G12 (fixes K30): recovery sets velocity to 0 on all axes (no friction, drag or gravity)
-		s.velocity = Vector3.ZERO
+		# G12, measured session 11 (HM_R): the lunge ends at zero speed; on the ground the recovery then allows normal
+		# accel but caps speed at heavy_recovery_max_speed (~115 u/s). In the air it still holds velocity at 0 on all
+		# axes (no friction, drag or gravity; K30, unmeasured).
+		if s.grounded:
+			GroundState.walk_physics(sim, s, ctx, sim.cp.effective_move_speed(s, ctx.firing))
+			sim.clamp_horizontal(s, p.heavy_recovery_max_speed)
+		else:
+			s.velocity = Vector3.ZERO
 		s.phase_ticks += 1
 		return
 	elif s.grounded:

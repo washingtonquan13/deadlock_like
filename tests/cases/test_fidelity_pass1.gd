@@ -91,6 +91,28 @@ func test_fp1_g12_heavy_recovery_zero() -> void:
 	done()
 
 
+## G12, measured session 11 (HM_R, HM_C): with W and the heavy held on the ground, the recovery caps speed at
+## ~115 u/s, the run-up after it has no self-slow, and the held heavy lunges again 120 ticks after the first.
+func test_fp1_g12_heavy_recovery_cap_and_cooldown() -> void:
+	var h := new_harness(&"flat")
+	await h.ready()
+	h.run(200, hold(B_HEAVY, 0, 1))
+	var lunges: Array[int] = []
+	for i in range(1, h.trace.size()):
+		if float(h.trace[i]["hspeed"]) > 10.0 and float(h.trace[i - 1]["hspeed"]) < 10.0:
+			lunges.append(i)
+	assert_eq(lunges.size(), 2, "two lunges (%s)" % [lunges])
+	if lunges.size() == 2:
+		assert_true(absi(lunges[1] - lunges[0] - 120) <= 1, "second lunge 120 ticks after the first (%d)" % (lunges[1] - lunges[0]))
+		var end := lunges[0] + 22
+		var top := 0.0
+		for i in range(end, end + 18):
+			top = maxf(top, float(h.trace[i]["hspeed"]))
+		assert_true(top <= 2.93 and top > 2.5, "recovery capped at ~115 u/s (%.2f m/s)" % top)
+		assert_true(float(h.trace[end + 19 + 38]["hspeed"]) > 6.8, "no self-slow: ~0.6 s run-up reaches base speed 7.2 m/s (%.2f)" % float(h.trace[end + 19 + 38]["hspeed"]))
+	done()
+
+
 ## Crouch held through a mantle glides at ~537 u/s (measured session 4);
 ## slide friction 0.1875 applies on the entry tick.
 func test_fp1_g11_mantle_glide() -> void:

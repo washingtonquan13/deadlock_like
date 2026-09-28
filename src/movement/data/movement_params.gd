@@ -289,12 +289,14 @@ extends Resource
 @export var heavy_lunge_start_frac_ground: float = 0.59          # G10: measured session 11 (HM_S/HM_W: ~465 u/s on the first lunge tick)
 @export var heavy_lunge_start_frac_air: float = 0.43             # G10: measured session 11 (HM_J: ~340 u/s 3D on the first lunge tick); PROVISIONAL: one aim pitch (14.7 deg down)
 @export var heavy_recovery_time: float = 0.2833                  # G12: 0.2833 s, velocity zeroed on all axes (ziplines_melee_misc.md; K28, K30)
+@export var heavy_recovery_max_speed: float = 2.921                # G12: measured session 11 (HM_R): on the ground the recovery caps speed at ~115 u/s, with normal accel under it; PROVISIONAL: air recovery unmeasured (kept at zero)
 @export var heavy_turn_rate_mult: float = 0.3                    # spec: movement.md §19
 @export var heavy_cooldown_hit: float = 1.0                      # spec: movement.md §19
-@export var heavy_cooldown_miss: float = 1.3                     # spec: movement.md §19
+@export var heavy_cooldown_miss: float = 1.3                     # spec: movement.md §19 (2025-07-29 notes)
+@export var heavy_cooldown_start: float = 0.2                     # measured session 11 (HM_C, HM_C2): the next heavy's lunge starts 120 ticks after the first, held or freshly pressed (1.5 s cooldown + 23-tick windup), so the 1.3 s cooldown starts 0.2 s into the lunge
 @export var light_self_slow: float = 0.2                         # spec: movement.md §19
 @export var light_self_slow_time: float = 0.3                    # spec: movement.md §19
-@export var heavy_self_slow: float = 0.3                         # spec: movement.md §19
+@export var heavy_self_slow: float = 0.0                         # spec: movement.md §19 says 0.3; measured session 11 (HM_R): no self-slow after the recovery (W run-up reaches 330+ u/s by 0.6 s, the same as from rest)
 @export var heavy_self_slow_time: float = 0.5                    # spec: movement.md §19
 @export var parry_duration: float = 1.0                          # spec: movement.md §19
 @export var parry_move_mult: float = 0.0                         # G45: parry roots the player; gravity kept (ziplines_melee_misc.md; K56)
