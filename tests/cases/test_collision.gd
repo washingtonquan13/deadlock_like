@@ -17,6 +17,21 @@ func test_t21_slope_slide() -> void:
 	done()
 
 
+## measured session 8 (s8_city_slide): a slide down a long ramp keeps gaining speed; the penalty waits for the flat
+func test_long_ramp_slide_no_penalty() -> void:
+	var h := new_harness(&"flat")
+	ArenaBuilder.add_ramp(h.root, Vector3.ZERO, 30.0, 45.0, 6.0)
+	await h.ready()
+	var d := 36.0
+	h.spawn(Vector3(0.0, d * tan(deg_to_rad(30.0)) + slope_rest_offset(R, 30.0), -d), PI)
+	h.state.velocity = Vector3(0.0, 0.0, 10.0)   # ~394 u/s downhill
+	h.run(80, hold(B_CROUCH))
+	assert_eq(h.state.loco, L.SLIDE, "still sliding after 1.25 s on the ramp")
+	assert_true(h.state.horizontal_speed() > 20.0, "gained speed (%.1f m/s)" % h.state.horizontal_speed())
+	assert_true(first_event(h.trace, MoveEvents.SLIDE_PENALTY) < 0, "no penalty on the ramp")
+	done()
+
+
 ## spec: movement.md §20 step height 18 u: 8/16/18 u stairs climb, 20 u blocks (T22)
 func test_t22_stairs() -> void:
 	var h := new_harness(&"flat")

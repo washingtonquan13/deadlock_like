@@ -28,7 +28,9 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 		s.slide_block_until_crouch_release = false
 	# measured session 7 (s7_ramp RS0/RSW): a crouch press on a ~20-26 degree ramp at rest or at crouch-walk speed
 	# does not slide (HUD stays 0 / 187 all the way down), so a slope is no exception to slide_entry_speed here.
-	var slide_ok := s.horizontal_speed() > p.slide_entry_speed and not s.slide_block_until_crouch_release
+	# measured session 8 (s7_ramp RRUN/RJ re-read): running down a 26.5 deg ramp the HUD reads the along-surface speed
+	# (347.5 horizontal -> ~390), and a crouch there slides, so the entry test uses the along-surface speed.
+	var slide_ok := surface_speed(s) > p.slide_entry_speed and not s.slide_block_until_crouch_release
 	# measured session 7 (s7_ramp RUP): a crouch pressed while moving uphill on a slide slope gets crouch friction,
 	# not a slide. PROVISIONAL (S7-SL): a slide carried onto an upslope from the flat is unmeasured and not ended.
 	if moving_uphill_on_slide_slope(sim, s):
@@ -70,6 +72,15 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 			s.velocity.y = 0.0
 
 
+## Speed along the ground plane for the horizontal velocity (the vertical part follows the surface).
+static func surface_speed(s: MoveState) -> float:
+	var n := s.ground_normal
+	if not s.grounded or n.y < 1e-3 or n.y > 0.99999:
+		return s.horizontal_speed()
+	var vy := -(n.x * s.velocity.x + n.z * s.velocity.z) / n.y
+	return Vector3(s.velocity.x, vy, s.velocity.z).length()
+
+
 ## measured session 7 (s7_ramp RUP): no slide (normal or dash) starts while moving uphill on a slide slope.
 static func moving_uphill_on_slide_slope(sim: MovementSim, s: MoveState) -> bool:
 	return sim.on_slide_slope(s) and Vector2(s.velocity.x, s.velocity.z).dot(Vector2(s.ground_normal.x, s.ground_normal.z)) < 0.0
@@ -85,6 +96,7 @@ static func enter_slide(sim: MovementSim, s: MoveState, kind: int, speed: float,
 	s.loco = L.SLIDE
 	s.crouched = true
 	s.slide_ticks = 0
+	s.slide_penalty_ticks = 0
 	s.slide_kind = kind
 	s.slide_from_ground = false   # set by the GROUND/CROUCH crouch-press callers
 	s.mantle_glide = false   # G09: only the mantle glide slide (flag set by the caller after this) is a superglide
@@ -142,9 +154,14 @@ static func slide_physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	# PROVISIONAL (S7-SL): single-angle fit; a second ramp angle would separate accel scale from friction.
 	if sim.on_slide_slope(s):
 		f = p.slide_slope_friction_dash if s.slide_kind == MoveState.SlideKind.DASH else p.slide_slope_friction
-	if s.slide_ticks >= onset:
+		# measured session 8 (s8_city_slide v1-v4, 19-30 deg city ramps): no penalty while sliding downhill; the sharp
+		# slowdown starts 0.57-0.60 s after reaching the flat whatever the time spent on the ramp, so the timer restarts.
+		# PROVISIONAL (S8-SL): restart vs hold is not separated (every clip crouched at the top edge).
+		if not moving_uphill_on_slide_slope(sim, s):
+			s.slide_penalty_ticks = 0
+	if s.slide_penalty_ticks >= onset:
 		f = p.slide_penalty_friction_dash_jump if s.slide_kind == MoveState.SlideKind.DASH_JUMP else p.slide_penalty_friction
-		if s.slide_ticks == onset:
+		if s.slide_penalty_ticks == onset:
 			sim.emit(s, MoveEvents.SLIDE_PENALTY)
 	v *= maxf(0.0, 1.0 - f * dt)
 	# measured session 3: a held move key turns the horizontal velocity toward the wish direction at a capped
@@ -164,3 +181,4 @@ static func slide_physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 			v = Vector3(h.x, v.y, h.y)
 	s.velocity = v
 	s.slide_ticks += 1
+	s.slide_penalty_ticks += 1

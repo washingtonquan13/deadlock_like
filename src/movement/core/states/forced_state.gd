@@ -37,6 +37,7 @@ static func finish(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	if s.loco == L.SLIDE:
 		s.crouched = true
 		s.slide_ticks = 0
+		s.slide_penalty_ticks = 0
 
 
 static func physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
