@@ -180,6 +180,16 @@
   the air) of the same FF_N recordings matches the sim speed3d at lag 2.7-4.5: dash plateau 855-865 vs 857, post-dash
   663-702 vs 661-694, same landing tick (~95). No change.
 
+## G09 flag is not cleared by sliding (SLH)
+
+- SLH3..SLH32: SL with crouch held from the air, so hop 1 lands straight into a landing slide (~393 u/s) and hop 2
+  comes 3..32 ticks after the landing (`slh_sim.py`, lag 4.5).
+- Every hop 2 is penalized in the game: the air speed is pulled to ~200-215 u/s, even after 32 ticks (0.5 s) of
+  sliding. The sim (flag clears only on ground time not sliding) matches the shape; rms 35.7 including two slow-hop-1
+  trials (SLH8 t2, SLH18 t3) and the brake column. The game's low point is ~10 u/s under the sim's 225 (inside the
+  215-235 per-scenario spread of session 9).
+- So ground time in a slide does not count toward the clear. The non-sliding clear time stays bracketed at <= 0.5 s.
+
 ## Still open
 
 - HM_W's extra ~13 u when the heavy starts from a run.
