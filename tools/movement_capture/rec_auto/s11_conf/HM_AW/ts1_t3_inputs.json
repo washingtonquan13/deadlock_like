@@ -1,0 +1,131 @@
+{
+  "t0_perf": 111071.9933721,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.0003200000064680353,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.06279140000697225,
+      "t_plan": 0.0625,
+      "kind": "down",
+      "arg": "space",
+      "tick": 5
+    },
+    {
+      "t_real": 0.08778329999768175,
+      "t_plan": 0.0875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 6
+    },
+    {
+      "t_real": 0.29727640000055544,
+      "t_plan": 0.296875,
+      "kind": "down",
+      "arg": "space",
+      "tick": 20
+    },
+    {
+      "t_real": 0.32209590000275057,
+      "t_plan": 0.321875,
+      "kind": "up",
+      "arg": "space",
+      "tick": 21
+    },
+    {
+      "t_real": 0.3283700000029057,
+      "t_plan": 0.328125,
+      "kind": "down",
+      "arg": "q",
+      "tick": 22
+    },
+    {
+      "t_real": 0.9691085999947973,
+      "t_plan": 0.96875,
+      "kind": "up",
+      "arg": "q",
+      "tick": 63
+    },
+    {
+      "t_real": 2.64084360000561,
+      "t_plan": 2.640625,
+      "kind": "up",
+      "arg": "w",
+      "tick": 170
+    },
+    {
+      "t_real": 2.641212300004554,
+      "t_plan": 2.640625,
+      "kind": "down",
+      "arg": "s",
+      "tick": 170
+    },
+    {
+      "t_real": 3.5940480999997817,
+      "t_plan": 3.59375,
+      "kind": "up",
+      "arg": "s",
+      "tick": 231
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2212.34,
+    "pos_y": -614.38,
+    "pos_z": 102.19,
+    "ang_pitch": 14.72,
+    "ang_yaw": 57.69,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 0.0
+  },
+  "start_yaw": 57.69,
+  "late_ms_max": 0.5873000045539811,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\s11_conf\\HM_AW.json",
+  "mark": "street_y058b",
+  "mark_value": {
+    "pawn": [
+      2231.41,
+      -519.73,
+      102.08
+    ],
+    "hud": [
+      2212.37,
+      -614.4200000000001,
+      102.11999999999999
+    ],
+    "yaw": 57.72,
+    "pitch": 14.69,
+    "cam_offset": [
+      -19.039999999999964,
+      -94.69,
+      0.03999999999999204
+    ],
+    "return_error_u": 0.0,
+    "note": "street_y058 moved 300 u back along the view (session 9 SHL runway)"
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl",
+    "melee": "q"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 677,
+  "pre_real_s": 0.3
+}

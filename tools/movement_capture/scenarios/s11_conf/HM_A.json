@@ -1,0 +1,65 @@
+{
+ "_comment": "street_y058b: jump 5, air jump 20, melee held 22..62, S brake 170",
+ "name": "HM_A",
+ "clip": "HM_A",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 230,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 5,
+   "to": 5,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 20,
+   "to": 20,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 22,
+   "to": 62,
+   "buttons": [
+    "melee"
+   ]
+  },
+  {
+   "from": 170,
+   "to": 230,
+   "move": [
+    0,
+    -1
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}

@@ -100,6 +100,12 @@ for c in (12, 20, 24):
         s = base(n, "street_y058b: W 1..%d, dash 4, crouch %d..%d, S brake %d.." % (wend, c, c + 40, c + 41), c + 100)
         add(s, 1, wend, move=[0, 1]); add(s, 4, 4, buttons=["dash"]); add(s, c, c + 40, buttons=["crouch"])
         add(s, c + 41, c + 100, move=[0, -1]); S[n] = s
+# A: heavy air recovery (G12, air unmeasured): jump 5, air jump 20, melee held 22..62 (lunge ends in the air?);
+# HM_A no keys, HM_AW W held from 1 (air control under the recovery). S brake 170.
+for n, w in (("HM_A", False), ("HM_AW", True)):
+    s = base(n, "street_y058b: %sjump 5, air jump 20, melee held 22..62, S brake 170" % ("W 1..169, " if w else ""), 230)
+    if w: add(s, 1, 169, move=[0, 1])
+    add(s, 5, 5, buttons=["jump"]); add(s, 20, 20, buttons=["jump"]); add(s, 22, 62, buttons=["melee"]); add(s, 170, 230, move=[0, -1]); S[n] = s
 for k, v in S.items():
     json.dump(v, open(k + ".json", "w"), indent=1)
 print(" ".join(S))
