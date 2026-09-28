@@ -1,0 +1,87 @@
+{
+  "t0_perf": 78241.3591362,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.0004304000030970201,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "lctrl",
+      "tick": 1
+    },
+    {
+      "t_real": 0.0009284999978262931,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 4.000367799992091,
+      "t_plan": 4.0,
+      "kind": "up",
+      "arg": "lctrl",
+      "tick": 257
+    },
+    {
+      "t_real": 4.000937399992836,
+      "t_plan": 4.0,
+      "kind": "up",
+      "arg": "w",
+      "tick": 257
+    }
+  ],
+  "start_hud": {
+    "pos_x": 308.5,
+    "pos_y": -292.81,
+    "pos_z": 120.53,
+    "ang_pitch": 27.72,
+    "ang_yaw": 97.81,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 385.92
+  },
+  "start_yaw": 97.81,
+  "late_ms_max": 0.937399992835708,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\s7_ramp\\RSW.json",
+  "mark": "ramp1_slope",
+  "mark_value": {
+    "pawn": [
+      263.0,
+      -215.0,
+      88.0
+    ],
+    "hud": [
+      308.44,
+      -292.84,
+      120.53
+    ],
+    "yaw": 97.78,
+    "pitch": 27.72,
+    "cam_offset": [
+      45.44,
+      -77.83999999999997,
+      32.53
+    ],
+    "return_error_u": 0.0
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 769,
+  "pre_real_s": 0.3
+}

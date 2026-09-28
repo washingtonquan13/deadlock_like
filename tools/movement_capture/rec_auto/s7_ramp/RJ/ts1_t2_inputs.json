@@ -1,0 +1,101 @@
+{
+  "t0_perf": 78510.9167578,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.00017309999384451658,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.5002448999875924,
+      "t_plan": 0.5,
+      "kind": "up",
+      "arg": "w",
+      "tick": 33
+    },
+    {
+      "t_real": 0.5005749999982072,
+      "t_plan": 0.5,
+      "kind": "down",
+      "arg": "lctrl",
+      "tick": 33
+    },
+    {
+      "t_real": 0.8599193999980344,
+      "t_plan": 0.859375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 56
+    },
+    {
+      "t_real": 0.8847309999982826,
+      "t_plan": 0.884375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 57
+    },
+    {
+      "t_real": 3.500271899989457,
+      "t_plan": 3.5,
+      "kind": "up",
+      "arg": "lctrl",
+      "tick": 225
+    }
+  ],
+  "start_hud": {
+    "pos_x": 309.19,
+    "pos_y": -434.56,
+    "pos_z": 129.78,
+    "ang_pitch": 27.72,
+    "ang_yaw": 97.81,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 387.49
+  },
+  "start_yaw": 97.81,
+  "late_ms_max": 0.574999998207204,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\s7_ramp\\RJ.json",
+  "mark": "ramp1_top",
+  "mark_value": {
+    "pawn": [
+      263.7,
+      -356.74,
+      96.0
+    ],
+    "hud": [
+      309.12,
+      -434.59,
+      129.78
+    ],
+    "yaw": 97.78,
+    "pitch": 27.72,
+    "cam_offset": [
+      45.420000000000016,
+      -77.84999999999997,
+      33.78
+    ],
+    "return_error_u": 0.0
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 738,
+  "pre_real_s": 0.3
+}

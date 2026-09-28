@@ -1,0 +1,23 @@
+{
+  "frames": 1037,
+  "parsed": 595,
+  "duplicates": 207,
+  "outlier_values_rejected": 10,
+  "valid_rows": 382,
+  "velocity_source": "derived-from-position",
+  "vel_readout_vs_derived": null,
+  "source": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\rec_auto\\s7_ramp\\RBOT\\ts1_t1_frames.npz",
+  "timescale": 1.0,
+  "time": "game seconds from the first input",
+  "units_per_meter": 39.3701,
+  "up_axis": "z",
+  "frames_captured": 1037,
+  "frames_distinct": 1037,
+  "cleaning": {
+    "hampel_window": 3,
+    "hampel_k": 4.0,
+    "tol_pos": 3.0,
+    "tol_vel": 3.0,
+    "tol_ang": 1.0
+  }
+}
