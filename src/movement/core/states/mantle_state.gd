@@ -44,7 +44,14 @@ static func try_start(sim: MovementSim, s: MoveState, ctx: Ctx, forced: bool) ->
 	# measured session 4: the duration follows the distance (constant climb, then constant exit), not a band
 	var top: Vector3 = ledge["top"]
 	var rise := maxf(0.0, top.y - s.position.y)
-	var run := Vector2(top.x - s.position.x, top.z - s.position.z).length()
+	# measured session 5: the gap to the face closes during the climb (exit 10-14 ticks wherever the mantle
+	# triggered); the exit phase only covers face contact -> top. Already at or past contact: nothing to close.
+	var fh := Vector3(fwd.x, 0.0, fwd.z).normalized()
+	var contact := top - fh * (2.0 * p.capsule_radius + 0.05)
+	contact.y = s.position.y
+	if (contact - s.position).dot(fh) <= 0.0:
+		contact = s.position
+	var run := Vector2(top.x - contact.x, top.z - contact.z).length()
 	# measured session 4 (66, 94, 162 u): the average climb speed grows with the ledge height above the floor
 	var climb := p.mantle_climb_speed + p.mantle_climb_speed_per_height * h
 	var total := ceili(rise / (climb * MoveUnits.DT) - 1e-6) + maxi(1, ceili(run / (p.mantle_exit_speed * MoveUnits.DT) - 1e-6))
@@ -53,6 +60,7 @@ static func try_start(sim: MovementSim, s: MoveState, ctx: Ctx, forced: bool) ->
 	s.loco = L.MANTLE
 	s.mantle_from = s.position
 	s.mantle_to = ledge["top"]
+	s.mantle_contact = contact
 	s.mantle_total_ticks = total
 	s.mantle_climb_speed = climb
 	s.mantle_ticks = 0
@@ -96,8 +104,8 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 		s.loco = L.CROUCH if s.crouched else L.GROUND
 
 
-## Scripted motion (measured session 4): straight up at the height-based average climb speed, then forward onto the top
-## at the exit speed. Horizontal speed is frozen during the climb.
+## Scripted motion (measured session 4/5): up at the height-based average climb speed while closing the gap to the face
+## (horizontal in step with the rise), then forward onto the top at the exit speed.
 static func physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	ctx.skip_move = true
 	s.mantle_ticks += 1
@@ -110,6 +118,11 @@ static func physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 		var dy := minf(b.y - pos.y, s.mantle_climb_speed * budget)
 		pos.y += dy
 		budget -= dy / s.mantle_climb_speed
+		var a := s.mantle_from
+		var f := clampf((pos.y - a.y) / maxf(b.y - a.y, 1e-6), 0.0, 1.0)
+		var c := s.mantle_contact
+		pos.x = lerpf(a.x, c.x, f)
+		pos.z = lerpf(a.z, c.z, f)
 	if pos.y >= b.y and budget > 0.0:
 		var h := Vector2(b.x - pos.x, b.z - pos.z)
 		var step := minf(h.length(), p.mantle_exit_speed * budget)
