@@ -1,0 +1,84 @@
+{
+ "_comment": "wallA: W 1..83 into the wall, jump 60, A 84..150, wall jump 88",
+ "name": "s7_open_WJA_prop",
+ "clip": "WJA",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 260,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 83,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 60,
+   "to": 60,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 84,
+   "to": 150,
+   "move": [
+    -1,
+    0
+   ]
+  },
+  {
+   "from": 88,
+   "to": 88,
+   "buttons": [
+    "jump"
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder (value unchanged)"
+  }
+ ],
+ "geometry": [
+  {
+   "type": "wall",
+   "center": [
+    0.0,
+    5.0,
+    -10.8164
+   ],
+   "size": [
+    40.0,
+    10.0,
+    0.5
+   ]
+  }
+ ],
+ "fixed": {
+  "wall_jump_kick_tangent": 2.7178
+ }
+}
