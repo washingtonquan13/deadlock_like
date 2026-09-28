@@ -1,0 +1,102 @@
+{
+  "t0_perf": 98384.5233096,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.00027219999174121767,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.6096369000006234,
+      "t_plan": 0.609375,
+      "kind": "down",
+      "arg": "space",
+      "tick": 40
+    },
+    {
+      "t_real": 0.6252333000011276,
+      "t_plan": 0.625,
+      "kind": "up",
+      "arg": "w",
+      "tick": 41
+    },
+    {
+      "t_real": 0.6348008999921149,
+      "t_plan": 0.634375,
+      "kind": "up",
+      "arg": "space",
+      "tick": 41
+    },
+    {
+      "t_real": 0.656697800004622,
+      "t_plan": 0.65625,
+      "kind": "down",
+      "arg": "a",
+      "tick": 43
+    },
+    {
+      "t_real": 1.406607900004019,
+      "t_plan": 1.40625,
+      "kind": "up",
+      "arg": "a",
+      "tick": 91
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2212.31,
+    "pos_y": -614.41,
+    "pos_z": 102.12,
+    "ang_pitch": 14.69,
+    "ang_yaw": 57.69,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 410.14
+  },
+  "start_yaw": 57.69,
+  "late_ms_max": 0.4478000046219677,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\s10_gains\\FA_L.json",
+  "mark": "street_y058b",
+  "mark_value": {
+    "pawn": [
+      2231.41,
+      -519.73,
+      102.08
+    ],
+    "hud": [
+      2212.37,
+      -614.4200000000001,
+      102.11999999999999
+    ],
+    "yaw": 57.72,
+    "pitch": 14.69,
+    "cam_offset": [
+      -19.039999999999964,
+      -94.69,
+      0.03999999999999204
+    ],
+    "return_error_u": 0.0,
+    "note": "street_y058 moved 300 u back along the view (session 9 SHL runway)"
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 376,
+  "pre_real_s": 0.3
+}
