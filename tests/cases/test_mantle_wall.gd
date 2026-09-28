@@ -91,11 +91,11 @@ func test_t26_wall_jump() -> void:
 	done()
 
 
-## Measured wall jump (session3_findings.md): ~519 u/s up from a hover, off-wall kick 268 / 215 (W) / 361 (S) for a held key,
+## Measured wall jump (session3_findings.md): ~519 u/s up from a hover, off-wall kick 268 / ~256 (W, session 10) / 361 (S) for a held key,
 ## A adds ~107 u/s along the wall on top of the incoming tangent (session 7b; none here, from a hover).
 ## Deliberately loose: the model is still being fit against recordings.
 func test_measured_wall_jump_launch() -> void:
-	var cases := {"none": [0, 0, 268.0, 0.0], "w": [0, 1, 215.0, 0.0], "s": [0, -1, 361.0, 0.0], "a": [-1, 0, 268.0, 107.0]}
+	var cases := {"none": [0, 0, 268.0, 0.0], "w": [0, 1, 256.0, 0.0], "s": [0, -1, 361.0, 0.0], "a": [-1, 0, 268.0, 107.0]}
 	for key: String in cases:
 		var c: Array = cases[key]
 		var h := new_harness(&"flat")
