@@ -5,6 +5,16 @@
 - Scenarios and fit scripts: `tools/movement_capture/scenarios/s10_gains/` (`gen.py`, `rampfit.py`, `rampjoint.py`,
   `wkfit2.py`, `wall_sim.py`, `fa_sim.py`).
 
+## Recording lag: align game windows by a kink, not by the scripted tick
+
+- The game's recorded time lags the scripted input by ~2.7 ticks. The launch kink in z of a wall jump sits at game
+  tick 91.2 (t·64 + 1) for a press scripted at 88. FA_L's ground jump agrees.
+- In an approach from rest the sim is also ~2 ticks (~11 u) ahead. The matched wall replay is
+  `wall_sim.py --lag=2.7 --face=411`.
+- Any fit that compares game and sim in windows after a scripted tick must shift the game windows by this lag. The
+  session-10 256 u/s wall kick (below) was an artifact of skipping it.
+- The HUD `vel_scalar2` column is a max-speed readout, not live speed.
+
 ## Low-speed ramp slide accel (S10-SL, closes the S8-SL open item)
 
 - **Scenarios RL5, RL8 and RL12** (mark `ramp1_slope`, the smooth 26.5° ramp): W for 5, 8 or 12 ticks, then crouch
@@ -15,30 +25,35 @@
   `slide_slope_boost_rate` (1.733/s) · tan(θ) · (500 u/s − v). Above 500 the session-8 fit stands.
 - **Replay peaks:** RL sim 482/481/484 vs game 471–482.
 - **Side effect:** RBOT is now 474 vs game 457 (was 460), and RRUN 547 vs 514 (was 532). The on-ramp bins match; the
-  excess is in the entry. Not fixed.
+  excess is in the entry (see the ramp-entry section).
 - PROVISIONAL: one angle. The tan(θ) scaling is assumed; the ~30° city ramps are too noisy to check it.
 
-## Wall jump: approach independence and the W-held kick
+## Wall jump: approach independence, the W-held kick, diagonals (S10-WJ, S10-WD)
 
 - **Approach (WN_E, WN_F; mark `wallAd`):** the neutral kick is ~262 whether the pawn reaches the wall at 365 u/s into
   it or at rest (WN_F waits 20 ticks against the wall). There is no dependence on the incoming normal speed. The
   session-9 "245 vs 268" open item is resolved: 268 stands, and 245 was from the key-on-press-tick timing.
   WN_R was invalid (an air jump before contact).
-- **Held keys (WH_W/WA/SA/S/A):** the keys are held from tick 84 through the press at 88. The comparison is between
-  game and sim replay windows after the press (`wall_sim.py`), with kick and along in u/s:
+- **Held keys (WH_W/WA/SA/S/A):** the keys are held from tick 84 through the press at 88. Game vs sim replay, lag- and
+  contact-aligned (`wall_sim.py --lag=2.7 --face=411`), kick off the wall in u/s at 0.05/0.10/0.15/0.20/0.30 s:
 
-  | Case | Game | Sim, toward 215 | Sim, toward 256 |
+  | Case | Game | Sim, toward 232 | Sim, toward 215 |
   |---|---|---|---|
-  | WH_W | 179 | 133 | 173 |
-  | WH_WA | 191/160 | 171/160 | 199/160 |
-  | WH_SA | 334/131 | 327/106 | 327/106 |
-  | WH_S | 349 | 354 | 354 |
-  | WH_A | 267/148 | 263/149 | 263/149 |
+  | WH_W | 150/106/68/24/−54 | 150/113/76/39/−45 | 133/96/59/23/−61 |
 
-- **Change:** `wall_jump_kick_toward` 215 → 256 u/s (6.5 m/s). This splits WH_W and WH_WA. The session-3 value was a
-  fit artifact: the game data agree across sessions.
-- **Open:** S+A along is 25 u/s higher in the game. A diagonal away from the wall may get a larger tangent kick. W+A's
-  kick is ~8 high at 256, so the diagonal rule is not exactly linear in d.
+  Diagonals, early kick/along:
+
+  | Case | Game | Sim (224, full tangent) |
+  |---|---|---|
+  | WH_WA | 169/183 | ~177/191 |
+  | WH_SA | 339/133 | 327/136 |
+
+- **Change (S10-WJ):** `wall_jump_kick_toward` 215 → 224 u/s (5.7 m/s). WH_W wants ~232 early, WH_WA ~215.
+- **Change (S10-WD):** a held diagonal gets the full single-key tangent kick (~107), not 0.707 of it. Its off-wall kick
+  still follows the normalized d. The tangent uses the unnormalized key vector clamped per world axis, like the air
+  jump (session 6). This closes the session-7/9 held-diagonal question and the S+A along gap.
+- PROVISIONAL (S10-WD): one yaw, facing the wall straight on, so view-space raw keys and the world-clamped vector are
+  not separated.
 
 ## Air strafe above 450 u/s (G26 / K26)
 
@@ -47,15 +62,24 @@
 - **Result (`fa_sim.py`, 0.08 s windows):**
   - The sideways speed rises from 0 to ~78 u/s in ~0.12 s at both speeds.
   - It plateaus at 80 u/s at both speeds.
-  - The sim (accel mult 1.0, cap 80) matches both. The game onset reads ~4 ticks later than the sim at both speeds, so
-    it is recording alignment, not physics.
+  - The sim (accel mult 1.0, cap 80) matches both. The game onset reads ~3–4 ticks later than the sim, which is the
+    recording lag.
 - **Conclusion:** `air_accel_high_speed_mult` 1.0 and `air_wishspeed_cap` 80 are measured up to ~560 u/s. The 450 u/s
   split has no measured effect. The 700 u/s fast cap is still unmeasured.
 - **Side notes:**
   - Forward speed through the hop flight is within ~10–20 u/s of the sim.
-  - After landing, the game keeps more speed than the sim at ~350 u/s (FA_L 1.40 s: 290 vs 235). The landings are
-    not fit.
+  - FA_L's apparent landing loss (1.40 s: game 290 vs sim 235) is the time offset: shifted by the lag, the sim
+    matches the whole run. No model change.
   - FA_D's landing stops much faster, probably something on the street edge.
+
+## Ramp entry (RBOT/RRUN, open)
+
+- s7 replay tag `s10` (`scenarios/s7_fit_ramp/run.sh s10`, `compare.py s10`): peaks RBOT 474 vs game 457, RRUN 547 vs
+  514, RJ 480 vs 558, RDASH 718 vs 716.
+- RRUN, lag-shifted: the run-up matches to ~1 u/s and ~1 u through 0.6 s. The crouch press lands at the ramp edge in
+  both. The sim slides from 0.6 s. The game's speed dips (390 → 375 by 0.8 s) before it accelerates, so it crouches
+  first and slides later.
+- RJ's game peak is 78 u/s above the sim; unexplained.
 
 ## Capture tooling
 
@@ -64,7 +88,5 @@
 
 ## Still open
 
-- Diagonal wall kicks (the S+A tangent, and W+A's kick).
-- The RBOT/RRUN ramp-entry excess after S10-SL.
-- The landing speed loss after a ~350 u/s jump.
+- The RBOT/RRUN ramp-entry excess, and RJ.
 - The air strafe above 700 u/s.
