@@ -362,3 +362,21 @@ The table also refits the older 1-D cases.
 - The camera directions after the jump are about 11–19° off the old velocity toward the wish. The rule predicts 17°.
 - **Open:** S+D lands ~20 u/s above its mirror S+A (396 vs 371, two trials each). The cause is unknown.
 - **Open:** earlier air accel values (~780 u/s²) came from camera slopes and may be a few % high.
+
+## Air drag (HUD refit): none outside the air dash
+
+HUD-only fits (`scenarios/double/hudfit.py`, g = 795 fixed) over consecutive windows of one airtime:
+
+| Case | Windows (ticks) | Horizontal h |
+|---|---|---|
+| A0 (plain jump, no key) | 43–84 | 338.6 / 339.3 / 338.9 / 337.7 |
+| DJ22 (dash jump) | 32–90 | 615 / 620 / 625 / 625 / 624.5 |
+| A_air_b1 fast (fall after an air dash) | 54–60 / 60–66 | 489.2 / 488.5 |
+| A_air_b2 fast (fall after an air dash) | 54–60 / 60–66 | 482.8 / 481.0 |
+
+- Horizontal speed in the air does not decay. The earlier 0.2/s (G08) and the camera-slope readings of decay were wrong:
+  camera slopes overstate air speed and drift.
+- During the air dash itself (gravity off, HUD = horizontal speed) the speed does fall ~0.19 × speed per second
+  (A_air_b1: 572 → 538 over 0.31 s). This is a property of the dash, not of air movement.
+- DJ22's HUD-only h after launch is 615–625, below the 703 read earlier from HUD plus the camera height track. Recheck the
+  dash-jump launch.
