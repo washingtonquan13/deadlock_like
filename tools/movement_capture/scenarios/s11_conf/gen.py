@@ -83,6 +83,11 @@ add(s, 1, 160, move=[0, 1]); add(s, 70, 70, buttons=["jump"]); add(s, 85, 85, bu
 s = base("DD_AW", "street_y058b: W 1..200, jump 70, air jump 95, crouch taps 110 and 116, S brake (landing hold: dash- or landing-keyed)", 260)
 add(s, 1, 200, move=[0, 1]); add(s, 70, 70, buttons=["jump"]); add(s, 95, 95, buttons=["jump"]); add(s, 110, 110, buttons=["crouch"]); add(s, 116, 116, buttons=["crouch"])
 add(s, 201, 260, move=[0, -1]); S["DD_AW"] = s
+# V: air dash vertical (G25: vy zeroed and held during the burst, or kept). W held, jump 5 from standstill-ish (W 1..),
+# air dash rising (AV_R, dash 12) or falling (AV_F, dash 40), W released 80, S brake 150.
+for n, d in (("AV_R", 12), ("AV_F", 40)):
+    s = base(n, "street_y058b: W 1..80, jump 5, air dash %d, S brake 150" % d, 210)
+    add(s, 1, 80, move=[0, 1]); add(s, 5, 5, buttons=["jump"]); add(s, d, d, buttons=["dash"]); add(s, 150, 210, move=[0, -1]); S[n] = s
 # R: plain W run from rest (the s7 FSW check): runs since ~15:47 read ~396 u/s at 0.8 s vs 382 before; is the
 # hero faster now (buff, souls, item)?
 s = base("RUN", "street_y058b: W 1..180 from rest, S brake", 240)

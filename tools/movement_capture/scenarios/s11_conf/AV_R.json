@@ -1,0 +1,66 @@
+{
+ "_comment": "street_y058b: W 1..80, jump 5, air dash 12, S brake 150",
+ "name": "AV_R",
+ "clip": "AV_R",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 210,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 80,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 5,
+   "to": 5,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 12,
+   "to": 12,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 150,
+   "to": 210,
+   "move": [
+    0,
+    -1
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}
