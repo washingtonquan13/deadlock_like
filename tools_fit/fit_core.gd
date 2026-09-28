@@ -212,7 +212,7 @@ func ticks() -> int:
 
 
 ## Timeline -> one InputCmd per tick. Ticks are 1-based (tick 1 is the first simulate()).
-## "default": {move:[x,y], buttons:[...], yaw_deg}; timeline entries {from, to, buttons, move, yaw_deg}
+## "start": {pitch_deg} (view pitch, + = up; default 0). "default": {move:[x,y], buttons:[...], yaw_deg}; timeline entries {from, to, buttons, move, yaw_deg}
 ## override/add for ticks from..to inclusive. Held bits only: the sim derives press edges, so a
 ## one-tick press is from == to.
 func _build_cmds() -> void:
@@ -231,7 +231,7 @@ func _build_cmds() -> void:
 					mv = e["move"]
 				if e.has("yaw_deg"):
 					yaw = deg_to_rad(float(e["yaw_deg"]))
-		_cmds.append(InputCmd.create(t, btn, int(mv[0]), int(mv[1]), yaw, 0.0))
+		_cmds.append(InputCmd.create(t, btn, int(mv[0]), int(mv[1]), yaw, deg_to_rad(float(st.get("pitch_deg", 0.0)))))
 
 
 static func _buttons(names: Array) -> int:

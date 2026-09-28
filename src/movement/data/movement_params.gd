@@ -281,9 +281,13 @@ extends Resource
 
 # --- melee / parry --------------------------------------------------------------
 @export var heavy_windup_time: float = 0.36                      # G12: 0.36 s windup (ziplines_melee_misc.md)
-@export var heavy_lunge_speed_ground: float = 19.05              # G10: 750 u/s (ziplines_melee_misc.md; K29); PROVISIONAL (G10): profile pending H1
-@export var heavy_lunge_speed_air: float = 20.2438               # G10: 797 u/s (ziplines_melee_misc.md; K29); PROVISIONAL (G10): profile pending H1
-@export var heavy_lunge_time: float = 0.6                        # G10: max lunge time 0.6 s (no target contact simulated); PROVISIONAL (G10): contradicts "half a dash" (research Q5), pending H1
+@export var heavy_lunge_speed_ground: float = 19.05              # G10: 750 u/s peak, measured session 11 (HM_S/HM_W HUD plateau 750)
+@export var heavy_lunge_speed_air: float = 20.2438               # G10: 797 u/s peak (ziplines_melee_misc.md); session 11 HM_J 3D HUD plateau 794
+@export var heavy_lunge_time: float = 0.34                       # G10: measured session 11: a hard stop ~22 ticks after the lunge starts (227 u settled displacement on flat ground, no target)
+@export var heavy_lunge_ramp_time: float = 0.2                   # G10: measured session 11 (HM_S/HM_W): ground speed ramps linearly to the peak over ~13 ticks
+@export var heavy_lunge_ramp_time_air: float = 0.156             # G10: measured session 11 (HM_J): air speed ramps faster, ~10 ticks
+@export var heavy_lunge_start_frac_ground: float = 0.59          # G10: measured session 11 (HM_S/HM_W: ~465 u/s on the first lunge tick)
+@export var heavy_lunge_start_frac_air: float = 0.43             # G10: measured session 11 (HM_J: ~340 u/s 3D on the first lunge tick); PROVISIONAL: one aim pitch (14.7 deg down)
 @export var heavy_recovery_time: float = 0.2833                  # G12: 0.2833 s, velocity zeroed on all axes (ziplines_melee_misc.md; K28, K30)
 @export var heavy_turn_rate_mult: float = 0.3                    # spec: movement.md §19
 @export var heavy_cooldown_hit: float = 1.0                      # spec: movement.md §19

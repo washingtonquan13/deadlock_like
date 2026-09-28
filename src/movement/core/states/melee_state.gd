@@ -99,17 +99,22 @@ static func _finish(sim: MovementSim, s: MoveState) -> void:
 static func physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	var p := sim.cp.params
 	if s.phase == LP.LUNGE:
-		# G10 (fixes K29): lunge 750 u/s on the ground, 797 u/s in the air, in the facing direction,
-		# for up to heavy_lunge_time. PROVISIONAL (G10): constant-speed profile pending H1.
-		# Unresolved Q5 conflict: these speeds over heavy_lunge_time give ~11.4 m (ground) / ~12.1 m (air),
-		# against ~5 m of lunge distance in other sources. No source gives the speed curve, so none is
-		# invented here; the distance mismatch stays open until clip H1.
-		var f := sim.facing(s)
-		var sp := p.heavy_lunge_speed_ground if s.grounded else p.heavy_lunge_speed_air
-		s.velocity.x = f.x * sp
-		s.velocity.z = f.z * sp
+		# G10, measured session 11 (HM_S/HM_W/HM_J): the lunge speed ramps linearly from a start fraction of the peak
+		# (ground 0.59, air 0.43) to the peak (750 ground, 797 air) over ~13 (ground) / ~10 (air) ticks, holds it,
+		# and stops dead after heavy_lunge_time (227 u on flat ground). Pre-lunge velocity is replaced. On the ground it runs
+		# along the yaw; in the air along the aim, pitch included (HM_J: the fall rate grows with the lunge speed, at
+		# ~0.25 of it for a 14.7 deg down aim), with no gravity. Landing mid-lunge switches to the ground speed.
+		var cp := sim.cp
+		var f0 := p.heavy_lunge_start_frac_ground if s.grounded else p.heavy_lunge_start_frac_air
+		var ramp := cp.heavy_lunge_ramp_ticks if s.grounded else cp.heavy_lunge_ramp_ticks_air
+		var frac := minf(1.0, f0 + (1.0 - f0) * float(s.phase_ticks + 1) / float(ramp))
 		if s.grounded:
-			s.velocity.y = 0.0
+			var f := sim.facing(s)
+			s.velocity = Vector3(f.x, 0.0, f.z) * p.heavy_lunge_speed_ground * frac
+		else:
+			s.velocity = Basis.from_euler(Vector3(s.pitch, s.yaw, 0.0)) * Vector3.FORWARD * p.heavy_lunge_speed_air * frac
+		s.phase_ticks += 1
+		return
 	elif s.phase == LP.RECOVERY:
 		# G12 (fixes K30): recovery sets velocity to 0 on all axes (no friction, drag or gravity)
 		s.velocity = Vector3.ZERO

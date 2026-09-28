@@ -36,25 +36,30 @@ func test_fp1_g07_early_jump_lockout() -> void:
 	done()
 
 
-## G10: heavy lunge 750 u/s (19.05 m/s) on the ground, for up to 0.6 s = 39 ticks, after a 0.36 s
-## (24 tick) windup (ziplines_melee_misc.md). PROVISIONAL (G10): constant profile pending H1.
+## G10 (measured session 11): after a 0.36 s (24 tick) windup the lunge ramps to 750 u/s (19.05 m/s), holds it and
+## stops dead after ~0.34 s, covering ~227 u (5.8 m) on flat ground.
 func test_fp1_g10_heavy_lunge_ground() -> void:
 	var h := new_harness(&"flat")
 	await h.ready()
 	h.run(120, func(t: int) -> InputCmd: return cmd(t, B_HEAVY if t == 1 else 0))
 	var first := -1
-	var n := 0
+	var peak := 0
+	var dist := 0.0
 	for i in h.trace.size():
-		if absf(float(h.trace[i]["hspeed"]) - 19.05) < 1e-3:
-			n += 1
+		var hs := float(h.trace[i]["hspeed"])
+		if int(h.trace[i]["loco"]) == L.HEAVY_LUNGE and hs > 0.1:
 			if first < 0:
 				first = i
+			dist += hs / 64.0
+		if absf(hs - 19.05) < 1e-3:
+			peak += 1
 	assert_eq(first, 24, "lunge starts after a 24-tick (0.36 s) windup (G12)")
-	assert_eq(n, 39, "lunge lasts 39 ticks (0.6 s)")
+	assert_true(peak >= 8, "lunge holds 750 u/s for a while (%d ticks)" % peak)
+	assert_true(dist > 5.5 and dist < 6.8, "lunge covers ~5.8 m (%.2f)" % dist)
 	done()
 
 
-## G10: air lunge 797 u/s = 20.2438 m/s for 39 ticks.
+## G10: air lunge peaks at 797 u/s = 20.2438 m/s.
 func test_fp1_g10_heavy_lunge_air() -> void:
 	var h := new_harness(&"flat")
 	await h.ready()
@@ -64,7 +69,7 @@ func test_fp1_g10_heavy_lunge_air() -> void:
 	for i in h.trace.size():
 		if absf(float(h.trace[i]["hspeed"]) - 20.2438) < 1e-3:
 			n += 1
-	assert_eq(n, 39, "air lunge at 797 u/s for 39 ticks")
+	assert_true(n >= 8, "air lunge reaches 797 u/s (%d ticks)" % n)
 	done()
 
 
@@ -82,7 +87,7 @@ func test_fp1_g12_heavy_recovery_zero() -> void:
 			if first < 0:
 				first = i
 	assert_eq(n, 19, "recovery: 19 ticks with velocity exactly zero")
-	assert_eq(first, 24 + 39, "recovery starts right after the lunge")
+	assert_true(absi(first - 46) <= 1, "recovery starts right after the ~22-tick lunge (%d)" % first)
 	done()
 
 

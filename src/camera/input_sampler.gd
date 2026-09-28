@@ -6,7 +6,7 @@ extends Node
 
 @export var mouse_sensitivity: float = 0.0022   # rad per pixel
 @export var invert_y: bool = false
-@export var heavy_hold_time: float = 0.2        # s; Q held this long = heavy melee (design §5)
+@export var heavy_hold_time: float = 0.2        # s; Q held this long = heavy melee (design §5; session 11 measured ~13-14 ticks)
 
 const PITCH_LIMIT := deg_to_rad(89.0)           # matches InputCmd pitch clamp
 
