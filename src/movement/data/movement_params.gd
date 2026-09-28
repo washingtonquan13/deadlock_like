@@ -200,8 +200,8 @@ extends Resource
 @export var slide_hop_penalty_drag: float = 1.3                  # PROVISIONAL (G09): measured session 6 (SHH6 hop ~6 ticks into the slide): extra drag decays (+1.5/s ticks 4-12, +0.9 12-22, ~0 after); box 1.3 x 20 ticks matches apex 229 and landing 214
 @export var slide_hop_penalty_time: float = 0.3125               # PROVISIONAL (G09): 20 ticks (session 6; drag x time ~0.4 is the fitted valley); < 0 = until landing
 # measured session 6: a landing into a NORMAL slide below this speed loses one ground-friction tick (x0.9375).
-# PROVISIONAL: threshold bracketed 428-466 u/s (LSD12 loses at 427, DJS7 keeps at 469).
-@export var landing_slide_friction_speed: float = 11.43           # 450 u/s
+# measured session 7 (s7_open LT440-465): loses at 439-461, keeps at 471-476; bracketed 461-471, midpoint used
+@export var landing_slide_friction_speed: float = 11.836          # 466 u/s
 @export var slide_hop_clear_time: float = 0.25                   # PROVISIONAL (G09): placeholder for "a short time on the ground" (V4 2:13); pending S2
 
 # --- wall jump ------------------------------------------------------------------

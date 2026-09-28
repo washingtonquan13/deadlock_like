@@ -120,7 +120,7 @@ func test_measured_air_jump_diagonal_world_clamp() -> void:
 	done()
 
 
-## Measured landing into a slide (session6_findings.md): below ~450 u/s it loses one ground-friction tick (~6%),
+## Measured landing into a slide (session 6, session 7 LT*): below ~466 u/s it loses one ground-friction tick (~6%),
 ## above ~470 nothing. Loose on purpose.
 func test_measured_landing_slide_loss() -> void:
 	var u := 0.0254

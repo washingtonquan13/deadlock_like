@@ -595,7 +595,7 @@ func _land(s: MoveState, ctx: Ctx, g: Dictionary) -> void:
 					kind = MoveState.SlideKind.NORMAL
 				if kind >= 0:
 					# measured session 6 (s6_slidejump): a landing into a normal slide below landing_slide_friction_speed
-					# takes one ground-friction tick first (x0.9375 at 376-428 u/s); none at 466+ u/s.
+					# takes one ground-friction tick first (x0.9375 at 376-461 u/s); none at 471+ u/s (session 7, s7_open LT*).
 					var hv := s.horizontal_speed()
 					if kind == MoveState.SlideKind.NORMAL and hv < p.landing_slide_friction_speed and hv > 1e-6:
 						var ns := maxf(0.0, hv - maxf(hv, p.stop_speed) * p.ground_friction * MoveUnits.DT)
