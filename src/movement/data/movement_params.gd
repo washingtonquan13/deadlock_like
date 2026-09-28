@@ -87,7 +87,7 @@ extends Resource
 # G21 dash slide start speed: SET along the dash direction on every dash-slide entry, all buckets
 # (video_guides V5 0:17 "always starts at 650 u/s"; Leif). < 0 = keep the current dash speed (K15, ground_dash.md
 # rule 7 wording). PROVISIONAL (G21): single source; the "dead slide" before 0.3 s is not modeled; pending clip D2.
-@export var dash_slide_speed: float = 16.332                   # measured session 3: dash slide peaks at 643 u/s (was 16.51 = 650, V5)
+@export var dash_slide_speed: float = 16.511                   # measured session 5: 650 u/s; friction on the entry tick makes the first slide tick read 643 (game 641-643)
 
 # --- jump / gravity -------------------------------------------------------------
 @export var jump_speed: float = 7.62                             # measured ~300 u/s on plain jumps (session2_findings.md); spec §10 was 7.493 (295 u/s)
@@ -172,8 +172,8 @@ extends Resource
 # measured session 4 (lslide): a landing slide hits the penalty 44 ticks (0.69 s) after touchdown (spec 0.75);
 # the spec's +0.25 s per bonus step is kept
 @export var slide_onset_table: Array[float] = [0.69, 0.94, 1.19, 1.44]
-# measured session 3: the penalty starts ~0.96 s into a ground-dash slide (shot list: ~1.0 s window for dash slides)
-@export var slide_onset_table_dash: Array[float] = [0.96, 1.21, 1.46, 1.71]
+# measured session 5: the penalty starts 1.00 s into a ground-dash slide (session 3's 0.96 was paired with the low 636 entry)
+@export var slide_onset_table_dash: Array[float] = [1.00, 1.25, 1.50, 1.75]  # knee - t(643) median 62.95 ticks; bonus steps unmeasured
 @export var slide_onset_table_dash_jump: Array[float] = [1.00, 1.25, 1.50, 1.75]  # spec: movement.md §13; unused since session 4
 # measured session 4 (hop): a jump out of a ground-dash slide cuts horizontal speed to x0.75 (0.74-0.79 at
 # 350-640 u/s); jumps out of a landing slide or from walking are not cut.
