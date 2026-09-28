@@ -222,9 +222,9 @@ extends Resource
 @export var wall_jump_up_speed: float = 13.183                   # measured session 3: ~519 u/s launch at vz = 0 before the press
 @export var wall_jump_up_vz_gain_fall: float = 0.30              # measured session 3: launch vz += gain * vz before the press while falling (-221 -> 453)
 @export var wall_jump_up_vz_gain_rise: float = 0.12              # measured session 3: same while rising (+215 -> 542)
-# measured session 10 (s10_gains WH_W/WH_WA, sim replay windows): ~256 u/s with W held straight in (d = -1); session 3's
-# 215 was a fit artifact (the game data match across sessions). 6.5 splits WH_W (173 vs 179) and WH_WA (199 vs 191).
-@export var wall_jump_kick_toward: float = 6.5                     # 256 u/s off the wall, W held straight in (d = -1)
+# measured session 10 (s10_gains WH_W/WH_WA; game windows aligned by the launch kink, ~2.7 ticks of recording lag):
+# ~224 u/s with W held straight in (d = -1). WH_W wants ~232 early, WH_WA ~215; session 3's 215 was close.
+@export var wall_jump_kick_toward: float = 5.7                     # 224 u/s off the wall, W held straight in (d = -1)
 @export var wall_jump_kick_neutral: float = 6.807                # measured session 3: 268 u/s with no key; the kick is interpolated linearly in d = wish.normal
 @export var wall_jump_kick_away: float = 9.169                   # measured session 3: 361 u/s with S held straight away (d = +1)
 # measured session 7 (s7_open + s3 WJD/WJA, 10 trials): the A/D kick is added on top of the incoming tangent that the
