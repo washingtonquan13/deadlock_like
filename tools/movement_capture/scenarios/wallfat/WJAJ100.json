@@ -1,0 +1,54 @@
+{
+ "_comment": "W held, ground jump 60, wall jump 88, air jump 100",
+ "name": "WJAJ100",
+ "clip": "WJAJ100",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 300,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 280,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 60,
+   "to": 60,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 88,
+   "to": 88,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 100,
+   "to": 100,
+   "buttons": [
+    "jump"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,353 @@
+{
+  "t0_perf": 59427.8750012,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.00024329999723704532,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.04732489999878453,
+      "t_plan": 0.046875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 4
+    },
+    {
+      "t_real": 0.07216389999666717,
+      "t_plan": 0.071875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 5
+    },
+    {
+      "t_real": 0.7658795999959693,
+      "t_plan": 0.765625,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 50
+    },
+    {
+      "t_real": 0.7910962999958429,
+      "t_plan": 0.790625,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 51
+    },
+    {
+      "t_real": 1.4845840999987558,
+      "t_plan": 1.484375,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 96
+    },
+    {
+      "t_real": 1.5097915000005742,
+      "t_plan": 1.509375,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 97
+    },
+    {
+      "t_real": 2.3283815999966464,
+      "t_plan": 2.328125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 150
+    },
+    {
+      "t_real": 2.353504399994563,
+      "t_plan": 2.353125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 151
+    },
+    {
+      "t_real": 2.5785021999981836,
+      "t_plan": 2.578125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 166
+    },
+    {
+      "t_real": 2.603340299996489,
+      "t_plan": 2.603125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 167
+    },
+    {
+      "t_real": 2.8285084000017378,
+      "t_plan": 2.828125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 182
+    },
+    {
+      "t_real": 2.8534051999959047,
+      "t_plan": 2.853125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 183
+    },
+    {
+      "t_real": 3.0783595999964746,
+      "t_plan": 3.078125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 198
+    },
+    {
+      "t_real": 3.1033156999983476,
+      "t_plan": 3.103125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 199
+    },
+    {
+      "t_real": 3.328348899995035,
+      "t_plan": 3.328125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 214
+    },
+    {
+      "t_real": 3.353515899994818,
+      "t_plan": 3.353125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 215
+    },
+    {
+      "t_real": 3.578341199994611,
+      "t_plan": 3.578125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 230
+    },
+    {
+      "t_real": 3.6033228999949642,
+      "t_plan": 3.603125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 231
+    },
+    {
+      "t_real": 3.8283494999996037,
+      "t_plan": 3.828125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 246
+    },
+    {
+      "t_real": 3.8533143999957247,
+      "t_plan": 3.853125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 247
+    },
+    {
+      "t_real": 4.078511599997,
+      "t_plan": 4.078125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 262
+    },
+    {
+      "t_real": 4.103351500001736,
+      "t_plan": 4.103125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 263
+    },
+    {
+      "t_real": 4.328499899995222,
+      "t_plan": 4.328125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 278
+    },
+    {
+      "t_real": 4.35336180000013,
+      "t_plan": 4.353125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 279
+    },
+    {
+      "t_real": 4.578358499995375,
+      "t_plan": 4.578125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 294
+    },
+    {
+      "t_real": 4.603465599997435,
+      "t_plan": 4.603125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 295
+    },
+    {
+      "t_real": 4.828483299999789,
+      "t_plan": 4.828125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 310
+    },
+    {
+      "t_real": 4.853351199999452,
+      "t_plan": 4.853125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 311
+    },
+    {
+      "t_real": 5.078522099996917,
+      "t_plan": 5.078125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 326
+    },
+    {
+      "t_real": 5.103397300001234,
+      "t_plan": 5.103125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 327
+    },
+    {
+      "t_real": 5.328337699997064,
+      "t_plan": 5.328125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 342
+    },
+    {
+      "t_real": 5.353392899996834,
+      "t_plan": 5.353125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 343
+    },
+    {
+      "t_real": 5.57848489999742,
+      "t_plan": 5.578125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 358
+    },
+    {
+      "t_real": 5.603382499997679,
+      "t_plan": 5.603125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 359
+    },
+    {
+      "t_real": 5.828481699994882,
+      "t_plan": 5.828125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 374
+    },
+    {
+      "t_real": 5.853323999996064,
+      "t_plan": 5.853125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 375
+    },
+    {
+      "t_real": 6.078469599997334,
+      "t_plan": 6.078125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 390
+    },
+    {
+      "t_real": 6.103338399996574,
+      "t_plan": 6.103125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 391
+    },
+    {
+      "t_real": 6.328472399996826,
+      "t_plan": 6.328125,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 406
+    },
+    {
+      "t_real": 6.353364099995815,
+      "t_plan": 6.353125,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 407
+    },
+    {
+      "t_real": 6.640989399995306,
+      "t_plan": 6.640625,
+      "kind": "up",
+      "arg": "w",
+      "tick": 426
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2486.34,
+    "pos_y": -285.28,
+    "pos_z": 102.12,
+    "ang_pitch": 14.66,
+    "ang_yaw": 147.56,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 412.49
+  },
+  "start_yaw": 147.56,
+  "late_ms_max": 0.4712999958428332,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\stam\\SCR.json",
+  "mark": "street_y148",
+  "mark_value": {
+    "pawn": [
+      2391.6800000000003,
+      -265.99,
+      102.08000000000001
+    ],
+    "hud": [
+      2486.34,
+      -285.12,
+      102.12
+    ],
+    "yaw": 147.66,
+    "pitch": 14.69,
+    "cam_offset": [
+      94.65999999999985,
+      -19.129999999999995,
+      0.03999999999999204
+    ],
+    "return_error_u": 0.0
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 787,
+  "pre_real_s": 0.3
+}

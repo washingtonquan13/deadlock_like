@@ -1,0 +1,77 @@
+{
+ "_comment": "2 dashes, jump 100, air dash 120",
+ "name": "SAJ0",
+ "clip": "SAJ0",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 210,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 47,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 48,
+   "to": 95,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 52,
+   "to": 52,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 96,
+   "to": 200,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 100,
+   "to": 100,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 120,
+   "to": 120,
+   "buttons": [
+    "dash"
+   ]
+  }
+ ]
+}

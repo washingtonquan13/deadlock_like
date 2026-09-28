@@ -1,0 +1,54 @@
+{
+ "_comment": "dash jump (dash 4, jump 31), air jump at 50: allowed? vz and horizontal after",
+ "name": "DJAJ",
+ "clip": "DJAJ",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 180,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 235,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 31,
+   "to": 31,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 50,
+   "to": 50,
+   "buttons": [
+    "jump"
+   ]
+  }
+ ]
+}

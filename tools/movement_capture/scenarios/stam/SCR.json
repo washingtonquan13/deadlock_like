@@ -1,0 +1,173 @@
+{
+ "_comment": "dashes at 4/50/96 (all charges), then a dash press every 16 ticks from 150: first success = regen time",
+ "name": "SCR",
+ "clip": "SCR",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 430,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 425,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 50,
+   "to": 50,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 96,
+   "to": 96,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 150,
+   "to": 150,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 166,
+   "to": 166,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 182,
+   "to": 182,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 198,
+   "to": 198,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 214,
+   "to": 214,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 230,
+   "to": 230,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 246,
+   "to": 246,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 262,
+   "to": 262,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 278,
+   "to": 278,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 294,
+   "to": 294,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 310,
+   "to": 310,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 326,
+   "to": 326,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 342,
+   "to": 342,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 358,
+   "to": 358,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 374,
+   "to": 374,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 390,
+   "to": 390,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 406,
+   "to": 406,
+   "buttons": [
+    "dash"
+   ]
+  }
+ ]
+}

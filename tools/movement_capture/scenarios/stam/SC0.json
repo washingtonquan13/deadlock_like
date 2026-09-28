@@ -1,0 +1,61 @@
+{
+ "_comment": "4 ground dashes 46 ticks apart: counts the charges (3 expected)",
+ "name": "SC0",
+ "clip": "SC0",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 200,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 235,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 50,
+   "to": 50,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 96,
+   "to": 96,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 142,
+   "to": 142,
+   "buttons": [
+    "dash"
+   ]
+  }
+ ]
+}

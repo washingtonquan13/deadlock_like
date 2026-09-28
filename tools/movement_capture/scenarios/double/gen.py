@@ -24,3 +24,26 @@ S["DBD"] = dbl("DBD", "walk, jump, air jump at +24, D from the air jump (redirec
 S["DBR"] = dbl("DBR", "standing jump, air jump at +24 with D from the air jump (burst from rest?)", 24, [1, 0], walk=False)
 for k, v in S.items():
     json.dump(v, open(k + ".json", "w"), indent=1)
+# WJAJ (wallfat) hinted at a boost along the wish when the air jump starts with v.wish small; the camera near the wall
+# is unreliable, so test in the open: jump 40, S 42..66 brakes the forward speed to ~0, W from 67, air jump at 76.
+for name, aj in (("DBX", True), ("DBX0", False)):
+    s = base(name, "walk, jump 40, S 42..66 (fwd ~0), W from 67%s" % (", air jump 76" if aj else " (control)"))
+    s["timeline"] = [{"from": 1, "to": 41, "move": [0, 1]}, {"from": 40, "to": 40, "buttons": ["jump"]},
+                     {"from": 42, "to": 66, "move": [0, -1]}, {"from": 67, "to": 170, "move": [0, 1]}]
+    if aj:
+        s["timeline"].append({"from": 76, "to": 76, "buttons": ["jump"]})
+    S[name] = s
+    json.dump(s, open(name + ".json", "w"), indent=1)
+# DBX shows a boost along the wish. Which rule: raise the wish component (other components kept) or redirect?
+#  DBL/DBL0: walk W (fwd ~walk), jump 40, W released and D held from 56, air jump 66 (control without)
+#  DBRW: standing jump 40, W from 56, air jump 66 (boost from rest?)
+#  DBB: walk W, jump 40, S from 56 (fwd still large), air jump 66 (does v.wish << 0 get raised?)
+X = {"DBL": ([1, 0], True, True), "DBL0": ([1, 0], True, False), "DBRW": ([0, 1], False, True), "DBB": ([0, -1], True, True)}
+for name, (key, walk, aj) in X.items():
+    s = base(name, "%s jump 40, key %s from 56%s" % ("walk," if walk else "standing", key, ", air jump 66" if aj else " (control)"))
+    if walk:
+        s["timeline"].append({"from": 1, "to": 55, "move": [0, 1]})
+    s["timeline"] += [{"from": 40, "to": 40, "buttons": ["jump"]}, {"from": 56, "to": 170, "move": key}]
+    if aj:
+        s["timeline"].append({"from": 66, "to": 66, "buttons": ["jump"]})
+    json.dump(s, open(name + ".json", "w"), indent=1)

@@ -265,3 +265,29 @@ Scenarios are in `scenarios/wallfat`. The setup is the same as WJW: W held throu
   - Rising-contact repeats.
   - Whether a landing clears the fatigue (the sim assumes it does).
   - Whether an airborne melee adds fatigue.
+
+## Air jump: stamina and horizontal (Haze, marks street_y148 and wallA)
+
+Scenarios are in `scenarios/stam/gen.py`, `scenarios/double/gen.py` (DBX, DBL, DBRW, DBB) and `scenarios/wallfat` (WJAJ).
+Two trials each. `stam/dashes.py` counts dashes (HUD ≥ 600 within 12 ticks of a press). `double/hser.py` prints forward and lateral velocity from camera-position slopes.
+
+- **The air jump is free.** SAJ spends two charges on ground dashes, then does an air jump and an air dash before any regen. The air dash still fires (to ~570, z flat) in both trials, and the SAJ0 control matches. The sim charged 1.
+- **A dash jump costs 2 in total.** In SCDJ, a dash followed by a dash jump leaves one charge. This matches `cost_dash_jump_extra` 1.
+- **Regen is ~140 ticks after each use.** A 4th dash at +142 failed, while dashes at +148 and +196 fired. Fast stamina may still have been on, since the spec says 4.5 s, so the regen time is not applied.
+- **Air jump after a dash jump (DJAJ at +10 and +30):** allowed, and the ~620 horizontal speed is kept.
+- **Air jump after a wall jump (WJAJ):** vz is set to ~520–545, as in the plain air jump. The camera next to the wall is too unreliable to judge the horizontal.
+- **The air jump accelerates along the held direction.** Other components are kept:
+
+  | Case | v·wish before | v·wish after | Other component |
+  |---|---|---|---|
+  | DBX: S-brake, then W | ~100 | ~275–290 | – |
+  | DBRW: standing jump, W | ~80 | ~275–285 | – |
+  | DBL: W walk, then D | ~82 (lateral) | ~270–280 | forward ~330 kept |
+  | DBB: W walk, then S | ~−210 | ~0 (then air accel to −80) | – |
+  | DBW24: W walk | ~340 | unchanged | – |
+  | DB0: no key | – | unchanged | – |
+
+  - One Source-style accelerate step fits all the cases. It raises v·wish toward **~280 u/s**, adding at most **~205 u/s**.
+  - Only DBB pins the ~205 limit; every other case reaches 280.
+  - The earlier "no redirect" result (DBD, DBS, DBR) came from the key being pressed on the same tick as the air jump, so it was not registered.
+- **The air strafe caps at ~82 u/s.** The lateral speed from D before the air jump (DBL, DBL0) flattens at 80–87 u/s. This supports the provisional 80 u/s air wishspeed cap (G26).

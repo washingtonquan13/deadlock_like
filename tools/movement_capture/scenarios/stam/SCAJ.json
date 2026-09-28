@@ -1,0 +1,68 @@
+{
+ "_comment": "jump 4, air jump 20, then ground dashes at 115/161/207: 2 work if the air jump costs 1",
+ "name": "SCAJ",
+ "clip": "SCAJ",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 260,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 235,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 20,
+   "to": 20,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 115,
+   "to": 115,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 161,
+   "to": 161,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 207,
+   "to": 207,
+   "buttons": [
+    "dash"
+   ]
+  }
+ ]
+}

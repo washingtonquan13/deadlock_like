@@ -1,0 +1,63 @@
+{
+ "_comment": "walk, jump 40, S 42..66 (fwd ~0), W from 67, air jump 76",
+ "name": "DBX",
+ "clip": "DBX",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 200,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 41,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 40,
+   "to": 40,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 42,
+   "to": 66,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 67,
+   "to": 170,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 76,
+   "to": 76,
+   "buttons": [
+    "jump"
+   ]
+  }
+ ]
+}
