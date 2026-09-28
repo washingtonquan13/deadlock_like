@@ -105,3 +105,23 @@ func test_measured_wall_jump_launch() -> void:
 		assert_near(-v.x, float(c[2]), 20.0, key + ": kick off the wall")
 		assert_near(absf(v.z), float(c[3]), 15.0, key + ": kick along the wall")
 	done()
+
+
+## Measured session 4 (wallfat): with W held, a second wall jump ~53 ticks after the first launches only ~0.3-0.45 of
+## the first one's vertical speed; the kick off the wall is unchanged. Loose on purpose.
+func test_wall_jump_fatigue_second_jump() -> void:
+	var h := new_harness(&"flat")
+	ArenaBuilder.add_wall(h.root, Vector3(1.25, 25.0, 0.0), Vector3(0.5, 50.0, 20.0))
+	await h.ready()
+	h.spawn(Vector3(1.0 - 0.4064 - 0.1, 30.0, 0.0), -PI / 2.0)
+	h.run(80, func(t: int) -> InputCmd: return cmd(t, B_JUMP if (t == 1 or t == 54) else 0, 0, 1, -PI / 2.0))
+	var i1 := first_event(h.trace, MoveEvents.WALL_JUMP, "count", 1)
+	var i2 := first_event(h.trace, MoveEvents.WALL_JUMP, "count", 2)
+	assert_true(i1 >= 0 and i2 >= 0, "two wall jumps (W pulls back to the wall)")
+	if i1 >= 0 and i2 >= 0:
+		var v1: Vector3 = h.trace[i1]["vel"] / 0.0254
+		var v2: Vector3 = h.trace[i2]["vel"] / 0.0254
+		var r := v2.y / v1.y
+		assert_true(r > 0.25 and r < 0.5, "second jump vertical is fatigued (ratio %.2f)" % r)
+		assert_near(v2.x, v1.x, 20.0, "kick off the wall not fatigued")
+	done()

@@ -43,7 +43,7 @@ static func try_light(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 		return
 	ModifierStack.add_raw(s, &"light_melee_slow", ModifierDef.Stat.SLOW, p.light_self_slow, p.light_self_slow_time, &"melee")
 	if not s.grounded:
-		sim.add_wall_fatigue(s, p.wall_jump_fatigue_per_jump)
+		sim.add_wall_fatigue(s, p.melee_wall_fatigue)
 
 
 ## spec: movement.md §19 heavy melee start. Returns true when started.
@@ -54,7 +54,7 @@ static func try_heavy(sim: MovementSim, s: MoveState, ctx: Ctx) -> bool:
 	if not _melee_allowed(s) or s.loco == L.GROUND_DASH:
 		return false
 	if not s.grounded:
-		sim.add_wall_fatigue(s, p.wall_jump_fatigue_per_jump)
+		sim.add_wall_fatigue(s, p.melee_wall_fatigue)
 	if s.loco == L.SLIDE:
 		sim.emit(s, MoveEvents.SLIDE_END)
 	sim.try_uncrouch(s)

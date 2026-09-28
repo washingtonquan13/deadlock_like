@@ -87,12 +87,11 @@ static func try_wall_jump(sim: MovementSim, s: MoveState, ctx: Ctx) -> bool:
 	var cost := 0.0 if s.wall_jumps_done < p.wall_jump_free_count else p.cost_wall_jump_subsequent
 	if not sim.spend(s, cost):
 		return false
-	# fatigue scales the vertical launch only (walls_and_ledges.md rule 13, official 2025-05-08).
-	# PROVISIONAL (G33): the 0.25 floor and the linear curve are unsourced; pending clip W5.
 	# measured session 3: the launch depends on the vertical speed just before the press (steeper while falling)
+	# measured session 4 (wallfat): fatigue scales only the base up speed, not the vz term and not the kick
 	var vz0 := s.velocity.y
-	var up := p.wall_jump_up_speed + vz0 * (p.wall_jump_up_vz_gain_fall if vz0 < 0.0 else p.wall_jump_up_vz_gain_rise)
-	var vy := maxf(0.0, up) * maxf(p.wall_jump_fatigue_min_mult, 1.0 - s.wall_fatigue)
+	var base := p.wall_jump_up_speed * maxf(p.wall_jump_fatigue_min_mult, 1.0 - s.wall_fatigue)
+	var vy := maxf(0.0, base + vz0 * (p.wall_jump_up_vz_gain_fall if vz0 < 0.0 else p.wall_jump_up_vz_gain_rise))
 	sim.add_wall_fatigue(s, p.wall_jump_fatigue_per_jump)
 	# measured session 3: the kick off the wall is linear in d = wish.normal (W in = toward, S out = away)
 	var d := ctx.wish.dot(n) if ctx.has_move else 0.0

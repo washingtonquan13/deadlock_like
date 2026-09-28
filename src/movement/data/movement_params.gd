@@ -197,15 +197,16 @@ extends Resource
 @export var wall_jump_kick_tangent: float = 3.734                 # measured session 3: 147 u/s along the wall per unit of the wish's tangential component (A/D)
 @export var wall_jump_free_count: int = 1                        # spec: movement.md §14
 @export var wall_slide_max_fall: float = 15.24                   # G36: -600 u/s fall cap on a wall (walls_and_ledges.md rule 21); PROVISIONAL (G36): trigger (airborne + wall contact + falling) pending recording
-@export var wall_jump_fatigue_per_jump: float = 0.25             # spec: movement.md §14
-@export var wall_jump_fatigue_min_mult: float = 0.25             # PROVISIONAL (G33): floor on the vertical fatigue multiplier (fatigue is vertical-only, walls_and_ledges.md rule 13 / 2025-05-08); no source for 0.25, curve pending W5
+@export var wall_jump_fatigue_per_jump: float = 1.0              # measured session 4 (wallfat): each wall jump sets fatigue to full
+@export var wall_jump_fatigue_min_mult: float = 0.0              # measured session 4: no floor (the base up speed goes to ~0 right after a wall jump)
+@export var melee_wall_fatigue: float = 0.25                     # PROVISIONAL: airborne melee fatigue (spec §19); amount unmeasured, keeps the pre-session-4 value
 # G33: a wall jump too soon after the previous one gives no height and no distance (video_guides V7 14:14),
 # and extra jump presses next to a wall are eaten, not spent as an air jump (V18 Stairs 1:21). Modeled as a
 # minimum interval between wall jumps; a press inside it is consumed with no effect.
 # PROVISIONAL (G33): 0.125 s placeholder ("slightly longer than a double jump or a dash", V7); pending clip W5.
 @export var wall_jump_min_interval: float = 0.125
-@export var wall_jump_fatigue_recovery: float = 1.25             # spec: movement.md §14
-@export var wall_jump_fatigue_recovery_exponent: float = 1.0      # spec: movement.md §14 recovery curve shape (1 = linear; spec gives no curve)
+@export var wall_jump_fatigue_recovery: float = 1.95             # measured session 4 (wallfat): linear recovery over ~125 ticks
+@export var wall_jump_fatigue_recovery_exponent: float = 1.0      # measured session 4: linear fits (rms ~8 u/s)
 # G03 wall jump: incoming velocity is split into normal and tangential parts; tangential is kept
 # (V13 0:18, V6 17:09, V7 8:19). PROVISIONAL (G03): pending recording clip W1.
 @export var wall_jump_tangent_keep: float = 0.95                 # measured session 3: incoming tangent kept at ~0.9-1.0 (165 -> 147 at 25 deg, 250 -> 245 at 45 deg)

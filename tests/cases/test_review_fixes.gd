@@ -247,8 +247,10 @@ func test_rf_fatigue_exponent() -> void:
 		h.state.wall_fatigue = 0.5
 		h.state.wall_fatigue_peak = 0.5
 		h.state.wall_fatigue_recover_ticks = 0
-		h.run(h.cp.wall_fatigue_recovery_ticks / 2, hold())
-		assert_near(h.state.wall_fatigue, 0.5 * pow(0.5, k), 1e-6, "fatigue at half recovery (k=%.0f)" % k)
+		var n := h.cp.wall_fatigue_recovery_ticks / 2
+		h.run(n, hold())
+		var t := float(n) / float(h.cp.wall_fatigue_recovery_ticks)
+		assert_near(h.state.wall_fatigue, 0.5 * pow(1.0 - t, k), 1e-6, "fatigue at half recovery (k=%.0f)" % k)
 	done()
 
 
