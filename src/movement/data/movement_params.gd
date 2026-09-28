@@ -236,11 +236,11 @@ extends Resource
 @export var wall_jump_fatigue_per_jump: float = 1.0              # measured session 4 (wallfat): each wall jump sets fatigue to full
 @export var wall_jump_fatigue_min_mult: float = 0.0              # measured session 4: no floor (the base up speed goes to ~0 right after a wall jump)
 @export var melee_wall_fatigue: float = 0.25                     # PROVISIONAL: airborne melee fatigue (spec §19); amount unmeasured, keeps the pre-session-4 value
-# G33: a wall jump too soon after the previous one gives no height and no distance (video_guides V7 14:14),
-# and extra jump presses next to a wall are eaten, not spent as an air jump (V18 Stairs 1:21). Modeled as a
-# minimum interval between wall jumps; a press inside it is consumed with no effect.
-# PROVISIONAL (G33): 0.125 s placeholder ("slightly longer than a double jump or a dash", V7); pending clip W5.
-@export var wall_jump_min_interval: float = 0.125
+# G33, measured session 11 (WI4/8/12/20, wi_sim.py): after a wall jump, a jump press is held until this interval ends
+# and then fires (by then the pawn is off the wall, so it is an air jump). The press is not eaten. Presses at +4 and +8
+# ticks both give a 235 u rise over 48 ticks (sim 231 at 10 ticks, with a 2-3 u low bias seen in WI12/WI20/WN_E);
+# +12 and +20 fire at once. The spec's "slightly longer than a double jump or a dash" (V7) was a 0.125 s placeholder.
+@export var wall_jump_min_interval: float = 0.156
 @export var wall_jump_fatigue_recovery: float = 1.95             # measured session 4 (wallfat): linear recovery over ~125 ticks
 @export var wall_jump_fatigue_recovery_exponent: float = 1.0      # measured session 4: linear fits (rms ~8 u/s)
 # G03 wall jump: incoming velocity is split into normal and tangential parts; tangential is kept

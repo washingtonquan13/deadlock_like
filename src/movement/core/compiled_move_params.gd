@@ -41,7 +41,7 @@ var slide_jump_store_crouch_ticks: int = 14
 var slide_hop_min_ticks: int = 32       # PROVISIONAL (G09)
 var slide_hop_penalty_ticks: int = -1   # PROVISIONAL (G09): <0 = until landing
 var slide_hop_clear_ticks: int = 16     # PROVISIONAL (G09)
-var wall_jump_min_interval_ticks: int = 8   # PROVISIONAL (G33)
+var wall_jump_min_interval_ticks: int = 10  # G33 (measured session 11)
 var floor_min_normal_y: float = 0.7
 var slide_slope_min_normal_y: float = 0.996
 
@@ -91,7 +91,7 @@ static func build(p_params: MovementParams, p_hero: HeroMovementStats) -> Compil
 	c.slide_hop_min_ticks = MoveUnits.ticks(p.slide_hop_min_time)                     # PROVISIONAL (G09)
 	c.slide_hop_penalty_ticks = -1 if p.slide_hop_penalty_time < 0.0 else MoveUnits.ticks(p.slide_hop_penalty_time)
 	c.slide_hop_clear_ticks = maxi(1, MoveUnits.ticks(p.slide_hop_clear_time))
-	c.wall_jump_min_interval_ticks = MoveUnits.ticks(p.wall_jump_min_interval)        # PROVISIONAL (G33)
+	c.wall_jump_min_interval_ticks = MoveUnits.ticks(p.wall_jump_min_interval)        # G33 (measured session 11)
 	c.floor_min_normal_y = cos(deg_to_rad(p.max_floor_angle_deg))
 	c.slide_slope_min_normal_y = cos(deg_to_rad(p.slide_slope_min_angle_deg))
 	c.params_hash = hash([_res_signature(p), _res_signature(h)])

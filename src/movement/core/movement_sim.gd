@@ -574,6 +574,7 @@ func _land(s: MoveState, ctx: Ctx, g: Dictionary) -> void:
 		s.air_dash_drag_pending = false
 		s.air_dash_drag_land_ticks = -1
 	s.last_wall_jump_tick = -1
+	s.jump_deferred = false
 	# spec: movement.md §16 knock-off stun starts on landing
 	if s.zip_knockoff_pending:
 		s.zip_knockoff_pending = false

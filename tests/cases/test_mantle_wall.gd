@@ -64,7 +64,7 @@ func test_t25_mantle_bands() -> void:
 
 ## spec: movement.md §14 wall jump: first free, then 0.5 stamina and fatigue (T26)
 func test_t26_wall_jump() -> void:
-	# the G33 min interval would eat the tick-3 press; it is tested in test_fpp_g33_double_press_one_wall_jump
+	# the G33 min interval would defer the tick-3 press; it is tested in test_fpp_g33_press_in_interval_deferred
 	var p := MovementParams.new()
 	p.wall_jump_min_interval = 0.0
 	var h := new_harness(&"flat", p)

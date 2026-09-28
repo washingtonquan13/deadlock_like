@@ -111,7 +111,8 @@ var slide_hop_flag: bool = false             # PROVISIONAL (G09): set by a slide
 var slide_hop_penalty_active: bool = false   # PROVISIONAL (G09): slide-drag air drag active
 var slide_hop_penalty_ticks: int = 0         # PROVISIONAL (G09): remaining ticks when the penalty is timed
 var slide_hop_ground_ticks: int = 0          # PROVISIONAL (G09): ground ticks not sliding (clears the flag)
-var last_wall_jump_tick: int = -1            # PROVISIONAL (G33): tick of the last wall jump this airtime (-1 = none)
+var last_wall_jump_tick: int = -1            # G33: tick of the last wall jump this airtime (-1 = none)
+var jump_deferred: bool = false              # G33: a jump pressed inside the post-wall-jump interval, fired when it ends
 var air_dash_drag_land_ticks: int = -1       # PROVISIONAL (G02): ticks left of an air dash that landed (IAD) while its end drag is pending (-1 = not landed)
 var air_dash_ramp_target: float = 0.0        # air dash cap mode 3: along-dash speed the ramp stops at
 var air_dash_ramp_v0: float = 0.0          # air dash cap mode 3: speed along the dash at its start (measured session 5)

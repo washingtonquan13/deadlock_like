@@ -265,20 +265,18 @@ func test_fpp_g02_iad_bhop_drags() -> void:
 	done()
 
 
-## G33 min interval: a second jump press next to the same wall 2 ticks after a wall jump is eaten:
-## one WALL_JUMP, no air jump, stamina charged once (V7 14:14, V18 1:21). Pending W5.
-func test_fpp_g33_double_press_one_wall_jump() -> void:
+## G33, measured session 11 (WI4/8): a second jump press 2 ticks after a wall jump is held, not eaten. It fires
+## when wall_jump_min_interval (10 ticks) ends, as an air jump once the pawn has left the wall.
+func test_fpp_g33_press_in_interval_deferred() -> void:
 	var h := new_harness(&"flat")
 	ArenaBuilder.add_wall(h.root, Vector3(1.25, 5.0, 0.0), Vector3(0.5, 10.0, 20.0))
 	await h.ready()
 	h.spawn(Vector3(1.0 - R - 0.05, 3.0, 0.0), 0.0)
-	h.state.wall_jumps_done = 1   # next wall jump costs cost_wall_jump_subsequent
-	var st0 := h.state.stamina
-	h.run(6, func(t: int) -> InputCmd: return cmd(t, B_JUMP if (t == 1 or t == 3) else 0))
+	h.run(20, func(t: int) -> InputCmd: return cmd(t, B_JUMP if (t == 1 or t == 3) else 0))
+	var w := first_event(h.trace, MoveEvents.WALL_JUMP)
+	var j := first_event(h.trace, MoveEvents.JUMPED, "kind", &"air")
 	assert_eq(_count(h.trace, MoveEvents.WALL_JUMP), 1, "one wall jump")
-	assert_eq(first_event(h.trace, MoveEvents.JUMPED, "kind", &"air"), -1, "second press not spent as an air jump")
-	assert_eq(h.state.air_jumps_used, 0, "no air jump used")
-	assert_near(h.state.stamina, st0 - h.sim.cp.params.cost_wall_jump_subsequent, 1e-6, "stamina charged once")
+	assert_true(w >= 0 and j >= 0 and absi(j - w - 10) <= 1, "the held press fires as an air jump ~10 ticks after the wall jump (%d, %d)" % [w, j])
 	done()
 
 

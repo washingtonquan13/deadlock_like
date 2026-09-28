@@ -29,7 +29,19 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 			return
 		s.last_air_crouch_press_tick = ctx.tick_no
 	# spec: movement.md §10, §14 jump in the air: wall jump, coyote jump, air jump
+	# measured session 11 (WI4/8/12/20): a jump pressed within wall_jump_min_interval after a wall jump is neither eaten
+	# nor fired at once: it is held and fires when the interval ends (an air jump once the wall is out of reach).
+	var in_interval := s.last_wall_jump_tick >= 0 and ctx.tick_no - s.last_wall_jump_tick < sim.cp.wall_jump_min_interval_ticks
+	var jump := false
 	if ctx.is_pressed(InputCmd.BTN_JUMP) and (ctx.mask & ControlLocks.JUMP) == 0:
+		if in_interval:
+			s.jump_deferred = true
+		else:
+			jump = true
+	elif s.jump_deferred and not in_interval:
+		jump = (ctx.mask & ControlLocks.JUMP) == 0
+	if jump:
+		s.jump_deferred = false
 		if try_wall_jump(sim, s, ctx):
 			return
 		if s.coyote_ticks > 0:
@@ -93,11 +105,6 @@ static func try_wall_jump(sim: MovementSim, s: MoveState, ctx: Ctx) -> bool:
 	if n.length_squared() < 1e-6:
 		return false
 	n = n.normalized()
-	# G33: a wall jump too soon after the previous one gives no height and no distance (video_guides V7 14:14);
-	# the extra press next to the wall is eaten, not spent as an air jump (V18 Stairs 1:21).
-	# PROVISIONAL (G33): interval length pending clip W5.
-	if s.last_wall_jump_tick >= 0 and ctx.tick_no - s.last_wall_jump_tick < sim.cp.wall_jump_min_interval_ticks:
-		return true
 	var cost := 0.0 if s.wall_jumps_done < p.wall_jump_free_count else p.cost_wall_jump_subsequent
 	if not sim.spend(s, cost):
 		return false
