@@ -46,6 +46,10 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 				s.velocity.y = vy
 			else:
 				s.velocity.y += vy
+			if ctx.has_move:
+				var add := p.air_jump_wish_speed - Vector3(s.velocity.x, 0.0, s.velocity.z).dot(ctx.wish)
+				if add > 0.0:
+					s.velocity += Vector3(ctx.wish.x, 0.0, ctx.wish.z) * minf(add, p.air_jump_wish_add_max)
 			s.air_jumps_used += 1
 			s.loco = L.AIR
 			sim.emit(s, MoveEvents.JUMPED, {"kind": &"air"})

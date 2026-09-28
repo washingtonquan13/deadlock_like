@@ -53,7 +53,7 @@ extends Resource
 @export var cost_ground_dash: float = 1.0                        # spec: movement.md §7, §8
 @export var cost_air_dash: float = 1.0                           # spec: movement.md §7, §11
 @export var cost_dash_jump_extra: float = 1.0                    # spec: movement.md §7, §9
-@export var cost_air_jump: float = 1.0                           # spec: movement.md §7, §10
+@export var cost_air_jump: float = 0.0                           # measured session 4 (SAJ): free (spec §7 said 1)
 @export var cost_wall_jump_subsequent: float = 0.5               # spec: movement.md §7, §14
 @export var cost_down_dash: float = 0.5                          # G28: 0.5 per wiki Stamina page (fidelity gaps, research-settled; K54)
 @export var wall_jump_combat_regen_penalty: float = 0.25         # spec: movement.md §7, §14
@@ -90,6 +90,10 @@ extends Resource
 @export var gravity: float = 20.32                               # measured 798-801 u/s^2 on plain jumps (session2_findings.md); spec §10 was 24.562 (967 u/s^2)
 @export var air_jump_speed: float = 13.26                        # measured session 4: vz set to ~522 u/s (was 7.493 = 295)
 @export var air_jump_sets_vertical: bool = true                  # measured session 4: set, not added (rise ~168 u for any vz before)
+# measured session 4 (DBX/DBL/DBRW/DBB): one accelerate step along the wish on the air jump; v.wish rises toward
+# 280 u/s by at most 205 u/s (only DBB pins the step), other components kept, nothing with no key held.
+@export var air_jump_wish_speed: float = 7.112
+@export var air_jump_wish_add_max: float = 5.207
 @export var air_jumps_per_airtime: int = 1                       # spec: movement.md §10
 @export var coyote_time: float = 0.0                             # spec: movement.md §10 (Open Q20)
 @export var jump_buffer_time: float = 0.0                        # spec: movement.md §10 (Open Q20)

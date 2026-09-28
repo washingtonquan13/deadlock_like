@@ -62,7 +62,7 @@ func test_t17_down_dash_double_tap() -> void:
 	done()
 
 
-## spec: movement.md §10 air jump sets vertical speed, costs 1, one per airtime (T18)
+## spec: movement.md §10 air jump sets vertical speed, one per airtime (T18); free (measured session 4, SAJ)
 func test_t18_air_jump() -> void:
 	var h := new_harness(&"flat")
 	await h.ready()
@@ -72,7 +72,7 @@ func test_t18_air_jump() -> void:
 	if i >= 0:
 		var vy: float = (h.trace[i]["vel"] as Vector3).y
 		assert_near(vy, 13.26 - 20.32 / 64.0, 1e-4, "vertical speed after air jump (half-step gravity)")
-		assert_near(h.trace[i]["stamina"], 2.0, 1e-9, "stamina after air jump")
+		assert_near(h.trace[i]["stamina"], 3.0, 1e-9, "air jump is free")
 	assert_true(first_event(h.trace, MoveEvents.JUMPED, "kind", &"air", 10) < 0, "second air jump refused")
 	assert_eq(h.state.air_jumps_used, 1, "one air jump used")
 	# land, counters refresh
@@ -83,4 +83,24 @@ func test_t18_air_jump() -> void:
 	var t0 := h.state.tick
 	h.run(20, func(t: int) -> InputCmd: return cmd(t, B_JUMP if (t == t0 + 1 or t == t0 + 10) else 0))
 	assert_true(first_event(h.trace, MoveEvents.JUMPED, "kind", &"air") >= 0, "air jump works again after landing")
+	done()
+
+
+## Measured air jump horizontal (session4_findings.md): one accelerate step along the held key raises v.wish toward
+## ~280 u/s by at most ~205 u/s; other components are kept. Loose on purpose.
+func test_measured_air_jump_wish_accel() -> void:
+	var u := 0.0254
+	for c: Array in [[1, 0, Vector3(82.0, 0.0, -330.0)], [0, -1, Vector3(0.0, 0.0, -210.0)]]:
+		var h := new_harness(&"flat")
+		await h.ready()
+		h.spawn(Vector3(0.0, 50.0, 0.0), 0.0)
+		h.state.air_jumps_used = 0
+		h.state.velocity = c[2] * u
+		h.run(2, func(t: int) -> InputCmd: return cmd(t, B_JUMP if t == 2 else 0, c[0], c[1]))
+		var v: Vector3 = h.state.velocity / u
+		if c[0] == 1:
+			assert_near(v.x, 280.0, 25.0, "D: lateral raised to ~280")
+			assert_near(-v.z, 330.0, 25.0, "D: forward kept")
+		else:
+			assert_near(-v.z, 0.0, 30.0, "S against 210: raised by ~205 only, to ~0")
 	done()
