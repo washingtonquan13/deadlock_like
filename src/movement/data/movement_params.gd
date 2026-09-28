@@ -301,8 +301,10 @@ extends Resource
 @export var heavy_lunge_ramp_time_air: float = 0.156             # G10: measured session 11 (HM_J): air speed ramps faster, ~10 ticks
 @export var heavy_lunge_start_frac_ground: float = 0.59          # G10: measured session 11 (HM_S/HM_W: ~465 u/s on the first lunge tick)
 @export var heavy_lunge_start_frac_air: float = 0.43             # G10: measured session 11 (HM_J: ~340 u/s 3D on the first lunge tick); PROVISIONAL: one aim pitch (14.7 deg down)
-@export var heavy_recovery_time: float = 0.2833                  # G12: 0.2833 s, velocity zeroed on all axes (ziplines_melee_misc.md; K28, K30)
-@export var heavy_recovery_max_speed: float = 2.921                # G12: measured session 11 (HM_R): on the ground the recovery caps speed at ~115 u/s, with normal accel under it; PROVISIONAL: air recovery unmeasured (kept at zero)
+@export var heavy_recovery_time: float = 0.345                   # G12: measured session 11 (HM_R, lag 2.7): the ground ~115 u/s cap holds ~22 ticks after the lunge stops (spec 0.2833 s ran 3-4 ticks short)
+@export var heavy_recovery_max_speed: float = 2.921                # G12: measured session 11 (HM_R): the recovery caps speed at ~115 u/s, with normal accel under it (ground); also applied in the air
+@export var heavy_recovery_air_accel_mult: float = 0.15           # G12: measured session 11 (HM_AW): in an air recovery W adds ~2 u/s per tick (vs ~12 normally), vz held at 0
+@export var heavy_recovery_time_air: float = 0.36                 # G12: measured session 11 (HM_A, HM_AW): the air recovery holds the hero ~23 ticks after the lunge stops, then gravity resumes
 @export var heavy_turn_rate_mult: float = 0.3                    # spec: movement.md §19
 @export var heavy_cooldown_hit: float = 1.0                      # spec: movement.md §19
 @export var heavy_cooldown_miss: float = 1.3                     # spec: movement.md §19 (2025-07-29 notes)

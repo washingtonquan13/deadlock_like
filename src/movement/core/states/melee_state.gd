@@ -85,7 +85,7 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 				# G12 (fixes K28): no clamp to walk speed; recovery zeroes all velocity (see physics)
 				s.velocity = Vector3.ZERO
 		LP.RECOVERY:
-			if s.phase_ticks >= cp.heavy_recovery_ticks:
+			if s.phase_ticks >= (cp.heavy_recovery_ticks if s.grounded else cp.heavy_recovery_ticks_air):
 				_finish(sim, s)
 
 
@@ -120,13 +120,17 @@ static func physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 		return
 	elif s.phase == LP.RECOVERY:
 		# G12, measured session 11 (HM_R): the lunge ends at zero speed; on the ground the recovery then allows normal
-		# accel but caps speed at heavy_recovery_max_speed (~115 u/s). In the air it still holds velocity at 0 on all
-		# axes (no friction, drag or gravity; K30, unmeasured).
+		# accel but caps speed at heavy_recovery_max_speed (~115 u/s). Measured session 11 (HM_A, HM_AW): in the air
+		# vz is held at 0 (no gravity) and air input works at heavy_recovery_air_accel_mult of the normal rate.
 		if s.grounded:
 			GroundState.walk_physics(sim, s, ctx, sim.cp.effective_move_speed(s, ctx.firing))
 			sim.clamp_horizontal(s, p.heavy_recovery_max_speed)
 		else:
-			s.velocity = Vector3.ZERO
+			var v0 := s.velocity
+			AirState.air_physics(sim, s, ctx, true)
+			s.velocity = v0 + (s.velocity - v0) * p.heavy_recovery_air_accel_mult
+			s.velocity.y = 0.0
+			sim.clamp_horizontal(s, p.heavy_recovery_max_speed)
 		s.phase_ticks += 1
 		return
 	elif s.grounded:

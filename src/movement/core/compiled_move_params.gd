@@ -34,6 +34,7 @@ var heavy_lunge_ticks: int = 22
 var heavy_lunge_ramp_ticks: int = 13
 var heavy_lunge_ramp_ticks_air: int = 10
 var heavy_recovery_ticks: int = 13
+var heavy_recovery_ticks_air: int = 18
 var parry_ticks: int = 64
 var combat_penalty_ticks: int = 320
 var in_combat_ticks: int = 192
@@ -86,6 +87,7 @@ static func build(p_params: MovementParams, p_hero: HeroMovementStats) -> Compil
 	c.heavy_lunge_ramp_ticks = maxi(1, MoveUnits.ticks(p.heavy_lunge_ramp_time))
 	c.heavy_lunge_ramp_ticks_air = maxi(1, MoveUnits.ticks(p.heavy_lunge_ramp_time_air))
 	c.heavy_recovery_ticks = MoveUnits.ticks(p.heavy_recovery_time)
+	c.heavy_recovery_ticks_air = MoveUnits.ticks(p.heavy_recovery_time_air)
 	c.parry_ticks = MoveUnits.ticks(p.parry_duration)
 	c.combat_penalty_ticks = MoveUnits.ticks(p.wall_jump_combat_regen_penalty_time)
 	c.in_combat_ticks = MoveUnits.ticks(p.in_combat_time)                  # spec: movement.md §14
