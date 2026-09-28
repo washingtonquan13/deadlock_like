@@ -85,10 +85,16 @@ The apparent cut (~570 → ~85 u/s at touchdown) is **an obstacle on the street 
 |---|---|---|
 | No key (DJ27) | Lands at ~565, then ground friction: 435 → 141 over 0.28 s | 0.31 ratio |
 | Crouch held from mid-air or just before touchdown (DJC, DJC2) | Slide at the landing speed (no boost): 567 → 506 over 0.61 s, ~100 u/s² | DASH_JUMP landing slide, 568 → 502 over 0.70 s, ~94 u/s² |
-| Crouch pressed ~2 ticks after touchdown (DJC3) | ~6 ticks of ground friction first, then a slide from ~385 | Slides from ~530 |
+| Crouch pressed after touchdown (DJC3, DJCP100/106/110) | Ground friction until the press, then a slide at the speed left (see below) | Same, within ~1 tick |
 
 - **Late part of DJC and DJC2:** the drop after ~0.65 s of slide is the landing-slide penalty onset (~0.69 s, see "Landing-slide onset" below), not the end of the runway.
-- **Open (DJC3):** the gap may be a crouch-to-slide delay on the ground, or the landing tick being off by ~2 ticks. It needs a ground test: run, then a crouch press.
+- **Crouch after touchdown (DJC3 resolved; `cslide.py`):**
+  - The sim lands on input tick 98. The recorder adds ~2.5–3.5 ticks of latency, and that latency is the same for jump and crouch presses within a run.
+  - A crouch 2 ticks after landing (DJCP100) slides ~3 ticks after touchdown, at 471 (sim: 2 ticks, 531).
+  - A crouch 5 ticks after (DJC3) slides ~5.5 ticks after touchdown, at 390 (sim: 5 ticks, 438).
+  - A crouch 8 or 12 ticks after (DJCP106/110) gives no slide: the speed is already ≤ ~350, below slide entry, and it just crouches (the sim slides at 362 for DJCP106).
+  - So there is no crouch-to-slide delay. The residual is ≤ ~1 tick of phase (the game's rise→land is ~66 ticks against the sim's 67), and there is no model change.
+  - The old "sim slides from ~530" figure came from before the landing-slide fix (7f4b266).
 
 ## Mantles (Haze, crate top 66 u above the sidewalk, mark crateA)
 
