@@ -69,6 +69,21 @@ def foreground_exe() -> str:
         k32.CloseHandle(h)
 
 
+def _exe_of(hwnd) -> str:
+    pid = wintypes.DWORD()
+    u32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+    h = k32.OpenProcess(0x1000, False, pid.value)
+    if not h:
+        return ""
+    try:
+        buf = ctypes.create_unicode_buffer(1024)
+        n = wintypes.DWORD(1024)
+        k32.QueryFullProcessImageNameW(h, 0, buf, ctypes.byref(n))
+        return os.path.basename(buf.value).lower()
+    finally:
+        k32.CloseHandle(h)
+
+
 def require_game(exe: str = "deadlock.exe") -> None:
     fg = foreground_exe()
     if fg != exe:
@@ -100,6 +115,34 @@ def game_window(exe: str = "deadlock.exe"):
     return max(found)[1] if found else None
 
 
+def minimize_popups(exes: tuple = ("egui.exe",), verbose: bool = False) -> int:
+    """Minimizes visible windows of `exes` (the ESET notification popup takes the foreground). Minimizing answers
+    nothing: an alert stays on the taskbar for the user. Returns the number minimized."""
+    hits = []
+    WNDENUMPROC = ctypes.WINFUNCTYPE(wintypes.BOOL, wintypes.HWND, wintypes.LPARAM)
+
+    def cb(hwnd, _):
+        if u32.IsWindowVisible(hwnd) and not u32.IsIconic(hwnd) and u32.GetWindowTextLengthW(hwnd) > 0:
+            pid = wintypes.DWORD()
+            u32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+            h = k32.OpenProcess(0x1000, False, pid.value)
+            if h:
+                buf = ctypes.create_unicode_buffer(1024)
+                n = wintypes.DWORD(1024)
+                k32.QueryFullProcessImageNameW(h, 0, buf, ctypes.byref(n))
+                k32.CloseHandle(h)
+                if os.path.basename(buf.value).lower() in exes:
+                    hits.append(hwnd)
+        return True
+
+    u32.EnumWindows(WNDENUMPROC(cb), 0)
+    for hwnd in hits:
+        u32.ShowWindow(hwnd, 6)  # SW_MINIMIZE
+    if verbose and hits:
+        print("minimize_popups: minimized %d window(s)" % len(hits))
+    return len(hits)
+
+
 def focus_game(exe: str = "deadlock.exe", verbose: bool = False) -> bool:
     """Brings the game's main window to the front (only when asked; runs never refocus on their own).
     Tries escalating methods, because a fullscreen 'Windows Input Experience' (textinputhost) window can sit in
@@ -117,6 +160,7 @@ def focus_game(exe: str = "deadlock.exe", verbose: bool = False) -> bool:
 
     if foreground_exe() == exe:
         return True
+    minimize_popups(verbose=verbose)
     # 1. Windows only lets the process that received the last input change the foreground: a bare Alt tap counts
     u32.keybd_event(0x12, 0, 0, 0)
     u32.keybd_event(0x12, 0, KEYEVENTF_KEYUP, 0)
@@ -144,7 +188,16 @@ def focus_game(exe: str = "deadlock.exe", verbose: bool = False) -> bool:
     r = wintypes.RECT()
     u32.GetWindowRect(hwnd, ctypes.byref(r))
     pt = wintypes.POINT((r.left + r.right) // 2, (r.top + r.bottom) // 2)
-    if u32.GetAncestor(u32.WindowFromPoint(pt), 2) != hwnd:  # GA_ROOT
+    top = u32.GetAncestor(u32.WindowFromPoint(pt), 2)  # GA_ROOT
+    for _ in range(4):
+        if top == hwnd or not _exe_of(top).startswith(("godot", "egui")):
+            break
+        u32.ShowWindow(top, 6)  # SW_MINIMIZE: the editor, a Godot run or a popup covers the game (reversible)
+        time.sleep(0.3)
+        if verbose:
+            print("focus_game: minimized %s covering the game" % _exe_of(top))
+        top = u32.GetAncestor(u32.WindowFromPoint(pt), 2)
+    if top != hwnd:
         if verbose:
             print("focus_game: something else is at the game's centre, not clicking")
         return False
