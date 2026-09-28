@@ -33,3 +33,36 @@ The fits are `scenarios/air/fitair.py` (v0 + constant accel) and `scenarios/air/
 
 - The 50 u/s cap above 700 u/s (`air_wishspeed_cap_fast`) is untested here.
 - Mouse-turn air strafing (turning while holding A/D) is untested. It should follow from the cap and accel.
+
+# Dash jumps (Haze B1, mark street)
+
+Scenarios are in `tools/movement_capture/scenarios/dashjump/gen.py`: W held, ground dash on tick 4, jump press k ticks later.
+Fits: `fitdj.py` (window, takeoff), `launchh.py` (launch speeds), `hudh.py` (speed series).
+**Camera-derived horizontal positions are unreliable during a ground dash:** they read ~950 u/s while the HUD shows 635.
+Horizontal speeds below come from the HUD speed (3D) with vz from the height track.
+
+## Launch (applied)
+
+- **Horizontal:** 703 u/s in all 12 trials (DJ20/22/27, DJC, DJW; fit residual ~4 u/s). The dash plateau is 635, so this is ×1.107.
+  - `dash_jump_set_speed` goes from 15.519 to 17.856 m/s.
+  - Whether it is a set value or a multiple of the bucket's dash speed needs a B2/B3 hero.
+- **Vertical:** ~412 u/s at the first airborne frame. That is consistent with 425 set minus one tick of gravity, so it is unchanged.
+- **In the air:** drag 0.2/s alone fits the horizontal decay (703 → ~570 at landing, airtime 1.03 s).
+
+## Window
+
+| Jump press after the dash (ticks) | Result |
+|---|---|
+| 12, 18 | No jump at all |
+| 20, 22, 27, 33 | Dash jump |
+| 36, 40 | No jump at all (the press is dropped, not buffered into a plain jump) |
+| 12 then 27 (DJL) | No jump: the early press locks the dash jump out |
+
+The model's window 0.30–0.55 s (ticks ~19–35) and the early-press lock match. The sim buffers a late press into
+a plain jump when the dash ends (tick 39); the game does not.
+
+## Landing (not applied yet)
+
+- **Dash-jump landing cut:** after a dash jump, touchdown cuts horizontal speed from ~570 to ~85 u/s within ~4 ticks, then normal friction follows.
+  - This happens with no key, with W, and with crouch held from mid-air (no dash-jump slide appears).
+- **Other landings keep their speed:** an air-dash landing at ~480 keeps ~440, and a plain jump landing at ~355 keeps ~330.

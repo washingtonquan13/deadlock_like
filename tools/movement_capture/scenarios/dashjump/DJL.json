@@ -1,0 +1,54 @@
+{
+ "_comment": "dash, early jump at 12 then again at 27 (does the early press lock the dash jump?)",
+ "name": "DJL",
+ "clip": "DJL",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 220,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 31,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 16,
+   "to": 16,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 31,
+   "to": 31,
+   "buttons": [
+    "jump"
+   ]
+  }
+ ]
+}

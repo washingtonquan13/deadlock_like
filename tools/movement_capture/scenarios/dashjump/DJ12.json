@@ -1,0 +1,47 @@
+{
+ "_comment": "dash, jump 12 ticks after the dash, no key after",
+ "name": "DJ12",
+ "clip": "DJ12",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 220,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 16,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 16,
+   "to": 16,
+   "buttons": [
+    "jump"
+   ]
+  }
+ ]
+}

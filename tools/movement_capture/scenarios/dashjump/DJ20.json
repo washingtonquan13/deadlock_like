@@ -1,0 +1,47 @@
+{
+ "_comment": "dash, jump 20 ticks after the dash, no key after",
+ "name": "DJ20",
+ "clip": "DJ20",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 220,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 24,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 24,
+   "to": 24,
+   "buttons": [
+    "jump"
+   ]
+  }
+ ]
+}

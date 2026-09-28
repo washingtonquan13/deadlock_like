@@ -74,9 +74,9 @@ extends Resource
 @export var dash_jump_coyote_time: float = -1.0                  # PROVISIONAL (G18): <0 = whole window stays open after dashing off a ledge (ground_dash.md rule 15); exact grace pending recording
 # G17 dash-jump horizontal. 0 = legacy: keep the bucket's dash speed x dash_jump_horizontal_mult (K13,
 # contradicted); 1 = SET to dash_jump_set_speed in every bucket, prior discarded (ground_dash.md rule 13 /
-# momentum table "SET to ~611 u/s", video_guides V9 0:19 "same velocity for every bucket").
+# momentum table, video_guides V9 0:19 "same velocity for every bucket"). The value is measured (session 4).
 @export var dash_jump_speed_mode: int = 1
-@export var dash_jump_set_speed: float = 15.5194                 # PROVISIONAL (G17): ~611 u/s (ground_dash.md rule 13, V9 0:19); exact value pending clip D3 (fit to the official 19 m)
+@export var dash_jump_set_speed: float = 17.856                  # measured session 4 (Haze B1): 703 u/s in every trial (was ~611 from V9). Same for every bucket is still unmeasured
 @export var dash_jump_horizontal_mult: float = 1.0               # legacy mode 0 only (K13, contradicted by V9 0:19)
 @export var dash_jump_air_control_bonus: float = 0.30            # spec: movement.md §9
 @export var dash_jump_air_control_time: float = 0.25             # spec: movement.md §9

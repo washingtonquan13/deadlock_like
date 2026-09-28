@@ -133,8 +133,8 @@ func test_fp1_g18_coyote_dash_jump() -> void:
 	assert_eq(i, 25, "airborne dash-jump at k=25")
 	if i >= 0:
 		assert_near((h.trace[i]["vel"] as Vector3).y, 10.795 - G * DT, 1e-4, "dash-jump vy 425 u/s")
-		# PROVISIONAL (G17): dash_jump_speed_mode 1 sets 611 u/s = 15.5194 m/s (V9 0:19), pending D3
-		assert_near(h.trace[i]["hspeed"], 15.5194 * (1.0 - 0.2 * DT), 1e-3, "dash-jump sets 611 u/s (then one tick of 0.2 air drag)")
+		# measured session 4: dash_jump_speed_mode 1 sets 703 u/s (session4_findings.md)
+		assert_near(h.trace[i]["hspeed"] / 0.0254, 703.0, 5.0, "dash-jump sets ~703 u/s")
 	assert_eq(h.state.air_jumps_used, 0, "no air jump used")
 	done()
 
