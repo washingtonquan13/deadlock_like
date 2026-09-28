@@ -1,0 +1,51 @@
+{
+ "_comment": "street_y058b: W 1..200, melee held 20..60 (heavy while running, W kept down: recovery and self-slow)",
+ "name": "HM_R",
+ "clip": "HM_R",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 230,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 200,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 20,
+   "to": 60,
+   "buttons": [
+    "melee"
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}

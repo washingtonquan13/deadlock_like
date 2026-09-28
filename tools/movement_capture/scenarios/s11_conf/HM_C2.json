@@ -1,0 +1,50 @@
+{
+ "_comment": "street_y058b: standing, melee held 5..45, then a fresh hold 115..220 (cooldown start: lunge start vs end)",
+ "name": "HM_C2",
+ "clip": "HM_C2",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 260,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 5,
+   "to": 45,
+   "buttons": [
+    "melee"
+   ]
+  },
+  {
+   "from": 115,
+   "to": 220,
+   "buttons": [
+    "melee"
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}
