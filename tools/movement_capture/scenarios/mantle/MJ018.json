@@ -1,0 +1,40 @@
+{
+ "_comment": "W held, jump at tick 18 (contact late in the fall: airborne trigger without a recent press?)",
+ "name": "MJ018",
+ "clip": "MJ018",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 220,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 220,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 18,
+   "to": 18,
+   "buttons": [
+    "jump"
+   ]
+  }
+ ]
+}

@@ -115,8 +115,13 @@ Scenarios are in `scenarios/mantle/gen.py` (the face is ~250 u ahead, contact at
   - This happens with W released too (MJ044R, 2 trials), so it behaves like a step-up or pop, not the climb.
   - With crouch held (MJ044C): pop, then crouch-walk at 187 u/s.
 - **Not repeatable at the same inputs (MJ056 t1, MJ070 t1):** a plain jump (apex ~62 u camera) followed by a pop onto the top without input. The cause may be the crate seam or the lateral slide position.
+- **Airborne trigger (MJ012–022, MS68/72/76):**
+  - MJ050's contact is actually ~3 ticks after the press (the speed drops at ~53), not 12.
+  - In MS72 and MS76 the hero jumps at 40, brakes with S in the air, then holds W and stays against the face (horizontal distance flat at ~241) from ~tick 72 until landing at ~88. Its feet go from ~7 to ~54 u below the top, with no recent press. There is **no mantle and no pop**: it slides down the face.
+  - So an airborne contact needs a jump press near contact. This matches the sim's "jump pressed or held" rule, so there is no change.
+  - MJ012–022 land before reaching the face, so they don't test this.
 - **Open:**
-  - The airborne trigger window (MJ050 climbed with the jump pressed 12 ticks before contact).
+  - How long before contact a press still counts (≤ ~3 ticks is confirmed).
   - The pop threshold.
   - Taller ledges and the maximum mantle height (only a 66 u ledge was tested).
 
