@@ -167,6 +167,12 @@ extends Resource
 # measured session 3: a ground-dash slide decays at 0.694/s (video_guides: ~0.6 since 2026-03-06, ~0.18 before)
 @export var slide_friction_dash: float = 0.694
 @export var slide_slope_friction: float = 0.1875                  # measured session 8 (s8_city_slide v1-v4 + s7_ramp RBOT/RRUN): the normal slide friction; g*tan(theta) downhill
+# measured session 10 (s10_gains RL5/8/12, smooth 26.5 deg ramp1): below ~500 u/s a downhill slide gains more than
+# g*tan(theta): the HUD accel falls linearly from ~600 at 150 u/s to ~400 at 450 (696 - 0.66 v). Modeled as an extra
+# downhill accel slide_slope_boost_rate * tan(theta) * (slide_slope_boost_speed - v). Above it the session-8 fit stands.
+# PROVISIONAL (S10-SL): one smooth angle; the tan(theta) scaling is assumed (the city ramps at ~30 deg are too noisy).
+@export var slide_slope_boost_speed: float = 12.7                 # 500 u/s
+@export var slide_slope_boost_rate: float = 1.733                 # 1/s per unit tan(theta)
 @export var slide_slope_friction_dash: float = 0.24               # measured session 7 (s7_ramp RDASH): dash slide on a slide slope, before the penalty
 @export var slide_penalty_friction: float = 3.1875               # spec: movement.md §13
 @export var slide_penalty_friction_dash_jump: float = 0.6875     # spec: movement.md §13; unused since session 4 (landings no longer make DASH_JUMP slides)

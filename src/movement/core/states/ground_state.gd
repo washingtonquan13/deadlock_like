@@ -159,7 +159,12 @@ static func slide_physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	var v := Vector3(s.velocity.x, 0.0, s.velocity.z)
 	var dh := Vector3(n.x, 0.0, n.z)
 	if n.y < 0.99999 and n.y > 1e-3:
-		v += dh.normalized() * sim.cp.gravity(s) * dh.length() / n.y * dt
+		var tan_t := dh.length() / n.y
+		var a := sim.cp.gravity(s) * tan_t
+		# measured session 10 (s10_gains RL*): a slow downhill slide gains extra accel toward slide_slope_boost_speed
+		if sim.on_slide_slope(s) and not moving_uphill_on_slide_slope(sim, s):
+			a += p.slide_slope_boost_rate * tan_t * maxf(0.0, p.slide_slope_boost_speed - v.length())
+		v += dh.normalized() * a * dt
 	var onset := sim.cp.slide_onset_ticks(s.slide_kind, sim.cp.slide_bonus(s), s.slide_from_ground)
 	var f := p.slide_friction_dash if s.slide_kind == MoveState.SlideKind.DASH else p.slide_friction
 	# measured session 7 (s7_ramp RRUN/RBOT/RDASH, one 26.5 deg ramp): before the penalty, the net downhill accel is
