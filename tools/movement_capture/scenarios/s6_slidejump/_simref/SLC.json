@@ -1,0 +1,58 @@
+{
+ "_comment": "ground dash slide with crouch from 34 instead of 24 (W 1..33, dash 4)",
+ "name": "SLC",
+ "clip": "SLC",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 280,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 33,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 34,
+   "to": 270,
+   "buttons": [
+    "crouch"
+   ]
+  }
+ ],
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "suppress_sprint": false,
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}

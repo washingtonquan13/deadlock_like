@@ -1,0 +1,61 @@
+{
+ "_comment": "sprint W 1..60, jump 60, S air dash 72 (entry ~-386 along, back dash)",
+ "name": "A_probe_b1_vert",
+ "clip": "A_probe_b1_vert",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 150,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 1,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 16,
+   "to": 16,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 14,
+   "to": 18,
+   "move": [
+    0,
+    1
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "record": {
+  "src": "rec_auto\\A_probe_b1\\vert_ts0p25_t1_inputs.json"
+ },
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}

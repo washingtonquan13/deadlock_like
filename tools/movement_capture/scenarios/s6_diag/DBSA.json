@@ -1,0 +1,66 @@
+{
+ "_comment": "backpedal S 30-55 (short: lane), jump 40, S+A from 56, air jump 66 (DGBSA in a longer lane)",
+ "name": "DBSA",
+ "clip": "DBSA",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 200,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 30,
+   "to": 55,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 40,
+   "to": 40,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 56,
+   "to": 170,
+   "move": [
+    -1,
+    -1
+   ]
+  },
+  {
+   "from": 66,
+   "to": 66,
+   "buttons": [
+    "jump"
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}

@@ -1,0 +1,58 @@
+{
+ "_comment": "baseline dash slide, no input after tick 23",
+ "name": "SL0",
+ "clip": "SL0",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 130,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 23,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 24,
+   "to": 130,
+   "buttons": [
+    "crouch"
+   ]
+  }
+ ],
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "suppress_sprint": false,
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}

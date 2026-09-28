@@ -1,0 +1,143 @@
+{
+  "t0_perf": 71476.1322819,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.00022039999021217227,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.04730489999928977,
+      "t_plan": 0.046875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 4
+    },
+    {
+      "t_real": 0.07206399999267887,
+      "t_plan": 0.071875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 5
+    },
+    {
+      "t_real": 0.3597503999917535,
+      "t_plan": 0.359375,
+      "kind": "up",
+      "arg": "w",
+      "tick": 24
+    },
+    {
+      "t_real": 0.3601405999943381,
+      "t_plan": 0.359375,
+      "kind": "down",
+      "arg": "lctrl",
+      "tick": 24
+    },
+    {
+      "t_real": 0.406532299995888,
+      "t_plan": 0.40625,
+      "kind": "down",
+      "arg": "space",
+      "tick": 27
+    },
+    {
+      "t_real": 0.4314546999958111,
+      "t_plan": 0.43125,
+      "kind": "up",
+      "arg": "space",
+      "tick": 28
+    },
+    {
+      "t_real": 1.7657911999995122,
+      "t_plan": 1.765625,
+      "kind": "down",
+      "arg": "space",
+      "tick": 114
+    },
+    {
+      "t_real": 1.7908424999914132,
+      "t_plan": 1.790625,
+      "kind": "up",
+      "arg": "space",
+      "tick": 115
+    },
+    {
+      "t_real": 2.8597288000019034,
+      "t_plan": 2.859375,
+      "kind": "up",
+      "arg": "lctrl",
+      "tick": 184
+    },
+    {
+      "t_real": 2.8600516000005882,
+      "t_plan": 2.859375,
+      "kind": "down",
+      "arg": "s",
+      "tick": 184
+    },
+    {
+      "t_real": 3.500413199988543,
+      "t_plan": 3.5,
+      "kind": "up",
+      "arg": "s",
+      "tick": 225
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2486.38,
+    "pos_y": -285.12,
+    "pos_z": 102.12,
+    "ang_pitch": 14.69,
+    "ang_yaw": 147.66,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 407.8
+  },
+  "start_yaw": 147.66,
+  "late_ms_max": 0.7655999943381175,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\s6_slidejump\\SHH40.json",
+  "mark": "street_y148",
+  "mark_value": {
+    "pawn": [
+      2391.6800000000003,
+      -265.99,
+      102.08000000000001
+    ],
+    "hud": [
+      2486.34,
+      -285.12,
+      102.12
+    ],
+    "yaw": 147.66,
+    "pitch": 14.69,
+    "cam_offset": [
+      94.65999999999985,
+      -19.129999999999995,
+      0.03999999999999204
+    ],
+    "return_error_u": 0.0
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 667,
+  "pre_real_s": 0.3
+}

@@ -1,0 +1,73 @@
+{
+ "_comment": "W 1..47, dash 4, crouch 48 (normal slide after the dash end), slide jump at 58; crouch off 118, S brake",
+ "name": "NSJ48",
+ "clip": "NSJ48",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 158,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 47,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 48,
+   "to": 117,
+   "buttons": [
+    "crouch"
+   ]
+  },
+  {
+   "from": 58,
+   "to": 58,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 118,
+   "to": 148,
+   "move": [
+    0,
+    -1
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}

@@ -1,0 +1,79 @@
+{
+ "_comment": "W, dash 4, dash jump 26, S air dash 40 (entry ~-700 along, back dash)",
+ "name": "E700S",
+ "clip": "E700S",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 150,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 37,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 26,
+   "to": 26,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 38,
+   "to": 42,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 40,
+   "to": 40,
+   "buttons": [
+    "dash"
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "record": {
+  "mark": "street_y148",
+  "timescale": 0.25,
+  "trials": 3,
+  "note": "driver.py takes the timescale on the command line (--timescale 0.25); this block is documentation only"
+ },
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}
