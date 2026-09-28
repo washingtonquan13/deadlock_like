@@ -22,7 +22,11 @@
   - Follows the aim pitch (14.7° down in HM_J), with no gravity.
   - Landing switches it to the ground 750.
   - Distance 223 vs sim 231.
-- **Open:** HM_W (running in at ~400 u/s) goes ~13 u further than the sim (246 vs 232), cause unknown.
+- **HM_W's extra ~13 u is explained (HUD re-check):**
+  - The windup friction decay is the same (0.9374 per tick in the game, 0.9373 in the sim), and the lunge matches from
+    its first tick.
+  - The game enters the windup faster: 405 vs 386 u/s, the contaminated hero (run plateau ~414), plus a ~1-tick
+    offset. Friction carries that ~16% through the whole windup, so no model change.
 
 ## Recovery and cooldown (G12)
 
