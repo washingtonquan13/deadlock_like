@@ -106,6 +106,13 @@ for n, w in (("HM_A", False), ("HM_AW", True)):
     s = base(n, "street_y058b: %sjump 5, air jump 20, melee held 22..62, S brake 170" % ("W 1..169, " if w else ""), 230)
     if w: add(s, 1, 169, move=[0, 1])
     add(s, 5, 5, buttons=["jump"]); add(s, 20, 20, buttons=["jump"]); add(s, 22, 62, buttons=["melee"]); add(s, 170, 230, move=[0, -1]); S[n] = s
+# LH: SL with crouch held from the air (60) so hop 1 lands straight into a landing slide (~393 u/s), hop 2 k ticks after
+# the sim landing (~77): penalized (flag still set) vs clean narrows the G09 clear time below 0.5 s. S brake 60 after.
+for k in (3, 8, 13, 18, 24, 32):
+    h = 77 + k; T = h + 90
+    s = base("SLH%d" % k, "street_y058b: W 1..%d, dash 4, crouch 24..32, slide hop 30, crouch 60..%d, hop %d, S brake" % (h + 60, h + 2, h), T)
+    add(s, 1, h + 60, move=[0, 1]); add(s, 4, 4, buttons=["dash"]); add(s, 24, 32, buttons=["crouch"]); add(s, 30, 30, buttons=["jump"])
+    add(s, 60, h + 2, buttons=["crouch"]); add(s, h, h, buttons=["jump"]); add(s, h + 61, T, move=[0, -1]); S["SLH%d" % k] = s
 for k, v in S.items():
     json.dump(v, open(k + ".json", "w"), indent=1)
 print(" ".join(S))
