@@ -32,6 +32,20 @@ func test_long_ramp_slide_no_penalty() -> void:
 	done()
 
 
+## measured session 8 (sliding_2 w2): a slide carried from the flat onto an upslope ends and decays to crouch speed.
+func test_slide_into_upslope_ends() -> void:
+	var h := new_harness(&"flat")
+	ArenaBuilder.add_ramp(h.root, Vector3.ZERO, 28.0, 20.0, 6.0)
+	await h.ready()
+	h.spawn(Vector3(0.0, 0.0, 3.0), 0.0)
+	h.state.velocity = Vector3(0.0, 0.0, -12.5)   # ~490 u/s toward the uphill
+	h.run(45, hold(B_CROUCH))
+	assert_true(first_event(h.trace, MoveEvents.SLIDE_START) >= 0, "slid on the flat")
+	assert_true(h.state.loco != L.SLIDE, "no slide up the slope (%s)" % L.keys()[h.state.loco])
+	assert_true(h.state.horizontal_speed() < 7.0, "slowed on the slope (%.1f m/s)" % h.state.horizontal_speed())
+	done()
+
+
 ## spec: movement.md §20 step height 18 u: 8/16/18 u stairs climb, 20 u blocks (T22)
 func test_t22_stairs() -> void:
 	var h := new_harness(&"flat")

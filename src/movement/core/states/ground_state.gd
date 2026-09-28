@@ -32,7 +32,7 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	# (347.5 horizontal -> ~390), and a crouch there slides, so the entry test uses the along-surface speed.
 	var slide_ok := surface_speed(s) > p.slide_entry_speed and not s.slide_block_until_crouch_release
 	# measured session 7 (s7_ramp RUP): a crouch pressed while moving uphill on a slide slope gets crouch friction,
-	# not a slide. PROVISIONAL (S7-SL): a slide carried onto an upslope from the flat is unmeasured and not ended.
+	# not a slide. A slide carried onto an upslope ends (session 8 w2, SLIDE branch below).
 	if moving_uphill_on_slide_slope(sim, s):
 		slide_ok = false
 	if s.loco == L.GROUND and s.crouched and not crouch:
@@ -66,6 +66,12 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 				s.loco = L.GROUND
 			else:
 				s.loco = L.CROUCH
+		# measured session 8 (sliding_2 w2): a mantle-glide slide at ~490 u/s carried from the flat onto ~28 deg stairs
+		# going up ends at once: ~5.5/s crouch-like decay to crouch-walk 187 within ~0.2 s, no slide up the slope.
+		elif moving_uphill_on_slide_slope(sim, s):
+			sim.emit(s, MoveEvents.SLIDE_END)
+			s.loco = L.CROUCH
+			s.velocity.y = 0.0
 		elif s.horizontal_speed() < sim.cp.effective_crouch_speed(s) and not sim.on_slide_slope(s):
 			sim.emit(s, MoveEvents.SLIDE_END)
 			s.loco = L.CROUCH

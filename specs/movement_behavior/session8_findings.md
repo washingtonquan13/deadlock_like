@@ -53,8 +53,30 @@ cl_showpos `vel` was read by OCR; it is the horizontal speed.
 | Bottom speed | 750 | 790 (+5%) |
 | Bottom → knee | 0.55 s | 0.6 s |
 
+## sliding_2 clips (w1-w3, `s8_city_slide/ocr/w*.csv`)
+
+- **The wiki's "slides on a ramp" rule.** It holds in the along-surface form only.
+  - w1: Haze runs from rest over a ~30° stair ramp and crouches at HUD ~331, which is horizontal ≈ run speed 323,
+    below the flat 350. It slides, with the HUD then rising ~10/frame (g·tanθ).
+  - w3 is the same case at ~330-347.
+  - Both fit the along-surface test: 323 / cos 30 ≈ 373 > 350.
+  - s7 RS0 (crouch at rest on ramp1) and RSW (crouch-walk 187 down ramp1) still show no slide in the game. So "any
+    speed on a ramp" is not what the game does.
+  - Unmeasured: a crouch while running down a ramp with the along-surface speed below 350. Examples are a slow hero
+    such as Abrams (252 u/s) on ~26°, or Haze on a ~10-15° ramp.
+- **w2 is a mantle glide out of the mid-boss pit.**
+  - The HUD freezes during the climb. The exit runs 11 frames at 177 (the mantle exit speed), then the glide starts at
+    540.8 with crouch held (known ~537).
+  - The glide decays at ~0.19/s on the flat, then runs into the upward stairs (~28°).
+  - There the slide ends at once: 488 → 190 in ~11 frames (~5.5/s), then crouch-walk 187 up the stairs. The user
+    confirms that sliding up is blocked in the game.
+  - Model: SLIDE → CROUCH when moving uphill on a slide slope.
+  - The sim decays at ground friction 4/s, a bit slower than ~5.5. RUP's ~400 u/s² tail below 100 hints at an extra
+    uphill g·tanθ term in crouch. That is not modelled.
+
 ## Open
 
 - Restart vs hold of the timer (needs a flat slide carried onto a ramp).
 - A smooth (non-stair) ramp at a second angle, to pin k.
-- A slide carried onto an upslope.
+- Crouch friction uphill (~5.5/s game vs 4/s sim); a possible g·tanθ term on crouch/ground movement on slopes.
+- Along-surface entry below 350 on a ramp (see above).
