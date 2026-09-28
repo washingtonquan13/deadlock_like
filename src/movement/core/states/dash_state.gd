@@ -132,7 +132,9 @@ static func _start_air_dash_ramp(sim: MovementSim, s: MoveState, dir: Vector3) -
 	var vpar0 := Vector3(s.velocity.x, 0.0, s.velocity.z).dot(d)
 	var b := clampi(sim.cp.hero.dash_bucket, 1, 3) - 1
 	s.air_dash_ramp_v0 = vpar0
-	s.air_dash_ramp_target = p.air_dash_ramp_target_fracs[b] * s.dash_speed + p.air_dash_ramp_entry_frac * vpar0
+	# measured session 6 (s6_airdash): entries against the dash lower the peak more steeply (E386S, E700S)
+	var k := p.air_dash_ramp_entry_frac if vpar0 >= 0.0 else p.air_dash_ramp_entry_frac_neg
+	s.air_dash_ramp_target = p.air_dash_ramp_target_fracs[b] * s.dash_speed + k * vpar0
 
 
 ## One tick of the mode 3 ramp: v_par gains (rate - damping_c * (v_par - v_par0)) / duration * dt, stopping at the
@@ -173,11 +175,15 @@ static func apply_air_dash_end_drag(sim: MovementSim, s: MoveState) -> void:
 	if p.air_dash_end_drag_mode == 4:
 		# measured (session2_findings.md "Session 2c"): the excess over the floor bleeds off over
 		# air_dash_end_drag_ticks airborne ticks (AirState.air_physics); the grounded case is unmeasured.
+		# measured session 6 (s6_airdash): it removes (1 - excess_keep) of the excess over the floor, but never more
+		# than air_dash_end_drag_prop of the speed (E700W 670 -> 542, E700WD 762 -> 617, 565 -> 490).
 		if s.grounded or v <= p.air_dash_end_drag_floor:
 			return
+		var fl := maxf(p.air_dash_end_drag_floor + p.air_dash_end_drag_excess_keep * (v - p.air_dash_end_drag_floor),
+			v * (1.0 - p.air_dash_end_drag_prop))
 		s.air_dash_end_drag_ticks_left = p.air_dash_end_drag_ticks
-		s.air_dash_end_drag_step = (v - p.air_dash_end_drag_floor) / float(p.air_dash_end_drag_ticks)
-		sim.emit(s, MoveEvents.AIR_DASH_END_DRAG, {"from": v, "to": p.air_dash_end_drag_floor})
+		s.air_dash_end_drag_step = (v - fl) / float(p.air_dash_end_drag_ticks)
+		sim.emit(s, MoveEvents.AIR_DASH_END_DRAG, {"from": v, "to": fl})
 		return
 	match p.air_dash_end_drag_mode:
 		1:

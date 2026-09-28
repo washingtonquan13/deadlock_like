@@ -123,7 +123,8 @@ extends Resource
 @export var air_dash_ramp_rate: float = 49.0                     # measured session 5: 49 m/s (accel x duration)
 @export var air_dash_ramp_damping_c: float = 0.85                # measured session 5: damps on the speed gained since the dash start, not on v_par (36 trials, rms 3.9)
 @export var air_dash_ramp_target_fracs: Array[float] = [0.759, 0.776, 0.789]  # measured session 5: peak intercepts 554.1/516.1/484.7 u/s over 8 m / duration
-@export var air_dash_ramp_entry_frac: float = 0.26               # measured session 5: peak slope vs entry v_par (0.240/0.260/0.266); entries above ~80 u/s unmeasured
+@export var air_dash_ramp_entry_frac: float = 0.26               # measured session 5-6: peak slope vs entry v_par >= 0 (holds to +673, E700W)
+@export var air_dash_ramp_entry_frac_neg: float = 0.35           # measured session 6: peak slope for entries against the dash (E386S -348 -> 434, E700S -641 -> 327); B2/B3 only probed near -60
 @export var air_dash_keeps_air_drag: bool = true                 # measured: speed decays ~0.19/s during the dash (spec §11 suspends drag)
 @export var air_dash_drag: float = 0.2                           # measured session 4: 1/s during the air dash only (A_air_b1 572 -> 538 over 0.31 s)
 # G02 end drag at the airborne end of an air dash. 0 = off, 1 = V8 (a) v' = max(min(v, floor), v - frac*(v - offset)),
@@ -137,6 +138,8 @@ extends Resource
 @export var air_dash_end_drag_frac: float = 0.2                  # PROVISIONAL (G02): 20% (V8 2:38, V9 1:09, V2 3:03); pending A2
 @export var air_dash_end_drag_offset: float = 2.032              # PROVISIONAL (G02): 80 u/s, formula (a) only (V8 2:38); pending A2
 @export var air_dash_end_drag_floor: float = 12.192              # PROVISIONAL (G02): 480 u/s, no drag below (V8, V9 1:09); pending A2
+@export var air_dash_end_drag_prop: float = 0.175              # measured session 6 (mode 4): at most 17.5% of the speed is removed (fast dashes keep ~81% with air drag)
+@export var air_dash_end_drag_excess_keep: float = 0.25        # measured session 6 (mode 4): 25% of the excess over the floor is kept (settles 490-517 at 565-637)
 # G02 IAD: landing during an air dash keeps the drag pending until the dash's scheduled end. It is skipped
 # only when the player is then in a SLIDE on level ground (V2 0:11, V9 1:41); leaving the ground first (bhop,
 # any drop) applies it at once (V2 0:33 / 3:03, V9 1:58). "Level" = ground normal y >= this value.
