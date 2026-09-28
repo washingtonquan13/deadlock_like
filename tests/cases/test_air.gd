@@ -55,7 +55,7 @@ func test_t17_down_dash_double_tap() -> void:
 	done()
 
 
-## spec: movement.md §10 air jump sets vertical speed, one per airtime (T18); free (measured session 4, SAJ)
+## spec: movement.md §10 air jump sets vertical speed, one per airtime (T18); costs 1 stamina
 func test_t18_air_jump() -> void:
 	var h := new_harness(&"flat")
 	await h.ready()
@@ -65,7 +65,7 @@ func test_t18_air_jump() -> void:
 	if i >= 0:
 		var vy: float = (h.trace[i]["vel"] as Vector3).y
 		assert_near(vy, 13.26 - 20.32 / 64.0, 1e-4, "vertical speed after air jump (half-step gravity)")
-		assert_near(h.trace[i]["stamina"], 3.0, 1e-9, "air jump is free")
+		assert_near(h.trace[i]["stamina"], 2.0, 1e-9, "air jump costs one stamina")
 	assert_true(first_event(h.trace, MoveEvents.JUMPED, "kind", &"air", 10) < 0, "second air jump refused")
 	assert_eq(h.state.air_jumps_used, 1, "one air jump used")
 	# land, counters refresh

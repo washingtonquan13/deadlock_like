@@ -57,7 +57,7 @@ extends Resource
 @export var cost_ground_dash: float = 1.0                        # spec: movement.md §7, §8
 @export var cost_air_dash: float = 1.0                           # spec: movement.md §7, §11
 @export var cost_dash_jump_extra: float = 1.0                    # spec: movement.md §7, §9
-@export var cost_air_jump: float = 0.0                           # measured session 4 (SAJ): free (spec §7 said 1)
+@export var cost_air_jump: float = 1.0                           # spec: movement.md §7; user-confirmed costs 1 (session-4 SAJ "free" was fast-stamina contaminated)
 @export var cost_wall_jump_subsequent: float = 0.5               # spec: movement.md §7, §14
 @export var cost_down_dash: float = 0.5                          # G28: 0.5 per wiki Stamina page (fidelity gaps, research-settled; K54)
 @export var wall_jump_combat_regen_penalty: float = 0.25         # spec: movement.md §7, §14
