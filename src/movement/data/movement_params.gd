@@ -29,8 +29,8 @@ extends Resource
 @export var ground_accel_ref_speed: float = 10.16                # 400 u/s
 @export var ground_friction: float = 4.0                         # spec: movement.md §2 (Open Q1)
 @export var stop_speed: float = 2.54                             # spec: movement.md §2 (100 u/s)
-@export var backpedal_mult: float = 1.0                          # spec: movement.md §2 (Open Q2)
-@export var strafe_mult: float = 1.0                             # spec: movement.md §2 (Open Q2)
+@export var backpedal_mult: float = 1.0                          # spec: movement.md §2 (Open Q2); unmeasured
+@export var strafe_mult: float = 1.0                             # measured session 7 (s7_open FSD/FSA/FSWA): sideways and diagonal plateau 385.8 = W, HUD and position-derived
 @export var firing_speed_mult: float = 0.75                      # spec: movement.md §2
 
 # --- sprint ---------------------------------------------------------------------
