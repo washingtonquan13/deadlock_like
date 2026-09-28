@@ -1,0 +1,55 @@
+{
+ "_comment": "walk jump at 40, S 50..62, crouch from 58 (while S held)",
+ "name": "LSWS",
+ "clip": "LSWS",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 260,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 40,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 40,
+   "to": 40,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 50,
+   "to": 62,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 58,
+   "to": 250,
+   "buttons": [
+    "crouch"
+   ]
+  }
+ ]
+}

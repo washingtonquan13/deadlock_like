@@ -87,7 +87,7 @@ The apparent cut (~570 → ~85 u/s at touchdown) is **an obstacle on the street 
 | Crouch held from mid-air or just before touchdown (DJC, DJC2) | Slide at the landing speed (no boost): 567 → 506 over 0.61 s, ~100 u/s² | DASH_JUMP landing slide, 568 → 502 over 0.70 s, ~94 u/s² |
 | Crouch pressed ~2 ticks after touchdown (DJC3) | ~6 ticks of ground friction first, then a slide from ~385 | Slides from ~530 |
 
-- **Late part of DJC and DJC2:** the drop after ~0.65 s of slide is the end of the runway (~33 m), so the penalty onset is not measured here.
+- **Late part of DJC and DJC2:** the drop after ~0.65 s of slide is the landing-slide penalty onset (~0.69 s, see "Landing-slide onset" below), not the end of the runway.
 - **Open (DJC3):** the gap may be a crouch-to-slide delay on the ground, or the landing tick being off by ~2 ticks. It needs a ground test: run, then a crouch press.
 
 ## Mantles (Haze, crate top 66 u above the sidewalk, mark crateA)
@@ -158,9 +158,54 @@ Scenarios are in `scenarios/hop/gen.py`. The dash slide is W 1..23, dash at 4, c
 - **Landing with crouch held after a slide jump:**
   - **Jumped at slide tick 19, 40 or 60:** no slide. The hero lands crouched and brakes to 0 (~430 → 0 in ~40 ticks), the same as with crouch released (SHJ19R).
   - **SHJ19P (crouch released at the jump, pressed again in the air):** landed at ~270, under the slide entry speed, and braked as well.
-  - **Jumped at slide tick 3 or 10:** the hero lands into a slide at ~380 / 353 that decays slowly (~0.15–0.19/s, landing-slide friction). The slide ends near tick 145 in both, which is ~65–68 ticks after landing and ~121 after S0, then it brakes.
+  - **Jumped at slide tick 3 or 10:** the hero lands into a slide at ~380 / 353 that decays slowly (~0.15–0.19/s, landing-slide friction). The slide ends near tick 145 in both, then it brakes. That is ~43 ticks after the slide steps up the curb at ~680 u (see "Landing-slide onset"), not a landing-based timer.
   - So a late slide jump stores crouch like a ground jump does (G40), and an early one does not. The threshold lies between slide ticks 11 and 18.
 - **Open:**
   - A non-dash (normal) slide jump.
   - Chained slide hops (the G09 second-hop penalty).
   - Whether the early/late threshold counts slide ticks or time since the dash.
+
+## Landing-slide onset (Haze, mark street_y148)
+
+Scenarios are in `scenarios/lslide` (`gen.py`). Helpers:
+- `land.py`: landing tick, and decay over ~21 ticks.
+- `onset.py`: first tick where the HUD speed falls faster than 1.5/s.
+- `atd.py` and `dist.py`: camera distance along the runway.
+
+The runs are:
+- LSD k: a dash jump (dash 4, jump 31), S held in the air for k ticks to set the landing speed, crouch from 61.
+- LSA, LSB, LSW, LSWS: S and crouch order variants, and walk jumps.
+- LSX16: LSD12 shifted 16 ticks later.
+- LSJ20 and SLC: ground dash slides with the crouch at 50 or 34. LSJ20's jump at 20 did nothing; the dash seems to ignore a jump that early.
+
+**The runway has a curb.** About 680 u out on `street_y148`, the ground steps up ~8 u, then falls ~3 u over the next ~100 u. A slide that crosses it acts like a fresh landing:
+- The friction switches from the dash slide's ~0.69/s to ~0.2–0.25/s.
+- The penalty clock restarts.
+
+Earlier landing-speed and onset readings near the curb must allow for this.
+
+**Entry on a flat landing: speed, not the dash jump.**
+- A dash-jump landing with crouch held slides only above ~350 u/s (the normal entry speed; bracketed between ~300 and ~390 on flat).
+- At 260–305 (LSD20, LSA) it brakes with ground friction, the same as a walk jump at ~298 (LSW).
+- The slides that did start from 200–250 (LSD26, LSB, one LSD30) all landed on the curb's down slope, so the slope triggered them.
+- Holding S at the crouch press makes no difference.
+
+**The friction and penalty are the same as a normal slide.**
+- Before the onset, every landing slide decays at 0.18–0.19/s.
+- After the onset, a dash-jump landing slide brakes as hard as a ground slide: ~350 → 0 in ~40 ticks (LSD12, LSX16). There is no gentler dash-jump penalty.
+
+**Onset: ~44 ticks (0.69 s) after the landing.** A later landing moves it by the same amount:
+
+| Run | Land | Onset | Gap |
+|---|---|---|---|
+| LSD12 | 101.2–101.6 | 145.3–145.4 | 44 |
+| LSD26 | 101.0–102.5 | 146.2–146.6 | 44–45 |
+| LSB | 102.0–102.7 | 145.8–146.1 | 43–44 |
+| LSX16 | 117.4–117.9 | ~162–163 | 45 |
+
+Curb crossings behave the same way. SLC, LSJ20 and SHJ3/10 reach 680 u at 86–100 and hit the onset ~40–44 ticks later.
+
+**Ground dash slides that stay before the curb** keep the ~1.0 s onset (SL0: crouch 24, onset ~88).
+
+This agrees with the shot list's "a slope resets the window to 0.6 s" (V15). The landing reset is ~0.69 s.
+

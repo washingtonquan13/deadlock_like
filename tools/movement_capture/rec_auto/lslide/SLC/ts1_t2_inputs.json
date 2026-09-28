@@ -1,0 +1,101 @@
+{
+  "t0_perf": 57243.9354615,
+  "timescale": 1.0,
+  "inputs": [
+    {
+      "t_real": 0.00021180000476306304,
+      "t_plan": 0.0,
+      "kind": "down",
+      "arg": "w",
+      "tick": 1
+    },
+    {
+      "t_real": 0.04710809999960475,
+      "t_plan": 0.046875,
+      "kind": "down",
+      "arg": "lshift",
+      "tick": 4
+    },
+    {
+      "t_real": 0.07241320000321139,
+      "t_plan": 0.071875,
+      "kind": "up",
+      "arg": "lshift",
+      "tick": 5
+    },
+    {
+      "t_real": 0.515881300001638,
+      "t_plan": 0.515625,
+      "kind": "up",
+      "arg": "w",
+      "tick": 34
+    },
+    {
+      "t_real": 0.5161790999991354,
+      "t_plan": 0.515625,
+      "kind": "down",
+      "arg": "lctrl",
+      "tick": 34
+    },
+    {
+      "t_real": 4.219228500005556,
+      "t_plan": 4.21875,
+      "kind": "up",
+      "arg": "lctrl",
+      "tick": 271
+    }
+  ],
+  "start_hud": {
+    "pos_x": 2486.34,
+    "pos_y": -285.09,
+    "pos_z": 102.16,
+    "ang_pitch": 14.69,
+    "ang_yaw": 147.66,
+    "ang_roll": 0.0,
+    "vel_scalar": 0.0,
+    "vel_scalar2": 412.49
+  },
+  "start_yaw": 147.66,
+  "late_ms_max": 0.5540999991353601,
+  "scenario": "C:\\Godot Projects\\deadlock_like\\deadlock_like\\tools\\movement_capture\\scenarios\\lslide\\SLC.json",
+  "mark": "street_y148",
+  "mark_value": {
+    "pawn": [
+      2391.6800000000003,
+      -265.99,
+      102.08000000000001
+    ],
+    "hud": [
+      2486.34,
+      -285.12,
+      102.12
+    ],
+    "yaw": 147.66,
+    "pitch": 14.69,
+    "cam_offset": [
+      94.65999999999985,
+      -19.129999999999995,
+      0.03999999999999204
+    ],
+    "return_error_u": 0.0
+  },
+  "roi": [
+    0,
+    217,
+    567,
+    146
+  ],
+  "layout": "layouts/showpos_default.json",
+  "keys": {
+    "forward": "w",
+    "back": "s",
+    "left": "a",
+    "right": "d",
+    "dash": "lshift",
+    "jump": "space",
+    "crouch": "lctrl"
+  },
+  "deg_per_count": 0.03522,
+  "frames": 555,
+  "pre_real_s": 0.3
+}

@@ -1,0 +1,62 @@
+{
+ "_comment": "as LSD12 but the jump at 20 (dash still at 4)",
+ "name": "LSJ20",
+ "clip": "LSJ20",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 280,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 20,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 20,
+   "to": 20,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 29,
+   "to": 40,
+   "move": [
+    0,
+    -1
+   ]
+  },
+  {
+   "from": 50,
+   "to": 270,
+   "buttons": [
+    "crouch"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,62 @@
+{
+ "_comment": "dash jump, S in the air for 26 ticks from 40, crouch 61..250 (landing slide onset)",
+ "name": "LSD26",
+ "clip": "LSD26",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0
+ },
+ "ticks": 260,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 31,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 4,
+   "to": 4,
+   "buttons": [
+    "dash"
+   ]
+  },
+  {
+   "from": 31,
+   "to": 31,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 61,
+   "to": 250,
+   "buttons": [
+    "crouch"
+   ]
+  },
+  {
+   "from": 40,
+   "to": 65,
+   "move": [
+    0,
+    -1
+   ]
+  }
+ ]
+}
