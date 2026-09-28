@@ -1,0 +1,80 @@
+{
+ "_comment": "street_y058b: W 1..200, jump 70, air jump 95, crouch taps 110 and 116, S brake (landing hold: dash- or landing-keyed)",
+ "name": "DD_AW",
+ "clip": "DD_AW",
+ "up_axis": "z",
+ "start": {
+  "pos_m": [
+   0,
+   0,
+   0
+  ],
+  "yaw_deg": 0.0,
+  "stamina": 3.0,
+  "sprint_on": true
+ },
+ "ticks": 260,
+ "default": {
+  "move": [
+   0,
+   0
+  ],
+  "buttons": []
+ },
+ "timeline": [
+  {
+   "from": 1,
+   "to": 200,
+   "move": [
+    0,
+    1
+   ]
+  },
+  {
+   "from": 70,
+   "to": 70,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 95,
+   "to": 95,
+   "buttons": [
+    "jump"
+   ]
+  },
+  {
+   "from": 110,
+   "to": 110,
+   "buttons": [
+    "crouch"
+   ]
+  },
+  {
+   "from": 116,
+   "to": 116,
+   "buttons": [
+    "crouch"
+   ]
+  },
+  {
+   "from": 201,
+   "to": 260,
+   "move": [
+    0,
+    -1
+   ]
+  }
+ ],
+ "suppress_sprint": false,
+ "hero": "res://data/movement/heroes/hero_haze.tres",
+ "params": [
+  {
+   "name": "air_accel",
+   "min": 0,
+   "max": 100,
+   "note": "placeholder: the sim replay needs one (value unchanged)"
+  }
+ ]
+}

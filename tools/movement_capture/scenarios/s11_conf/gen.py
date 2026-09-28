@@ -63,6 +63,26 @@ for k in (4, 8, 12, 16, 20, 24, 32, 48):
     s = base("SL%d" % k, "street_y058b: W 1..%d, dash 4, crouch 24..32, slide hop 30, crouch %d..%d, hop %d, S brake" % (h + 60, c, h + 2, h), T)
     add(s, 1, h + 60, move=[0, 1]); add(s, 4, 4, buttons=["dash"]); add(s, 24, 32, buttons=["crouch"]); add(s, 30, 30, buttons=["jump"])
     add(s, c, h + 2, buttons=["crouch"]); add(s, h, h, buttons=["jump"]); add(s, h + 61, T, move=[0, -1]); S["SL%d" % k] = s
+# DD: down dash (double-tap crouch in the air; U4, G29: speed, duration, horizontal kept or not, end drag).
+# Taps are single presses 6 ticks apart. DD_S standing jump; DD_A jump + air jump (longer fall); DD_W running, W held;
+# DD_R running, W released before the taps; DD_1 a single tap (control: no down dash).
+s = base("DD_S", "street_y058b: standing jump 5, crouch taps 20 and 26", 120)
+add(s, 5, 5, buttons=["jump"]); add(s, 20, 20, buttons=["crouch"]); add(s, 26, 26, buttons=["crouch"]); S["DD_S"] = s
+s = base("DD_A", "street_y058b: standing jump 5, air jump 30, crouch taps 45 and 51", 160)
+add(s, 5, 5, buttons=["jump"]); add(s, 30, 30, buttons=["jump"]); add(s, 45, 45, buttons=["crouch"]); add(s, 51, 51, buttons=["crouch"]); S["DD_A"] = s
+s = base("DD_W", "street_y058b: W 1..160, jump 70, crouch taps 85 and 91, S brake", 220)
+add(s, 1, 160, move=[0, 1]); add(s, 70, 70, buttons=["jump"]); add(s, 85, 85, buttons=["crouch"]); add(s, 91, 91, buttons=["crouch"])
+add(s, 161, 220, move=[0, -1]); S["DD_W"] = s
+s = base("DD_R", "street_y058b: W 1..75, jump 70, crouch taps 85 and 91, no keys, S brake 150", 210)
+add(s, 1, 75, move=[0, 1]); add(s, 70, 70, buttons=["jump"]); add(s, 85, 85, buttons=["crouch"]); add(s, 91, 91, buttons=["crouch"])
+add(s, 150, 210, move=[0, -1]); S["DD_R"] = s
+s = base("DD_1", "street_y058b: W 1..75, jump 70, one crouch tap 85, no keys, S brake 150", 210)
+add(s, 1, 75, move=[0, 1]); add(s, 70, 70, buttons=["jump"]); add(s, 85, 85, buttons=["crouch"]); add(s, 150, 210, move=[0, -1]); S["DD_1"] = s
+s = base("DD_1W", "street_y058b: W 1..160, jump 70, one crouch tap 85, S brake (sprint kept or lost on an air crouch press)", 220)
+add(s, 1, 160, move=[0, 1]); add(s, 70, 70, buttons=["jump"]); add(s, 85, 85, buttons=["crouch"]); add(s, 161, 220, move=[0, -1]); S["DD_1W"] = s
+s = base("DD_AW", "street_y058b: W 1..200, jump 70, air jump 95, crouch taps 110 and 116, S brake (landing hold: dash- or landing-keyed)", 260)
+add(s, 1, 200, move=[0, 1]); add(s, 70, 70, buttons=["jump"]); add(s, 95, 95, buttons=["jump"]); add(s, 110, 110, buttons=["crouch"]); add(s, 116, 116, buttons=["crouch"])
+add(s, 201, 260, move=[0, -1]); S["DD_AW"] = s
 # R: plain W run from rest (the s7 FSW check): runs since ~15:47 read ~396 u/s at 0.8 s vs 382 before; is the
 # hero faster now (buff, souls, item)?
 s = base("RUN", "street_y058b: W 1..180 from rest, S brake", 240)
