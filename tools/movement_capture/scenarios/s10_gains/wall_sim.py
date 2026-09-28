@@ -1,6 +1,8 @@
 """Sim replay of the wallAd wall jumps (s10_gains WN_*/WH_*) and a game-vs-sim table of the post-press velocity
 (kick off the wall, along the wall) in 0.08 s windows. The wall face is 400 u ahead (game camera travel to contact).
 Usage (from tools/movement_capture): python wall_sim.py [--set=name=value,...] [--face=U]
+[--lag=TICKS]
+--lag shifts the game windows later (the recording lags the sim by ~4-5 ticks on FA_L and the approaches).
 --face moves the wall (u from the start); the game reaches the wall ~5 ticks after the sim does at 400."""
 import csv, glob, json, os, subprocess, sys
 import numpy as np
@@ -12,10 +14,13 @@ PRESS = {"WN_F": 104}
 WIN = [0.05, 0.10, 0.15, 0.20, 0.30]
 FIX = {}
 FACE = 400.0
+LAG = 0.0
 for a in sys.argv[1:]:
     if a.startswith("--set="):
         for kv in a[6:].split(","):
             k, v = kv.split("="); FIX[k] = float(v)
+    elif a.startswith("--lag="):
+        LAG = float(a[6:])
     elif a.startswith("--face="):
         FACE = float(a[7:])
 out = os.path.join(ROOT, "tools_fit", "_out", "s10_wall"); os.makedirs(out, exist_ok=True)
@@ -43,7 +48,7 @@ def game_v(n, P):
     for p in sorted(glob.glob("rec_auto/s10_gains/%s/ts1_t?.csv" % n)):
         R = [r for r in csv.DictReader(open(p)) if r["valid"] == "1"]
         t, x, y = (np.array([float(r[k]) for r in R]) for k in ("t", "pos_x", "pos_y"))
-        tp = (P - 1) / 64; row = []
+        tp = (P - 1 + LAG) / 64; row = []
         for a in WIN:
             m = (t > tp + a) & (t < tp + a + 0.08)
             row.append((-np.polyfit(t[m], x[m], 1)[0], np.polyfit(t[m], y[m], 1)[0]) if m.sum() > 3 else (np.nan, np.nan))
