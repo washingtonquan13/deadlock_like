@@ -244,9 +244,9 @@ extends Resource
 @export var wall_jump_fatigue_recovery: float = 1.95             # measured session 4 (wallfat): linear recovery over ~125 ticks
 @export var wall_jump_fatigue_recovery_exponent: float = 1.0      # measured session 4: linear fits (rms ~8 u/s)
 # G03 wall jump: incoming velocity is split into normal and tangential parts; tangential is kept
-# (V13 0:18, V6 17:09, V7 8:19). PROVISIONAL (G03): pending recording clip W1.
+# (V13 0:18, V6 17:09, V7 8:19). Measured session 3 (tangent keep) and session 10 (normal mode, below).
 @export var wall_jump_tangent_keep: float = 0.95                 # measured session 3: incoming tangent kept at ~0.9-1.0 (165 -> 147 at 25 deg, 250 -> 245 at 45 deg)
-@export var wall_jump_normal_mode: int = 0                       # PROVISIONAL (G03): 0 = normal axis set to the kick, 1 = kick added to the incoming normal speed; pending W1
+@export var wall_jump_normal_mode: int = 0                       # G03: 0 = normal axis set to the kick, 1 = kick added to the incoming normal speed. Measured session 10 (WN_E 365 u/s into the wall vs WN_F from rest: both kick ~262): mode 0
 
 # --- mantle ---------------------------------------------------------------------
 @export var mantle_min_height_u: int = 32                        # spec: movement.md §15
