@@ -122,6 +122,7 @@ extends Resource
 @export var air_dash_ramp_target_fracs: Array[float] = [0.746, 0.758, 0.771]  # measured peak intercepts 546.7/508.2/476.4 u/s over 8 m / duration
 @export var air_dash_ramp_entry_frac: float = 0.176              # measured peak slope vs entry v_par (0.151/0.183/0.193)
 @export var air_dash_keeps_air_drag: bool = true                 # measured: speed decays ~0.19/s during the dash (spec §11 suspends drag)
+@export var air_dash_drag: float = 0.2                           # measured session 4: 1/s during the air dash only (A_air_b1 572 -> 538 over 0.31 s)
 # G02 end drag at the airborne end of an air dash. 0 = off, 1 = V8 (a) v' = max(min(v, floor), v - frac*(v - offset)),
 # 2 = V9 (b) v' = v - frac*max(0, v - floor), 3 = flat v' = v*(1 - frac) ("20% of total", V1/V6),
 # 4 = measured: the excess over floor is removed in equal steps over air_dash_end_drag_ticks airborne ticks
@@ -151,7 +152,7 @@ extends Resource
 # K26: the x0.5 accel above 450 u/s has no source (the wiki gives the split, not a factor; V8/Leif model
 # only the 700 u/s wishspeed cap), so it is neutral (1.0). PROVISIONAL (G26): pending A5.
 @export var air_accel_high_speed_mult: float = 1.0
-@export var air_drag: float = 0.2                                # G08: value 0.2 (research-settled; K27); PROVISIONAL (G08): linear form pending A4
+@export var air_drag: float = 0.0                                # measured session 4 (HUD refit): no horizontal decay in the air (A0, DJ22, after an air dash); G08's 0.2 was wrong
 
 # --- slide ----------------------------------------------------------------------
 @export var slide_entry_speed: float = 8.89                      # spec: movement.md §13 (350 u/s)

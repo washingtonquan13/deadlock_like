@@ -291,7 +291,7 @@ func test_fp1_dash_jump_landing_slide() -> void:
 		var h := new_harness(&"flat")
 		await h.ready()
 		h.run(160, func(t: int) -> InputCmd:
-			var my := -1 if (slow and t >= 30 and t < 60) else 0
+			var my := -1 if (slow and t >= 30 and t < 80) else 0
 			return cmd(t, (B_DASH if t == 1 else 0) | (B_JUMP if t == 21 else 0) | (B_CROUCH if t >= 40 else 0), 0, my))
 		assert_true(first_event(h.trace, MoveEvents.JUMPED, "kind", &"dash_jump") > 0, "dash jump (slow=%s)" % slow)
 		var land := first_event(h.trace, MoveEvents.LANDED)

@@ -38,7 +38,7 @@ func test_fpp_g01_g02_dash_jump_air_dash_601() -> void:
 			if StringName(ev["type"]) == MoveEvents.AIR_DASH_END_DRAG:
 				to = float(ev["to"])
 		assert_near(to / HU, 601.98, 0.05, "V8 formula (a): about 601 u/s")
-		assert_near(h.trace[e]["hspeed"], _drag_a(C_B1) * (1.0 - 0.2 * DT), 1e-4, "then normal air drag")
+		assert_near(h.trace[e]["hspeed"], _drag_a(C_B1), 1e-4, "then no air drag")
 	done()
 
 
@@ -56,7 +56,7 @@ func test_fpp_g01_g02_alt_model_560() -> void:
 	var e := first_event(h.trace, MoveEvents.AIR_DASH_END_DRAG)
 	assert_true(e > 0, "end drag applied")
 	if e > 0:
-		assert_near(h.trace[e]["hspeed"] / (1.0 - 0.2 * DT) / HU, 560.0, 0.05, "0.8 * 700 = 560 u/s")
+		assert_near(h.trace[e]["hspeed"] / HU, 560.0, 0.05, "0.8 * 700 = 560 u/s")
 	done()
 
 
@@ -155,8 +155,8 @@ func test_fpp_g03_wall_jump_keeps_tangent() -> void:
 	h.run(1, func(t: int) -> InputCmd: return cmd(t, B_JUMP))
 	assert_eq(first_event(h.trace, MoveEvents.WALL_JUMP), 0, "wall jump")
 	var v: Vector3 = h.trace[0]["vel"]
-	var k := 1.0 - 0.2 * DT
-	assert_near(v.z, -8.0 * 0.95 * k, 1e-3, "tangential -8 m/s kept x0.95 (then one tick of air drag)")
+	var k := 1.0   # no air drag (session 4)
+	assert_near(v.z, -8.0 * 0.95 * k, 1e-3, "tangential -8 m/s kept x0.95")
 	assert_near(v.x, -6.807 * k, 1e-3, "normal axis set to the neutral kick (incoming +3 discarded)")
 	done()
 
@@ -190,7 +190,7 @@ func test_fpp_g09_slide_hop_penalty() -> void:
 		if variant == "early":
 			assert_eq(first_event(h.trace, MoveEvents.SLIDE_DRAG), 0, "early: slide drag")
 			var r: float = float(h.trace[1]["hspeed"]) / float(h.trace[0]["hspeed"])
-			assert_near(r, 1.0 - (0.2 + 0.8) * DT, 1e-6, "early: air drag 0.2 + 0.8 penalty")
+			assert_near(r, 1.0 - 0.8 * DT, 1e-6, "early: 0.8 penalty (no air drag)")
 			h.run(80, hold())
 			assert_true(h.state.grounded and not h.state.slide_hop_penalty_active, "penalty ends on landing")
 			h.run(20, hold())

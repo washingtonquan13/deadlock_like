@@ -2,9 +2,7 @@ extends MoveTestCase
 ## Air drag, down dash, air jump (design §13.1).
 
 
-## spec: movement.md §12 air drag, raised by 35% of the actual slow (T10)
-## G08: research proves the old 0.1/s wrong; air_drag is 0.2/s, so 10*(1-0.2/64)^64 = 8.1847
-## and under SLOW 0.5: 10*(1-0.2*1.175/64)^64 = 7.9023 (old 9.0477 / 8.8905 were for 0.1/s).
+## Measured session 4 (HUD refit): no horizontal decay in the air, with or without a slow.
 func test_t10_air_drag() -> void:
 	var h := new_harness(&"flat", null, hero_with(1, 0.0))
 	await h.ready()
@@ -12,12 +10,7 @@ func test_t10_air_drag() -> void:
 	h.state.velocity = Vector3(0.0, 0.0, -10.0)
 	h.run(64, hold())
 	assert_eq(h.state.loco, L.AIR, "still airborne")
-	assert_near(h.state.horizontal_speed(), 8.1847, 1e-3, "drag over 1 s (G08)")
-	h.spawn(Vector3(0.0, 5.0, 0.0), 0.0)
-	h.state.velocity = Vector3(0.0, 0.0, -10.0)
-	h.sim.push_external(h.state, {"op": &"add_modifier", "def": ModifierDef.make(&"slow_half", ModifierDef.Stat.SLOW, 0.5), "source": &"test"})
-	h.run(64, hold())
-	assert_near(h.state.horizontal_speed(), 7.9023, 1e-3, "drag over 1 s under SLOW 0.5 (G08)")
+	assert_near(h.state.horizontal_speed(), 10.0, 0.05, "no air drag over 1 s")
 	done()
 
 

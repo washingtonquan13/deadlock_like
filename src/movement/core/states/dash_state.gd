@@ -135,7 +135,7 @@ static func _start_air_dash_ramp(sim: MovementSim, s: MoveState, dir: Vector3) -
 
 
 ## One tick of the mode 3 ramp: v_par gains (rate / duration - damping * v_par) * dt, stopping at the
-## target; v_perp is kept. Air drag stays on during the dash when air_dash_keeps_air_drag is set.
+## target; v_perp is kept. The dash's own drag (air_dash_drag) applies when air_dash_keeps_air_drag is set.
 static func _air_dash_ramp_tick(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	var p := sim.cp.params
 	var dt := MoveUnits.DT * ctx.frac
@@ -151,7 +151,7 @@ static func _air_dash_ramp_tick(sim: MovementSim, s: MoveState, ctx: Ctx) -> voi
 			s.air_dash_ramp_done = true
 		vh += d * gain
 	if p.air_dash_keeps_air_drag and s.zip_exit_momentum_ticks <= 0:
-		vh *= maxf(0.0, 1.0 - sim.cp.effective_air_drag(s) * dt)
+		vh *= maxf(0.0, 1.0 - p.air_dash_drag * (1.0 + p.slow_air_drag_factor * sim.cp.actual_slow(s)) * dt)
 	s.velocity.x = vh.x
 	s.velocity.z = vh.z
 

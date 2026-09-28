@@ -133,7 +133,7 @@ Suite: `60 passed, 0 failed (about 4.8 s)`. That is the 44 earlier tests plus 16
 | G05 (K13 vertical) | `dash_jump_vertical_speed` 7.493 -> 10.795 m/s (425 u/s). Flat dash-jump airtime is now about 0.879 s. | `test_fp1_g05_dash_jump_vertical` |
 | G06 (K55) | `dash_jump_window_length` 0.2 -> 0.25. The last tick moves from k=31 to k=35. | `test_t06_dash_jump_window` (updated) |
 | G07 | New `MoveState.dash_jump_locked`: a jump pressed at k < 20 locks out the dash-jump for that dash. The early press stays buffered, since what it does instead is undocumented. | `test_fp1_g07_early_jump_lockout` |
-| G08 (K27) | `air_drag` 0.1 -> 0.2. The linear form is PROVISIONAL pending A4. | `test_t10_air_drag` (updated) |
+| G08 (K27) | `air_drag` 0.1 -> 0.2 -> **0** (session 4 HUD refit: no decay in the air). The air dash keeps its own `air_dash_drag` 0.2. | `test_t10_air_drag` (updated) |
 | G10 (K29) | New `heavy_lunge_speed_ground` 19.05 and `heavy_lunge_speed_air` 20.2438 replace `heavy_lunge_distance`. `heavy_lunge_time` 0.3 -> 0.6. **Moved to provisional (review):** 750/797 u/s over 0.6 s gives about 11.4/12.1 m, against about 5 m in research Q5. The conflict is unresolved and no speed curve is invented; pending H1. | `test_fp1_g10_heavy_lunge_ground`, `test_fp1_g10_heavy_lunge_air` |
 | G11 (K35) | `mantle_glide_speed` 8.9 -> 13.97 m/s. | `test_fp1_g11_mantle_glide` |
 | G12 (K28, K30) | Recovery zeroes velocity on every axis, with no gravity. The lunge-end walk-speed clamp is removed. `heavy_recovery_time` 0.2 -> 0.2833 and `heavy_windup_time` 0.35 -> 0.36. | `test_fp1_g12_heavy_recovery_zero` (windup also in `test_fp1_g10_heavy_lunge_ground`) |
@@ -268,7 +268,7 @@ Values marked L in the design's parameter table are guesses. They need in-game m
   - `gravity` 24.562 m/s² is inferred from 295 u/s and 45 u.
   - `air_jump_speed` (Open Q4) is a guess. `dash_jump_vertical_speed` is 425 u/s (G05); `dash_jump_set_speed` 611 u/s is provisional (G17).
   - T04 checks self-consistency with these values, not ground truth.
-- **Air control:** `air_accel` 10 (PROVISIONAL, G26), `air_wishspeed_cap` 2.032 m/s and 1.27 m/s above 700 u/s (PROVISIONAL, G26). `air_drag` is 0.2 (G08); its linear form is still provisional.
+- **Air control:** `air_accel` 10 (PROVISIONAL, G26), `air_wishspeed_cap` 2.032 m/s and 1.27 m/s above 700 u/s (PROVISIONAL, G26). `air_drag` is 0 (measured session 4); only the air dash decays (`air_dash_drag` 0.2).
 - **Dash:** `down_dash_speed` 15 m/s (Open Q7) and the exit clamp (Open Q6). The down dash cost is settled at 0.5 (G28), and the scaling mode is settled as speed (ground_dash.md rule 6).
 - **Wall jump:** speeds, kicks and fatigue amounts (Open Q12). The 0.125 s min interval is provisional (G33). Fatigue is measured (S4-WF).
 - **Mantle:** `mantle_reach` 0.6 m (the 212 u "activation distance" is unresolved); `mantle_glide_speed` is 13.97 m/s (G11).

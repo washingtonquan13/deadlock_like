@@ -117,7 +117,7 @@ func test_wall_jump_fatigue_second_jump() -> void:
 	ArenaBuilder.add_wall(h.root, Vector3(1.25, 25.0, 0.0), Vector3(0.5, 50.0, 20.0))
 	await h.ready()
 	h.spawn(Vector3(1.0 - 0.4064 - 0.1, 30.0, 0.0), -PI / 2.0)
-	h.run(80, func(t: int) -> InputCmd: return cmd(t, B_JUMP if (t == 1 or t == 54) else 0, 0, 1, -PI / 2.0))
+	h.run(80, func(t: int) -> InputCmd: return cmd(t, B_JUMP if (t == 1 or (t >= 40 and t % 2 == 0)) else 0, 0, 1, -PI / 2.0))
 	var i1 := first_event(h.trace, MoveEvents.WALL_JUMP, "count", 1)
 	var i2 := first_event(h.trace, MoveEvents.WALL_JUMP, "count", 2)
 	assert_true(i1 >= 0 and i2 >= 0, "two wall jumps (W pulls back to the wall)")
