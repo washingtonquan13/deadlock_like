@@ -132,11 +132,6 @@ func mantle_band_for_height(h_m: float) -> int:
 	return tops.size() - 1
 
 
-func mantle_ticks_for_band(band: int) -> int:
-	if band < 0 or band >= params.mantle_band_durations.size():
-		return 0
-	return MoveUnits.ticks(params.mantle_band_durations[band])
-
 
 # --- effective values -----------------------------------------------------------
 

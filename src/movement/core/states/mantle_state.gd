@@ -4,7 +4,6 @@ extends RefCounted
 const Ctx = preload("res://src/movement/core/states/sim_context.gd")
 const GroundState = preload("res://src/movement/core/states/ground_state.gd")
 const L := MoveState.Loco
-const RISE_PORTION := 0.6
 
 
 ## spec: movement.md §15 trigger: jump pressed or held + forward input toward a ledge.
@@ -42,9 +41,11 @@ static func try_start(sim: MovementSim, s: MoveState, ctx: Ctx, forced: bool) ->
 	var band := sim.cp.mantle_band_for_height(h)
 	if band < 0:
 		return false
-	var total := sim.cp.mantle_ticks_for_band(band)
-	if total <= 0:
-		return false
+	# measured session 4: the duration follows the distance (constant climb, then constant exit), not a band
+	var top: Vector3 = ledge["top"]
+	var rise := maxf(0.0, top.y - s.position.y)
+	var run := Vector2(top.x - s.position.x, top.z - s.position.z).length()
+	var total := ceili(rise / (p.mantle_climb_speed * MoveUnits.DT) - 1e-6) + maxi(1, ceili(run / (p.mantle_exit_speed * MoveUnits.DT) - 1e-6))
 	if s.loco == L.SLIDE:
 		sim.emit(s, MoveEvents.SLIDE_END)
 	s.loco = L.MANTLE
@@ -64,7 +65,7 @@ static func try_start(sim: MovementSim, s: MoveState, ctx: Ctx, forced: bool) ->
 
 
 static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
-	if s.mantle_ticks < s.mantle_total_ticks:
+	if s.mantle_ticks < s.mantle_total_ticks and s.position.distance_squared_to(s.mantle_to) > 1e-10:
 		return
 	# spec: movement.md §15 ends grounded with air actions refreshed
 	var dir := Vector3(s.mantle_to.x - s.mantle_from.x, 0.0, s.mantle_to.z - s.mantle_from.z)
@@ -76,7 +77,9 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	else:
 		s.ground_normal = Vector3.UP
 	s.grounded = true
-	s.velocity = Vector3.ZERO
+	# measured session 4: the exit speed is kept; W then accelerates from it
+	var d := dir.normalized() if dir.length_squared() > 1e-9 else sim.facing(s)
+	s.velocity = d * sim.cp.params.mantle_exit_speed
 	sim.refresh_air(s)
 	s.last_air_crouch_press_tick = -1
 	sim.emit(s, MoveEvents.MANTLE_END)
@@ -90,18 +93,25 @@ static func transitions(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 		s.loco = L.CROUCH if s.crouched else L.GROUND
 
 
-## Scripted motion: smoothstep rise at the start position, then forward onto the top.
+## Scripted motion (measured session 4): straight up at the climb speed, then forward onto the top
+## at the exit speed. Horizontal speed is frozen during the climb.
 static func physics(sim: MovementSim, s: MoveState, ctx: Ctx) -> void:
 	ctx.skip_move = true
 	s.mantle_ticks += 1
-	var t := clampf(float(s.mantle_ticks) / float(maxi(1, s.mantle_total_ticks)), 0.0, 1.0)
-	var a := s.mantle_from
+	var p := sim.cp.params
 	var b := s.mantle_to
 	var prev := s.position
-	if t < RISE_PORTION:
-		var u := smoothstep(0.0, 1.0, t / RISE_PORTION)
-		s.position = Vector3(a.x, lerpf(a.y, b.y, u), a.z)
-	else:
-		var u2 := smoothstep(0.0, 1.0, (t - RISE_PORTION) / (1.0 - RISE_PORTION))
-		s.position = Vector3(lerpf(a.x, b.x, u2), b.y, lerpf(a.z, b.z, u2))
+	var budget := MoveUnits.DT
+	var pos := s.position
+	if pos.y < b.y:
+		var dy := minf(b.y - pos.y, p.mantle_climb_speed * budget)
+		pos.y += dy
+		budget -= dy / p.mantle_climb_speed
+	if pos.y >= b.y and budget > 0.0:
+		var h := Vector2(b.x - pos.x, b.z - pos.z)
+		var step := minf(h.length(), p.mantle_exit_speed * budget)
+		if h.length() > 1e-9:
+			h = h.normalized() * step
+		pos += Vector3(h.x, 0.0, h.y)
+	s.position = pos
 	s.velocity = (s.position - prev) / MoveUnits.DT

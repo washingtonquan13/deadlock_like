@@ -205,11 +205,12 @@ extends Resource
 # --- mantle ---------------------------------------------------------------------
 @export var mantle_min_height_u: int = 32                        # spec: movement.md §15
 @export var mantle_band_tops_u: Array[int] = [64, 96, 128, 160]  # spec: movement.md §15
-@export var mantle_band_durations: Array[float] = [0.2, 0.3, 0.4, 0.5]  # spec: movement.md §15
+@export var mantle_climb_speed: float = 5.476                    # measured session 4: straight-up climb ~215.6 u/s
+@export var mantle_exit_speed: float = 4.496                     # measured session 4: ~177 u/s forward onto the top, kept after
 @export var mantle_min_depth: float = 0.1524                     # spec: movement.md §15 (6 u)
 @export var mantle_reach: float = 0.6                            # spec: movement.md §15
 @export var mantle_requires_forward: bool = true                 # spec: movement.md §15
-@export var mantle_glide_speed: float = 13.97                    # G11: ~550 u/s (walls_and_ledges.md rule 30; K35)
+@export var mantle_glide_speed: float = 13.64                    # measured session 4: ~537 u/s after the exit phase
 @export var mantle_hit_slow_start: float = 0.80                  # spec: movement.md §15
 @export var mantle_hit_slow_end: float = 0.20                    # spec: movement.md §15
 @export var mantle_hit_slow_time: float = 2.0                    # spec: movement.md §15
@@ -266,8 +267,6 @@ func validate() -> PackedStringArray:
 	for i in range(1, slide_bonus_table.size()):
 		if slide_bonus_table[i] < slide_bonus_table[i - 1]:
 			w.append("slide_bonus_table is not monotonic at index %d" % i)
-	if mantle_band_tops_u.size() != mantle_band_durations.size():
-		w.append("mantle_band_tops_u and mantle_band_durations lengths differ")
 	var prev: int = mantle_min_height_u
 	for i in mantle_band_tops_u.size():
 		if mantle_band_tops_u[i] <= prev:

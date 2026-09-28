@@ -412,7 +412,6 @@ var sprint_delay_ticks: int       # 192
 static func build(params: MovementParams, hero: HeroMovementStats) -> CompiledMoveParams
 func slide_onset_ticks(slide_kind: int, slide_bonus: float) -> int
 func mantle_band_for_height(h_m: float) -> int         # -1 = no mantle; 0..3
-func mantle_ticks_for_band(band: int) -> int           # 13, 20, 26, 32
 func effective_move_speed(state: MoveState, firing: bool) -> float
 func effective_crouch_speed(state: MoveState) -> float
 func effective_air_drag(state: MoveState) -> float
@@ -712,11 +711,12 @@ All fields are `@export`. Defaults are the frozen spec baseline. Confidence: H =
 | corner_boost_mult | float | 0.8 | x (after -20%) | 14 | M |
 | mantle_min_height_u | int | 32 | u | 15 | M |
 | mantle_band_tops_u | Array[int] | [64, 96, 128, 160] | u | 15 | M |
-| mantle_band_durations | Array[float] | [0.2, 0.3, 0.4, 0.5] | s | 15 | M |
+| mantle_climb_speed | float | 5.476 | m/s (~215.6 u/s, measured session 4) | 15 | H |
+| mantle_exit_speed | float | 4.496 | m/s (~177 u/s, kept after; measured session 4) | 15 | H |
 | mantle_min_depth | float | 0.1524 | m (6 u) | 15 | M |
 | mantle_reach | float | 0.6 | m forward probe | 15 (212 u unresolved) | L |
 | mantle_requires_forward | bool | true | - | 15 | M |
-| mantle_glide_speed | float | 8.9 | m/s | 15 (Open Q13) | L |
+| mantle_glide_speed | float | 13.64 | m/s (~537 u/s, measured session 4) | 15 | H |
 | mantle_hit_slow_start | float | 0.80 | fraction | 15 | M |
 | mantle_hit_slow_end | float | 0.20 | fraction | 15 | M |
 | mantle_hit_slow_time | float | 2.0 | s | 15 | M |
