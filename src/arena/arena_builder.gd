@@ -31,7 +31,8 @@ const ZIP_OUTER_SPEED := 21.0          # spec: movement.md §16
 # layouts
 # ============================================================================
 
-## Builds a layout under `root`. &"none" = nothing, &"flat" = floor only, &"full" = everything.
+## Builds a layout under `root`. &"none" = nothing, &"flat" = floor only, &"full" = the movement
+## debug arena, &"three_lane" = the 5v5 lane map (LaneMapBuilder).
 ## Returns { "spawn": Vector3, "markers": Dictionary[String, Vector3] }.
 static func build(root: Node3D, layout: StringName = &"full") -> Dictionary:
 	var out := {"spawn": Vector3.ZERO, "markers": {}}
@@ -43,6 +44,10 @@ static func build(root: Node3D, layout: StringName = &"full") -> Dictionary:
 			return out
 		&"full":
 			_build_full(root, out)
+			out["minimap"] = {"rect": Rect2(-100, -100, 200, 200), "name": "Movement Debug"}
+			return out
+		&"three_lane":
+			LaneMapBuilder.build(root, out)
 			return out
 		_:
 			push_warning("ArenaBuilder: unknown layout '%s', building 'flat'" % layout)
@@ -223,9 +228,10 @@ static func add_floor(root: Node3D, size: Vector2 = Vector2(200, 200)) -> Static
 	return add_box(root, Vector3(0.0, -FLOOR_THICKNESS * 0.5, 0.0), Vector3(size.x, FLOOR_THICKNESS, size.y), "Floor")
 
 
-static func add_box(root: Node3D, center: Vector3, size: Vector3, name: String = "") -> StaticBody3D:
+static func add_box(root: Node3D, center: Vector3, size: Vector3, name: String = "", yaw: float = 0.0) -> StaticBody3D:
 	var body := _new_body(name if name != "" else "Box")
 	body.position = center
+	body.rotation.y = yaw
 	var cs := CollisionShape3D.new()
 	var shape := BoxShape3D.new()
 	shape.size = size

@@ -43,7 +43,7 @@ func _ready() -> void:
 		_recipe_select.add_item(String(r))
 	_recipe_select.focus_mode = Control.FOCUS_NONE  # never steal Space/keys from gameplay
 	_recorder.recording_changed.connect(func(_on: bool) -> void: _refresh_record_label())
-	_help.text = "F1 hide  F2 timescale  F3 inf. stamina  F4/F8 teleport  F5 pause  F6 step  F7 record"
+	_help.text = "F1 hide  F2 timescale  F3 inf. stamina  F4/F8 teleport  F5 pause  F6 step  F7 record  F9 next map"
 	_timescale_index = maxi(0, TIMESCALES.find(Engine.time_scale))
 	_bind_player()
 	_refresh_record_label()
