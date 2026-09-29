@@ -13,13 +13,14 @@ extends Control
 @export var color_border: Color = Color(0.0, 0.0, 0.0, 0.6)
 
 @export_group("Stamina")
-@export var arc_radius: float = 42.0
+@export var arc_radius: float = 30.0
 @export var arc_width: float = 6.0
-@export var segment_deg: float = 22.0
-@export var segment_gap_deg: float = 4.0
+@export var segment_deg: float = 32.0
+@export var segment_gap_px: float = 4.0
 @export var color_full: Color = Color("#E0E0E0D9")
 @export var color_partial: Color = Color("#E8C040")
-@export var color_empty: Color = Color(0.0, 0.0, 0.0, 0.5)
+@export var color_empty: Color = Color(0.05, 0.05, 0.05, 0.55)
+@export var color_arc_border: Color = Color(0.0, 0.0, 0.0, 0.7)
 @export var color_window: Color = Color("#6CC8E8")
 @export var flash_hz: float = 12.0
 
@@ -28,6 +29,8 @@ extends Control
 @export var color_ammo: Color = Color("#F0F0F0")
 @export var color_ammo_max: Color = Color("#A8A8A8")
 @export var color_infinite: Color = Color("#7CE08A")
+@export var inf_size: float = 20.0
+@export var inf_line: float = 2.5
 @export var ring_radius: float = 16.0
 
 @export_group("Hit markers")
@@ -44,6 +47,7 @@ var _window_open: bool = false
 var _flash_time: float = 0.0
 var _hit_age: float = 1e9
 var _hit_crit: bool = false
+var _inf_age: float = 1e9
 var _font: SystemFont
 
 
@@ -88,6 +92,8 @@ func _process(delta: float) -> void:
 	if _window_open:
 		_flash_time += delta
 	_hit_age += delta
+	var inf := _weapon != null and is_instance_valid(_weapon) and _weapon.wstate != null and _weapon.wstate.infinite_ammo
+	_inf_age = _inf_age + delta if inf else 0.0
 	queue_redraw()
 
 
@@ -154,12 +160,21 @@ func _draw_weapon(c: Vector2) -> void:
 	draw_string_outline(_font, Vector2(x + wc, y), rest, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, ol, olc)
 	draw_string(_font, Vector2(x + wc, y), rest, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, color_ammo_max)
 	if s.infinite_ammo:
-		var inf := "∞"
-		var isz := fs + 8
-		var wi := _font.get_string_size(inf, HORIZONTAL_ALIGNMENT_LEFT, -1, isz).x
-		var ip := Vector2(x - wi - 6.0, y + 2.0)
-		draw_string_outline(_font, ip, inf, HORIZONTAL_ALIGNMENT_LEFT, -1, isz, ol, olc)
-		draw_string(_font, ip, inf, HORIZONTAL_ALIGNMENT_LEFT, -1, isz, color_infinite)
+		# pops in when the slide starts, then sits left of the count
+		var pop := 1.0 + 0.35 * clampf(1.0 - _inf_age / 0.15, 0.0, 1.0)
+		_draw_infinity(Vector2(x - inf_size * 0.5 - 8.0, y - fs * 0.36), inf_size * pop)
+
+
+## Lemniscate drawn as a line so it reads at any size, unlike the thin font glyph.
+func _draw_infinity(at: Vector2, width: float) -> void:
+	var pts := PackedVector2Array()
+	var a := width * 0.5
+	for k in 41:
+		var t := TAU * k / 40.0
+		var d := 1.0 + sin(t) * sin(t)
+		pts.append(at + Vector2(a * cos(t) / d, 1.5 * a * sin(t) * cos(t) / d))
+	draw_polyline(pts, Color(0, 0, 0, 0.85), inf_line + 3.0, true)
+	draw_polyline(pts, color_infinite, inf_line, true)
 
 
 func _draw_stamina(c: Vector2) -> void:
@@ -172,21 +187,37 @@ func _draw_stamina(c: Vector2) -> void:
 	var count := int(ceil(cp.stamina_max(st) - 1e-5))
 	if count <= 0:
 		return
-	# segments spread symmetrically about straight down (+y is down, so PI/2)
+	# segments spread symmetrically about straight down (+y is down, so PI/2), with a fixed
+	# pixel gap between them
 	var seg := deg_to_rad(segment_deg)
-	var gap := deg_to_rad(segment_gap_deg)
+	var gap := segment_gap_px / arc_radius
 	var a0 := PI * 0.5 + (count * seg + (count - 1) * gap) * 0.5
 	var flashing := _window_open and fmod(_flash_time * flash_hz, 1.0) < 0.5
 	var regen_i := int(floor(st.stamina + 1e-5))
-	# fill from the player's left (screen left = larger angle here) to the right
+	# fill from screen left (larger angle here) to the right
 	for i in count:
 		var start := a0 - i * (seg + gap)
-		var end := start - seg
-		draw_arc(c, arc_radius, start + 0.02, end - 0.02, 12, color_empty, arc_width + 3.0)
 		var fill := clampf(st.stamina - float(i), 0.0, 1.0)
 		var col := color_window if flashing else color_full
 		if fill < 1.0 and i == regen_i:
 			fill = maxf(fill, clampf(st.stamina_regen_progress, 0.0, 1.0))
 			col = color_window if flashing else color_partial
+		var slot := _sector(c, start, start - seg)
+		draw_colored_polygon(slot, color_empty)
 		if fill > 0.0:
-			draw_arc(c, arc_radius, start, start - seg * fill, 12, col, arc_width)
+			draw_colored_polygon(_sector(c, start, start - seg * fill), col)
+		slot.append(slot[0])
+		draw_polyline(slot, color_arc_border, 1.5, true)
+
+
+## Annular sector between two angles, ends cut along the radius.
+func _sector(c: Vector2, from: float, to: float) -> PackedVector2Array:
+	var r0 := arc_radius - arc_width * 0.5
+	var r1 := arc_radius + arc_width * 0.5
+	var n := maxi(2, ceili(absf(to - from) / 0.05))
+	var pts := PackedVector2Array()
+	for k in n + 1:
+		pts.append(c + Vector2.from_angle(lerpf(from, to, float(k) / n)) * r1)
+	for k in n + 1:
+		pts.append(c + Vector2.from_angle(lerpf(to, from, float(k) / n)) * r0)
+	return pts
