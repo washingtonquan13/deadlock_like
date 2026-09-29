@@ -30,5 +30,9 @@ func _ready() -> void:
 		_sampler.set_mouse_captured(true)
 
 
+func get_sampler() -> InputSampler:
+	return _sampler
+
+
 func get_aim_ray() -> Dictionary:
 	return _rig.get_aim_ray()

@@ -25,6 +25,8 @@ const ACTION_BITS := {
 var _yaw: float = 0.0
 var _pitch: float = 0.0
 var _mouse_captured: bool = false
+## A menu (the shop) owns the cursor: mouse buttons go to the UI, not to firing or recapture.
+var ui_open: bool = false
 
 ## Tap latch: any press seen since the last build_cmd is ORed into that cmd's held bits.
 var _latched: int = 0
@@ -61,9 +63,12 @@ func _input(event: InputEvent) -> void:
 	if event.is_echo():
 		return
 
-	if event.is_action_pressed(&"toggle_mouse_capture"):
+	if event.is_action_pressed(&"toggle_mouse_capture") and not ui_open:
 		set_mouse_captured(not _mouse_captured)
 		get_viewport().set_input_as_handled()
+		return
+
+	if ui_open and event is InputEventMouseButton:
 		return
 
 	# a click while released recaptures the mouse instead of firing
@@ -120,6 +125,8 @@ func build_cmd(tick: int) -> InputCmd:
 	if f and b:
 		buttons |= InputCmd.BTN_OPPOSE_Y
 
+	if ui_open:
+		buttons &= ~InputCmd.BTN_FIRE
 	_latched = 0
 	return InputCmd.create(tick, buttons, move_x, move_y, _yaw, _pitch)
 
