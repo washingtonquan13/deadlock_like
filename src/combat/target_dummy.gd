@@ -80,7 +80,7 @@ func _build_visual() -> void:
 	_label = Label3D.new()
 	_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	_label.position = Vector3(0, head_center + 0.45, 0)
-	_label.font_size = 48
+	_label.font_size = 40
 	_label.pixel_size = 0.004
 	add_child(_label)
 	_refresh_label()
@@ -89,3 +89,4 @@ func _build_visual() -> void:
 func _refresh_label() -> void:
 	if _label != null:
 		_label.text = "%d / %d" % [ceili(maxf(health, 0.0)), int(max_health)]
+		_label.visible = health < max_health   # full-HP labels just clutter the lane

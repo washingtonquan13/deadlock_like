@@ -15,6 +15,8 @@ signal reload_started
 ## Fire-rate and reload multipliers (combat.md §12 / reload modifiers); 1 = base.
 @export var fire_rate_mult: float = 1.0
 @export var reload_mult: float = 1.0
+## Where tracers appear to leave from, in view space (right, up, back) from the eye. Visual only.
+@export var tracer_muzzle: Vector3 = Vector3(0.55, -0.35, -0.4)
 ## Where the crosshair ray stops when it hits nothing (m).
 @export var max_aim_distance: float = 150.0
 
@@ -76,9 +78,10 @@ func _on_player_ticked(_tick: int, s: MoveState) -> void:
 	var muzzle := s.position + Vector3.UP * (player.params.eye_height_crouch if s.crouched else player.params.eye_height_stand)
 	var aim := _aim_direction(muzzle, s)
 	var dmg := weapon.damage_at_boons(boons)
+	var voff := Basis.from_euler(Vector3(s.pitch, s.yaw, 0.0)) * tracer_muzzle
 	for shot in shots:
 		for d in WeaponSim.shot_directions(weapon, aim, float(shot["spread"]), int(shot["index"])):
-			projectiles.spawn(muzzle, d, weapon, dmg, player.get_instance_id(), float(shot["lead"]))
+			projectiles.spawn(muzzle, d, weapon, dmg, player.get_instance_id(), float(shot["lead"]), voff)
 		shot_fired.emit(weapon.recoil_kick)
 
 

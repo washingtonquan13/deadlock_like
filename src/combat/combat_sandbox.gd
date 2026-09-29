@@ -85,8 +85,9 @@ func _on_bullet_hit(info: Dictionary) -> void:
 	lbl.text = "%.1f" % float(info["amount"]) if float(info["amount"]) < 10.0 else "%d" % roundi(float(info["amount"]))
 	lbl.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	lbl.no_depth_test = true
-	lbl.font_size = 64 if info["is_crit"] else 48
-	lbl.pixel_size = 0.004
+	lbl.fixed_size = true   # same size on screen at any range
+	lbl.font_size = 40 if info["is_crit"] else 30
+	lbl.pixel_size = 0.0012
 	lbl.modulate = Color(1.0, 0.85, 0.2) if info["is_crit"] else Color(1, 1, 1)
 	lbl.outline_size = 12
 	add_child(lbl)
@@ -94,7 +95,7 @@ func _on_bullet_hit(info: Dictionary) -> void:
 	lbl.global_position = (info["point"] as Vector3) + jitter
 	var tw := lbl.create_tween()
 	tw.set_parallel(true)
-	tw.tween_property(lbl, "position:y", lbl.position.y + 0.8, 0.8)
+	tw.tween_property(lbl, "position:y", lbl.position.y + 0.4 + 0.02 * float(info["distance"]), 0.8)
 	tw.tween_property(lbl, "modulate:a", 0.0, 0.8).set_delay(0.3)
 	tw.chain().tween_callback(lbl.queue_free)
 
