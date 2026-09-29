@@ -2,11 +2,15 @@ class_name WeaponController
 extends Node
 ## Gives a PlayerCharacter a gun (docs/design/gun_system_plan.md). Steps WeaponSim once per sim
 ## tick from the same InputCmd buttons the movement sim consumed, and hands shots to the
-## ProjectileSystem. Bullets leave the eye toward the point under the crosshair.
+## ProjectileSystem. Bullets leave the gun muzzle toward the point under the crosshair, so the
+## tracer drawn along a bullet is exactly where it goes.
 
 signal shot_fired(kick_deg: float)
 signal weapon_changed(w: WeaponData)
 signal reload_started
+## Per trigger shot: where it left from and the muzzle's offset from the eye (for visuals that
+## follow the rendered player).
+signal muzzle_fired(muzzle: Vector3, eye_offset: Vector3, aim: Vector3)
 
 @export var player_path: NodePath
 @export var projectiles_path: NodePath
@@ -15,8 +19,9 @@ signal reload_started
 ## Fire-rate and reload multipliers (combat.md §12 / reload modifiers); 1 = base.
 @export var fire_rate_mult: float = 1.0
 @export var reload_mult: float = 1.0
-## Where tracers appear to leave from, in view space (right, up, back) from the eye. Visual only.
-@export var tracer_muzzle: Vector3 = Vector3(0.55, -0.35, -0.4)
+## Gun muzzle in view space (right, up, forward is -z) from the eye. Right of the 0.41 m player
+## capsule so it clears the shooter; a wall between the eye and it pulls it back.
+@export var muzzle_offset: Vector3 = Vector3(0.55, -0.35, -0.4)
 ## Where the crosshair ray stops when it hits nothing (m).
 @export var max_aim_distance: float = 150.0
 
@@ -77,14 +82,26 @@ func _on_player_ticked(_tick: int, s: MoveState) -> void:
 		reload_started.emit()
 	if shots.is_empty() or projectiles == null:
 		return
-	var muzzle := s.position + Vector3.UP * (player.params.eye_height_crouch if s.crouched else player.params.eye_height_stand)
+	var eye := s.position + Vector3.UP * (player.params.eye_height_crouch if s.crouched else player.params.eye_height_stand)
+	var muzzle := _muzzle(eye, s)
 	var aim := _aim_direction(muzzle, s)
 	var dmg := weapon.damage_at_boons(boons)
-	var voff := Basis.from_euler(Vector3(s.pitch, s.yaw, 0.0)) * tracer_muzzle
 	for shot in shots:
 		for d in WeaponSim.shot_directions(weapon, aim, float(shot["spread"]), int(shot["index"])):
-			projectiles.spawn(muzzle, d, weapon, dmg, player.get_instance_id(), float(shot["lead"]), voff)
+			projectiles.spawn(muzzle, d, weapon, dmg, player.get_instance_id(), float(shot["lead"]))
 		shot_fired.emit(weapon.recoil_kick)
+		muzzle_fired.emit(muzzle, muzzle - eye, aim)
+
+
+func _muzzle(eye: Vector3, s: MoveState) -> Vector3:
+	var m := eye + Basis.from_euler(Vector3(s.pitch, s.yaw, 0.0)) * muzzle_offset
+	_ray.from = eye
+	_ray.to = m
+	_ray.exclude = [player.get_rid()]
+	var hit := player.get_world_3d().direct_space_state.intersect_ray(_ray)
+	if not hit.is_empty():
+		m = eye.lerp(hit["position"], 0.9)
+	return m
 
 
 ## Toward the world point under the crosshair (the camera sits behind the shoulder, so bullets

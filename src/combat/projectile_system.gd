@@ -32,14 +32,10 @@ const TARGET_GROUP := &"bullet_targets"
 @export var tracer_linger: float = 0.08
 @export var tracer_ghost_length: float = 40.0
 @export var tracer_color: Color = Color(1.0, 0.9, 0.5)
-## Tracers leave from a visual muzzle (spawn's visual_offset) and blend onto the true bullet path
-## over this many meters. Visual only; hits always use the true path from the eye.
-@export var tracer_converge: float = 8.0
 
 var _pos := PackedVector3Array()
 var _vel := PackedVector3Array()
 var _origin := PackedVector3Array()
-var _voff := PackedVector3Array()        # tracer-only muzzle offset, fades over tracer_converge
 var _age := PackedFloat32Array()
 var _life := PackedFloat32Array()
 var _first_dt := PackedFloat32Array()    # sub-tick lead for the first step; <0 after that
@@ -57,7 +53,7 @@ var live_count := 0
 var _ray := PhysicsRayQueryParameters3D.new()
 var _mm: MultiMesh
 var _mmi: MultiMeshInstance3D
-var _ghosts: Array = []                  # [end, dir, width, length, age] for bullets that just died
+var _ghosts: Array = []                  # [end, vel, gravity, width, length, age] for bullets that just died
 
 
 func _ready() -> void:
@@ -81,7 +77,7 @@ func _process(delta: float) -> void:
 
 ## Spawn one bullet. `lead` is the part of the current tick left after the shot (WeaponSim);
 ## the bullet covers only that much on its first step. Shooter velocity is not inherited.
-func spawn(origin: Vector3, dir: Vector3, w: WeaponData, damage: float, owner_id: int = 0, lead: float = DT, visual_offset := Vector3.ZERO) -> int:
+func spawn(origin: Vector3, dir: Vector3, w: WeaponData, damage: float, owner_id: int = 0, lead: float = DT) -> int:
 	var i: int
 	if _free.size() > 0:
 		i = _free[_free.size() - 1]
@@ -93,7 +89,6 @@ func spawn(origin: Vector3, dir: Vector3, w: WeaponData, damage: float, owner_id
 			_grow(maxi(256, _pos.size() * 2))
 	_pos[i] = origin
 	_origin[i] = origin
-	_voff[i] = visual_offset
 	_vel[i] = dir.normalized() * w.bullet_speed
 	_age[i] = 0.0
 	_life[i] = w.max_travel_time()
@@ -111,7 +106,7 @@ func spawn(origin: Vector3, dir: Vector3, w: WeaponData, damage: float, owner_id
 
 
 func _grow(n: int) -> void:
-	_pos.resize(n); _vel.resize(n); _origin.resize(n); _voff.resize(n)
+	_pos.resize(n); _vel.resize(n); _origin.resize(n)
 	_age.resize(n); _life.resize(n); _first_dt.resize(n); _damage.resize(n); _grav.resize(n); _radius.resize(n)
 	_alive.resize(n); _owner.resize(n); _weapon.resize(n)
 
@@ -122,7 +117,7 @@ func _kill(i: int) -> void:
 		var sp := v.length()
 		if sp > 1e-3:
 			var length := minf(maxf(sp * tracer_time, tracer_ghost_length), _origin[i].distance_to(_pos[i]))
-			_ghosts.append([i, _pos[i], v / sp, maxf(tracer_width, _radius[i] * 0.35), length, 0.0, _origin[i], _voff[i]])
+			_ghosts.append([_pos[i], v, _grav[i], maxf(tracer_width, _radius[i] * 0.35), length, 0.0])
 	_alive[i] = 0
 	_weapon[i] = null
 	_pierced.erase(i)
@@ -340,10 +335,12 @@ func _update_tracers(delta: float) -> void:
 			continue
 		left *= left   # the tail snaps in fast, then the last bit near the impact hangs
 		k += 1
-		var end: Vector3 = gh[1]
-		_set_streak(n, end - (gh[2] as Vector3) * (float(gh[4]) * left), end, gh[6], gh[7], gh[3])
+		var end: Vector3 = gh[0]
+		_set_streak(n, _path_back(end, gh[1], float(gh[2]), float(gh[4]) * left), end, gh[3])
 		n += 1
-	var f := clampf(Engine.get_physics_interpolation_fraction(), 0.0, 1.0)
+	# Drawn where the bullet was at render time: the player renders between its last two ticks,
+	# so bullets do too (one tick behind the sim), which keeps them on the rendered muzzle.
+	var back := DT * (1.0 - clampf(Engine.get_physics_interpolation_fraction(), 0.0, 1.0))
 	for i in _high:
 		if _alive[i] == 0:
 			continue
@@ -351,19 +348,25 @@ func _update_tracers(delta: float) -> void:
 		var speed := v.length()
 		if speed < 1e-3:
 			continue
-		var dir := v / speed
-		var head := _pos[i] + v * (DT * f)
-		var length := minf(minf(speed * tracer_time, tracer_max_length), _origin[i].distance_to(head))
-		_set_streak(n, head - dir * length, head, _origin[i], _voff[i], maxf(tracer_width, _radius[i] * 0.35))
+		var along := _origin[i].distance_to(_pos[i]) - speed * back
+		if along <= 0.0:
+			continue   # not out of the barrel yet at render time
+		var head := _path_back(_pos[i], v, _grav[i], speed * back)
+		var length := minf(minf(speed * tracer_time, tracer_max_length), along)
+		_set_streak(n, _path_back(head, v, _grav[i], length), head, maxf(tracer_width, _radius[i] * 0.35))
 		n += 1
 	_mm.visible_instance_count = n
 
 
-## One streak instance from tail to head (true path points), shifted by the fading muzzle offset.
-func _set_streak(n: int, tail: Vector3, head: Vector3, origin: Vector3, voff: Vector3, w: float) -> void:
-	var inv := 1.0 / maxf(tracer_converge, 0.01)
-	var t := tail + voff * maxf(0.0, 1.0 - origin.distance_to(tail) * inv)
-	var h := head + voff * maxf(0.0, 1.0 - origin.distance_to(head) * inv)
+## The point `dist` meters back along a bullet's arc from `p`, where it has velocity `v` and
+## drops at `g` m/s^2: p(t - tau) = p - v tau + 1/2 g tau^2 down.
+static func _path_back(p: Vector3, v: Vector3, g: float, dist: float) -> Vector3:
+	var tau := dist / maxf(v.length(), 1e-3)
+	return p - v * tau + Vector3.DOWN * (0.5 * g * tau * tau)
+
+
+## One streak instance from tail to head.
+func _set_streak(n: int, t: Vector3, h: Vector3, w: float) -> void:
 	var seg := h - t
 	var length := seg.length()
 	var dir := seg / length if length > 1e-5 else Vector3.FORWARD

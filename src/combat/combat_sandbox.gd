@@ -15,6 +15,7 @@ extends Node3D
 
 var projectiles: ProjectileSystem
 var weapon_ctrl: WeaponController
+var fx: GunFx
 var _player: PlayerCharacter
 var _ctrl: LocalController
 var _hud_label: Label
@@ -48,6 +49,11 @@ func _ready() -> void:
 		if rig != null and rig.has_method(&"add_recoil"):
 			weapon_ctrl.shot_fired.connect(rig.add_recoil)
 	projectiles.bullet_hit.connect(_on_bullet_hit)
+	fx = GunFx.new()
+	fx.name = "GunFx"
+	add_child(fx)
+	fx.connect_weapon(weapon_ctrl)
+	fx.connect_projectiles(projectiles)
 	_build_hud()
 
 
