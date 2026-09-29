@@ -3,11 +3,13 @@ extends Node3D
 ## Adds guns to the movement sandbox (docs/design/gun_system_plan.md): the ProjectileSystem, a
 ## WeaponController on the local player, target dummies along the sprint lane, floating damage
 ## numbers and a small ammo HUD. [ / ] cycle through every hero's gun, R reloads. HeroStats
-## gives the player items, souls and HP; B opens the debug shop.
+## gives the player items, souls and HP; B opens the debug shop. HeroAbilities gives the
+## player the "pyre" kit: 1–4 cast, Alt+1–4 unlock/upgrade, Z X T G cast active items.
 
 @export var player_path: NodePath
 @export var local_controller_path: NodePath
 @export var weapon_key: StringName = &"haze"
+@export var kit_key: StringName = &"pyre"
 ## Dummies beside the sprint lane (the lane has 5 m labels), feet positions.
 @export var dummy_positions: PackedVector3Array = PackedVector3Array([
 	Vector3(3.0, 0.0, -10.0), Vector3(3.0, 0.0, -20.0), Vector3(3.0, 0.0, -30.0),
@@ -24,6 +26,9 @@ var _crosshair: Crosshair
 var _info: Label
 var hero: HeroStats
 var shop: ShopPanel
+var abilities: HeroAbilities
+var ability_fx: AbilityEffects
+var ability_bar: AbilityBar
 var _hp_bar: ProgressBar
 var _hp_label: Label
 
@@ -75,6 +80,15 @@ func _ready() -> void:
 		_crosshair = _ctrl.get_node_or_null(^"UI/Crosshair") as Crosshair
 		if _crosshair != null:
 			_crosshair.bind_weapon(weapon_ctrl)
+	abilities = HeroAbilities.new()
+	abilities.name = "HeroAbilities"
+	add_child(abilities)
+	abilities.bind(hero, _player, _ctrl.get_sampler() if _ctrl != null else null)
+	abilities.set_kit(kit_key)
+	ability_fx = AbilityEffects.new()
+	ability_fx.name = "AbilityEffects"
+	add_child(ability_fx)
+	ability_fx.bind(abilities, numbers, projectiles, _ctrl.get_aim_ray if _ctrl != null else Callable())
 	_build_hud()
 	hero.health_changed.connect(_on_health_changed)
 	_on_health_changed(hero.hp, hero.max_hp)
@@ -100,7 +114,7 @@ func _process(_delta: float) -> void:
 		return
 	var w := weapon_ctrl.weapon
 	_info.text = "%s  |  %.2f x%d dmg  |  %.0f m/s  |  +%d%% wpn  |  %d SP
-[ / ] change gun    R reload    B shop" % [
+[ / ] gun   R reload   B shop   1-4 cast   Alt+1-4 level up" % [
 		w.display_name, weapon_ctrl.damage_per_bullet(), w.pellets, w.bullet_speed,
 		int(hero.sheet.get_stat(StatDefs.WEAPON_DAMAGE)), int(hero.spirit_power())]
 	_hp_label.text = "%d / %d   +%.1f/s" % [ceili(hero.hp), int(hero.max_hp), hero.regen_per_second()]
@@ -133,6 +147,10 @@ func _build_hud() -> void:
 	_info.add_theme_constant_override(&"outline_size", 4)
 	_info.add_theme_color_override(&"font_outline_color", Color.BLACK)
 	layer.add_child(_info)
+	ability_bar = AbilityBar.new()
+	ability_bar.name = "AbilityBar"
+	layer.add_child(ability_bar)
+	ability_bar.bind(abilities)
 
 	var hp_box := VBoxContainer.new()
 	hp_box.anchor_top = 1.0

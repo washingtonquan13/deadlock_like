@@ -12,6 +12,8 @@ extends Node3D
 @export var hit_outline: Color = Color(0.1, 0.1, 0.1)
 @export var crit_color: Color = Color("#F0D020")
 @export var crit_outline: Color = Color("#FF9C00")
+@export var spirit_color: Color = Color("#C58CFF")      # spirit damage reads purple
+@export var spirit_outline: Color = Color("#3A1460")
 @export var fade_color: Color = Color(0.55, 0.55, 0.2)   # numbers go olive as they rise
 @export var total_color: Color = Color("#FFFFE0")
 ## Running total position: this far above the target's feet, and this many pixels to the side.
@@ -31,8 +33,10 @@ func _ready() -> void:
 func on_hit(info: Dictionary) -> void:
 	var amount := float(info["amount"])
 	var crit: bool = info["is_crit"]
+	var spirit: bool = info.get("kind", &"bullet") == &"spirit"
 	var lbl := _label(crit_font_size if crit else hit_font_size, 8,
-		crit_color if crit else hit_color, crit_outline if crit else hit_outline)
+		spirit_color if spirit else (crit_color if crit else hit_color),
+		spirit_outline if spirit else (crit_outline if crit else hit_outline))
 	lbl.text = _fmt(amount)
 	add_child(lbl)
 	lbl.global_position = (info["point"] as Vector3) + Vector3(randf_range(-0.12, 0.12), 0.05, randf_range(-0.12, 0.12))

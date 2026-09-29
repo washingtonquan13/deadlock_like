@@ -1,0 +1,52 @@
+{
+	"_note": "Our ability kits (specs/abilities.md). Props: a number or {base, sp (coef per spirit power), boon (per boon), mult}. mult is cooldown | duration | range | charges | '' and defaults by name (cooldown, charges, duration, radius, range). Upgrades add to props in tier order; 'sp' adds to a prop's SP coefficient. Numbers follow the spec's worked example and the public reference data; names are ours.",
+	"kits": {
+		"pyre": ["cinder_bolt", "flame_trail", "kindling", "detonate"]
+	},
+	"abilities": [
+		{ "id": "cinder_bolt", "name": "Cinder Bolt", "kind": "instant", "effect": "cone_blast",
+		  "props": {
+			"cooldown": 25, "charges": 1, "between": 6, "cast_delay": 0.1,
+			"range": 20, "cone_width": 1, "cone_growth": 0.5,
+			"damage": { "base": 40, "sp": 0.6 },
+			"amp": 16, "amp_duration": { "base": 8, "mult": "duration" },
+			"slow": 28, "slow_duration": { "base": 4, "mult": "duration" },
+			"lifesteal": 0 },
+		  "upgrades": [
+			{ "text": "+1 charge", "add": { "charges": 1 } },
+			{ "text": "15% spirit lifesteal", "add": { "lifesteal": 15 } },
+			{ "text": "+17% damage amp", "add": { "amp": 17 } } ] },
+
+		{ "id": "flame_trail", "name": "Flame Trail", "kind": "instant", "effect": "fire_dash",
+		  "props": {
+			"cooldown": 38, "charges": 1, "between": 0, "cast_delay": 0.2,
+			"duration": 3, "ground_speed": 12, "air_speed": 8, "slow_resist": 50,
+			"dps": { "base": 30, "sp": 0.7 }, "radius": 4.5,
+			"flame_duration": { "base": 4, "mult": "duration" }, "spacing": 1, "tick": 0.5 },
+		  "upgrades": [
+			{ "text": "-12s cooldown", "add": { "cooldown": -12 } },
+			{ "text": "+20 DPS, +1s flames", "add": { "dps": 20, "flame_duration": 1 } },
+			{ "text": "+2 charges", "add": { "charges": 2, "between": 14 } } ] },
+
+		{ "id": "kindling", "name": "Kindling", "kind": "passive", "effect": "kindling",
+		  "props": {
+			"buildup": 8.1, "buildup_crit": 15.4, "buildup_duration": 17,
+			"burn_duration": { "base": 3, "mult": "duration" },
+			"dps": { "base": 14, "sp": 0.66 }, "tick": 0.5 },
+		  "upgrades": [
+			{ "text": "+16 burn DPS", "add": { "dps": 16 } },
+			{ "text": "burning targets deal -35% spirit damage", "add": { "spirit_weaken": 35 } },
+			{ "text": "+3s burn", "add": { "burn_duration": 3 } } ] },
+
+		{ "id": "detonate", "name": "Detonate", "kind": "channel", "ultimate": true, "effect": "detonate",
+		  "props": {
+			"cooldown": 190, "charges": 1, "between": 0, "cast_delay": 0, "channel": 3.25,
+			"damage": { "base": 125, "sp": 0.975 }, "radius": 12,
+			"stun": { "base": 1.25, "mult": "duration" }, "lifesteal": 0,
+			"move_mult": 1.0 },
+		  "upgrades": [
+			{ "text": "+100 damage", "add": { "damage": 100 } },
+			{ "text": "-65s cooldown, 100% lifesteal", "add": { "cooldown": -65, "lifesteal": 100 } },
+			{ "text": "+0.9s stun, +10m radius", "add": { "stun": 0.9, "radius": 10 } } ] }
+	]
+}

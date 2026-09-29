@@ -20,6 +20,10 @@ var health: float = 800.0
 var total_damage: float = 0.0
 var _since_hit: float = 0.0
 var _label: Label3D
+## Timed debuffs shown on the label: name -> seconds left (slow, stun, burn; dummies don't act).
+var statuses: Dictionary = {}
+## Damage amp per attacker (abilities: "takes +x% damage from the caster"): source id -> [pct, left].
+var amps: Dictionary = {}
 
 
 func _ready() -> void:
@@ -38,6 +42,9 @@ func get_hit_capsules() -> Array:
 
 
 func take_bullet_hit(info: Dictionary) -> void:
+	var amp: Array = amps.get(info.get("source_id", 0), [])
+	if not amp.is_empty():
+		info["amount"] = float(info.get("amount", 0.0)) * (1.0 + float(amp[0]) / 100.0)
 	var amount := float(info.get("amount", 0.0))
 	health -= amount
 	total_damage += amount
@@ -49,8 +56,33 @@ func take_bullet_hit(info: Dictionary) -> void:
 	_refresh_label()
 
 
+func set_status(status: StringName, seconds: float) -> void:
+	statuses[status] = maxf(seconds, float(statuses.get(status, 0.0)))
+	_refresh_label()
+
+
+func apply_amp(source_id: int, pct: float, seconds: float) -> void:
+	amps[source_id] = [pct, seconds]
+	set_status(&"amp", seconds)
+
+
+## Chest height, where abilities aim and numbers spawn.
+func get_center() -> Vector3:
+	return global_position + Vector3(0, (body_top + body_bottom) * 0.5, 0)
+
+
 func _process(delta: float) -> void:
 	_since_hit += delta
+	if not statuses.is_empty() or not amps.is_empty():
+		for k in statuses.keys():
+			statuses[k] -= delta
+			if statuses[k] <= 0.0:
+				statuses.erase(k)
+		for k in amps.keys():
+			amps[k][1] -= delta
+			if amps[k][1] <= 0.0:
+				amps.erase(k)
+		_refresh_label()
 	if _since_hit > reset_delay and health < max_health:
 		health = max_health
 		_refresh_label()
@@ -88,5 +120,9 @@ func _build_visual() -> void:
 
 func _refresh_label() -> void:
 	if _label != null:
-		_label.text = "%d / %d" % [ceili(maxf(health, 0.0)), int(max_health)]
-		_label.visible = health < max_health   # full-HP labels just clutter the lane
+		var tags := PackedStringArray()
+		for k in statuses:
+			tags.append(String(k).to_upper())
+		_label.text = "%d / %d" % [ceili(maxf(health, 0.0)), int(max_health)] 				+ ("" if tags.is_empty() else "
+" + " ".join(tags))
+		_label.visible = health < max_health or not tags.is_empty()   # full-HP labels just clutter the lane
