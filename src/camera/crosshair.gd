@@ -1,28 +1,58 @@
 class_name Crosshair
 extends Control
-## Center dot plus stamina pips (design §9).
+## Reticle, stamina arc, ammo count and hit markers (specs/hud.md).
 ## spec: movement.md §7 stamina bars (full / partial regen / empty).
-## spec: movement.md §9 UI cue: pips flash light blue while the dash-jump window is open.
+## spec: movement.md §9 UI cue: the stamina bars flash light blue while the dash-jump window is open.
 
-@export var dot_radius: float = 2.5
-@export var pip_size: Vector2 = Vector2(14.0, 4.0)
-@export var pip_gap: float = 4.0
-@export var pip_offset_y: float = 22.0
-@export var color_dot: Color = Color(1.0, 1.0, 1.0, 0.9)
-@export var color_full: Color = Color(0.95, 0.85, 0.35, 0.95)
-@export var color_partial: Color = Color(0.95, 0.85, 0.35, 0.55)
-@export var color_empty: Color = Color(0.1, 0.1, 0.1, 0.55)
-@export var color_window: Color = Color(0.55, 0.85, 1.0, 1.0)   # light blue
+@export_group("Reticle")
+@export var dot_radius: float = 1.5
+@export var line_length: float = 6.0
+@export var line_gap: float = 5.0
+@export var line_width: float = 2.0
+@export var color_reticle: Color = Color(1.0, 1.0, 1.0, 0.95)
+@export var color_border: Color = Color(0.0, 0.0, 0.0, 0.6)
+
+@export_group("Stamina")
+@export var arc_radius: float = 42.0
+@export var arc_width: float = 6.0
+@export var segment_deg: float = 22.0
+@export var segment_gap_deg: float = 4.0
+@export var color_full: Color = Color("#E0E0E0D9")
+@export var color_partial: Color = Color("#E8C040")
+@export var color_empty: Color = Color(0.0, 0.0, 0.0, 0.5)
+@export var color_window: Color = Color("#6CC8E8")
 @export var flash_hz: float = 12.0
 
+@export_group("Ammo")
+@export var ammo_font_size: int = 17
+@export var color_ammo: Color = Color("#F0F0F0")
+@export var color_ammo_max: Color = Color("#A8A8A8")
+@export var color_infinite: Color = Color("#7CE08A")
+@export var ring_radius: float = 16.0
+
+@export_group("Hit markers")
+@export var hit_time: float = 0.15
+@export var hit_inner: float = 8.0
+@export var hit_outer: float = 14.0
+@export var color_hit: Color = Color(1, 1, 1, 1)
+@export var color_crit: Color = Color("#F0D020")
+@export var color_crit_border: Color = Color("#D02010")
+
 var _player: PlayerCharacter = null
+var _weapon: WeaponController = null
 var _window_open: bool = false
 var _flash_time: float = 0.0
+var _hit_age: float = 1e9
+var _hit_crit: bool = false
+var _font: SystemFont
 
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_font = SystemFont.new()
+	_font.font_names = PackedStringArray(["Arial", "Segoe UI", "sans-serif"])
+	_font.font_weight = 700
 
 
 func bind_player(p: PlayerCharacter) -> void:
@@ -36,6 +66,18 @@ func bind_player(p: PlayerCharacter) -> void:
 	queue_redraw()
 
 
+## Shows the gun's ammo, reload and spin under the reticle.
+func bind_weapon(wc: WeaponController) -> void:
+	_weapon = wc
+
+
+## Flashes a hit marker; crit = headshot style.
+func show_hit(crit: bool) -> void:
+	# a body hit landing right after a crit keeps the crit marker
+	_hit_crit = crit or (_hit_crit and _hit_age < hit_time * 0.5)
+	_hit_age = 0.0
+
+
 func _on_dash_jump_window(open: bool) -> void:
 	_window_open = open
 	_flash_time = 0.0
@@ -45,40 +87,106 @@ func _on_dash_jump_window(open: bool) -> void:
 func _process(delta: float) -> void:
 	if _window_open:
 		_flash_time += delta
+	_hit_age += delta
 	queue_redraw()
 
 
 func _draw() -> void:
-	var center := size * 0.5
-	draw_circle(center, dot_radius, color_dot)
+	var c := (size * 0.5).round()
+	_draw_reticle(c)
+	_draw_hit_marker(c)
+	_draw_weapon(c)
+	_draw_stamina(c)
+
+
+func _draw_reticle(c: Vector2) -> void:
+	for d: Vector2 in [Vector2.RIGHT, Vector2.LEFT, Vector2.UP, Vector2.DOWN]:
+		var a := c + d * line_gap
+		var b := c + d * (line_gap + line_length)
+		draw_line(a - d, b + d, color_border, line_width + 2.0)
+		draw_line(a, b, color_reticle, line_width)
+	draw_circle(c, dot_radius + 1.0, color_border)
+	draw_circle(c, dot_radius, color_reticle)
+
+
+func _draw_hit_marker(c: Vector2) -> void:
+	if _hit_age >= hit_time:
+		return
+	var f := 1.0 - _hit_age / hit_time
+	var grow := 1.0 + 0.25 * f
+	for k in 4:
+		var d := Vector2.from_angle(PI * 0.25 + k * PI * 0.5)
+		var a := c + d * hit_inner * grow
+		var b := c + d * hit_outer * grow
+		if _hit_crit:
+			draw_line(a - d, b + d, Color(color_crit_border, f), 4.5)
+			draw_line(a, b, Color(color_crit, f), 2.0)
+		else:
+			draw_line(a - d, b + d, Color(color_border, 0.6 * f), 4.0)
+			draw_line(a, b, Color(color_hit, f), 2.0)
+
+
+func _draw_weapon(c: Vector2) -> void:
+	if _weapon == null or not is_instance_valid(_weapon) or _weapon.weapon == null:
+		return
+	var w := _weapon.weapon
+	var s := _weapon.wstate
+	# reload (guess, specs/hud.md §1.5) and spin-up (§1.4) rings around the reticle
+	if s.is_reloading():
+		draw_arc(c, ring_radius, 0.0, TAU, 48, color_empty, 3.0)
+		var p := clampf(s.reload_progress(w), 0.0, 1.0)
+		if p > 0.0:
+			draw_arc(c, ring_radius, -PI * 0.5, -PI * 0.5 + TAU * p, 48, color_reticle, 2.0)
+	elif w.spins_up and s.spin > 0.0:
+		draw_arc(c, ring_radius, -PI * 0.5, -PI * 0.5 + TAU * clampf(s.spin, 0.0, 1.0), 48, Color(0.75, 0.75, 0.75, 0.8), 2.0)
+	# ammo under the stamina arc: "12 / 30", with ∞ while sliding
+	var cur := "%d" % s.ammo
+	var rest := " / %d" % w.clip_size
+	var fs := ammo_font_size
+	var wc := _font.get_string_size(cur, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+	var wr := _font.get_string_size(rest, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+	var y := c.y + arc_radius + arc_width + 6.0 + fs
+	var x := c.x - (wc + wr) * 0.5
+	var ol := 5
+	var olc := Color(0, 0, 0, 0.85)
+	draw_string_outline(_font, Vector2(x, y), cur, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, ol, olc)
+	draw_string(_font, Vector2(x, y), cur, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, color_ammo)
+	draw_string_outline(_font, Vector2(x + wc, y), rest, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, ol, olc)
+	draw_string(_font, Vector2(x + wc, y), rest, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, color_ammo_max)
+	if s.infinite_ammo:
+		var inf := "∞"
+		var isz := fs + 8
+		var wi := _font.get_string_size(inf, HORIZONTAL_ALIGNMENT_LEFT, -1, isz).x
+		var ip := Vector2(x - wi - 6.0, y + 2.0)
+		draw_string_outline(_font, ip, inf, HORIZONTAL_ALIGNMENT_LEFT, -1, isz, ol, olc)
+		draw_string(_font, ip, inf, HORIZONTAL_ALIGNMENT_LEFT, -1, isz, color_infinite)
+
+
+func _draw_stamina(c: Vector2) -> void:
 	if _player == null or not is_instance_valid(_player) or _player.state == null:
 		return
 	var cp := _player.get_compiled_params()
 	if cp == null:
 		return
 	var st := _player.state
-	var max_bars := cp.stamina_max(st)
-	var pip_count := int(ceil(max_bars - 1e-5))
-	if pip_count <= 0:
+	var count := int(ceil(cp.stamina_max(st) - 1e-5))
+	if count <= 0:
 		return
-	var total_w := pip_count * pip_size.x + (pip_count - 1) * pip_gap
-	var x0 := center.x - total_w * 0.5
-	var y0 := center.y + pip_offset_y
-	# flash on/off at flash_hz while the dash-jump window is open
+	# segments spread symmetrically about straight down (+y is down, so PI/2)
+	var seg := deg_to_rad(segment_deg)
+	var gap := deg_to_rad(segment_gap_deg)
+	var a0 := PI * 0.5 + (count * seg + (count - 1) * gap) * 0.5
 	var flashing := _window_open and fmod(_flash_time * flash_hz, 1.0) < 0.5
-	for i in pip_count:
-		var r := Rect2(Vector2(x0 + i * (pip_size.x + pip_gap), y0), pip_size)
-		draw_rect(r, color_empty)
+	var regen_i := int(floor(st.stamina + 1e-5))
+	# fill from the player's left (screen left = larger angle here) to the right
+	for i in count:
+		var start := a0 - i * (seg + gap)
+		var end := start - seg
+		draw_arc(c, arc_radius, start + 0.02, end - 0.02, 12, color_empty, arc_width + 3.0)
 		var fill := clampf(st.stamina - float(i), 0.0, 1.0)
-		if fill < 1.0 and i == int(floor(st.stamina + 1e-5)):
-			# the one bar currently regenerating (spec §7: one bar regens at a time)
+		var col := color_window if flashing else color_full
+		if fill < 1.0 and i == regen_i:
 			fill = maxf(fill, clampf(st.stamina_regen_progress, 0.0, 1.0))
-			if fill > 0.0:
-				draw_rect(Rect2(r.position, Vector2(r.size.x * fill, r.size.y)),
-					color_window if flashing else color_partial)
-			continue
+			col = color_window if flashing else color_partial
 		if fill > 0.0:
-			draw_rect(Rect2(r.position, Vector2(r.size.x * fill, r.size.y)),
-				color_window if flashing else color_full)
-		elif flashing:
-			draw_rect(r, color_window, false, 1.0)
+			draw_arc(c, arc_radius, start, start - seg * fill, 12, col, arc_width)

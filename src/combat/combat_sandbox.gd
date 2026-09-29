@@ -18,8 +18,9 @@ var weapon_ctrl: WeaponController
 var fx: GunFx
 var _player: PlayerCharacter
 var _ctrl: LocalController
-var _hud_label: Label
-var _reload_bar: ProgressBar
+var numbers: DamageNumbers
+var _crosshair: Crosshair
+var _info: Label
 
 
 func _ready() -> void:
@@ -54,6 +55,13 @@ func _ready() -> void:
 	add_child(fx)
 	fx.connect_weapon(weapon_ctrl)
 	fx.connect_projectiles(projectiles)
+	numbers = DamageNumbers.new()
+	numbers.name = "DamageNumbers"
+	add_child(numbers)
+	if _ctrl != null:
+		_crosshair = _ctrl.get_node_or_null(^"UI/Crosshair") as Crosshair
+		if _crosshair != null:
+			_crosshair.bind_weapon(weapon_ctrl)
 	_build_hud()
 
 
@@ -66,69 +74,40 @@ func _unhandled_input(event: InputEvent) -> void:
 		weapon_ctrl.cycle_weapon(-1)
 
 
+func _on_bullet_hit(info: Dictionary) -> void:
+	numbers.on_hit(info)
+	if _crosshair != null and info.get("source_id", 0) == _player.get_instance_id():
+		_crosshair.show_hit(info["is_crit"])
+
+
 func _process(_delta: float) -> void:
-	if weapon_ctrl == null or _hud_label == null or weapon_ctrl.weapon == null:
+	if weapon_ctrl == null or _info == null or weapon_ctrl.weapon == null:
 		return
 	var w := weapon_ctrl.weapon
-	var s := weapon_ctrl.wstate
-	var mode := ""
-	if s.mode == WeaponState.Mode.RELOADING:
-		mode = "  RELOADING"
-	elif s.mode == WeaponState.Mode.RELOADING_SINGLE:
-		mode = "  RELOADING (shells)"
-	var extra := ""
-	if w.spins_up:
-		extra = "  spin %d%%" % roundi(s.spin * 100.0)
-	_hud_label.text = "%s   %d / %d%s%s\n%.2f dmg x%d  |  %.0f dps  |  %.0f m/s  |  falloff %.0f-%.0f m\n[ / ] change gun   R reload" % [
-		w.display_name, s.ammo, w.clip_size, mode, extra,
-		w.damage_at_boons(weapon_ctrl.boons), w.pellets, w.burst_dps(), w.bullet_speed, w.falloff_start, w.falloff_end]
-	_reload_bar.visible = s.is_reloading()
-	_reload_bar.value = s.reload_progress(w) * 100.0
+	_info.text = "%s  |  %.2f x%d dmg  |  %.0f dps  |  %.0f m/s
+[ / ] change gun    R reload" % [
+		w.display_name, w.damage_at_boons(weapon_ctrl.boons), w.pellets, w.burst_dps(), w.bullet_speed]
 
 
-func _on_bullet_hit(info: Dictionary) -> void:
-	var lbl := Label3D.new()
-	lbl.text = "%.1f" % float(info["amount"]) if float(info["amount"]) < 10.0 else "%d" % roundi(float(info["amount"]))
-	lbl.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	lbl.no_depth_test = true
-	lbl.fixed_size = true   # same size on screen at any range
-	lbl.font_size = 40 if info["is_crit"] else 30
-	lbl.pixel_size = 0.0012
-	lbl.modulate = Color(1.0, 0.85, 0.2) if info["is_crit"] else Color(1, 1, 1)
-	lbl.outline_size = 12
-	add_child(lbl)
-	var jitter := Vector3(randf_range(-0.25, 0.25), randf_range(0.0, 0.2), randf_range(-0.25, 0.25))
-	lbl.global_position = (info["point"] as Vector3) + jitter
-	var tw := lbl.create_tween()
-	tw.set_parallel(true)
-	tw.tween_property(lbl, "position:y", lbl.position.y + 0.4 + 0.02 * float(info["distance"]), 0.8)
-	tw.tween_property(lbl, "modulate:a", 0.0, 0.8).set_delay(0.3)
-	tw.chain().tween_callback(lbl.queue_free)
-
-
+## Ammo, reload and hit markers live on the crosshair (specs/hud.md); this is only a small
+## sandbox info line in the corner.
 func _build_hud() -> void:
 	var layer := CanvasLayer.new()
 	layer.name = "WeaponHud"
 	add_child(layer)
-	var box := VBoxContainer.new()
-	box.anchor_left = 1.0
-	box.anchor_right = 1.0
-	box.anchor_top = 1.0
-	box.anchor_bottom = 1.0
-	box.offset_left = -460.0
-	box.offset_top = -110.0
-	box.offset_right = -16.0
-	box.offset_bottom = -16.0
-	box.alignment = BoxContainer.ALIGNMENT_END
-	layer.add_child(box)
-	_hud_label = Label.new()
-	_hud_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	_hud_label.add_theme_font_size_override(&"font_size", 16)
-	_hud_label.add_theme_constant_override(&"outline_size", 4)
-	_hud_label.add_theme_color_override(&"font_outline_color", Color.BLACK)
-	box.add_child(_hud_label)
-	_reload_bar = ProgressBar.new()
-	_reload_bar.custom_minimum_size = Vector2(200, 8)
-	_reload_bar.show_percentage = false
-	_reload_bar.visible = false
-	box.add_child(_reload_bar)
+	_info = Label.new()
+	_info.anchor_left = 1.0
+	_info.anchor_right = 1.0
+	_info.anchor_top = 1.0
+	_info.anchor_bottom = 1.0
+	_info.offset_left = -520.0
+	_info.offset_top = -60.0
+	_info.offset_right = -16.0
+	_info.offset_bottom = -12.0
+	_info.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_info.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+	_info.modulate = Color(1, 1, 1, 0.7)
+	_info.add_theme_font_size_override(&"font_size", 14)
+	_info.add_theme_constant_override(&"outline_size", 4)
+	_info.add_theme_color_override(&"font_outline_color", Color.BLACK)
+	layer.add_child(_info)
