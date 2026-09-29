@@ -28,8 +28,8 @@ extends Control
 @export var color_ammo: Color = Color("#F0F0F0")
 @export var color_ammo_max: Color = Color("#A8A8A8")
 @export var color_infinite: Color = Color("#7CE08A")
-@export var inf_size: float = 30.0
-@export var inf_line: float = 5.5
+@export var inf_size: float = 18.0
+@export var inf_line: float = 2.6
 @export var ring_radius: float = 16.0
 
 @export_group("Hit markers")
@@ -149,7 +149,7 @@ func _draw_weapon(c: Vector2) -> void:
 	var y := c.y + arc_radius + arc_width + 6.0 + fs
 	if s.infinite_ammo:
 		# pops in when the slide starts
-		var pop := 1.0 + 0.35 * clampf(1.0 - _inf_age / 0.15, 0.0, 1.0)
+		var pop := 1.0 + 0.2 * clampf(1.0 - _inf_age / 0.15, 0.0, 1.0)
 		_draw_infinity(Vector2(c.x, y - fs * 0.36), inf_size * pop)
 		return
 	var cur := "%d" % s.ammo
@@ -174,7 +174,7 @@ func _draw_infinity(at: Vector2, width: float) -> void:
 	for k in n + 1:
 		var t := TAU * k / n
 		var d := 1.0 + sin(t) * sin(t)
-		pts.append(at + Vector2(a * cos(t) / d, 1.4 * a * sin(t) * cos(t) / d))
+		pts.append(at + Vector2(a * cos(t) / d, 1.25 * a * sin(t) * cos(t) / d))
 	var inner := PackedVector2Array()
 	var outer := PackedVector2Array()
 	for k in n + 1:
@@ -183,7 +183,7 @@ func _draw_infinity(at: Vector2, width: float) -> void:
 		if k == n:
 			tan_v = (pts[1] - pts[n - 1]).normalized()
 		var nrm := Vector2(-tan_v.y, tan_v.x)
-		var half := inf_line * (0.3 + 0.7 * pow(absf(cos(t)), 1.5)) * 0.5
+		var half := inf_line * (0.55 + 0.45 * absf(cos(t))) * 0.5
 		inner.append(pts[k] - nrm * half)
 		outer.append(pts[k] + nrm * half)
 	for k in n:
