@@ -37,6 +37,11 @@ func sources() -> Array:
 	return _sources.keys()
 
 
+## The stat -> value map one source gives (empty when absent).
+func get_source(source: StringName) -> Dictionary:
+	return _sources.get(source, {})
+
+
 ## The folded bonus for a stat (0 when nothing gives it; see StatDefs for each stat's rule).
 func get_stat(stat: StringName) -> float:
 	if _dirty:

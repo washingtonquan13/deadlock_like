@@ -27,7 +27,11 @@ signal muzzle_fired(muzzle: Vector3, eye_offset: Vector3, aim: Vector3)
 
 var player: PlayerCharacter
 var projectiles: ProjectileSystem
+## The gun as fired: base_weapon with the stat sheet's clip, reload, speed and range applied.
 var weapon: WeaponData
+var base_weapon: WeaponData
+## Item and investment stats (specs/stats.md §4); null = the bare gun.
+var stats: StatSheet
 var wstate: WeaponState
 ## Callable() -> {origin: Vector3, direction: Vector3}: the crosshair ray. Empty = aim from the sim view angles.
 var aim_provider: Callable
@@ -51,10 +55,57 @@ func set_weapon(key: StringName) -> void:
 		push_warning("WeaponController: unknown weapon '%s'" % key)
 		return
 	weapon_key = key
-	weapon = w
-	wstate = WeaponSim.new_state(w)
+	base_weapon = w
+	_rebuild_weapon()
+	wstate = WeaponSim.new_state(weapon)
 	wstate.time = float(player.state.tick) / 64.0 if player != null and player.state != null else 0.0
-	weapon_changed.emit(w)
+	weapon_changed.emit(weapon)
+
+
+func set_stats(sheet: StatSheet) -> void:
+	if stats != null and stats.changed.is_connected(_on_stats_changed):
+		stats.changed.disconnect(_on_stats_changed)
+	stats = sheet
+	if stats != null:
+		stats.changed.connect(_on_stats_changed)
+	_on_stats_changed()
+
+
+func _on_stats_changed() -> void:
+	if base_weapon == null:
+		return
+	_rebuild_weapon()
+	if wstate != null:
+		wstate.ammo = mini(wstate.ammo, weapon.clip_size)
+	weapon_changed.emit(weapon)
+
+
+## specs/stats.md §4: clip (base + flat) × (1 + %) rounded up; bullet speed and falloff range %.
+## Damage % and fire rate are applied per shot (damage_per_bullet, effective_fire_rate_mult).
+func _rebuild_weapon() -> void:
+	if stats == null:
+		weapon = base_weapon
+		return
+	weapon = base_weapon.duplicate()
+	weapon.clip_size = StatDefs.clip_size(stats, base_weapon.clip_size)
+	weapon.bullet_speed = base_weapon.bullet_speed * StatDefs.bullet_speed_mult(stats)
+	var r := maxf(0.0, 1.0 + stats.get_stat(StatDefs.FALLOFF_RANGE) / 100.0)
+	weapon.falloff_start = base_weapon.falloff_start * r
+	weapon.falloff_end = base_weapon.falloff_end * r
+
+
+## Bullet damage at our boons after the weapon damage pool (stats.md §4).
+func damage_per_bullet() -> float:
+	var base := weapon.damage_at_boons(boons)
+	return StatDefs.bullet_damage(stats, base) if stats != null else base
+
+
+func effective_fire_rate_mult() -> float:
+	return fire_rate_mult * (StatDefs.fire_rate_mult(stats) if stats != null else 1.0)
+
+
+func effective_reload_mult() -> float:
+	return reload_mult * (StatDefs.reload_mult(stats) if stats != null else 1.0)
 
 
 func cycle_weapon(step: int) -> void:
@@ -77,7 +128,7 @@ func _on_player_ticked(_tick: int, s: MoveState) -> void:
 	var was_reloading := wstate.is_reloading()
 	# spec: slide_and_slopes.md rule 26, infinite ammo while sliding
 	var slide := s.loco == MoveState.Loco.SLIDE
-	var shots := WeaponSim.step(wstate, weapon, fire, reload, fire_rate_mult, reload_mult, slide)
+	var shots := WeaponSim.step(wstate, weapon, fire, reload, effective_fire_rate_mult(), effective_reload_mult(), slide)
 	if wstate.is_reloading() and not was_reloading:
 		reload_started.emit()
 	if shots.is_empty() or projectiles == null:
@@ -85,7 +136,7 @@ func _on_player_ticked(_tick: int, s: MoveState) -> void:
 	var eye := s.position + Vector3.UP * (player.params.eye_height_crouch if s.crouched else player.params.eye_height_stand)
 	var muzzle := _muzzle(eye, s)
 	var aim := _aim_direction(muzzle, s)
-	var dmg := weapon.damage_at_boons(boons)
+	var dmg := damage_per_bullet()
 	for shot in shots:
 		for d in WeaponSim.shot_directions(weapon, aim, float(shot["spread"]), int(shot["index"])):
 			projectiles.spawn(muzzle, d, weapon, dmg, player.get_instance_id(), float(shot["lead"]))

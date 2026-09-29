@@ -52,3 +52,23 @@ func test_max_health_formula() -> void:
 	s.set_source(&"item", {StatDefs.HEALTH: 210})
 	assert_near(StatDefs.max_health(s, 700.0, 30.0, 2), ceilf(760.0 * 1.2 + 210.0), 1e-4, "(base+boons)*(1+vit)+flat")
 	done()
+
+
+## spec: stats.md §4 (clip, max HP) wired through the hero's sheet
+func test_hero_stats_hooks() -> void:
+	var hs := HeroStats.new()
+	var wc := WeaponController.new()
+	wc.set_weapon(&"haze")
+	var base_clip := wc.weapon.clip_size
+	hs.bind(null, wc)
+	hs._refresh_health(true)
+	var hp0 := hs.max_hp
+	hs.inventory.add_souls(1600)
+	assert_true(hs.inventory.buy(&"wide_mag") and hs.inventory.buy(&"stout_heart"), "buy")
+	assert_true(wc.weapon.clip_size > base_clip, "clip grows")
+	assert_true(wc.damage_per_bullet() > wc.base_weapon.damage_at_boons(0), "damage grows")
+	assert_true(hs.max_hp > hp0 + 200.0, "max HP grows")
+	assert_near(hs.max_hp - hs.hp, 0.0, 1e-3, "missing HP kept")
+	wc.free()
+	hs.free()
+	done()
