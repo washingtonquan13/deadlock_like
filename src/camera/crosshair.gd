@@ -13,14 +13,13 @@ extends Control
 @export var color_border: Color = Color(0.0, 0.0, 0.0, 0.6)
 
 @export_group("Stamina")
-@export var arc_radius: float = 30.0
-@export var arc_width: float = 6.0
+@export var arc_radius: float = 31.0
+@export var arc_width: float = 9.0
 @export var segment_deg: float = 32.0
 @export var segment_gap_px: float = 4.0
 @export var color_full: Color = Color("#E0E0E0D9")
 @export var color_partial: Color = Color("#E8C040")
 @export var color_empty: Color = Color(0.05, 0.05, 0.05, 0.55)
-@export var color_arc_border: Color = Color(0.0, 0.0, 0.0, 0.7)
 @export var color_window: Color = Color("#6CC8E8")
 @export var flash_hz: float = 12.0
 
@@ -29,8 +28,8 @@ extends Control
 @export var color_ammo: Color = Color("#F0F0F0")
 @export var color_ammo_max: Color = Color("#A8A8A8")
 @export var color_infinite: Color = Color("#7CE08A")
-@export var inf_size: float = 20.0
-@export var inf_line: float = 2.5
+@export var inf_size: float = 26.0
+@export var inf_line: float = 3.0
 @export var ring_radius: float = 16.0
 
 @export_group("Hit markers")
@@ -145,13 +144,18 @@ func _draw_weapon(c: Vector2) -> void:
 			draw_arc(c, ring_radius, -PI * 0.5, -PI * 0.5 + TAU * p, 48, color_reticle, 2.0)
 	elif w.spins_up and s.spin > 0.0:
 		draw_arc(c, ring_radius, -PI * 0.5, -PI * 0.5 + TAU * clampf(s.spin, 0.0, 1.0), 48, Color(0.75, 0.75, 0.75, 0.8), 2.0)
-	# ammo under the stamina arc: "12 / 30", with ∞ while sliding
+	# ammo under the stamina arc: "12 / 30", replaced by ∞ while sliding
+	var fs := ammo_font_size
+	var y := c.y + arc_radius + arc_width + 6.0 + fs
+	if s.infinite_ammo:
+		# pops in when the slide starts
+		var pop := 1.0 + 0.35 * clampf(1.0 - _inf_age / 0.15, 0.0, 1.0)
+		_draw_infinity(Vector2(c.x, y - fs * 0.36), inf_size * pop)
+		return
 	var cur := "%d" % s.ammo
 	var rest := " / %d" % w.clip_size
-	var fs := ammo_font_size
 	var wc := _font.get_string_size(cur, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
 	var wr := _font.get_string_size(rest, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
-	var y := c.y + arc_radius + arc_width + 6.0 + fs
 	var x := c.x - (wc + wr) * 0.5
 	var ol := 5
 	var olc := Color(0, 0, 0, 0.85)
@@ -159,10 +163,6 @@ func _draw_weapon(c: Vector2) -> void:
 	draw_string(_font, Vector2(x, y), cur, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, color_ammo)
 	draw_string_outline(_font, Vector2(x + wc, y), rest, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, ol, olc)
 	draw_string(_font, Vector2(x + wc, y), rest, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, color_ammo_max)
-	if s.infinite_ammo:
-		# pops in when the slide starts, then sits left of the count
-		var pop := 1.0 + 0.35 * clampf(1.0 - _inf_age / 0.15, 0.0, 1.0)
-		_draw_infinity(Vector2(x - inf_size * 0.5 - 8.0, y - fs * 0.36), inf_size * pop)
 
 
 ## Lemniscate drawn as a line so it reads at any size, unlike the thin font glyph.
@@ -202,12 +202,9 @@ func _draw_stamina(c: Vector2) -> void:
 		if fill < 1.0 and i == regen_i:
 			fill = maxf(fill, clampf(st.stamina_regen_progress, 0.0, 1.0))
 			col = color_window if flashing else color_partial
-		var slot := _sector(c, start, start - seg)
-		draw_colored_polygon(slot, color_empty)
+		draw_colored_polygon(_sector(c, start, start - seg), color_empty)
 		if fill > 0.0:
 			draw_colored_polygon(_sector(c, start, start - seg * fill), col)
-		slot.append(slot[0])
-		draw_polyline(slot, color_arc_border, 1.5, true)
 
 
 ## Annular sector between two angles, ends cut along the radius.

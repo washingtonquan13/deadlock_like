@@ -32,7 +32,7 @@ Sources:
 2. Format: current ammo bold white (#F0F0F0), then " / max" in grey (#A0A0A0, ~60%), same size,
    about 16–18 px at 1080p. *High.*
 3. While sliding, a light-green infinity symbol shows the infinite ammo [E Ammo]. *High.*
-   Placement unknown; guess: left of the ammo count.
+   Placement unknown; we replace the ammo count with it (user preference).
 4. Low-ammo colour: unknown, not implemented.
 
 ## 3. Hit markers
