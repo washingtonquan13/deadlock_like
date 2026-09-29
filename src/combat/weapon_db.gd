@@ -31,6 +31,7 @@ static func _load() -> void:
 			"health": float(e.get("hero_health", 700.0)),
 			"health_per_boon": float(e.get("hero_health_per_boon", 0.0)),
 			"regen": float(e.get("hero_regen", 1.0)),
+			"spirit_per_boon": float(e.get("hero_spirit_per_boon", 1.1)),
 			"crit_damage_received_scale": float(e.get("crit_damage_received_scale", 1.0)),
 		}
 

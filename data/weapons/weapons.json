@@ -37,7 +37,8 @@
   "spread_bloom_max": 0.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 1.2,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "apollo": {
   "name": "Apollo",
@@ -77,7 +78,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.805,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "bebop": {
   "name": "Bebop",
@@ -117,7 +119,8 @@
   "spread_bloom_max": 2.5,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.399,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "billy": {
   "name": "Billy",
@@ -157,7 +160,8 @@
   "spread_bloom_max": 2.5,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.439,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "calico": {
   "name": "Calico",
@@ -197,7 +201,8 @@
   "spread_bloom_max": 0.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.747,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "celeste": {
   "name": "Celeste",
@@ -237,7 +242,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.79,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "drifter": {
   "name": "Drifter",
@@ -277,7 +283,8 @@
   "spread_bloom_max": 0.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 1.2,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "dynamo": {
   "name": "Dynamo",
@@ -317,7 +324,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.628,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "graves": {
   "name": "Graves",
@@ -357,7 +365,8 @@
   "spread_bloom_max": 2.5,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.358,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "grey_talon": {
   "name": "Grey Talon",
@@ -397,7 +406,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.955,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.6
  },
  "haze": {
   "name": "Haze",
@@ -437,7 +447,8 @@
   "spread_bloom_max": 2.5,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.408,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 0.5
  },
  "holliday": {
   "name": "Holliday",
@@ -477,7 +488,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.841,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "infernus": {
   "name": "Infernus",
@@ -517,7 +529,8 @@
   "spread_bloom_max": 2.5,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.415,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "ivy": {
   "name": "Ivy",
@@ -557,7 +570,8 @@
   "spread_bloom_max": 2.5,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.384,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.2
  },
  "kelvin": {
   "name": "Kelvin",
@@ -597,7 +611,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.808,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.3
  },
  "lady_geist": {
   "name": "Lady Geist",
@@ -637,7 +652,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.871,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "lash": {
   "name": "Lash",
@@ -677,7 +693,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.504,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "mcginnis": {
   "name": "McGinnis",
@@ -717,7 +734,8 @@
   "spread_bloom_max": 2.5,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.432,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "mina": {
   "name": "Mina",
@@ -757,7 +775,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.469,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "mirage": {
   "name": "Mirage",
@@ -797,7 +816,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.694,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "mo_krill": {
   "name": "Mo & Krill",
@@ -837,7 +857,8 @@
   "spread_bloom_max": 0.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.588,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "paige": {
   "name": "Paige",
@@ -877,7 +898,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 1.2,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "paradox": {
   "name": "Paradox",
@@ -917,7 +939,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.454,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "pocket": {
   "name": "Pocket",
@@ -957,7 +980,8 @@
   "spread_bloom_max": 0.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 1.149,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "rem": {
   "name": "Rem",
@@ -997,7 +1021,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.73,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "seven": {
   "name": "Seven",
@@ -1037,7 +1062,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.574,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "shiv": {
   "name": "Shiv",
@@ -1077,7 +1103,8 @@
   "spread_bloom_max": 0.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 1.114,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "silver": {
   "name": "Silver",
@@ -1117,7 +1144,8 @@
   "spread_bloom_max": 0.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 1.2,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "sinclair": {
   "name": "Sinclair",
@@ -1157,7 +1185,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.783,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.3
  },
  "the_doorman": {
   "name": "The Doorman",
@@ -1197,7 +1226,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.97,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "venator": {
   "name": "Venator",
@@ -1237,7 +1267,8 @@
   "spread_bloom_max": 2.5,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.49,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "victor": {
   "name": "Victor",
@@ -1277,7 +1308,8 @@
   "spread_bloom_max": 2.5,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.61,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "vindicta": {
   "name": "Vindicta",
@@ -1317,7 +1349,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.62,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "viscous": {
   "name": "Viscous",
@@ -1357,7 +1390,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.56,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.3
  },
  "vyper": {
   "name": "Vyper",
@@ -1397,7 +1431,8 @@
   "spread_bloom_max": 2.5,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.447,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "warden": {
   "name": "Warden",
@@ -1437,7 +1472,8 @@
   "spread_bloom_max": 1.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.77,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "wraith": {
   "name": "Wraith",
@@ -1477,7 +1513,8 @@
   "spread_bloom_max": 2.5,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 0.419,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  },
  "yamato": {
   "name": "Yamato",
@@ -1517,6 +1554,7 @@
   "spread_bloom_max": 0.0,
   "spread_bloom_decay": 4.0,
   "recoil_kick": 1.046,
-  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated"
+  "_source": "specs/combat.md per-hero table (community-datamine 2026-09-16 snapshot); spread/recoil approximated",
+  "hero_spirit_per_boon": 1.1
  }
 }

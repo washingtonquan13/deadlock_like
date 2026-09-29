@@ -5,6 +5,7 @@ extends Node
 ## stack, so each system keeps its own stacking (movement does its own move-speed DR).
 
 signal health_changed(hp: float, max_hp: float)
+signal level_changed(level: int)
 
 ## Combat timer vs heroes (combat.md §7): out-of-combat regen starts this long after damage.
 const COMBAT_TIMER := 4.0
@@ -20,7 +21,8 @@ const MOVE_STATS := {
 }
 
 @export var hero_key: StringName = &"haze"
-@export var boons: int = 0
+## Boon count = level from total souls earned (abilities.md M1); never goes down.
+var boons: int = 0
 @export var starting_souls: int = 600
 
 var sheet := StatSheet.new()
@@ -39,11 +41,15 @@ var _base: Dictionary = {}
 func _init() -> void:
 	inventory = Inventory.new(sheet)
 	inventory.souls = starting_souls
+	inventory.earned = starting_souls
 	sheet.changed.connect(_on_sheet_changed)
+	inventory.changed.connect(_update_level)
 
 
 func _ready() -> void:
 	inventory.souls = starting_souls
+	inventory.earned = starting_souls
+	_update_level()
 	_refresh_health(true)
 
 
@@ -74,7 +80,18 @@ func regen_per_second() -> float:
 
 
 func spirit_power() -> float:
-	return StatDefs.spirit_power(sheet, 0.0)
+	return StatDefs.spirit_power(sheet, boons * float(_hero().get("spirit_per_boon", 1.1)))
+
+
+func _update_level() -> void:
+	var lv := maxi(boons, Progression.level_for(inventory.earned))
+	if lv == boons:
+		return
+	boons = lv
+	if weapon_ctrl != null:
+		weapon_ctrl.boons = boons
+	_refresh_health(false)
+	level_changed.emit(boons)
 
 
 func take_damage(amount: float) -> void:

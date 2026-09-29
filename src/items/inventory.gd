@@ -24,6 +24,7 @@ const INVEST_SOURCE := [&"invest:weapon", &"invest:vitality", &"invest:spirit"]
 
 var sheet: StatSheet
 var souls: int = 0
+var earned: int = 0                 # total souls ever gained; drives the boon level (abilities.md M1)
 var extra_slots: int = 0
 var slots: Array[StringName] = []   # item id per slot, &"" = empty
 var spent: Array[int] = [0, 0, 0]   # souls spent per category (economy §15)
@@ -59,6 +60,8 @@ func owned() -> Array:
 
 func add_souls(n: int) -> void:
 	souls += n
+	if n > 0:
+		earned += n
 	changed.emit()
 
 
