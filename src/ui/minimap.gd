@@ -4,6 +4,8 @@ extends Control
 ## (when it has one), top-down footprints of every box collider, zipline routes, the layout's
 ## icons, and the player with a view cone from the camera. M toggles a large centred view.
 ## Works for any MovementArena layout; the rect comes from info["minimap"] or a default.
+## Boxes tagged with meta "minimap" = &"roof" draw translucent, &"skip" not at all. Terrain and
+## footprints sit on a child layer that only redraws when the size changes.
 
 const SMALL := 260.0
 const LARGE := 820.0
@@ -23,6 +25,7 @@ var _boxes: Array = []      # [PackedVector2Array world corners, Color]
 var _rails: Array = []      # PackedVector2Array world points
 var _name := ""
 var _font: Font
+var _static: Control
 
 
 func bind(p_arena: MovementArena, p_player: Node3D) -> void:
@@ -44,6 +47,12 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	clip_contents = true
 	_font = ThemeDB.fallback_font
+	_static = Control.new()
+	_static.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_static.show_behind_parent = true
+	_static.draw.connect(_draw_static)
+	_static.resized.connect(_static.queue_redraw)
+	add_child(_static)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -61,6 +70,7 @@ func _process(_delta: float) -> void:
 	else:
 		size = Vector2(SMALL, SMALL)
 		position = vp - size - Vector2(MARGIN, MARGIN)
+	_static.size = size
 	queue_redraw()
 
 
@@ -72,18 +82,28 @@ func to_map(p: Vector2) -> Vector2:
 func _collect_geometry() -> void:
 	for body in arena.find_children("*", "StaticBody3D", true, false):
 		var sb := body as StaticBody3D
+		var tag: StringName = sb.get_meta(&"minimap", &"")
+		if tag == &"skip":
+			continue
 		for cs in sb.get_children():
 			if not (cs is CollisionShape3D and (cs as CollisionShape3D).shape is BoxShape3D):
 				continue
 			var bs := (cs as CollisionShape3D).shape as BoxShape3D
 			var xf := (cs as CollisionShape3D).global_transform
 			var h := bs.size * 0.5
+			var top := xf.origin.y + h.y
+			if top < -2.0:
+				continue                                          # underground furniture
 			var poly := PackedVector2Array()
 			for c: Vector3 in [Vector3(-h.x, 0, -h.z), Vector3(h.x, 0, -h.z), Vector3(h.x, 0, h.z), Vector3(-h.x, 0, h.z)]:
 				var w := xf * c
 				poly.append(Vector2(w.x, w.z))
-			var col := Color(0.12, 0.13, 0.15, 0.85)
-			if bs.size.y < 1.0:
+			# taller buildings read darker
+			var col := Color(0.36, 0.37, 0.40).lerp(Color(0.12, 0.13, 0.16), clampf(top / 45.0, 0.0, 1.0))
+			col.a = 0.9
+			if tag == &"roof":
+				col = Color(0.62, 0.62, 0.66, 0.4)                # over tunnels: show what's below
+			elif bs.size.y < 1.0:
 				col = Color(0.62, 0.58, 0.48)                     # decks
 			elif bs.size.x * bs.size.z > 1500.0:
 				col = Color(0.5, 0.52, 0.5) if _tex != null else Color(0.42, 0.44, 0.45)   # plateaus, floors
@@ -106,21 +126,25 @@ func _collect_geometry() -> void:
 		_rails.append(pts)
 
 
-func _draw() -> void:
+func _draw_static() -> void:
 	var r := Rect2(Vector2.ZERO, size)
-	draw_rect(r, C_BG)
+	_static.draw_rect(r, C_BG)
 	if _tex != null:
-		draw_texture_rect(_tex, r, false)
+		_static.draw_texture_rect(_tex, r, false)
 	for b in _boxes:
 		var poly := PackedVector2Array()
 		for p: Vector2 in b[0]:
 			poly.append(to_map(p))
-		draw_colored_polygon(poly, b[1])
+		_static.draw_colored_polygon(poly, b[1])
 	for pts: PackedVector2Array in _rails:
 		var line := PackedVector2Array()
 		for p in pts:
 			line.append(to_map(p))
-		draw_polyline(line, Color(1, 1, 1, 0.55), 1.5 if large else 1.0)
+		_static.draw_polyline(line, Color(1, 1, 1, 0.55), 1.5 if large else 1.0)
+
+
+func _draw() -> void:
+	var r := Rect2(Vector2.ZERO, size)
 	var k := size.x / SMALL
 	for ic: Dictionary in _icons:
 		_draw_icon(ic, k)
