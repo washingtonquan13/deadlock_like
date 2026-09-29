@@ -16,14 +16,14 @@ var is_item: bool = false
 var effect: StringName = &""
 ## Cooldown starts when the channel ends / the toggle turns off instead of on press.
 var cd_on_end: bool = false
-## prop -> {base: float, sp: float, boon: float, mult: "cooldown"|"duration"|"range"|"charges"|""}
+## prop -> {base: float, sp: float, boon: float, mult: "cooldown"|"duration"|"range"|"radius"|"charges"|""}
 var props: Dictionary = {}
 ## 3 tiers: {text: String, add: {prop: delta}, sp: {prop: coef}}
 var upgrades: Array = []
 
 ## Which multiplier a property gets when the data doesn't say.
 const DEFAULT_MULT := {
-	&"cooldown": "cooldown", &"charges": "charges", &"duration": "duration", &"radius": "range", &"range": "range",
+	&"cooldown": "cooldown", &"charges": "charges", &"duration": "duration", &"radius": "radius", &"range": "range",
 }
 
 
@@ -77,6 +77,8 @@ func value(prop: StringName, tier: int, sheet: StatSheet, sp: float, boons: int)
 			v *= 1.0 + sheet.get_stat(StatDefs.DURATION) / 100.0
 		"range":
 			v *= 1.0 + sheet.get_stat(StatDefs.RANGE) / 100.0
+		"radius":
+			v *= 1.0 + sheet.get_stat(StatDefs.RADIUS) / 100.0
 		"charges":
 			# bonus charges only go to abilities that already have charges (M7)
 			if v > 1.0 and not is_item:

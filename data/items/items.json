@@ -15,6 +15,10 @@
 		  "stats": { "weapon_damage": 10, "falloff_range": 20, "bullet_speed": 60 } },
 		{ "id": "bloodrush", "name": "Bloodrush", "category": "weapon", "tier": 4,
 		  "stats": { "health": 160, "fire_rate": 15, "bullet_lifesteal": 10 } },
+		{ "id": "blood_pact", "name": "Blood Pact", "category": "weapon", "tier": 3, "active": true,
+		  "stats": { "ooc_regen": 4, "spirit_resist": 8, "debuff_resist": 8 },
+		  "ability": { "kind": "toggle", "effect": "blood_frenzy",
+			"props": { "cooldown": 0, "fire_rate": 35, "move_speed": 2, "debuff_resist": 35, "drain": 50, "tick": 0.1 } } },
 		{ "id": "brittle_edge", "name": "Brittle Edge", "category": "weapon", "tier": 4,
 		  "stats": { "weapon_damage": 80, "health_pct": -13 } },
 

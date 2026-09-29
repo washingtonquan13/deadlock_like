@@ -100,6 +100,13 @@ func take_damage(amount: float) -> void:
 	health_changed.emit(hp, max_hp)
 
 
+## Self-inflicted health cost (toggle drains): doesn't start the combat timer and stops at
+## 1 HP (whether a drain can kill is unmeasured).
+func drain(amount: float) -> void:
+	hp = maxf(minf(hp, 1.0), hp - amount)
+	health_changed.emit(hp, max_hp)
+
+
 func heal(amount: float) -> void:
 	hp = minf(max_hp, hp + amount)
 	health_changed.emit(hp, max_hp)

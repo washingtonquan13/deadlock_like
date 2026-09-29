@@ -95,12 +95,18 @@ func _draw_item(id: StringName, key: String, r: Rect2) -> void:
 	draw_rect(r, COL_BG)
 	if c != null:
 		_sweep(r, c.sweep())
-	draw_rect(r, Color("5fbf5a", 0.7), false, 1.0)
+		if c.phase == CastSlot.Phase.ACTIVE:
+			draw_rect(r.grow(-2), Color(1.0, 0.25, 0.25, 0.3))
+	draw_rect(r, _cat_color(it), false, 1.0)
 	_text_center(it.display_name.get_slice(" ", 0), Vector2(r.get_center().x, r.position.y + 14.0), 10, Color.WHITE, r.size.x - 4.0)
 	if c != null and c.wait_left() > 0.0:
 		var w := c.wait_left()
 		_text_center(("%.1f" % w) if w < 2.0 else str(ceili(w)), r.get_center() + Vector2(0, 10), 16, Color.WHITE)
 	_text_center(key, Vector2(r.get_center().x, r.end.y + 14.0), 12, Color(1, 1, 1, 0.7))
+
+
+static func _cat_color(it: ItemData) -> Color:
+	return [Color("e8923a"), Color("5fbf5a"), Color("a66ad8")][it.category]
 
 
 ## Clockwise dark pie from 12 o'clock covering `frac` of the slot.

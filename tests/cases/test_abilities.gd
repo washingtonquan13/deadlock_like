@@ -81,3 +81,28 @@ func test_kit_values() -> void:
 	assert_near(kit[0].value(&"charges", 0, s, 0.0, 0), 1.0, 1e-3, "no bonus charge on a 1-charge ability")
 	assert_near(kit[0].value(&"charges", 1, s, 0.0, 0), 3.0, 1e-3, "bonus charge once it has charges")
 	done()
+
+
+## spec: abilities.md M6 — a toggle item: buffs while on, drains HP, off clears it
+func test_toggle_item() -> void:
+	var hs := HeroStats.new()
+	hs._refresh_health(true)
+	var ha := HeroAbilities.new()
+	ha.bind(hs, null, null)
+	var fx := AbilityEffects.new()
+	fx.bind(ha, null, null, Callable())
+	hs.inventory.add_souls(3200)
+	assert_true(hs.inventory.buy(&"blood_pact"), "buy")
+	var hp0 := hs.hp
+	ha.press_item(0)
+	for i in 64:
+		ha.step(MoveUnits.DT)
+	assert_near(hs.sheet.get_stat(StatDefs.FIRE_RATE), 35.0, 1e-3, "fire rate while on")
+	assert_true(hs.hp < hp0 - 40.0, "drains about 50 HP/s")
+	ha.press_item(0)
+	ha.step(MoveUnits.DT)
+	assert_near(hs.sheet.get_stat(StatDefs.FIRE_RATE), 0.0, 1e-3, "off clears it")
+	fx.free()
+	ha.free()
+	hs.free()
+	done()

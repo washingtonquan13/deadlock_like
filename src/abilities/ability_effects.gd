@@ -19,6 +19,7 @@ var _heals: Array = []             # [{per_s, left}]
 var _kindle: Dictionary = {}       # target id -> {target, build, left, burn, tick}
 var _kindle_ability: AbilityData
 var _detonate_fx: MeshInstance3D
+var _drains: Dictionary = {}       # toggle ability -> {per_tick, tick, acc}
 
 
 func bind(p_abilities: HeroAbilities, p_numbers: DamageNumbers, projectiles: ProjectileSystem, p_aim: Callable) -> void:
@@ -49,6 +50,14 @@ func on_event(a: AbilityData, event: StringName) -> void:
 			var dur := _p(a, &"duration")
 			_heals.append({"per_s": _p(a, &"heal_total") / maxf(dur, 0.01), "left": dur})
 			_buff(&"buff:" + String(a.id), {StatDefs.SPRINT_SPEED: _p(a, &"sprint_speed")}, dur)
+		[&"blood_frenzy", &"toggle_on"]:
+			_buff(&"buff:" + String(a.id), {StatDefs.FIRE_RATE: _p(a, &"fire_rate"),
+					StatDefs.MOVE_SPEED: _p(a, &"move_speed"), StatDefs.DEBUFF_RESIST: _p(a, &"debuff_resist")}, INF)
+			_drains[a] = {"per_tick": _p(a, &"drain") * _p(a, &"tick"), "tick": _p(a, &"tick"), "acc": 0.0}
+		[&"blood_frenzy", &"toggle_off"]:
+			_buffs.erase(&"buff:" + String(a.id))
+			hero.sheet.clear_source(&"buff:" + String(a.id))
+			_drains.erase(a)
 		[&"blink", &"cast"]:
 			_blink(a)
 			_buff(&"buff:" + String(a.id), {StatDefs.BULLET_RESIST: _p(a, &"bullet_resist")}, _p(a, &"duration"))
@@ -64,6 +73,12 @@ func step(dt: float) -> void:
 		hero.heal(h["per_s"] * dt)
 		h["left"] -= dt
 	_heals = _heals.filter(func(h: Dictionary) -> bool: return h["left"] > 0.0)
+	for a in _drains:
+		var d: Dictionary = _drains[a]
+		d["acc"] += dt
+		while d["acc"] >= d["tick"]:
+			d["acc"] -= d["tick"]
+			hero.drain(d["per_tick"])
 	_step_dash(dt)
 	_step_flames(dt)
 	_step_kindling(dt)

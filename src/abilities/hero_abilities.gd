@@ -213,6 +213,9 @@ func _sync_items() -> void:
 	var ids := active_items()
 	for id in item_casts.keys():
 		if not ids.has(id):
+			var c: CastSlot = item_casts[id]
+			if c.phase == CastSlot.Phase.ACTIVE and effects != null:
+				effects.on_event(c.data, &"toggle_off")   # sold while on
 			item_casts.erase(id)
 	for id in ids:
 		if not item_casts.has(id):

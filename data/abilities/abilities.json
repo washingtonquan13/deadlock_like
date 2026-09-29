@@ -1,5 +1,5 @@
 {
-	"_note": "Our ability kits (specs/abilities.md). Props: a number or {base, sp (coef per spirit power), boon (per boon), mult}. mult is cooldown | duration | range | charges | '' and defaults by name (cooldown, charges, duration, radius, range). Upgrades add to props in tier order; 'sp' adds to a prop's SP coefficient. Numbers follow the spec's worked example and the public reference data; names are ours.",
+	"_note": "Our ability kits (specs/abilities.md). Props: a number or {base, sp (coef per spirit power), boon (per boon), mult}. mult is cooldown | duration | range | radius | charges | '' and defaults by name (cooldown, charges, duration, radius, range). Upgrades add to props in tier order; 'sp' adds to a prop's SP coefficient. Numbers follow the spec's worked example and the public reference data; names are ours.",
 	"kits": {
 		"pyre": ["cinder_bolt", "flame_trail", "kindling", "detonate"]
 	},
