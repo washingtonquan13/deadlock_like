@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://fesxdunm3a3"]
+[gd_scene load_steps=6 format=3 uid="uid://fesxdunm3a3"]
 
 [ext_resource type="PackedScene" uid="uid://c1oki71uuean4" path="res://scenes/arena/movement_arena.tscn" id="1_arena"]
 [ext_resource type="PackedScene" path="res://scenes/player/player_character.tscn" id="2_player"]
 [ext_resource type="PackedScene" path="res://scenes/player/local_controller.tscn" id="3_ctrl"]
 [ext_resource type="PackedScene" path="res://scenes/debug/movement_debug_overlay.tscn" id="4_overlay"]
+[ext_resource type="Script" path="res://src/combat/combat_sandbox.gd" id="5_combat"]
 
 [node name="MovementSandbox" type="Node3D"]
 
@@ -17,3 +18,8 @@ player_path = NodePath("../PlayerCharacter")
 
 [node name="MovementDebugOverlay" parent="." instance=ExtResource("4_overlay")]
 player_path = NodePath("../PlayerCharacter")
+
+[node name="CombatSandbox" type="Node3D" parent="."]
+script = ExtResource("5_combat")
+player_path = NodePath("../PlayerCharacter")
+local_controller_path = NodePath("../LocalController")

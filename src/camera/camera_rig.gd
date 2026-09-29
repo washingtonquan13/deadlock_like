@@ -15,6 +15,9 @@ extends Node3D
 @export var fov_deg: float = 90.0
 ## How fast (fraction of full boom per second) the camera eases back out after being pulled in.
 @export var pull_out_speed: float = 6.0
+## Gun kick (docs/design/gun_system_plan.md): a small visual pitch offset that eases back out.
+@export var recoil_return_time: float = 0.15
+@export var recoil_max_deg: float = 4.0
 
 const WORLD_MASK := 1   # collision layer 1 WORLD (design §3)
 
@@ -23,6 +26,7 @@ var _sampler: InputSampler = null
 var _camera: Camera3D = null
 var _boom_fraction: float = 1.0
 var _query_shape: SphereShape3D = SphereShape3D.new()
+var _recoil_deg: float = 0.0
 
 
 func _ready() -> void:
@@ -39,6 +43,11 @@ func _ready() -> void:
 
 
 ## Vertical FOV for a horizontal FOV defined on a 4:3 screen.
+## Kick the view up by `deg` (it returns on its own).
+func add_recoil(deg: float) -> void:
+	_recoil_deg = minf(_recoil_deg + deg, recoil_max_deg)
+
+
 static func _vertical_fov(fov_4x3: float) -> float:
 	return rad_to_deg(2.0 * atan(tan(deg_to_rad(fov_4x3) * 0.5) * 0.75))
 
@@ -75,6 +84,8 @@ func _process(delta: float) -> void:
 		yaw = _target.state.yaw
 		pitch = _target.state.pitch
 
+	_recoil_deg = move_toward(_recoil_deg, 0.0, maxf(_recoil_deg, 0.5) * delta / recoil_return_time)
+	pitch = clampf(pitch + deg_to_rad(_recoil_deg), -PI * 0.5 + 0.01, PI * 0.5 - 0.01)
 	var pivot := _target.get_eye_position()
 	var view_basis := Basis.from_euler(Vector3(pitch, yaw, 0.0))   # YXZ: yaw then pitch
 	global_transform = Transform3D(view_basis, pivot)
