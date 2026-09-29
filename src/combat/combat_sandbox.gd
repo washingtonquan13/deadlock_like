@@ -8,6 +8,8 @@ extends Node3D
 
 @export var player_path: NodePath
 @export var local_controller_path: NodePath
+## Its info["dummies"] ([feet, yaw, hp] entries) replaces dummy_positions; its info drives the minimap.
+@export var arena_path: NodePath = ^"../MovementArena"
 @export var weapon_key: StringName = &"haze"
 @export var kit_key: StringName = &"pyre"
 ## Dummies beside the sprint lane (the lane has 5 m labels), feet positions.
@@ -31,6 +33,8 @@ var ability_fx: AbilityEffects
 var ability_bar: AbilityBar
 var _hp_bar: ProgressBar
 var _hp_label: Label
+var minimap: Minimap
+var _arena: MovementArena
 
 
 func _ready() -> void:
@@ -39,11 +43,19 @@ func _ready() -> void:
 	projectiles = ProjectileSystem.new()
 	projectiles.name = "Projectiles"
 	add_child(projectiles)
+	_arena = get_node_or_null(arena_path) as MovementArena
+	var dummies: Array = []
 	for p in dummy_positions:
+		dummies.append([p, PI, 0.0])
+	if _arena != null and _arena.info.has("dummies"):
+		dummies = _arena.info["dummies"]
+	for e in dummies:
 		var d := TargetDummy.new()
+		if e[2] > 0.0:
+			d.max_health = e[2]
 		add_child(d)
-		d.global_position = p
-		d.rotation.y = PI
+		d.global_position = e[0]
+		d.rotation.y = e[1]
 	if _player == null:
 		return
 	weapon_ctrl = WeaponController.new()
@@ -114,7 +126,7 @@ func _process(_delta: float) -> void:
 		return
 	var w := weapon_ctrl.weapon
 	_info.text = "%s  |  %.2f x%d dmg  |  %.0f m/s  |  +%d%% wpn  |  %d SP
-[ / ] gun   R reload   B shop   1-4 cast   Alt+1-4 level up" % [
+[ / ] gun   R reload   B shop   1-4 cast   Alt+1-4 level up   M map   F9 next map" % [
 		w.display_name, weapon_ctrl.damage_per_bullet(), w.pellets, w.bullet_speed,
 		int(hero.sheet.get_stat(StatDefs.WEAPON_DAMAGE)), int(hero.spirit_power())]
 	_hp_label.text = "%d / %d   +%.1f/s" % [ceili(hero.hp), int(hero.max_hp), hero.regen_per_second()]
@@ -136,10 +148,11 @@ func _build_hud() -> void:
 	_info.anchor_right = 1.0
 	_info.anchor_top = 1.0
 	_info.anchor_bottom = 1.0
-	_info.offset_left = -520.0
-	_info.offset_top = -60.0
+	_info.offset_left = -720.0
+	# above the minimap
+	_info.offset_top = -(Minimap.SMALL + Minimap.MARGIN + 56.0)
 	_info.offset_right = -16.0
-	_info.offset_bottom = -12.0
+	_info.offset_bottom = -(Minimap.SMALL + Minimap.MARGIN + 6.0)
 	_info.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_info.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	_info.modulate = Color(1, 1, 1, 0.7)
@@ -172,6 +185,11 @@ func _build_hud() -> void:
 	fill.bg_color = Color("5fbf5a")
 	_hp_bar.add_theme_stylebox_override(&"fill", fill)
 	hp_box.add_child(_hp_bar)
+
+	minimap = Minimap.new()
+	minimap.name = "Minimap"
+	layer.add_child(minimap)
+	minimap.bind(_arena, _player)
 
 	var shop_layer := CanvasLayer.new()
 	shop_layer.name = "ShopLayer"
