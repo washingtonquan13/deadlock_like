@@ -14,7 +14,8 @@ const BTN_ABILITY       := 1 << 7   # any ability cast; cancels dash-jump window
 const BTN_ZIP_BOOST     := 1 << 8
 const BTN_OPPOSE_X      := 1 << 9   # left+right both held (spec: movement.md §3 opposing inputs reset sprint)
 const BTN_OPPOSE_Y      := 1 << 10  # forward+back both held (spec: movement.md §3)
-const BTN_MASK          := 0x07FF
+const BTN_RELOAD        := 1 << 11  # gun only; movement ignores it (docs/design/gun_system_plan.md)
+const BTN_MASK          := 0x0FFF
 
 const ANGLE_STEPS := 65536          # 1/65536 turn
 const PITCH_LIMIT_STEPS := 16201    # floor(89 deg / 360 * 65536)

@@ -16,6 +16,7 @@ const ACTION_BITS := {
 	&"crouch": InputCmd.BTN_CROUCH,
 	&"dash": InputCmd.BTN_DASH,
 	&"fire": InputCmd.BTN_FIRE,
+	&"reload": InputCmd.BTN_RELOAD,
 	&"parry": InputCmd.BTN_PARRY,
 	&"ability_1": InputCmd.BTN_ABILITY,
 	&"zipline_boost": InputCmd.BTN_ZIP_BOOST,
