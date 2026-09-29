@@ -3,8 +3,8 @@ extends RefCounted
 ## Map rotation for the sandbox scene. The first entry is the default; F9 advances and reloads.
 ## `--map=<id>` after `--` on the command line picks the starting map.
 
-const MAPS: Array[StringName] = [&"three_lane", &"full"]
-const NAMES := {&"three_lane": "Three Lanes", &"full": "Movement Debug"}
+const MAPS: Array[StringName] = [&"city", &"full"]
+const NAMES := {&"city": "The Burrows", &"full": "Movement Debug"}
 
 static var _index: int = -1
 

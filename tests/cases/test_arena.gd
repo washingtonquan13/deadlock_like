@@ -16,25 +16,26 @@ func test_arena_full_layout() -> void:
 	done()
 
 
-## Three-lane map smoke test: base spawn, terrain collision, and a lane zipline you can board
-## with jump + jump near the apex.
-func test_three_lane_layout() -> void:
-	var h := new_harness(&"three_lane")
+## City map smoke test: base spawn, the subway floor, the canal bed, and a subway rail you can
+## board with jump + jump near the apex.
+func test_city_layout() -> void:
+	var h := new_harness(&"city")
 	await h.ready()
 	assert_true(h.sim.ziplines.size() >= 6 and h.sim.ropes.size() > 0, "rails and ropes found")
 	assert_true(h.state.grounded and h.state.position.y > 6.5, "spawn is grounded on the base plateau")
 	h.run(64, hold(0, 0, 1))
 	assert_true(h.state.grounded and h.state.horizontal_speed() > 6.0, "can walk from spawn")
-	# river bank (terrain collision)
-	var u := LaneMapBuilder._meander(100.0) - 16.0
-	var bank := Vector2(100.0 + u, 100.0 - u) * LaneMapBuilder.R2
-	var ty := LaneMapBuilder.terrain_height(bank.x, bank.y)
-	assert_true(ty < -0.5, "bank is below ground level")
-	h.spawn(Vector3(bank.x, ty + 0.2, bank.y), 0.0)
+	# subway floor
+	h.spawn(Vector3(-320.0, -9.8, 0.0), 0.0)
 	h.run(32, hold())
-	assert_true(h.state.grounded and absf(h.state.position.y - ty) < 0.3, "stands on the terrain")
-	# top lane rail, 7 m east of the lane and 3 m up
-	h.spawn(Vector3(-313.0, 0.02, 100.0), 0.0)
+	assert_true(h.state.grounded and absf(h.state.position.y + 10.0) < 0.3, "stands in the subway")
+	# canal bed
+	var bed := CityMapBuilder.su(100.0, CityMapBuilder.meander(100.0))
+	h.spawn(Vector3(bed.x, -3.3, bed.y), 0.0)
+	h.run(32, hold())
+	assert_true(h.state.grounded and absf(h.state.position.y + 3.5) < 0.3, "stands in the canal")
+	# subway rail, 7 m east of the track centre and 3 m up
+	h.spawn(Vector3(-313.0, -9.98, 0.0), 0.0)
 	h.run(30, func(t: int) -> InputCmd: return cmd(t, B_JUMP if t == 1 or t == 20 else 0))
-	assert_eq(h.state.loco, L.ZIPLINE, "boards the lane zipline")
+	assert_eq(h.state.loco, L.ZIPLINE, "boards the subway zipline")
 	done()
