@@ -25,9 +25,11 @@ static func cycle_time(s: WeaponState, w: WeaponData, rate_mult: float = 1.0) ->
 ## Advance one tick. Returns the shots fired this tick, in order:
 ## { "time": sim time of the shot, "lead": seconds between the shot and the end of this tick,
 ##   "spread": cone half-angle in degrees, "index": shot counter (seeds the spread) }.
+## infinite_ammo: shots cost no ammo (sliding: specs/movement_behavior/slide_and_slopes.md rule 26).
 static func step(s: WeaponState, w: WeaponData, fire_held: bool, reload_pressed: bool,
-		rate_mult: float = 1.0, reload_mult: float = 1.0) -> Array:
+		rate_mult: float = 1.0, reload_mult: float = 1.0, infinite_ammo: bool = false) -> Array:
 	var shots: Array = []
+	s.infinite_ammo = infinite_ammo
 	var t0 := s.time
 	var t1 := t0 + DT
 	var fire_pressed := fire_held and not s.prev_fire
@@ -67,6 +69,8 @@ static func step(s: WeaponState, w: WeaponData, fire_held: bool, reload_pressed:
 			if t >= t1:
 				break
 			s.next_shot_time = t + cycle_time(s, w, rate_mult)
+			if w.burst_count > 1:
+				s.next_shot_time += w.burst_count * w.burst_interval / maxf(rate_mult, 0.01)
 			s.burst_left = maxi(1, w.burst_count)
 			s.next_burst_time = t
 			continue
@@ -78,7 +82,8 @@ static func step(s: WeaponState, w: WeaponData, fire_held: bool, reload_pressed:
 static func _fire(s: WeaponState, w: WeaponData, t: float, t1: float, shots: Array) -> void:
 	shots.append({"time": t, "lead": t1 - t, "spread": w.spread_base + s.bloom, "index": s.shots_fired})
 	s.shots_fired += 1
-	s.ammo -= 1
+	if not s.infinite_ammo:
+		s.ammo -= 1
 	s.bloom = minf(w.spread_bloom_max, s.bloom + w.spread_bloom_per_shot)
 
 

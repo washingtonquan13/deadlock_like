@@ -17,6 +17,7 @@ var spin: float = 0.0               # 0..1 spin-up (McGinnis, Victor)
 var bloom: float = 0.0              # extra spread, degrees
 var shots_fired: int = 0            # total shots (seeds spread)
 var prev_fire: bool = false
+var infinite_ammo: bool = false    # set per step (sliding)
 
 
 func is_reloading() -> bool:

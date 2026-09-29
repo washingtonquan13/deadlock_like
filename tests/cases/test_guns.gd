@@ -14,7 +14,7 @@ func test_gun_data_all_heroes() -> void:
 	assert_eq(WeaponDB.keys().size(), 38, "38 hero guns")
 	var haze := WeaponDB.get_weapon(&"haze")
 	assert_near(haze.burst_dps(), 50.1, 0.1, "haze burst dps")
-	assert_near(WeaponDB.get_weapon(&"lash").burst_dps(), 8.46 * 3 / 0.2625, 0.01, "lash burst dps")
+	assert_near(WeaponDB.get_weapon(&"lash").burst_dps(), 49.3, 0.1, "lash dps matches the data table")
 	done()
 
 
@@ -47,17 +47,17 @@ func test_gun_auto_fire_and_reload() -> void:
 	done()
 
 
-## Lash: 3-shot bursts 0.084 s apart, bursts 0.2625 s apart
+## Lash: 3-shot bursts 0.084 s apart, then a 0.2625 s pause
 func test_gun_burst() -> void:
 	var w := WeaponDB.get_weapon(&"lash")
 	var s := WeaponSim.new_state(w)
 	var times: Array = []
-	for i in 40:
+	for i in 48:
 		for sh in WeaponSim.step(s, w, true, false):
 			times.append(sh["time"])
 	assert_true(times.size() >= 6, "two bursts")
 	assert_near(times[1] - times[0], 0.084, 1e-4, "intra-burst gap")
-	assert_near(times[3] - times[0], 0.2625, 1e-4, "burst to burst")
+	assert_near(times[3] - times[0], 0.2625 + 3 * 0.084, 1e-4, "burst to burst")
 	done()
 
 
@@ -87,4 +87,15 @@ func test_gun_single_shell_reload() -> void:
 	assert_eq(fired, 1, "fire interrupts")
 	assert_eq(s.ammo, 2, "kept shells")
 	assert_true(not s.is_reloading(), "reload cancelled")
+	done()
+
+
+## spec: slide_and_slopes.md rule 26, sliding fires without spending ammo
+func test_gun_slide_infinite_ammo() -> void:
+	var w := WeaponDB.get_weapon(&"haze")
+	var s := WeaponSim.new_state(w)
+	var n := 0
+	for i in 64 * 5:
+		n += WeaponSim.step(s, w, true, false, 1.0, 1.0, true).size()
+	assert_true(n > w.clip_size and s.ammo == w.clip_size, "fired %d, clip still full" % n)
 	done()

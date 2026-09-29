@@ -89,7 +89,7 @@ Each hero's gun is a data record. Field names below are descriptive. Values are 
 
 **DPS formulas.** These were checked against the dataset: Haze gives 5.26 / 0.105 = 50.1 DPS and 26.43 sustained.
 
-- `burst DPS = bullet_damage × pellets × burst_count / cycle_time` (for burst guns, `cycle_time` is the time between bursts)
+- `burst DPS = bullet_damage × pellets × burst_count / period`, where `period = cycle_time` for normal guns and `cycle_time + burst_count × intra_burst_time` for burst guns. So for burst guns `cycle_time` is the pause after a burst, not burst start to burst start. This is **inferred** from the table's Base DPS column (Lash 8.46 × 3 / (0.2625 + 0.252) = 49.3; Seven 63.0; Paradox 51.4; Sinclair 48.3). Using `cycle_time` alone would give Lash 96.7.
 - `sustained DPS = damage_per_magazine / (clip_size × cycle_time + reload_duration)`
 
 **Firing state machine:**

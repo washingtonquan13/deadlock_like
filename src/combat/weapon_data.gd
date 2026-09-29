@@ -54,8 +54,15 @@ func damage_at_boons(boons: int) -> float:
 
 
 ## combat.md §2 DPS formulas (burst DPS, no reload).
+## Trigger cycle start to start. For burst guns cycle_time is the pause after the burst, so a
+## cycle also spans burst_count intra-burst gaps (the only reading that reproduces the data's
+## base DPS: Lash 8.46 x 3 / (0.2625 + 3 x 0.084) = 49.3, Paradox 51.4, Sinclair 48.3).
+func trigger_period() -> float:
+	return cycle_time + (burst_count * burst_interval if burst_count > 1 else 0.0)
+
+
 func burst_dps() -> float:
-	return bullet_damage * pellets * burst_count / cycle_time
+	return bullet_damage * pellets * burst_count / trigger_period()
 
 
 func sustained_dps() -> float:
@@ -64,7 +71,7 @@ func sustained_dps() -> float:
 	if reload_single:
 		full_reload = reload_single_delay + reload_time * clip_size
 	var shots := float(clip_size) / burst_count
-	return mag / (shots * cycle_time + full_reload)
+	return mag / (shots * trigger_period() + full_reload)
 
 
 func max_travel_time() -> float:

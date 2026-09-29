@@ -70,7 +70,9 @@ func _on_player_ticked(_tick: int, s: MoveState) -> void:
 	var reload := (buttons & InputCmd.BTN_RELOAD) != 0 and (_prev_buttons & InputCmd.BTN_RELOAD) == 0
 	_prev_buttons = buttons
 	var was_reloading := wstate.is_reloading()
-	var shots := WeaponSim.step(wstate, weapon, fire, reload, fire_rate_mult, reload_mult)
+	# spec: slide_and_slopes.md rule 26, infinite ammo while sliding
+	var slide := s.loco == MoveState.Loco.SLIDE
+	var shots := WeaponSim.step(wstate, weapon, fire, reload, fire_rate_mult, reload_mult, slide)
 	if wstate.is_reloading() and not was_reloading:
 		reload_started.emit()
 	if shots.is_empty() or projectiles == null:
