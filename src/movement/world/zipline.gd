@@ -11,6 +11,8 @@ enum Lane { CUSTOM, INNER, OUTER }
 @export var lane: Lane = Lane.CUSTOM   # spec: movement.md §16 inner 18 m/s, outer 21 m/s (data-driven)
 @export var lane_speed: float = 18.0   # used only for Lane.CUSTOM
 @export var express: bool = false      # spec: movement.md §16 express line, multiplier = MovementParams.zip_express_mult
+## Use the curve's control points as the rail polyline instead of baking it (long map rails).
+@export var use_points: bool = false
 
 
 func _ready() -> void:
@@ -19,7 +21,10 @@ func _ready() -> void:
 
 func to_rail(id: int) -> ZiplineRail:
 	var pts := PackedVector3Array()
-	if curve != null and curve.point_count >= 2:
+	if use_points and curve != null:
+		for i in curve.point_count:
+			pts.append(global_transform * curve.get_point_position(i))
+	elif curve != null and curve.point_count >= 2:
 		var total := curve.get_baked_length()
 		var n := maxi(1, ceili(total / BAKE_SPACING))
 		var xf := global_transform

@@ -10,6 +10,9 @@ uniform float major_period = 5.0;
 uniform float minor_width = 0.015;
 uniform float major_width = 0.04;
 uniform float blend_sharpness = 4.0;
+// Terrain: base colour from the mesh's vertex colours (linear) and softer lines.
+uniform bool use_vertex_color = false;
+uniform float line_strength = 1.0;
 
 varying vec3 world_pos;
 varying vec3 world_nrm;
@@ -40,8 +43,9 @@ void fragment() {
 	float major = plane_mask(world_pos.zy, major_period, major_width) * w.x
 			+ plane_mask(world_pos.xz, major_period, major_width) * w.y
 			+ plane_mask(world_pos.xy, major_period, major_width) * w.z;
-	vec3 c = mix(base_color, line_color, clamp(minor, 0.0, 1.0));
-	c = mix(c, major_color, clamp(major, 0.0, 1.0));
+	vec3 base = use_vertex_color ? COLOR.rgb : base_color;
+	vec3 c = mix(base, line_color, clamp(minor, 0.0, 1.0) * line_strength);
+	c = mix(c, major_color, clamp(major, 0.0, 1.0) * line_strength);
 	ALBEDO = c;
 	ROUGHNESS = 0.9;
 }
