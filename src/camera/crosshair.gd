@@ -13,9 +13,9 @@ extends Control
 @export var color_border: Color = Color(0.0, 0.0, 0.0, 0.6)
 
 @export_group("Stamina")
-@export var arc_radius: float = 31.0
+@export var arc_radius: float = 40.0
 @export var arc_width: float = 9.0
-@export var segment_deg: float = 32.0
+@export var segment_deg: float = 34.0
 @export var segment_gap_px: float = 4.0
 @export var color_full: Color = Color("#E0E0E0D9")
 @export var color_partial: Color = Color("#E8C040")
@@ -28,8 +28,8 @@ extends Control
 @export var color_ammo: Color = Color("#F0F0F0")
 @export var color_ammo_max: Color = Color("#A8A8A8")
 @export var color_infinite: Color = Color("#7CE08A")
-@export var inf_size: float = 26.0
-@export var inf_line: float = 3.0
+@export var inf_size: float = 30.0
+@export var inf_line: float = 5.5
 @export var ring_radius: float = 16.0
 
 @export_group("Hit markers")
@@ -165,16 +165,32 @@ func _draw_weapon(c: Vector2) -> void:
 	draw_string(_font, Vector2(x + wc, y), rest, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, color_ammo_max)
 
 
-## Lemniscate drawn as a line so it reads at any size, unlike the thin font glyph.
+## Stylized infinity: a lemniscate with a calligraphic stroke, thick through the outer lobes
+## and thin where the line crosses itself. Filled quads, no outline.
 func _draw_infinity(at: Vector2, width: float) -> void:
-	var pts := PackedVector2Array()
 	var a := width * 0.5
-	for k in 41:
-		var t := TAU * k / 40.0
+	var n := 64
+	var pts := PackedVector2Array()
+	for k in n + 1:
+		var t := TAU * k / n
 		var d := 1.0 + sin(t) * sin(t)
-		pts.append(at + Vector2(a * cos(t) / d, 1.5 * a * sin(t) * cos(t) / d))
-	draw_polyline(pts, Color(0, 0, 0, 0.85), inf_line + 3.0, true)
-	draw_polyline(pts, color_infinite, inf_line, true)
+		pts.append(at + Vector2(a * cos(t) / d, 1.4 * a * sin(t) * cos(t) / d))
+	var inner := PackedVector2Array()
+	var outer := PackedVector2Array()
+	for k in n + 1:
+		var t := TAU * k / n
+		var tan_v := (pts[mini(k + 1, n)] - pts[maxi(k - 1, 0)]).normalized()
+		if k == n:
+			tan_v = (pts[1] - pts[n - 1]).normalized()
+		var nrm := Vector2(-tan_v.y, tan_v.x)
+		var half := inf_line * (0.3 + 0.7 * pow(absf(cos(t)), 1.5)) * 0.5
+		inner.append(pts[k] - nrm * half)
+		outer.append(pts[k] + nrm * half)
+	for k in n:
+		draw_colored_polygon(PackedVector2Array([inner[k], outer[k], outer[k + 1], inner[k + 1]]), color_infinite)
+	# same-colour hairlines soften the polygon edges (antialiasing, not an outline)
+	draw_polyline(inner, color_infinite, 1.0, true)
+	draw_polyline(outer, color_infinite, 1.0, true)
 
 
 func _draw_stamina(c: Vector2) -> void:
